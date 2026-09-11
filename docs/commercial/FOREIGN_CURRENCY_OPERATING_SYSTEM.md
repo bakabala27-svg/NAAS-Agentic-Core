@@ -1,6 +1,12 @@
 # Foreign-Currency Operating System — Exportable Value from Algeria
 
 ## Purpose
+> **Operating engine (added 2026-09-11, zero deletion):** this file states *what must be true* before a
+> claim becomes revenue language; [`DECISION_COMMITMENT_ENGINE.md`](DECISION_COMMITMENT_ENGINE.md) states
+> *how each round of analysis must be run* (decision contract, non-compensatory gates, E0–E4 commitment
+> ladder, evidence ledger, corrected cash/FX/additionality ledgers, mandatory pre-delivery audit). Where the
+> two overlap, the stricter rule applies. Applied round: 
+> [`studies/algeria-hard-currency/DECISION-ROUND-01.md`](../../studies/algeria-hard-currency/DECISION-ROUND-01.md).
 
 This document is the commercial counterpart to the engineering constitution. It does not promise revenue; it defines the evidence-driven operating system that can produce revenue without confusing research, prototypes, attention, or unpaid usage with money received.
 
