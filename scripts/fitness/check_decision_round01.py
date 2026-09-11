@@ -12,10 +12,11 @@ import re
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-LEDGER = HERE / "decision_ledger_round01.csv"
-EVIDENCE = HERE / "evidence_round01.csv"
-ROUND = HERE / "DECISION-ROUND-01.md"
+ROOT = Path(__file__).resolve().parents[2]
+STUDY = ROOT / "studies" / "algeria-hard-currency"
+LEDGER = STUDY / "decision_ledger_round01.csv"
+EVIDENCE = STUDY / "evidence_round01.csv"
+ROUND = STUDY / "DECISION-ROUND-01.md"
 
 EXPECTED_HYPOTHESES = 32
 EXPECTED_LEVELS = {"E0", "E1", "E2"}
@@ -124,7 +125,7 @@ def check_claims(round_text: str, failures: list[str]) -> None:
 def main() -> int:
     for path in (LEDGER, EVIDENCE, ROUND):
         if not path.is_file():
-            print(f"❌ ملف مفقود: {path.relative_to(HERE.parent.parent)}")
+            print(f"❌ ملف مفقود: {path.relative_to(ROOT)}")
             return 1
     failures: list[str] = []
     ledger = load(LEDGER)

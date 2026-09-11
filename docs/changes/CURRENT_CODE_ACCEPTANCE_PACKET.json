@@ -60,7 +60,7 @@
         "studies/algeria-hard-currency/evidence_round01.csv",
         "docs/commercial/DECISION_COMMITMENT_ENGINE.md"
       ],
-      "gate": "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية && python3 studies/algeria-hard-currency/check_decision_round01.py  # PASS — جولة القرار متسقة مع سجلها الآلي",
+      "gate": "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية && python3 scripts/fitness/check_decision_round01.py  # PASS — جولة القرار متسقة مع سجلها الآلي",
       "application_ar": "هيكل كانفس مستقل الأقسام لكل جولة قرار: DECISION-ROUND-01.md يفصل صفحة القرار عن عقد الموارد والسجل (decision_ledger_round01.csv) وسجل الأدلة (evidence_round01.csv) والبطاقات، فكل وحدة تُقرأ وتُدحض بمعزل؛ ولا يُقبل استشهاد بمعرّف S/C خارج السجل — يتحقق ذلك بـ check_decision_round01.py."
     },
     {
@@ -77,10 +77,10 @@
         "studies/algeria-hard-currency/DECISION-ROUND-01.md",
         "studies/algeria-hard-currency/decision_ledger_round01.csv",
         "studies/algeria-hard-currency/evidence_round01.csv",
-        "studies/algeria-hard-currency/check_decision_round01.py",
+        "scripts/fitness/check_decision_round01.py",
         "docs/commercial/DECISION_COMMITMENT_ENGINE.md"
       ],
-      "gate": "python3 studies/algeria-hard-currency/check_decision_round01.py  # PASS — جولة القرار متسقة مع سجلها الآلي && python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
+      "gate": "python3 scripts/fitness/check_decision_round01.py  # PASS — جولة القرار متسقة مع سجلها الآلي && python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
       "application_ar": "بناء تجريبي من الأسفل: جولة القرار ترفض القفز إلى الالتزام وتُبقي السقف عند E1 (وصول وتأهيل بلا إنفاق) لغياب سقف خسارة معتمد، وتُرفق كل فرضية ببوابتها الحاكمة والاختبار الرخيص القادر على إسقاطها — وهو «ابنِه واثبُته صغيراً» مطبَّقاً على القرار لا على الكود. البرهان آلي: 32 صفاً، صفر E2 بلا تفويض، صفر استشهاد معلّق."
     }
   ],
@@ -92,7 +92,7 @@
       "studies/algeria-hard-currency/hypotheses_scores.csv — مصفوفة تقييم 32 فرضية قابلة لإعادة الحساب آلياً",
       "studies/algeria-hard-currency/DECISION-ROUND-01.md — جولة قرار v2 تحت المحرك (بوابات غير تعويضية + E0..E2 فقط)",
       "docs/commercial/DECISION_COMMITMENT_ENGINE.md — الوثيقة الحاكمة: البرومبت المعياري لمحرك اكتشاف المعاملات وهندسة الالتزام",
-      "studies/algeria-hard-currency/check_decision_round01.py — فاصلة تحقق آلية تربط الجولة بسجلها (لا أرقام يدوية)"
+      "scripts/fitness/check_decision_round01.py — فاصلة تحقق آلية تربط الجولة بسجلها (لا أرقام يدوية)"
     ],
     "runtime_evidence_paths": [
       "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md",
@@ -101,7 +101,7 @@
       "studies/algeria-hard-currency/decision_ledger_round01.csv",
       "studies/algeria-hard-currency/evidence_round01.csv",
       "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
-      "studies/algeria-hard-currency/check_decision_round01.py"
+      "scripts/fitness/check_decision_round01.py"
     ],
     "failure_behavior_ar": "لا تأثير تشغيلياً: لا استيراد ولا تكوين ولا مسار كود. أسوأ فشل ممكن أن يكون تحليلياً (افتراض ⚙️ يُدحض)، ومعالجته مدمجة في المتن نفسه: كل رهان يحمل إشارة تخلي معلنة وبوابة قتل زمنية (اليوم 90) بدل الاستمرار في فرضية ميتة.",
     "observability_ar": "قابلية التحقق بالمصادر: الملحق B يفهرس كل حقيقة ✅ بمصدرها، والملحق A يجعل كل افتراض ⚙️ قابلاً للاختبار والقتل؛ مصفوفة CSV تسمح بإعادة حساب أي نقطة فرضية بأمر واحد.",
@@ -129,7 +129,7 @@
       "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية  # PASS",
       "CODE_ACCEPTANCE_BASE_SHA=1c2d66811e0239d29e43aec5f0ec5e72ba7b27b8 python3 scripts/fitness/check_code_acceptance.py  # PASS — الحزمة مطابقة لdiff الـPR",
       "python3 scripts/research/refresh_acceptance_diff_snapshot.py  # PASS — بصمة غير دائرية محدثة بوضع base",
-      "python3 studies/algeria-hard-currency/check_decision_round01.py  # PASS — تطابق الجولة مع decision_ledger_round01.csv وevidence_round01.csv",
+      "python3 scripts/fitness/check_decision_round01.py  # PASS — تطابق الجولة مع decision_ledger_round01.csv وevidence_round01.csv",
       "python3 -c \"import csv;rows=list(csv.DictReader(open('studies/algeria-hard-currency/decision_ledger_round01.csv')));assert len(rows)==32 and len({r['id'] for r in rows})==32 and all(r['binding_gate'] and r['gate_state'] and r['decision'] for r in rows);print('ledger OK')\"  # PASS — 32 فرضية × بوابة حاكمة وحالة وقرار",
       "python3 -c \"import csv;rows=list(csv.DictReader(open('studies/algeria-hard-currency/evidence_round01.csv')));assert all(r['as_of'] and r['status'] and r['url'].startswith('http') or r['url']=='—' for r in rows);print('evidence OK', len(rows))\"  # PASS — 27 سنداً مؤرخاً بحالة استقلال معلنة"
     ]
@@ -224,7 +224,7 @@
     "studies/algeria-hard-currency/DECISION-ROUND-01.md",
     "studies/algeria-hard-currency/decision_ledger_round01.csv",
     "studies/algeria-hard-currency/evidence_round01.csv",
-    "studies/algeria-hard-currency/check_decision_round01.py",
+    "scripts/fitness/check_decision_round01.py",
     "docs/commercial/FOREIGN_CURRENCY_OPERATING_SYSTEM.md"
   ],
   "git_change_snapshot": {
@@ -232,12 +232,12 @@
     "changed_paths_excluding_packet": [
       "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
       "docs/commercial/FOREIGN_CURRENCY_OPERATING_SYSTEM.md",
+      "scripts/fitness/check_decision_round01.py",
       "studies/algeria-hard-currency/DECISION-ROUND-01.md",
-      "studies/algeria-hard-currency/check_decision_round01.py",
       "studies/algeria-hard-currency/decision_ledger_round01.csv",
       "studies/algeria-hard-currency/evidence_round01.csv"
     ],
-    "content_sha256_excluding_packet": "afaf10714888a2c032308f2488f9bd4b180afe282f5306e3761554c12df96329",
+    "content_sha256_excluding_packet": "14724fb154ed2639807d77bd1baf2fc00e4379a567f1e0c07e99aa67e86b7b26",
     "refreshed_on": "2026-09-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
