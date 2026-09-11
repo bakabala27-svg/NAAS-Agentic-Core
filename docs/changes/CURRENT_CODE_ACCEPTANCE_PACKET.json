@@ -55,10 +55,13 @@
     {
       "standard": "openhands-agent-canvas",
       "paths": [
-        "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md"
+        "studies/algeria-hard-currency/DECISION-ROUND-01.md",
+        "studies/algeria-hard-currency/decision_ledger_round01.csv",
+        "studies/algeria-hard-currency/evidence_round01.csv",
+        "docs/commercial/DECISION_COMMITMENT_ENGINE.md"
       ],
-      "gate": "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
-      "application_ar": "هيكل كانفس مستقل الأقسام: كل قسم (فرضيات، تقييم، مخاطر، ملاحق افتراضات) يحمل مصادقه الخاصة ورموز الحقيقة (✅/⚙️) وسجل مصادر في الملحق B، فيمكن قراءة أي قسم أو دحضه بمعزل عن البقية."
+      "gate": "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية && python3 studies/algeria-hard-currency/check_decision_round01.py  # PASS — جولة القرار متسقة مع سجلها الآلي",
+      "application_ar": "هيكل كانفس مستقل الأقسام لكل جولة قرار: DECISION-ROUND-01.md يفصل صفحة القرار عن عقد الموارد والسجل (decision_ledger_round01.csv) وسجل الأدلة (evidence_round01.csv) والبطاقات، فكل وحدة تُقرأ وتُدحض بمعزل؛ ولا يُقبل استشهاد بمعرّف S/C خارج السجل — يتحقق ذلك بـ check_decision_round01.py."
     },
     {
       "standard": "developer-roadmap",
@@ -67,6 +70,18 @@
       ],
       "gate": "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
       "application_ar": "خارطة طريق متدرجة الملكية (1–3–7–15 سنة) بقسم لكل فاعل (الدولة/الخاص/رواد الأعمال/الذكاء الاصطناعي) ومؤشرات نجاح قابلة للقياس لكل محطة — منهجية خارطة الطريق التعليمية مطبّقة على اقتصاد وطني."
+    },
+    {
+      "standard": "build-your-own-x",
+      "paths": [
+        "studies/algeria-hard-currency/DECISION-ROUND-01.md",
+        "studies/algeria-hard-currency/decision_ledger_round01.csv",
+        "studies/algeria-hard-currency/evidence_round01.csv",
+        "studies/algeria-hard-currency/check_decision_round01.py",
+        "docs/commercial/DECISION_COMMITMENT_ENGINE.md"
+      ],
+      "gate": "python3 studies/algeria-hard-currency/check_decision_round01.py  # PASS — جولة القرار متسقة مع سجلها الآلي && python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
+      "application_ar": "بناء تجريبي من الأسفل: جولة القرار ترفض القفز إلى الالتزام وتُبقي السقف عند E1 (وصول وتأهيل بلا إنفاق) لغياب سقف خسارة معتمد، وتُرفق كل فرضية ببوابتها الحاكمة والاختبار الرخيص القادر على إسقاطها — وهو «ابنِه واثبُته صغيراً» مطبَّقاً على القرار لا على الكود. البرهان آلي: 32 صفاً، صفر E2 بلا تفويض، صفر استشهاد معلّق."
     }
   ],
   "production": {
@@ -74,11 +89,19 @@
     "status": "DOCUMENTATION_ONLY_NO_RUNTIME_EFFECT",
     "interfaces": [
       "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md — دراسة استراتيجية (20 قسماً + ملاحق A/B) بالعربية",
-      "studies/algeria-hard-currency/hypotheses_scores.csv — مصفوفة تقييم 32 فرضية قابلة لإعادة الحساب آلياً"
+      "studies/algeria-hard-currency/hypotheses_scores.csv — مصفوفة تقييم 32 فرضية قابلة لإعادة الحساب آلياً",
+      "studies/algeria-hard-currency/DECISION-ROUND-01.md — جولة قرار v2 تحت المحرك (بوابات غير تعويضية + E0..E2 فقط)",
+      "docs/commercial/DECISION_COMMITMENT_ENGINE.md — الوثيقة الحاكمة: البرومبت المعياري لمحرك اكتشاف المعاملات وهندسة الالتزام",
+      "studies/algeria-hard-currency/check_decision_round01.py — فاصلة تحقق آلية تربط الجولة بسجلها (لا أرقام يدوية)"
     ],
     "runtime_evidence_paths": [
       "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md",
-      "studies/algeria-hard-currency/hypotheses_scores.csv"
+      "studies/algeria-hard-currency/hypotheses_scores.csv",
+      "studies/algeria-hard-currency/DECISION-ROUND-01.md",
+      "studies/algeria-hard-currency/decision_ledger_round01.csv",
+      "studies/algeria-hard-currency/evidence_round01.csv",
+      "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
+      "studies/algeria-hard-currency/check_decision_round01.py"
     ],
     "failure_behavior_ar": "لا تأثير تشغيلياً: لا استيراد ولا تكوين ولا مسار كود. أسوأ فشل ممكن أن يكون تحليلياً (افتراض ⚙️ يُدحض)، ومعالجته مدمجة في المتن نفسه: كل رهان يحمل إشارة تخلي معلنة وبوابة قتل زمنية (اليوم 90) بدل الاستمرار في فرضية ميتة.",
     "observability_ar": "قابلية التحقق بالمصادر: الملحق B يفهرس كل حقيقة ✅ بمصدرها، والملحق A يجعل كل افتراض ⚙️ قابلاً للاختبار والقتل؛ مصفوفة CSV تسمح بإعادة حساب أي نقطة فرضية بأمر واحد.",
@@ -89,7 +112,7 @@
     "offer_ids": [
       "on-premise-energy-ai"
     ],
-    "customer_problem_ar": "الجزائر أمام تآكل مُوثَّق للعملة الصعبة (احتياطي ≈ 47 مليار $ نهاية 2025 وعجز جارٍ متوسع) وحاجة لمحركات تصدير غير مركّزة في مورد واحد.",
+    "customer_problem_ar": "هشاشة خارجية موثقة لا «أزمة سيولة»: الاحتياطي 68.3 مليار $ نهاية 2024 (بنك الجزائر، التعريف الرسمي) مقابل 47.1 ملياراً في أكتوبر 2025 بتعريف «العملات وحدها» (≈52 بالتعريف الواسع)، وعجز جاري 10.5 مليار $ في النصف الأول 2025، وتوقعات صندوق النقد (Article IV 2025) بالانخفاض إلى ≈18.6 مليار $ في 2030 بلا إصلاح — بينما برنت 96–107 $ في 2026-09-10/11 فوق السعر المرجعي للميزانية (60 $). المصدر: studies/algeria-hard-currency/evidence_round01.csv (S02،S03،S04،S25).",
     "value_hypothesis_ar": "الدراسة تحوّل فائض الطاقة والموقع والكفاءات إلى ثلاث رهانات مُقيَّمة كمّياً (DesertGrid، المحرك الفرنكوفوني، المصهر الأخضر) بسيناريوهات إيراد ونقاط قتل — أي خط أنابيب فرص مباشر لعرض on-premise-energy-ai (حوسبة فوق طاقة مخصصة).",
     "foreign_currency_path_ar": "كل رهان مُصمَّم كسلسلة (ميزة→عميل أجنبي→فاتورة بالعملة الصعبة) بجداول إيراد صافية 2030/2035/2040، ما يجعل وثيقة القبول هذه نفسها دليلاً مسارياً للعملة الصعبة لا ادعاءً تسويقياً.",
     "foundation_exception_ar": "لا استثناء أساسيات: صفر تغيير كود، صفر استيراد جديد، صفر اعتمادية جديدة — التغيير إضافة توثيقية معزولة تحت studies/ ولا يمس أي قيد مؤسِّس."
@@ -97,7 +120,7 @@
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفر حذف: ملفان جديدان (دراسة + مصفوفة تقييم) وتحديث الحزمة نفسها بالزيادة فقط. لا سطر محذوف من أي قانون أو دستور أو سجل — على سابقة D-275 L9."
+    "policy_ar": "صفر حذف: ثلاث وثائق جديدة (محرك حاكم + جولة قرار + سجلَّي CSV) وفاصلة تحقق، وزيادة نصية في FOREIGN_CURRENCY_OPERATING_SYSTEM.md وحزمة القبول — لا سطر محذوف من أي قانون أو دستور أو سجل، على سابقة D-275 L9."
   },
   "verification": {
     "result": "PASS",
@@ -105,7 +128,10 @@
       "python3 -c \"import csv,json; rows=list(csv.DictReader(open('studies/algeria-hard-currency/hypotheses_scores.csv'))); w={'market(20%)':.2,'advantage(15%)':.15,'speed(15%)':.15,'scalability(15%)':.15,'net_FX(15%)':.15,'capital_eff(10%)':.10,'sustainability(5%)':.05,'sovereignty(5%)':.05}; assert all(abs(sum(int(r[k])*v for k,v in w.items())*10-float(r['weighted_score/50']))<0.05 for r in rows) and len(rows)==32; print('scores OK')\"  # PASS — إعادة حساب 32 درجة مرجّحة من CSV (مقياس ×10) تطابق عمود النتيجة",
       "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية  # PASS",
       "CODE_ACCEPTANCE_BASE_SHA=1c2d66811e0239d29e43aec5f0ec5e72ba7b27b8 python3 scripts/fitness/check_code_acceptance.py  # PASS — الحزمة مطابقة لdiff الـPR",
-      "python3 scripts/research/refresh_acceptance_diff_snapshot.py  # PASS — بصمة غير دائرية محدثة بوضع base"
+      "python3 scripts/research/refresh_acceptance_diff_snapshot.py  # PASS — بصمة غير دائرية محدثة بوضع base",
+      "python3 studies/algeria-hard-currency/check_decision_round01.py  # PASS — تطابق الجولة مع decision_ledger_round01.csv وevidence_round01.csv",
+      "python3 -c \"import csv;rows=list(csv.DictReader(open('studies/algeria-hard-currency/decision_ledger_round01.csv')));assert len(rows)==32 and len({r['id'] for r in rows})==32 and all(r['binding_gate'] and r['gate_state'] and r['decision'] for r in rows);print('ledger OK')\"  # PASS — 32 فرضية × بوابة حاكمة وحالة وقرار",
+      "python3 -c \"import csv;rows=list(csv.DictReader(open('studies/algeria-hard-currency/evidence_round01.csv')));assert all(r['as_of'] and r['status'] and r['url'].startswith('http') or r['url']=='—' for r in rows);print('evidence OK', len(rows))\"  # PASS — 27 سنداً مؤرخاً بحالة استقلال معلنة"
     ]
   },
   "curriculum": {
@@ -193,16 +219,26 @@
   "changed_paths": [
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
     "studies/algeria-hard-currency/hypotheses_scores.csv",
-    "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md"
+    "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md",
+    "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
+    "studies/algeria-hard-currency/DECISION-ROUND-01.md",
+    "studies/algeria-hard-currency/decision_ledger_round01.csv",
+    "studies/algeria-hard-currency/evidence_round01.csv",
+    "studies/algeria-hard-currency/check_decision_round01.py",
+    "docs/commercial/FOREIGN_CURRENCY_OPERATING_SYSTEM.md"
   ],
   "git_change_snapshot": {
-    "base_ref": "1c2d66811e0239d29e43aec5f0ec5e72ba7b27b8",
+    "base_ref": "8fa7ac4c4c6e5bdd066ea4788ac693e5d59fedd0",
     "changed_paths_excluding_packet": [
-      "\"studies/algeria-hard-currency/\\331\\205\\330\\264\\330\\261\\331\\210\\330\\271-\\330\\247\\331\\204\\330\\254\\330\\262\\330\\247\\330\\246\\330\\261-\\331\\204\\331\\204\\330\\271\\331\\205\\331\\204\\330\\251-\\330\\247\\331\\204\\330\\265\\330\\271\\330\\250\\330\\251.md\"",
-      "studies/algeria-hard-currency/hypotheses_scores.csv"
+      "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
+      "docs/commercial/FOREIGN_CURRENCY_OPERATING_SYSTEM.md",
+      "studies/algeria-hard-currency/DECISION-ROUND-01.md",
+      "studies/algeria-hard-currency/check_decision_round01.py",
+      "studies/algeria-hard-currency/decision_ledger_round01.csv",
+      "studies/algeria-hard-currency/evidence_round01.csv"
     ],
-    "content_sha256_excluding_packet": "79677c3c114077ce9bdb926e615409879e02704b59a7623e357af6d361fd0df5",
-    "refreshed_on": "2026-08-21",
+    "content_sha256_excluding_packet": "afaf10714888a2c032308f2488f9bd4b180afe282f5306e3761554c12df96329",
+    "refreshed_on": "2026-09-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
 }
