@@ -231,15 +231,17 @@
     "base_ref": "8fa7ac4c4c6e5bdd066ea4788ac693e5d59fedd0",
     "changed_paths_excluding_packet": [
       ".memory/ci-gates.md",
+      "docs/DOCUMENTATION_INDEX.md",
       "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
       "docs/commercial/FOREIGN_CURRENCY_OPERATING_SYSTEM.md",
+      "docs/governance/NEGATIVE_PROOFS.json",
       "scripts/fitness/check_decision_round01.py",
       "studies/algeria-hard-currency/DECISION-ROUND-01.md",
       "studies/algeria-hard-currency/decision_ledger_round01.csv",
       "studies/algeria-hard-currency/evidence_round01.csv",
       "tests/fitness/test_decision_round01_gate.py"
     ],
-    "content_sha256_excluding_packet": "fb453be6fc419f39535e2c72bcfd6100af1277e0b30f3ebbcd329d584c8e014b",
+    "content_sha256_excluding_packet": "970d2429a26005b5944f2af4da082debef3b945bfefb20778d4bd8c732ffdfd6",
     "refreshed_on": "2026-09-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }

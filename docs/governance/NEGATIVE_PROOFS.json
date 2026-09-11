@@ -35,6 +35,9 @@
   "check_correlated_http.py": [
    "tests/fitness/test_check_correlated_http.py"
   ],
+  "check_decision_round01.py": [
+   "tests/fitness/test_decision_round01_gate.py"
+  ],
   "check_design_tokens.py": [
    "tests/fitness/test_check_design_tokens.py"
   ],

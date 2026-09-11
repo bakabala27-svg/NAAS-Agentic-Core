@@ -187,6 +187,7 @@ proves the block is bounded: R&D work stays green while the legal gate is `ABSEN
 | `check_code_acceptance.py` | Current change packet has standards, evidence, local application, production trace, curriculum consideration, zero deletions, and a fresh content fingerprint. | يمنع إعلان قبول تغيير لم تُثبت حزمته أو تغيّر بعد تسجيل بصمته. |
 | `check_documentation_contract.py` | Live-document manifest, local links, executable command truth, stale operational references, CI wiring, and mandatory agent/contributor references. | يمنع رجوع الأوامر القديمة والروابط المكسورة ويجعل التوثيق جزءًا من required-ci. |
 | `check_dual_track_alignment.py` | Engineering capability and production/commercial evidence remain aligned. | يمنع تحويل التصميم أو البحث إلى ادعاء قيمة أو إيراد بلا دليل. |
+| `check_decision_round01.py` | Decision-round counts are derived from the machine-readable ledger: a binding gate per hypothesis, no E2 without a written authorization, and no citation pointing outside the evidence catalogue. | يمنع أن يُقرأ «عددٌ مكتوبٌ يدوياً في جدول» دليلاً، وأن تُرقَّى فرضيةٌ إلى التزامٍ لم تُجتَز بوابته — وهو سور التعويض الذي أسقطت جولةُ القرار 01 دراسته تحته (محرك الالتزام §1). |
 | `check_reference_backbone.py` | Pinned reference backbone remains additive, non-runtime, and represented by the declared source files. | يمنع استبدال مصدر مرجعي أو إدخاله إلى runtime بصمت. |
 | `check_source_adoption_matrix.py` | Every discovered source has status, purpose, local application, enforcer, and owner. | يمنع استخدام مصدر خارجي كسلطة غير معلنة أو تبعية غير مراجعة. |
 
