@@ -1,0 +1,9 @@
+effort,standard_score_pct,standard_cost_usd,adapter_score_pct,adapter_cost_usd,point_delta_adapter_minus_standard,score_ratio_adapter_over_standard,cost_ratio_standard_over_adapter,score_per_dollar_leverage
+max,62.7,26098,98.6,17332,35.9,1.57,1.51,2.37
+xhigh,59.3,37317,98.4,18147,39.1,1.66,2.06,3.41
+high,54.8,40705,99.9,18817,45.1,1.82,2.16,3.94
+medium,38.6,48090,98.4,19285,59.8,2.55,2.49,6.36
+low,17.5,38166,98.0,21298,80.5,5.60,1.79,10.04
+none,35.2,49791,96.7,23457,61.5,2.75,2.12,5.83
+SUMMARY,adapter_score_range,3.2,adapter_score_sd,0.94,standard_score_range,45.2,standard_score_sd,15.9,reasoning_dial_standard_none_to_max,27.5
+SUMMARY2,reasoning_dial_adapter_none_to_high,3.2,headline_gap_adapter_high_minus_standard_max,37.2,generation_gap_inflation_ratio,1.59,per_pair_adapter_high,112.68,per_pair_standard_max,156.28
