@@ -1,5 +1,5 @@
 {
-  "branch": "arena/01a092a3-naas-agentic-core",
+  "branch": "arena/01a09354-naas-agentic-core",
   "components": [
     {
       "agreed": false,
@@ -350,6 +350,6 @@
       "on_live_chain": true
     }
   ],
-  "generated_at_utc": "2026-09-11T23:37:06.235395+00:00",
+  "generated_at_utc": "2026-09-12T02:19:33.480812+00:00",
   "schema_version": 1
 }

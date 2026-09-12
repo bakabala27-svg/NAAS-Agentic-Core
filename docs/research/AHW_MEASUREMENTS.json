@@ -1,0 +1,446 @@
+{
+  "kind": "assurance-horizon-warranty-measurement",
+  "as_of": "2026-09-12",
+  "method": "حتميٌّ بالكامل (stdlib) — لا نموذج، لا شبِكة، لا قياسَ عميل",
+  "model_runs_executed": 0,
+  "client_measurements": 0,
+  "revenue_claim": "NONE — لا إيرادَ ولا عميلَ ولا دفعة",
+  "inputs": {
+    "horizon_anchors": [
+      {
+        "minutes": 30.0,
+        "rate": 0.005,
+        "label": "≤30 دقيقة · ≈0.5% غشّ",
+        "source": "METR Frontier Risk Report، 2026-05-19 (عبر وصفٍ ثانوي مؤرَّخ — يُعاد التحقق من النصّ الأصلي قبل أيّ استعمالٍ في عرضٍ بيعي)"
+      },
+      {
+        "minutes": 480.0,
+        "rate": 0.1667,
+        "label": ">8 ساعات · >1 من 6",
+        "source": "METR Frontier Risk Report، 2026-05-19 (عبر وصفٍ ثانوي مؤرَّخ — يُعاد التحقق من النصّ الأصلي قبل أيّ استعمالٍ في عرضٍ بيعي)"
+      }
+    ],
+    "drift_pairs": [
+      {
+        "suite": "Terminal-Bench-Science 0.1",
+        "before": 24.7,
+        "after": 52.6,
+        "days": 84,
+        "source": "جدولُ إطلاق Claude Fable 5.1 (2026-09-01) وما قابله من Claude Fable 5 (2026-06-09)؛ القياسُ المستقلُّ من Vals AI (2026-09-04)"
+      },
+      {
+        "suite": "Terminal-Bench 4.0",
+        "before": 42.0,
+        "after": 55.8,
+        "days": 84,
+        "source": "جدولُ إطلاق Claude Fable 5.1 (2026-09-01) وما قابله من Claude Fable 5 (2026-06-09)؛ القياسُ المستقلُّ من Vals AI (2026-09-04)"
+      },
+      {
+        "suite": "AutomationBench",
+        "before": 17.1,
+        "after": 31.4,
+        "days": 84,
+        "source": "جدولُ إطلاق Claude Fable 5.1 (2026-09-01) وما قابله من Claude Fable 5 (2026-06-09)؛ القياسُ المستقلُّ من Vals AI (2026-09-04)"
+      },
+      {
+        "suite": "OSWorld 2.0 (partial)",
+        "before": 72.9,
+        "after": 77.9,
+        "days": 84,
+        "source": "جدولُ إطلاق Claude Fable 5.1 (2026-09-01) وما قابله من Claude Fable 5 (2026-06-09)؛ القياسُ المستقلُّ من Vals AI (2026-09-04)"
+      },
+      {
+        "suite": "Humanity's Last Exam (no tools)",
+        "before": 57.8,
+        "after": 60.9,
+        "days": 84,
+        "source": "جدولُ إطلاق Claude Fable 5.1 (2026-09-01) وما قابله من Claude Fable 5 (2026-06-09)؛ القياسُ المستقلُّ من Vals AI (2026-09-04)"
+      },
+      {
+        "suite": "CursorBench 3.2.0",
+        "before": 70.5,
+        "after": 73.4,
+        "days": 84,
+        "source": "جدولُ إطلاق Claude Fable 5.1 (2026-09-01) وما قابله من Claude Fable 5 (2026-06-09)؛ القياسُ المستقلُّ من Vals AI (2026-09-04)"
+      },
+      {
+        "suite": "Harvey Legal Agent Benchmark (مستقل)",
+        "before": 11.25,
+        "after": 6.67,
+        "days": 84,
+        "source": "جدولُ إطلاق Claude Fable 5.1 (2026-09-01) وما قابله من Claude Fable 5 (2026-06-09)؛ القياسُ المستقلُّ من Vals AI (2026-09-04)"
+      }
+    ],
+    "adversary_budget_points": [
+      {
+        "budget": 0,
+        "assurance": 0.949,
+        "label": "هجماتٌ مُستدعاةٌ من النموذج",
+        "source": "MonitoringBench (arXiv:2605.09684، مايو 2026) — 4,783 محاولة تصعيد، و83.78% من المحاولات نجحت في مهمةٍ جانبية بعد التصعيد"
+      },
+      {
+        "budget": 4783,
+        "assurance": 0.603,
+        "label": "أفضل الهجمات المُصقولة",
+        "source": "MonitoringBench (arXiv:2605.09684، مايو 2026) — 4,783 محاولة تصعيد، و83.78% من المحاولات نجحت في مهمةٍ جانبية بعد التصعيد"
+      }
+    ],
+    "regulatory_references": [
+      {
+        "name": "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)",
+        "repatriation_days": 306,
+        "credit_ceiling_days": 360,
+        "status": "documented-official"
+      },
+      {
+        "name": "تنظيمُ بنك الجزائر المُبلَّغ صحفياً 2026-08-20",
+        "repatriation_days": 120,
+        "credit_ceiling_days": 180,
+        "status": "press-reported-awaiting-official-text"
+      }
+    ]
+  },
+  "results": {
+    "horizon": {
+      "risk_exponent": 1.264796,
+      "reading": "ε > 1 ⇒ التعرّضُ ينمو فوق خطّيٍّ مع الأفق؛ لا يُقال «المرونة العالمية»، بل «ما تُنتجه نقطتاُ الإسناد هاتان»",
+      "exposure_bands": {
+        "x2": 2.4029,
+        "x4": 5.7741,
+        "x8": 13.8747,
+        "x16": 33.34
+      }
+    },
+    "depreciation": {
+      "suite_count": 7,
+      "warranty_table": [
+        {
+          "suite": "Terminal-Bench-Science 0.1",
+          "points": 27.9,
+          "days": 84.0,
+          "direction": "up",
+          "velocity_points_per_day": 0.332143,
+          "warranty_days_at_2pts": 6.02,
+          "warranty_days_at_5pts": 15.05,
+          "warranty_days_at_10pts": 30.11
+        },
+        {
+          "suite": "Terminal-Bench 4.0",
+          "points": 13.8,
+          "days": 84.0,
+          "direction": "up",
+          "velocity_points_per_day": 0.164286,
+          "warranty_days_at_2pts": 12.17,
+          "warranty_days_at_5pts": 30.43,
+          "warranty_days_at_10pts": 60.87
+        },
+        {
+          "suite": "AutomationBench",
+          "points": 14.3,
+          "days": 84.0,
+          "direction": "up",
+          "velocity_points_per_day": 0.170238,
+          "warranty_days_at_2pts": 11.75,
+          "warranty_days_at_5pts": 29.37,
+          "warranty_days_at_10pts": 58.74
+        },
+        {
+          "suite": "OSWorld 2.0 (partial)",
+          "points": 5.0,
+          "days": 84.0,
+          "direction": "up",
+          "velocity_points_per_day": 0.059524,
+          "warranty_days_at_2pts": 33.6,
+          "warranty_days_at_5pts": 84.0,
+          "warranty_days_at_10pts": 168.0
+        },
+        {
+          "suite": "Humanity's Last Exam (no tools)",
+          "points": 3.1,
+          "days": 84.0,
+          "direction": "up",
+          "velocity_points_per_day": 0.036905,
+          "warranty_days_at_2pts": 54.19,
+          "warranty_days_at_5pts": 135.48,
+          "warranty_days_at_10pts": 270.97
+        },
+        {
+          "suite": "CursorBench 3.2.0",
+          "points": 2.9,
+          "days": 84.0,
+          "direction": "up",
+          "velocity_points_per_day": 0.034524,
+          "warranty_days_at_2pts": 57.93,
+          "warranty_days_at_5pts": 144.83,
+          "warranty_days_at_10pts": 289.66
+        },
+        {
+          "suite": "Harvey Legal Agent Benchmark (مستقل)",
+          "points": -4.58,
+          "days": 84.0,
+          "direction": "down",
+          "velocity_points_per_day": 0.054524,
+          "warranty_days_at_2pts": 36.68,
+          "warranty_days_at_5pts": 91.7,
+          "warranty_days_at_10pts": 183.41
+        }
+      ],
+      "sample_note": {
+        "suites": 7,
+        "downward_suites": [
+          "Harvey Legal Agent Benchmark (مستقل)"
+        ],
+        "flat_suites": [],
+        "sample_adequate": true,
+        "max_velocity_points_per_day": 0.332143
+      },
+      "shortest_warranty_days_at_2pts": 6.02,
+      "harvey_warranty_days_at_2pts": 36.68,
+      "robust_warranty_days_most_volatile_at_5pts": 8.85,
+      "survival_of_quarterly_report_pct": 34.25
+    },
+    "adversary_budget": {
+      "forms_note": "نقطتان لا تحدّدان المنحنى؛ B₀ مُدخَلٌ تصميميٌّ معلن، والثابتُ بينهما هو الأثرُ عند الميزانية المقيسة",
+      "attempts_per_point_b0_1": 138.24,
+      "points_per_doubling_b0_1": 2.8305,
+      "budget_for_minus_10pts_b0_1": 11,
+      "reading_curve": "الشكلُ اللوغاريتمي لا يشبع: كلُّ مضاعفةٍ لميزانية الخصم تكلّف ≈2.83 نقطة التقاط (عند B₀=1). لذلك ⛔ لا يُباع «رقمٌ مضمون» بميزانيةٍ أكبر — يُباع (A,B) معاً ويُعاد القياسُ عند تغيّر B المتاح للخصم",
+      "family": [
+        {
+          "b0": 1.0,
+          "kappa_points_per_log10": 9.4027,
+          "first_doubling_points": 1.6557,
+          "attempts_per_point": 138.24,
+          "points_per_doubling_asymptote": 2.8305,
+          "budget_for_minus_10pts": 11,
+          "budget_for_minus_20pts": 133
+        },
+        {
+          "b0": 10.0,
+          "kappa_points_per_log10": 12.9075,
+          "first_doubling_points": 2.2729,
+          "attempts_per_point": 138.24,
+          "points_per_doubling_asymptote": 3.8856,
+          "budget_for_minus_10pts": 50,
+          "budget_for_minus_20pts": 345
+        },
+        {
+          "b0": 100.0,
+          "kappa_points_per_log10": 20.4893,
+          "first_doubling_points": 3.608,
+          "attempts_per_point": 138.24,
+          "points_per_doubling_asymptote": 6.1679,
+          "budget_for_minus_10pts": 208,
+          "budget_for_minus_20pts": 847
+        },
+        {
+          "b0": 1000.0,
+          "kappa_points_per_log10": 45.3977,
+          "first_doubling_points": 7.9941,
+          "attempts_per_point": 138.24,
+          "points_per_doubling_asymptote": 13.6661,
+          "budget_for_minus_10pts": 661,
+          "budget_for_minus_20pts": 1758
+        }
+      ]
+    },
+    "billing_unit": {
+      "release_beat_probability_per_quarter": 0.6575,
+      "reading": "⛔ تقريرٌ ربعُ سنوي يفوته إصدارٌ جديد في ≈65.7% من الأرباع — الفوترةُ على حدث الإصدار، لا على السنة",
+      "eval_events_per_year_at_measured_cadence": 4.35,
+      "detection_lag_days": 45.0,
+      "drift_before_detection_points": {
+        "Terminal-Bench-Science 0.1": 14.9464,
+        "Terminal-Bench 4.0": 7.3929,
+        "AutomationBench": 7.6607,
+        "OSWorld 2.0 (partial)": 2.6786,
+        "Humanity's Last Exam (no tools)": 1.6607,
+        "CursorBench 3.2.0": 1.5536,
+        "Harvey Legal Agent Benchmark (مستقل)": 2.4536
+      }
+    },
+    "contract_terms": {
+      "min_buffer_days": 30,
+      "rows": [
+        {
+          "term_days": 30,
+          "robust_under_all_refs": true,
+          "per_ref": {
+            "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)": {
+              "survives": true,
+              "buffer_days": 276,
+              "legal_ceiling_days": 306,
+              "ref_status": "documented-official"
+            },
+            "تنظيمُ بنك الجزائر المُبلَّغ صحفياً 2026-08-20": {
+              "survives": true,
+              "buffer_days": 90,
+              "legal_ceiling_days": 120,
+              "ref_status": "press-reported-awaiting-official-text"
+            }
+          }
+        },
+        {
+          "term_days": 45,
+          "robust_under_all_refs": true,
+          "per_ref": {
+            "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)": {
+              "survives": true,
+              "buffer_days": 261,
+              "legal_ceiling_days": 306,
+              "ref_status": "documented-official"
+            },
+            "تنظيمُ بنك الجزائر المُبلَّغ صحفياً 2026-08-20": {
+              "survives": true,
+              "buffer_days": 75,
+              "legal_ceiling_days": 120,
+              "ref_status": "press-reported-awaiting-official-text"
+            }
+          }
+        },
+        {
+          "term_days": 60,
+          "robust_under_all_refs": true,
+          "per_ref": {
+            "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)": {
+              "survives": true,
+              "buffer_days": 246,
+              "legal_ceiling_days": 306,
+              "ref_status": "documented-official"
+            },
+            "تنظيمُ بنك الجزائر المُبلَّغ صحفياً 2026-08-20": {
+              "survives": true,
+              "buffer_days": 60,
+              "legal_ceiling_days": 120,
+              "ref_status": "press-reported-awaiting-official-text"
+            }
+          }
+        },
+        {
+          "term_days": 90,
+          "robust_under_all_refs": true,
+          "per_ref": {
+            "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)": {
+              "survives": true,
+              "buffer_days": 216,
+              "legal_ceiling_days": 306,
+              "ref_status": "documented-official"
+            },
+            "تنظيمُ بنك الجزائر المُبلَّغ صحفياً 2026-08-20": {
+              "survives": true,
+              "buffer_days": 30,
+              "legal_ceiling_days": 120,
+              "ref_status": "press-reported-awaiting-official-text"
+            }
+          }
+        },
+        {
+          "term_days": 120,
+          "robust_under_all_refs": false,
+          "per_ref": {
+            "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)": {
+              "survives": true,
+              "buffer_days": 186,
+              "legal_ceiling_days": 306,
+              "ref_status": "documented-official"
+            },
+            "تنظيمُ بنك الجزائر المُبلَّغ صحفياً 2026-08-20": {
+              "survives": true,
+              "buffer_days": 0,
+              "legal_ceiling_days": 120,
+              "ref_status": "press-reported-awaiting-official-text"
+            }
+          }
+        },
+        {
+          "term_days": 180,
+          "robust_under_all_refs": false,
+          "per_ref": {
+            "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)": {
+              "survives": true,
+              "buffer_days": 126,
+              "legal_ceiling_days": 306,
+              "ref_status": "documented-official"
+            },
+            "تنظيمُ بنك الجزائر المُبلَّغ صحفياً 2026-08-20": {
+              "survives": false,
+              "buffer_days": -60,
+              "legal_ceiling_days": 120,
+              "ref_status": "press-reported-awaiting-official-text"
+            }
+          }
+        },
+        {
+          "term_days": 270,
+          "robust_under_all_refs": false,
+          "per_ref": {
+            "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)": {
+              "survives": true,
+              "buffer_days": 36,
+              "legal_ceiling_days": 306,
+              "ref_status": "documented-official"
+            },
+            "تنظيمُ بنك الجزائر المُبلَّغ صحفياً 2026-08-20": {
+              "survives": false,
+              "buffer_days": -150,
+              "legal_ceiling_days": 120,
+              "ref_status": "press-reported-awaiting-official-text"
+            }
+          }
+        }
+      ],
+      "reading": "مجموعةُ الآجال التي تنجو تحت **كل** مرجع مُسند مع هامش تأخير ≥30 يوماً؛ ⛔ لا يُحسم أيُّ نصٍّ تنظيمي هنا — الحسمُ للجريدة الرسمية"
+    },
+    "pin_status_cases": [
+      {
+        "case": "تقريرٌ صدر يومَ الإطلاق، قُوبل في اليوم نفسه",
+        "state": "FRESH",
+        "state_label": "صالحٌ للاقتباس",
+        "quotable": true,
+        "age_days": 0.0,
+        "warranty_days": 8.85,
+        "missing_fields": []
+      },
+      {
+        "case": "تقريرٌ على Fable 5 قُدّم بعد 84 يوماً (دورةٌ ربعُ سنوية)",
+        "state": "STALE",
+        "state_label": "منتهيُ الصلاحية",
+        "quotable": false,
+        "age_days": 84.0,
+        "warranty_days": 8.85,
+        "missing_fields": []
+      },
+      {
+        "case": "تقريرٌ بلا مِصْمَلٍ ولا ميزانية مهاجم",
+        "state": "UNPINNED",
+        "state_label": "غيرُ مُدبَّس",
+        "quotable": false,
+        "age_days": 0.0,
+        "warranty_days": 8.85,
+        "missing_fields": [
+          "harness",
+          "safeguard_config",
+          "suite_version",
+          "adversary_budget"
+        ]
+      }
+    ]
+  },
+  "boundaries": {
+    "not_claimed": [
+      "لا قياسَ عميلٍ ولا تشغيلَ نموذج — المدخلاتُ منشورةٌ لا مقيسةٌ عندنا",
+      "لا سعرَ ولا إيرادَ ولا «ضمان» — ⛔ عبارةُ الضمان ممنوعةٌ دستورياً (L3)",
+      "سرعةُ التقادم خاصةٌ بالحزمة بين إصدارَين محدّدَين؛ نقلُها إلى حزمةٍ أخرى غيرُ مبرَّر",
+      "ε محسوبةٌ من نقطتَين؛ لا تُستعمل تنبّؤاً خارج [30 دقيقة، 8 ساعات]",
+      "مرجعُ الترحيل الأقصر **مُبلَّغٌ صحفياً** ولم يُحسم من الجريدة الرسمية؛ العقيدة لم تُعدَّل"
+    ],
+    "reverification_triggers": [
+      "إصدارُ نموذجٍ جديد على الخطِّ المفحوص (يلغي n-warranty المقيس)",
+      "تغيّرُ إصدار الحزمة المعيارية أو تكليفُها (churn حزمٍ لا churn نماذج)",
+      "نشرُ JORADP نصَّ تنظيمِ الترحيل 2026 (يُغلِق D-282 أو يُثبِّت التعارض)",
+      "أيُّ عرضٍ بيعيٍّ يقتبس رقماً من هذا الملف بلا دبوسٍ من `pin_status_cases`"
+    ]
+  },
+  "generated_at": "2026-09-12T02:11:08Z",
+  "inputs_digest_sha256": "901b3006c177b6f189446a680bd7d7299c048216644823e89fad5b9680f67ca6"
+}

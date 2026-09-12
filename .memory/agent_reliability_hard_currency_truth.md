@@ -33,6 +33,7 @@
 | H5 | الاختبار الموسّع يولّد عبء حوسبة حقيقياً | `OPEN` | قياس compute لكل سيناريو. **لم يُقَس** — الرقم المطلوب قبل أيّ نقدٍ حوسبي |
 | H6 | تكلفة التطوير الجزائرية فعلاً أقل | `OPEN` | مقارنة محاسبية داخلية بالمراجع. **لم تُثبَت** — لا تُدّعى ميزة قبلها |
 | H7 | منهجية Coding Agents قابلة للتعميم | `OPEN` | Pilot ثانٍ في Workload آخر. **لم يُجرَ** |
+| H8 | بوّابةُ انحدارٍ مُفعَّلةٌ بالإصدار تُنتج قراراً قبل تقادمِ الدليل (D-292) | `OPEN` | بروتوكولٌ مكتوب في §3.3/§5 من [`docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_AHW.md`](../docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_AHW.md) · **لم يُقَس** — صفرُ مقابلات، صفرُ تشغيل، و`v` الخاصُّ بنا لم يُحسب |
 
 **مجموعة الحالات المغلقة:** `OPEN` · `IN_PROGRESS` · `CLOSED_CONFIRMED` · `CLOSED_REFUTED` · `HOLD`.
 ⛔ `CLOSED_CONFIRMED` بلا ملف قياسٍ مؤرّخٍ في العمود الثالث = انتهاك L8.
@@ -72,3 +73,20 @@
 
 **ملاحظة الحوكمة:** هذا الجدول سجلّ حالةٍ لا قانونٍ — إلغاؤه أو تجاهله لا يمسّ L10
 (الإضافة لا الاستبدال · المراجعة مُجدوَلة) الذي يحرسه الفارض.
+
+---
+
+## 6) ملحَقُ 2026-09-12 (الدفعة الرابعة — AHW) — إضافةٌ لا حذف
+
+| الأصل | الحالة | ما يُثبتُه وما لا يُثبتُه |
+|---|---|---|
+| [`docs/research/FRONTIER_CLAIM_LEDGER_2026-09.md`](../docs/research/FRONTIER_CLAIM_LEDGER_2026-09.md) | `DOCUMENTED` | 17 ادّعاءً حدّياً بحُكمٍ + 20 سنداً (S46–S65) بتاريخٍ واستقلالٍ ومحفِّزِ تحقق. **يثبّتُ** أنّ الأدلةَ الخارجية مُسندة؛ **لا يثبتُ** أيَّ قدرةٍ لنا (⛔ لا استعارةَ أدلّة — L9) |
+| [`docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_AHW.md`](../docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_AHW.md) + [`AHW_MEASUREMENTS.json`](../docs/research/AHW_MEASUREMENTS.json) | `DOCUMENTED` | معرفةٌ جديدة (HRE/ABAC/AWW/ReportPin) محسوبةٌ حتمياً على القرص: ε=1.264796 · نافذةٌ صلبة 8.85 يوماً · بقاءُ تقريرٍ ربعِ سنوي 34.25% · سبقُ الإصدار 65.75% · 138.24 محاولةً/نقطة. `model_runs_executed = 0` |
+| [`docs/commercial/AHW_EXPORT_OFFER.md`](../docs/commercial/AHW_EXPORT_OFFER.md) | `PROPOSED` | تصميمُ عرضٍ على الخطوط 1·5·6 بأسعارٍ موسومةٍ `PRICING HYPOTHESIS`؛ ⛔ لا خطَّ ثامناً (L6) ولا عميلاً ولا فاتورة |
+| [`studies/algeria-hard-currency/DECISION-ROUND-03.md`](../studies/algeria-hard-currency/DECISION-ROUND-03.md) | `DESIGNED` | سبعُ فرضياتٍ (H41–H47) عند E1/E0 بلا إذنِ تنفيذ؛ لا سقفَ خسارةٍ معتمداً ⇒ لا توصيةَ بإنفاق |
+| [`shared/research/assurance_window.py`](../shared/research/assurance_window.py) + 77 اختباراً | `ON DISC` | أداةٌ stdlibٌ تُشحن للعميل؛ حارسُها اختبارُ مطابقةِ ملفِّ القياس (`--check`) لا إعلانٌ لفظي |
+
+**ما لم يتغيّر (وهو المقصود):** `GATE_C = ABSENT` — صفرُ عقد · صفرُ فاتورة · صفرُ دفعة.
+**ما تغيّر في المنهج:** بروتوكول H1 يبقى قائماً ويُصحَّح **مُخرَجُه** (يُعلَّب كحدثِ إصدارٍ بزوجٍ
+مُتحكَّمٍ بالتكوين)؛ ولا يُعدَّل أيُّ نصٍّ تنظيميٍّ في العقائد ببحثٍ ويب (قاعدةُ الإغلاق في
+[`fx_doctrine_truth.md`](fx_doctrine_truth.md)).
