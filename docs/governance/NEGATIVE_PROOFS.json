@@ -47,6 +47,9 @@
     "check_decision_round04.py": [
       "tests/fitness/test_decision_round04_gate.py"
     ],
+    "check_decision_round05.py": [
+      "tests/fitness/test_decision_round05_gate.py"
+    ],
     "check_design_tokens.py": [
       "tests/fitness/test_check_design_tokens.py"
     ],

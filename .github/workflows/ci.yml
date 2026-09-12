@@ -202,14 +202,30 @@ jobs:
           #   alternative becomes a ban on speaking, not a correction); and the
           #   measurement path must contain no exploit code, because this round
           #   measures organizational impact, never the vector.
+          # round05: benchmark-pin discipline. Guards three things no earlier gate
+          #   could, because no earlier round had a pinned benchmark score to guard:
+          #   (1) the domain guard — 7 complete pins must yield zero UNPINNED, so
+          #   H59's defect stays a misuse finding rather than drifting back into a
+          #   claim about the tool; (2) zero-denominator discipline — the 0->120
+          #   safeguard axis is recorded as PAIR_NOT_RATIO and the whole artifact is
+          #   text-scanned for Infinity/NaN, which json.dumps writes without error
+          #   and json.loads accepts, so a value check alone cannot catch them;
+          #   (3) conflict discipline — two independent primaries disagree on
+          #   "never solved" (22.05% vs 80.29%) and the reconciliation basis must
+          #   stay PIN_DIFFERENCE_NOT_AVERAGE, because averaging two honest numbers
+          #   fabricates a third one that describes no configuration.
+          #   Also enforces the attribution correction (suite.owner must stay
+          #   Berkeley RDI, not OpenAI) so round 04's error cannot return.
           python scripts/fitness/check_decision_round01.py
           python scripts/fitness/check_decision_round02.py
           python scripts/fitness/check_decision_round04.py
-          # The two deterministic measurement artifacts must rebuild byte-for-byte
+          python scripts/fitness/check_decision_round05.py
+          # The deterministic measurement artifacts must rebuild byte-for-byte
           # (timestamp excluded explicitly). A hand-edited number in a stored
           # artifact is the exact failure these gates exist to make impossible.
           python scripts/research/measure_assurance_window.py --check
           python scripts/research/measure_decision_latency.py --check
+          python scripts/research/measure_benchmark_pin.py --check
           # D-267 §3.1: the verifier's dependency map was prose. This turns it into a
           # contract — and enforces the D-187 lock structurally (no sandbox executor
           # or network client inside the product path before M1→M4).

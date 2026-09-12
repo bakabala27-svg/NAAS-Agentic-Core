@@ -1,0 +1,506 @@
+{
+  "kind": "BPIN_MEASUREMENTS",
+  "as_of": "2026-09-12",
+  "method": "أرقامٌ منشورةٌ مجمّعة من طرفَين أوّليين على حزمةٍ واحدة، مُدبَّسةٌ بـ`ReportPin` ومحسوبةٌ حتمياً. ⛔ لا تشغيلَ نموذج، لا إعادةَ إنتاجِ استغلال، لا قياسَ عميل.",
+  "model_runs_executed": 0,
+  "client_measurements": 0,
+  "exploits_reproduced": 0,
+  "exploit_code_present": false,
+  "revenue_claim": "NONE — لا إيرادَ ولا عميلَ ولا فاتورة",
+  "suite": {
+    "name": "ExploitGym",
+    "version": "arXiv:2605.11086v1 / sunblaze-ucb/exploitgym",
+    "instances": 898,
+    "domains": {
+      "USERSPACE": 520,
+      "BROWSER_V8": 185,
+      "KERNEL": 193
+    },
+    "owner": "Berkeley RDI (Dawn Song) + MPI-SP + UCSB + ASU + Anthropic + OpenAI + Google",
+    "issued_on": "2026-05-13",
+    "attribution_note": "⛔ تصحيحُ نسبٍ للجولة 04: الحزمةُ **ليست** حزامَ تقييمٍ تابعاً لـOpenAI. وطرفٌ أوّلٌ يملكها أكاديميٌّ مستقلّ، والشركاءُ الصناعيون وفّروا وصولَ النماذج والتغذية الراجعة، والمنهجيةُ للأكاديميين نصّاً. ⇒ استقلالُ الحزمة يرفع قيمةَ الدليل لا يخفضها: فالطرفُ الذي يقيس لا يملك النموذجَ المقاس."
+  },
+  "inputs": {
+    "runs": [
+      {
+        "model_id": "claude-mythos-preview",
+        "harness": "claude-code",
+        "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+        "adversary_budget_minutes": 120,
+        "successes": 157,
+        "by_domain": [
+          107,
+          38,
+          12
+        ],
+        "with_mitigations": [
+          25,
+          17,
+          3
+        ],
+        "cpst_usd": null,
+        "cost_full_usd": null,
+        "time_min_per_success": 54.7,
+        "llm_calls_per_success": 225.5,
+        "flags_captured": 226,
+        "successes_on_intended": 157
+      },
+      {
+        "model_id": "claude-opus-4.6",
+        "harness": "claude-code",
+        "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+        "adversary_budget_minutes": 120,
+        "successes": 15,
+        "by_domain": [
+          12,
+          2,
+          1
+        ],
+        "with_mitigations": [
+          0,
+          0,
+          0
+        ],
+        "cpst_usd": 8.08,
+        "cost_full_usd": 21.76,
+        "time_min_per_success": 18.1,
+        "llm_calls_per_success": 102.3,
+        "flags_captured": null,
+        "successes_on_intended": null
+      },
+      {
+        "model_id": "claude-opus-4.7",
+        "harness": "claude-code",
+        "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+        "adversary_budget_minutes": 120,
+        "successes": 7,
+        "by_domain": [
+          4,
+          3,
+          0
+        ],
+        "with_mitigations": [
+          0,
+          0,
+          0
+        ],
+        "cpst_usd": 8.64,
+        "cost_full_usd": 3.4,
+        "time_min_per_success": 22.1,
+        "llm_calls_per_success": 102.0,
+        "flags_captured": null,
+        "successes_on_intended": null
+      },
+      {
+        "model_id": "gemini-3.1-pro",
+        "harness": "gemini-cli",
+        "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+        "adversary_budget_minutes": 120,
+        "successes": 12,
+        "by_domain": [
+          10,
+          2,
+          0
+        ],
+        "with_mitigations": [
+          0,
+          0,
+          0
+        ],
+        "cpst_usd": 8.56,
+        "cost_full_usd": 9.02,
+        "time_min_per_success": 51.1,
+        "llm_calls_per_success": 169.5,
+        "flags_captured": null,
+        "successes_on_intended": null
+      },
+      {
+        "model_id": "glm-5.1",
+        "harness": "claude-code",
+        "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+        "adversary_budget_minutes": 120,
+        "successes": 4,
+        "by_domain": [
+          4,
+          0,
+          0
+        ],
+        "with_mitigations": [
+          0,
+          0,
+          0
+        ],
+        "cpst_usd": 3.75,
+        "cost_full_usd": 6.39,
+        "time_min_per_success": 63.3,
+        "llm_calls_per_success": 148.6,
+        "flags_captured": null,
+        "successes_on_intended": null
+      },
+      {
+        "model_id": "gpt-5.4",
+        "harness": "codex-cli",
+        "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+        "adversary_budget_minutes": 120,
+        "successes": 54,
+        "by_domain": [
+          38,
+          15,
+          1
+        ],
+        "with_mitigations": [
+          2,
+          0,
+          1
+        ],
+        "cpst_usd": 12.2,
+        "cost_full_usd": 25.43,
+        "time_min_per_success": 51.1,
+        "llm_calls_per_success": 220.1,
+        "flags_captured": null,
+        "successes_on_intended": null
+      },
+      {
+        "model_id": "gpt-5.5",
+        "harness": "codex-cli",
+        "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+        "adversary_budget_minutes": 120,
+        "successes": 120,
+        "by_domain": [
+          71,
+          27,
+          22
+        ],
+        "with_mitigations": [
+          10,
+          3,
+          8
+        ],
+        "cpst_usd": 22.99,
+        "cost_full_usd": 34.55,
+        "time_min_per_success": 49.6,
+        "llm_calls_per_success": 256.8,
+        "flags_captured": 210,
+        "successes_on_intended": 120
+      }
+    ],
+    "venn": {
+      "exclusive_mythos": 56,
+      "exclusive_gpt55": 26,
+      "shared_top_two": 91,
+      "exclusive_others": 4
+    },
+    "budget_curve": {
+      "mythos_at_120min": 127,
+      "mythos_at_360min": 204,
+      "opus46_plateau_minutes": 30,
+      "opus46_plateau_value": 15
+    },
+    "safeguard_pair": {
+      "model_id": "gpt-5.5",
+      "harness": "codex-cli",
+      "default_filters_successes": 0,
+      "filters_disabled_successes": 120
+    },
+    "openai_unsolved": {
+      "never_solved": 198,
+      "suite_total": 898,
+      "source": "OpenAI — «The Hugging Face incident and the road ahead» (2026-08-26) — طرفٌ أوّلٌ عن تشغيله الداخلي على الحزمة نفسها، ⛔ وليس مالكُ الحزمة"
+    }
+  },
+  "results": {
+    "pin_evaluations": {
+      "as_of": "2026-09-12",
+      "suite_issued_on": "2026-05-13",
+      "report_age_days": 122.0,
+      "fresh_days_threshold": 14.0,
+      "max_report_age_days": 90,
+      "pins_evaluated": 7,
+      "state_counts": {
+        "STALE": 7
+      },
+      "unpinned_count": 0,
+      "per_pin": [
+        {
+          "model_id": "claude-mythos-preview",
+          "harness": "claude-code",
+          "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+          "adversary_budget_minutes": 120,
+          "score_points": 157.0,
+          "pin_state": "STALE",
+          "pin_label": "منتهيُ الصلاحية",
+          "age_days_at_as_of": 122.0,
+          "window_days": null,
+          "missing_fields": [],
+          "quotable": false
+        },
+        {
+          "model_id": "claude-opus-4.6",
+          "harness": "claude-code",
+          "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+          "adversary_budget_minutes": 120,
+          "score_points": 15.0,
+          "pin_state": "STALE",
+          "pin_label": "منتهيُ الصلاحية",
+          "age_days_at_as_of": 122.0,
+          "window_days": null,
+          "missing_fields": [],
+          "quotable": false
+        },
+        {
+          "model_id": "claude-opus-4.7",
+          "harness": "claude-code",
+          "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+          "adversary_budget_minutes": 120,
+          "score_points": 7.0,
+          "pin_state": "STALE",
+          "pin_label": "منتهيُ الصلاحية",
+          "age_days_at_as_of": 122.0,
+          "window_days": null,
+          "missing_fields": [],
+          "quotable": false
+        },
+        {
+          "model_id": "gemini-3.1-pro",
+          "harness": "gemini-cli",
+          "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+          "adversary_budget_minutes": 120,
+          "score_points": 12.0,
+          "pin_state": "STALE",
+          "pin_label": "منتهيُ الصلاحية",
+          "age_days_at_as_of": 122.0,
+          "window_days": null,
+          "missing_fields": [],
+          "quotable": false
+        },
+        {
+          "model_id": "glm-5.1",
+          "harness": "claude-code",
+          "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+          "adversary_budget_minutes": 120,
+          "score_points": 4.0,
+          "pin_state": "STALE",
+          "pin_label": "منتهيُ الصلاحية",
+          "age_days_at_as_of": 122.0,
+          "window_days": null,
+          "missing_fields": [],
+          "quotable": false
+        },
+        {
+          "model_id": "gpt-5.4",
+          "harness": "codex-cli",
+          "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+          "adversary_budget_minutes": 120,
+          "score_points": 54.0,
+          "pin_state": "STALE",
+          "pin_label": "منتهيُ الصلاحية",
+          "age_days_at_as_of": 122.0,
+          "window_days": null,
+          "missing_fields": [],
+          "quotable": false
+        },
+        {
+          "model_id": "gpt-5.5",
+          "harness": "codex-cli",
+          "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+          "adversary_budget_minutes": 120,
+          "score_points": 120.0,
+          "pin_state": "STALE",
+          "pin_label": "منتهيُ الصلاحية",
+          "age_days_at_as_of": 122.0,
+          "window_days": null,
+          "missing_fields": [],
+          "quotable": false
+        }
+      ],
+      "h59_verdict": "CONFIRMED_IN_DOMAIN",
+      "age_governs_not_missingness": true,
+      "all_stale_by_age": true,
+      "reading": "سبعةُ دبابيس كاملةِ الحقول ⇒ صفرُ `UNPINNED`، والحكمُ كلُّه من العمر (122 يوماً > سقف 90) ⇒ `STALE` بالإجماع. وهذا **يُثبت `H59` في مجالها**: في الجولة 04 أنتج الدبوسُ `UNPINNED` لانطباقٍ خاطئٍ على غير درجةٍ معيارية، وهنا يُنتج حكماً مُدرَّجاً لأنّ المجالَ صحيح. ⇒ الدبوسُ ليس معطوباً؛ بل محكومُ المجال، والاستعمالُ الخاطئ هو العيب.",
+      "purpose_qualifier": "⚠️ `STALE` هنا تحكم **صلاحيةَ الاقتباس دليلاً على القدرة الحالية**، لا صحّةَ الرقم تاريخياً: فالقياسُ سجلٌّ دائم لِما فعلته تلك الأزواج في 2026-05-13. و`ReportPin` لا تحمل حقلَّ غرضٍ ⇒ الخلطُ ممكن، ويُمنع هنا بالنصّ لا بالأداة (قيدٌ مسجَّل في `pin_field_limitations`)."
+    },
+    "mitigation_effect": {
+      "pairs_measured": 7,
+      "successes_mitigations_off": 369,
+      "successes_mitigations_on": 69,
+      "reduction_factor": 5.3478,
+      "residual_share": 0.186992,
+      "pairs_zeroed_count": 4,
+      "pairs_zeroed": [
+        "claude-opus-4.6",
+        "claude-opus-4.7",
+        "gemini-3.1-pro",
+        "glm-5.1"
+      ],
+      "residual_by_pair": [
+        {
+          "model_id": "claude-mythos-preview",
+          "successes": 45
+        },
+        {
+          "model_id": "gpt-5.5",
+          "successes": 21
+        },
+        {
+          "model_id": "gpt-5.4",
+          "successes": 3
+        }
+      ],
+      "residual_top_pair": "claude-mythos-preview",
+      "residual_top_share": 0.652174,
+      "reading": "الحماياتُ القياسية (ASLR · canaries · V8 heap sandbox · KASLR) خفضت النجاحَ المُقاس 369 ← 69 وأصفرت 4 من 7 أزواج تماماً. والباقي متمركز: claude-mythos-preview يحمل 45/69 = 65.22%. ⇒ العبارةُ «الحماياتُ لا تكفي» صحيحةٌ إجمالاً **وخاطئةٌ تفصيلاً**: فهي تكفي تماماً لأربعةٍ من سبعة، ولا تكفي لأقواهم. وما يُباع هو التفصيلُ لا الإجمال.",
+      "source": "Berkeley RDI — «ExploitGym: Can AI Agents Turn Security Vulnerabilities into Real Attacks?» (2026-05-13) + arXiv:2605.11086 — طرفٌ أوّل يملك الحزمةَ ومنهجيةَ القياس — الجدول 2"
+    },
+    "cpst_band": {
+      "unit": "USD_PER_SUCCESSFUL_TASK",
+      "n_disclosed": 6,
+      "n_undisclosed": 1,
+      "undisclosed_models": [
+        "claude-mythos-preview"
+      ],
+      "band_usd": [
+        3.75,
+        22.99
+      ],
+      "spread_factor": 6.1307,
+      "median_usd": 8.6,
+      "undisclosed_imputed": false,
+      "doctrine_compliance": "D-290 L7: مقارنةُ الكلفة بـCPST لا بالأجر الساعي — وهذه أوّلُ مرساةٍ مُلتزمة",
+      "reading": "نطاقُ CPST المُفصَح عنه [3.75, 22.99] دولاراً لكلّ مهمةٍ ناجحة، بانتشارٍ 6.1307× بين 6 أزواج. و1 غيرُ مُفصَحة (claude-mythos-preview) ⇒ ⛔ لم تُستكمل بمتوسطٍ ولا بتقدير: فمتوسطُ نطاقٍ ناقصٍ يُقرأ اكتمالاً. والانتشارُ هنا **حقيقيٌّ لا ضجيجَ قياس**: فهو بين أزواجٍ مختلفةٍ لا بين تقديراتٍ للكمية نفسها — فلا يُعامل كتشتّتِ سوق الجولة 04.",
+      "source": "Berkeley RDI — «ExploitGym: Can AI Agents Turn Security Vulnerabilities into Real Attacks?» (2026-05-13) + arXiv:2605.11086 — طرفٌ أوّل يملك الحزمةَ ومنهجيةَ القياس — الجدول 1 (Cost (USD)/Succ.)"
+    },
+    "off_target_rate": {
+      "pairs_measured": 2,
+      "per_pair": [
+        {
+          "model_id": "gpt-5.5",
+          "flags_captured": 210,
+          "successes_on_intended": 120,
+          "off_target_count": 90,
+          "off_target_share": 0.428571
+        },
+        {
+          "model_id": "claude-mythos-preview",
+          "flags_captured": 226,
+          "successes_on_intended": 157,
+          "off_target_count": 69,
+          "off_target_share": 0.30531
+        }
+      ],
+      "max_off_target_share": 0.428571,
+      "min_off_target_share": 0.30531,
+      "reading": "المصدرُ الأوّل بنى حكماً (agent-as-a-judge) **لهذا السبب نصّاً**: «agents frequently succeed by exploiting a different bug than the intended one». فالعلمُ المقبوض ليس المقياسَ المنفَّذ — وهي الظاهرةُ نفسها التي سجّلتها الجولة 04 من رواية المختبر (`grader_divergent = true`). وهنا يقيسها طرفٌ ثالثٌ مستقلّ ⇒ **التباعدُ بنيويٌّ في قياس الاستغلال، لا عيبٌ في مختبرٍ واحد**.",
+      "source": "Berkeley RDI — «ExploitGym: Can AI Agents Turn Security Vulnerabilities into Real Attacks?» (2026-05-13) + arXiv:2605.11086 — طرفٌ أوّل يملك الحزمةَ ومنهجيةَ القياس — «The Interesting Bits» + الشكل 3 + arXiv الجدول 4"
+    },
+    "unsolved_conflict": {
+      "suite": "ExploitGym",
+      "suite_instances": 898,
+      "domain_instances": {
+        "USERSPACE": 520,
+        "BROWSER_V8": 185,
+        "KERNEL": 193
+      },
+      "domain_sum_matches_instances": true,
+      "berkeley_union_solved": 177,
+      "berkeley_unsolved": 721,
+      "berkeley_unsolved_share": 0.802895,
+      "openai_never_solved": 198,
+      "openai_never_solved_share": 0.22049,
+      "share_spread_factor": 3.6414,
+      "reconciled": false,
+      "reconciliation_basis": "PIN_DIFFERENCE_NOT_AVERAGE",
+      "pin_axes_that_differ": [
+        "model_id — تشغيلُ OpenAI الداخلي (IM1/HPIM بحجمٍ مقاربٍ لـGPT-5.6 Sol) مقابل سبعة أزواجٍ عامة",
+        "adversary_budget — الجدولُ معلَنٌ عند 120 دقيقة، وميزانيةُ التشغيل الداخلي غيرُ منشورة",
+        "harness — claude-code/codex-cli/gemini-cli مقابل حزامٍ داخلي غير مُسمّى",
+        "safeguard_config — المرشّحاتُ معطَّلةٌ في السبعة، وحالُها في التشغيل الداخلي غيرُ منشور"
+      ],
+      "reading": "طرفان أوّلان، حزمةٌ واحدة (898)، ونسبتا «لم يُحلّ» متباعدتان 80.29% مقابل 22.05% — انتشارٌ 3.6414×. ⛔ ليس تناقضاً ولا يُؤخذ متوسطُه: فالدبابيسُ مختلفة في أربعة محاور، وثلاثةٌ منها غيرُ منشور لدى الطرف الثاني. ⇒ الرقمُ «لم يُحلّ من 898» **بلا دبوسٍ غيرُ قابلٍ للاقتباس أصلاً**، وهذا برهانٌ على `H59` في مجال الدبوس الصحيح.",
+      "source": "Berkeley RDI — «ExploitGym: Can AI Agents Turn Security Vulnerabilities into Real Attacks?» (2026-05-13) + arXiv:2605.11086 — طرفٌ أوّل يملك الحزمةَ ومنهجيةَ القياس — الشكل 4 · OpenAI — «The Hugging Face incident and the road ahead» (2026-08-26) — طرفٌ أوّلٌ عن تشغيله الداخلي على الحزمة نفسها، ⛔ وليس مالكُ الحزمة"
+    },
+    "budget_sensitivity": {
+      "model_id": "claude-mythos-preview",
+      "successes_at_120min": 127,
+      "successes_at_360min": 204,
+      "growth_share": 0.606299,
+      "plateau_declared": false,
+      "weaker_pair": {
+        "model_id": "claude-opus-4.6",
+        "plateau_minutes": 30,
+        "plateau_value": 15
+      },
+      "self_declared_undercount": true,
+      "reading": "الميزانيةُ محورُ دبوسٍ لا تفصيل: 120 دقيقة ← 360 دقيقة رفعت النجاح 127 ← 204 (+60.63%) **بلا هضبة مُعلَنة**، بينما أضعفُ الأزواج استقرّ عند 15 خلال 30 دقيقة. والمصدرُ الأوّل يقول نصّاً إنّ ميزانيتَه «likely undercounts what the strongest agents can do» ⇒ أيُّ اقتباسٍ للدرجة بلا ميزانيتِها مُنحازٌ للأسفل، والانحيازُ **غيرُ متناظر** بين الأزواج.",
+      "source": "Berkeley RDI — «ExploitGym: Can AI Agents Turn Security Vulnerabilities into Real Attacks?» (2026-05-13) + arXiv:2605.11086 — طرفٌ أوّل يملك الحزمةَ ومنهجيةَ القياس — الشكل 5"
+    },
+    "safeguard_pair": {
+      "model_id": "gpt-5.5",
+      "harness": "codex-cli",
+      "successes_default_filters": 0,
+      "successes_filters_disabled": 120,
+      "ratio": null,
+      "ratio_undefined_reason": "ZERO_DENOMINATOR — ⛔ لا `inf` ولا صفر: فالغيابُ لا يُصفَّر",
+      "recorded_as": "PAIR_NOT_RATIO",
+      "reading": "النموذجُ نفسه، الحزامُ نفسه، الميزانيةُ نفسها — ومرشّحاتُ المزوّد وحدها تنقل النتيجة من 0 إلى 120. ⇒ أقوى دليلٍ متاح على أنّ الدرجةَ المعيارية بلا `safeguard_config` ليست رقماً ناقصاً بل **رقماً عن شيءٍ آخر**. وهذا قياسٌ مباشر لأطروحة AHW `(A,B)` معاً: المكوّنُ وحده لا يُفسّر، والزوجُ هو وحدةُ الاقتباس.",
+      "source": "Berkeley RDI — «ExploitGym: Can AI Agents Turn Security Vulnerabilities into Real Attacks?» (2026-05-13) + arXiv:2605.11086 — طرفٌ أوّل يملك الحزمةَ ومنهجيةَ القياس — حاشية ‡ في الجدول 1"
+    },
+    "self_contradictions": [
+      {
+        "id": "D1",
+        "where": "الجدول 1 مقابل الشكل 5، للميزانية نفسها (120 دقيقة) والنموذج نفسه",
+        "values": {
+          "table1_successes": 157,
+          "figure5_at_120min": 127
+        },
+        "delta": 30,
+        "resolved": false,
+        "why_unresolved": "⛔ لم يُقرأ نصُّ arXiv الكامل بعدُ (قُرئ الملخَّصُ ومدوّنةُ الطرف الأوّل). والفرقُ قد يكون تعريفَ «نجاح» (علمٌ مقبوض مقابل ثغرةٌ مقصودة) أو عيّنةً فرعية. ولا يُختار أحدُهما بلا نصٍّ — فالاختيارُ هنا اختلاق.",
+        "handling": "كلا الرقمَين مُسجَّل؛ ولا يُقتبس أيٌّ منهما بصفة «النجاح عند 120 دقيقة»"
+      }
+    ],
+    "mitigation_reduction_factor": 5.3478,
+    "mitigation_residual_share": 0.186992,
+    "pairs_zeroed_by_mitigations": 4,
+    "residual_top_share": 0.652174,
+    "cpst_band_usd": [
+      3.75,
+      22.99
+    ],
+    "cpst_spread_factor": 6.1307,
+    "cpst_undisclosed_count": 1,
+    "max_off_target_share": 0.428571,
+    "unsolved_share_spread_factor": 3.6414,
+    "unsolved_reconciled": false,
+    "budget_growth_share": 0.606299,
+    "safeguard_ratio": null,
+    "pins_unpinned_count": 0,
+    "pins_all_stale_by_age": true,
+    "h59_verdict": "CONFIRMED_IN_DOMAIN",
+    "self_contradiction_count": 1,
+    "self_contradictions_resolved": 0,
+    "pin_field_limitations": [
+      {
+        "field": "safeguard_config",
+        "limitation": "محورٌ واحدٌ لحمايتَين متعامدَتَين (مرشّحاتُ المزوّد · حماياتُ الهدف)",
+        "handling": "تركيبٌ صريحٌ `FILTERS_DISABLED+MITIGATIONS_OFF` — ⛔ لا إبهام",
+        "consequence": "الدبوسُ لا يميّز أيَّ المحورَين حرّك النتيجة، وكلاهما مُقاسٌ هنا منفصلاً"
+      },
+      {
+        "field": "(غائب)",
+        "limitation": "لا حقلَّ **غرضٍ** يفصل «دليلاً على القدرة الحالية» عن «سجلاًّ تاريخياً»",
+        "handling": "مُؤهِلٌ نصّي في `pin_evaluations.purpose_qualifier`",
+        "consequence": "بدون النصّ يُقرأ `STALE` تكذيباً للرقم لا انتهاءً لصلاحية الاقتباس"
+      }
+    ]
+  },
+  "boundaries": [
+    "⛔ صفرُ تشغيل نموذج وصفرُ إعادة إنتاج استغلال: ما قِيس أرقامٌ منشورةٌ مجمّعة.",
+    "⛔ لم يُقرأ نصُّ arXiv الكامل؛ والتناقضُ D1 (157 مقابل 127) باقٍ بلا حلّ بسبب ذلك.",
+    "⛔ لا يُقتبس أيُّ رقمٍ هنا دليلاً على القدرة الحالية: الدبابيسُ `STALE` بالعمر (122 يوماً > 90).",
+    "⛔ لا تُسوّى نسبةُ «لم يُحلّ» بين الطرفَين بمتوسط: فالدبابيسُ مختلفة في أربعة محاور.",
+    "⛔ CPST غيرُ المُفصَحة لم تُستكمل: فمتوسطُ نطاقٍ ناقصٍ يُقرأ اكتمالاً.",
+    "⛔ لا شيفرةَ استغلالٍ ولا تفصيلَ ناقلٍ في هذا الملفّ — والجهةُ المقاسةُ دفاعية (أثرُ الحمايات) واقتصادية (كلفةُ المهمة الناجحة)."
+  ],
+  "generated_at": "2026-09-12T12:30:03Z",
+  "inputs_digest_sha256": "aadd4179b5d72845f21bfd765324523167ef4157e3e45d686648c0ea35d22492"
+}
