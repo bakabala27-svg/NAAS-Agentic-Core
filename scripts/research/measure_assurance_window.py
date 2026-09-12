@@ -43,24 +43,29 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from shared.research.assurance_window import (  # noqa: E402
+    AcceptanceCorridor,
     AssurancePoint,
     ChurnRates,
     HorizonAnchor,
     RepatriationRef,
     ReportPin,
     SuiteDrift,
+    acceptance_corridor,
+    adjudicate,
     curve_family,
     drift_before_detection,
     drift_sample_note,
     evaluate_pin,
     fit_assurance_curve,
     horizon_risk_exponent,
+    pin_is_quotable,
     release_beat_probability,
     survival_probability,
     robust_terms,
     robust_warranty_days,
     summarize,
     warranty_table,
+    warranty_window_days,
 )
 
 OUT = ROOT / "docs" / "research" / "AHW_MEASUREMENTS.json"
@@ -109,6 +114,127 @@ FX_REFS: tuple[RepatriationRef, ...] = (
     ),
 )
 FX_TERMS: tuple[int, ...] = (30, 45, 60, 90, 120, 180, 270)
+
+#: ── حدثُ 2026-09-08 (Navier–Stokes) مُسندٌ بتاريخٍ لا بتذكُّر ────────────────────
+#: الإعلانُ يومَ الثلاثاء 2026-09-08؛ الوصولُ إلى النتيجة 2026-09-05 بعد ≈88 ساعةٍ من
+#: انطلاقِ الجهد (2026-09-01)؛ formalization + تحققٌ في Lean خلال 17 ساعةً إضافية عبر
+#: GPT-6 Astra؛ اكتمالُ المشروعِ والتحقّق 2026-09-06؛ عبارةُ المسألة صيغت بتكييفٍ من
+#: مستودع Formal Conjectures (Google DeepMind)؛ سلسلةُ الأدوات `lean 4.34.0-rc2`؛
+#: ولا قائمةَ مُدقِّقين مستقلّين منشورة، والمنفذُ ليس مجلةً محكَّمة.
+NS_ANNOUNCED_ON = date(2026, 9, 8)
+NS_SOLVED_ON = date(2026, 9, 5)
+NS_LEAN_HOURS = 17
+NS_SOLVE_HOURS = 88
+NS_TOOLCHAIN = "lean 4.34.0-rc2"
+NS_QUALIFYING_OUTLET = False  # مدوَّنة + PDF + مستودع Lean — لا منفذٌ مؤهَّل عند كلاي
+
+#: تاريخُ مصدرِ S48 الذي بنى عليه سجلُّنا عبارةَ «⛔ لا مسائل الألفية»، وتاريخُ كتابة
+#: السجلّ — الفارقُ بينهما هو ما دحضَ سجلَّنا **قبل** أن يُكتب.
+LEDGER_SOURCE_ON = date(2026, 8, 1)
+LEDGER_WRITTEN_ON = date(2026, 9, 12)
+
+
+def _shelf_window_days(churn: ChurnRates) -> float:
+    """أفقُ صلاحية **ادّعاءٍ وثائقي** = أفقُ بقاءِ الرقم تحت زحزحةِ التكوين (بلا v مُختلَقة)."""
+    window = warranty_window_days(churn, THETA)
+    if window is None:
+        raise AssertionError("لا نافذةَ بمخاطر صفرية — راجع ChurnRates")
+    return window
+
+
+def _adjudication_cases() -> list[dict[str, object]]:
+    """الحالتان اللتان تُعلِّمانا أكثرَ من غيرهما: رقمٌ طازجٌ لا يُقتبس، وادّعاءٌ قديمٌ دحضه حدثٌ أنكره."""
+    churn = ChurnRates.from_cadences(release_cadence_days=float(CADENCE_DAYS))
+    window = _shelf_window_days(churn)
+
+    # (أ) الإعلانُ نفسه كما كان سيُدرَج في عرضٍ بيعي بعد أربعة أيام
+    announcement = ReportPin(
+        model_id="openai-internal-post-astra",
+        harness="navier-stokes-lean@f9e8bc5",
+        safeguard_config="vendor-monitored",
+        suite_version="clay-C-and-D(forced)",
+        adversary_budget=0,
+        issued_on=NS_ANNOUNCED_ON,
+        suite="Millennium-NS/Lean",
+        notes=("⛔ لم نُشغِّل المُدقِّق؛ لم نقرأ الـ165 صفحة",),
+    )
+    ann_status = evaluate_pin(announcement, LEDGER_WRITTEN_ON, churn=churn, theta=THETA)
+    ann_adjud = adjudicate(
+        "VENDOR_ONLY",
+        "CONTESTED_PRIORITY",
+        scope_source="THIRD_PARTY",
+        toolchain=NS_TOOLCHAIN,
+        verified_by=(),
+    )
+
+    # (ب) صفُّ A3 من سجلِّنا، مُدبَّساً بمصدره ومؤرَّخاً بيوم كتابته
+    self_claim = ReportPin(
+        model_id="claim:A3",
+        harness="FRONTIER_CLAIM_LEDGER_2026-09.md",
+        safeguard_config="single-source-no-sweep",
+        suite_version="S48@2026-08-01",
+        adversary_budget=0,
+        issued_on=LEDGER_SOURCE_ON,
+        suite="literature-claim",
+        notes=("الحكمُ المنسوبُ للمصدر: «⛔ لا مسائل الألفية»",),
+    )
+    self_status = evaluate_pin(self_claim, LEDGER_WRITTEN_ON, churn=churn, theta=THETA)
+    self_adjud = adjudicate("UNSTATED", scope_source="SELF", toolchain="")
+
+    rows: list[dict[str, object]] = []
+    for label, status, adjud, extra in (
+        ("إعلانُ 2026-09-08 بعد 4 أيام — القِدَمُ يسمح، الاستقلالُ يمنع", ann_status, ann_adjud,
+         {
+             "lean_hours_after_solve": NS_LEAN_HOURS,
+             "solve_hours": NS_SOLVE_HOURS,
+             "solved_on": NS_SOLVED_ON.isoformat(),
+             "announced_on": NS_ANNOUNCED_ON.isoformat(),
+             "scope_source": "THIRD_PARTY",
+             "toolchain": NS_TOOLCHAIN,
+         }),
+        ("صفُّ A3 من سجلِّنا عند كتابته — المصدرُ أسبقُ 42 يوماً والحادثُ الداحضُ أسبقُ 4",
+         self_status, self_adjud,
+         {
+             "source_age_days_at_write": (LEDGER_WRITTEN_ON - LEDGER_SOURCE_ON).days,
+             "refuting_event_predated_write_days": (LEDGER_WRITTEN_ON - NS_ANNOUNCED_ON).days,
+             "scope_source": "SELF",
+         }),
+    ):
+        rows.append(
+            {
+                "case": label,
+                "age_state": status.state,
+                "age_state_label": status.label,
+                "age_days": status.age_days,
+                "shelf_window_days": round(window, 2),
+                "ceiling": adjud.ceiling,
+                "quotable_by_age": status.quotable,
+                "quotable_final": pin_is_quotable(status, adjud),
+                "reasons": list(adjud.reasons),
+                "notes": list(adjud.notes),
+                **extra,
+            }
+        )
+    return rows
+
+
+def _corridor_block() -> dict[str, object]:
+    """كم يوماً يبقى البرهانُ «غيرَ قابلٍ للشراء»؟ حسابٌ من نصِّ قواعد كلاي، لا تنبّؤ."""
+    as_filed = acceptance_corridor(NS_ANNOUNCED_ON, LEDGER_WRITTEN_ON, qualifying_outlet=NS_QUALIFYING_OUTLET)
+    as_if_published = acceptance_corridor(NS_ANNOUNCED_ON, LEDGER_WRITTEN_ON, qualifying_outlet=True)
+    return {
+        "clock_started_as_filed": as_filed.clock_started,
+        "earliest_eligible_if_published_on_announcement_day": (
+            None if as_if_published.earliest_eligible_on is None else as_if_published.earliest_eligible_on.isoformat()
+        ),
+        "corridor_days_if_published": as_if_published.corridor_days,
+        "elapsed_days": as_if_published.elapsed_days,
+        "remaining_days": as_if_published.remaining_days,
+        "fraction_elapsed": as_if_published.fraction_elapsed,
+        "reading": "الممرُّ 731 يوماً من «برهانٍ موجودٍ ولا يُشترى»، **و** العدُّ لم يبدأ لأنّ النشرَ لم "
+        "يكن في منفذٍ مؤهَّل. القيمةُ التي تُباع ليست البرهانَ بل **ما يحدث داخل الممرّ**: قياسٌ "
+        "مُفعَّلٌ بالحدث يُبقي ادّعاءَ العميل صحيحاً أثناء انتظار القبول",
+    }
 
 
 def build() -> dict[str, object]:
@@ -183,6 +309,27 @@ def build() -> dict[str, object]:
                 }
                 for p in (BASE_ATTACK, REFINED_ATTACK)
             ],
+            "frontier_event": [
+                {
+                    "event": "إعلانُ OpenAI عن حلِّ مسألة Navier–Stokes existence and smoothness",
+                    "announced_on": NS_ANNOUNCED_ON.isoformat(),
+                    "provenance": "منشورُ الصانع + PDF + مستودع Lean عامّ؛ بيانُ أسبقيةٍ مضادٍّ قبل 12 ساعة",
+                    "source": "openai.com/index/navier-stokes-solution/ · "
+                    "github.com/openai/NavierStokesAndEuler · "
+                    "en.wikipedia.org/wiki/Navier%E2%80%93Stokes_priority_controversy",
+                },
+                {
+                    "event": "قواعدُ جائزة الألفية: منفذٌ مؤهَّل + عامّان + قبولٌ عامّ، ولا استلامَ مشاركةٍ مباشرة",
+                    "source": "claymath.org/millennium-problems/rules/ (قواعدُ 2018-09-26) و"
+                    "claymath.org/millennium/navier-stokes-equation/ (الحالة: Active)",
+                },
+            ],
+            "ledger_self_audit_dates": {
+                "ledger_source_on": LEDGER_SOURCE_ON.isoformat(),
+                "ledger_written_on": LEDGER_WRITTEN_ON.isoformat(),
+                "note": "الفارقُ بين تاريخِ المصدر وتاريخِ الكتابة هو عمرُ الادّعاء عند النشر؛ "
+                "الفارقُ بين الحادثِ الداحض وتاريخِ الكتابة هو كم كان المسحُ متأخّراً",
+            },
             "regulatory_references": [
                 {
                     "name": ref.name,
@@ -239,6 +386,8 @@ def build() -> dict[str, object]:
                 "تأخير ≥30 يوماً؛ ⛔ لا يُحسم أيُّ نصٍّ تنظيمي هنا — الحسمُ للجريدة الرسمية",
             },
             "pin_status_cases": pins,
+            "adjudication_cases": _adjudication_cases(),
+            "acceptance_corridor": _corridor_block(),
         },
         "boundaries": {
             "not_claimed": [
@@ -255,6 +404,10 @@ def build() -> dict[str, object]:
                 "تغيّرُ إصدار الحزمة المعيارية أو تكليفُها (churn حزمٍ لا churn نماذج)",
                 "نشرُ JORADP نصَّ تنظيمِ الترحيل 2026 (يُغلِق D-282 أو يُثبِّت التعارض)",
                 "أيُّ عرضٍ بيعيٍّ يقتبس رقماً من هذا الملف بلا دبوسٍ من `pin_status_cases`",
+                "انتهاءُ الممرِّ الرسميِّ (2028-09-08 إن بدأ العدُّ) أو صدورُ بيانٍ من Clay عن الحالة",
+                "أيُّ بيانٍ مُوقَّعٍ من مُدقِّقٍ مستقلٍّ خارج الصانع يُغيّر `ceiling` من THROTTLE",
+                "كلُّ مسحٍ أدبيٍّ يُكتب في سجلِّ الادعاءات: إن تجاوز عمرُهُ `shelf_window_days` "
+                "عند الكتابة فالحكمُ يُكتب `STALE` لا `🟢`",
             ],
         },
     }

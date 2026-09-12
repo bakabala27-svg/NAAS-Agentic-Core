@@ -32,14 +32,19 @@ if str(ROOT) not in sys.path:
 
 from scripts.research.measure_assurance_window import build  # noqa: E402
 from shared.research.assurance_window import (  # noqa: E402
+    AcceptanceCorridor,
+    Adjudication,
     AssurancePoint,
     AssuranceWindowError,
     ChurnRates,
     HorizonAnchor,
     MIN_TOLERANCE_POINTS,
+    PROVENANCE_STATES,
     RepatriationRef,
     ReportPin,
     SuiteDrift,
+    acceptance_corridor,
+    adjudicate,
     budget_is_stated,
     buffer_days,
     curve_family,
@@ -54,6 +59,7 @@ from shared.research.assurance_window import (  # noqa: E402
     horizon_exposure_multiplier,
     horizon_risk_exponent,
     legal_term_ceiling,
+    pin_is_quotable,
     release_beat_probability,
     require_horizon_band,
     robust_terms,
@@ -573,3 +579,195 @@ def test_module_is_stdlib_only_and_imports_nothing_from_app() -> None:
                 assert root_name not in {"app", "microservices", "numpy", "pandas", "scipy"}, (
                     f"{rel} يستورد {name} — الحزمةُ stdlibٌ فقط لتُشحن لعميلٍ بلا تبعياتنا"
                 )
+
+
+# ── 7) قيدُ التحكيم: محورٌ ثانٍ غيرُ القِدَم (وُلدَ من حدثِ 2026-09-08) ────────────
+
+
+def test_provenance_states_are_a_closed_set() -> None:
+    assert PROVENANCE_STATES == (
+        "INDEPENDENTLY_VERIFIED",
+        "VENDOR_ONLY",
+        "CONTESTED_PRIORITY",
+        "REFUTED_INDEPENDENTLY",
+        "UNSTATED",
+    )
+
+
+def test_adjudicate_refuses_to_invent_a_state() -> None:
+    with pytest.raises(AssuranceWindowError, match="خارج المجموعة المغلقة"):
+        adjudicate("PROBABLY_INDEPENDENT")
+
+
+def test_adjudicate_refuses_silence_about_provenance() -> None:
+    with pytest.raises(AssuranceWindowError, match="بلا حالةِ استقلال"):
+        adjudicate()
+
+
+def test_unstated_provenance_is_blocked_not_deferred() -> None:
+    verdict = adjudicate("UNSTATED", scope_source="THIRD_PARTY")
+    assert (verdict.ceiling, verdict.quotable) == ("BLOCK", False)
+
+
+def test_independent_refutation_is_blocked() -> None:
+    assert adjudicate("REFUTED_INDEPENDENTLY", scope_source="THIRD_PARTY").ceiling == "BLOCK"
+
+
+def test_ceiling_is_the_weakest_link_not_the_strongest() -> None:
+    """إضافةُ حالةٍ مُستقلَّةٍ لا ترفع السقفَ فوق أضعفِ حالةٍ معلَنة."""
+    alone = adjudicate("INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY")
+    with_vendor_only = adjudicate("INDEPENDENTLY_VERIFIED", "VENDOR_ONLY", scope_source="THIRD_PARTY")
+    assert alone.ceiling == "ACCEPT"
+    assert with_vendor_only.ceiling == "THROTTLE"
+    assert not with_vendor_only.quotable
+
+
+@pytest.mark.parametrize("scope", ["SELF", "UNSTATED"])
+def test_self_authored_scope_can_never_be_the_only_authority(scope: str) -> None:
+    verdict = adjudicate("INDEPENDENTLY_VERIFIED", scope_source=scope)
+    assert verdict.ceiling == "THROTTLE"
+    assert any("نطاقُ العبارةِ" in reason for reason in verdict.reasons)
+
+
+def test_third_party_scope_plus_independent_verification_is_quotable() -> None:
+    verdict = adjudicate(
+        "INDEPENDENTLY_VERIFIED",
+        scope_source="THIRD_PARTY",
+        toolchain="lean 4.32.0",
+        verified_by=("mathlib-review-thread-2026-09",),
+    )
+    assert verdict == Adjudication("ACCEPT", True, (), ())
+
+
+def test_release_candidate_toolchain_is_reported_as_note_not_as_verdict() -> None:
+    """سلسلةُ الأدواتِ المتقادمة تُذكَرُ ولا تُحاسَب: لا نملكُ مِقياسَ انحدارِ Lean."""
+    plain = adjudicate("INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY", toolchain="lean 4.34.0")
+    rc = adjudicate("INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY", toolchain="lean 4.34.0-rc2")
+    assert plain.ceiling == rc.ceiling == "ACCEPT"
+    assert any("4.34.0-rc2" in note for note in rc.notes)
+    assert not any("4.34.0-rc2" in note for note in plain.notes)
+
+
+def test_missing_independent_checker_list_is_flagged() -> None:
+    verdict = adjudicate("VENDOR_ONLY", scope_source="THIRD_PARTY")
+    assert any("لا قائمةَ مُدقِّقين" in note for note in verdict.notes)
+
+
+def _fresh_pin() -> ReportPin:
+    return ReportPin(
+        model_id="m",
+        harness="h",
+        safeguard_config="s",
+        suite_version="1",
+        adversary_budget=0,
+        issued_on=date(2026, 9, 8),
+    )
+
+
+def test_quotability_needs_both_axes() -> None:
+    churn = ChurnRates.from_cadences(release_cadence_days=84.0)
+    fresh = evaluate_pin(_fresh_pin(), date(2026, 9, 8), churn=churn, theta=0.9)
+    accept = adjudicate("INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY", verified_by=("x",))
+    throttle = adjudicate("VENDOR_ONLY", scope_source="THIRD_PARTY", verified_by=("x",))
+    assert fresh.state == "FRESH"
+    assert pin_is_quotable(fresh, accept) is True
+    assert pin_is_quotable(fresh, throttle) is False
+
+
+def test_age_alone_does_not_rescue_a_throttled_certificate() -> None:
+    """حالةُ القِدَمِ تبقى FRESH رغم السقف: المحورانِ لا يطمسُ أحدهما الآخر — يُجمَّعان فقط."""
+    churn = ChurnRates.from_cadences(release_cadence_days=84.0)
+    status = evaluate_pin(_fresh_pin(), date(2026, 9, 8), churn=churn, theta=0.9)
+    verdict = adjudicate("UNSTATED")
+    assert status.quotable is True and verdict.quotable is False
+    assert pin_is_quotable(status, verdict) is False
+    assert status.state == "FRESH"  # ⛔ لا تُكتَب الحالةُ «STALE» لتجميلِ قرارِ الاستقلال
+
+
+# ── 8) ممرُّ عدمِ قابليةِ التحويل (قواعدُ كلاي: منفذٌ مؤهَّل + عامّان + قبولٌ عامّ) ──
+
+
+def test_corridor_is_two_calendar_years_of_days() -> None:
+    block = acceptance_corridor(date(2026, 9, 8), date(2026, 9, 12))
+    assert isinstance(block, AcceptanceCorridor)
+    assert block.earliest_eligible_on == date(2028, 9, 8)
+    assert block.corridor_days == 731  # 366 (2027‑02‑29 داخل المدى) + 365
+    assert (block.elapsed_days, block.remaining_days) == (4, 727)
+    assert block.inside is True
+    assert block.fraction_elapsed == 0.005472
+
+
+def test_corridor_clamps_leap_day_instead_of_skipping_a_year() -> None:
+    block = acceptance_corridor(date(2024, 2, 29), date(2024, 3, 1))
+    assert block.earliest_eligible_on == date(2026, 2, 28)
+
+
+def test_corridor_closes_and_stays_closed() -> None:
+    closed = acceptance_corridor(date(2024, 9, 8), date(2026, 9, 8))
+    assert closed.remaining_days == 0 and closed.inside is False
+    assert closed.fraction_elapsed == 1.0
+
+
+def test_corridor_clock_never_starts_without_a_qualifying_outlet() -> None:
+    block = acceptance_corridor(date(2026, 9, 8), date(2026, 9, 12), qualifying_outlet=False)
+    assert block.clock_started is False
+    assert (block.corridor_days, block.elapsed_days, block.remaining_days) == (None, None, None)
+    assert block.inside is True
+    assert "لم يبدأ العد" in block.rule_ar and "منفذٍ مؤهَّل" in block.rule_ar
+
+
+def test_corridor_without_publication_date_is_open_ended() -> None:
+    block = acceptance_corridor(None, date(2026, 9, 12))
+    assert block.clock_started is False and block.published_on is None
+
+
+def test_corridor_rejects_impossible_inputs() -> None:
+    with pytest.raises(AssuranceWindowError, match="على الأقلّ"):
+        acceptance_corridor(date(2026, 9, 8), date(2026, 9, 12), min_years=0)
+    with pytest.raises(AssuranceWindowError, match="أسبقُ من تاريخِ المراجعة"):
+        acceptance_corridor(date(2026, 9, 20), date(2026, 9, 12))
+
+
+# ── 9) ملفُّ القياس: الحدثُ مُودَعٌ ولا يُعادُ اختراعُه ───────────────────────────
+
+
+def test_measurements_record_fresh_but_unquotable_adjudication() -> None:
+    payload = build()
+    rows = payload["results"]["adjudication_cases"]
+    assert len(rows) == 2
+    announcement = rows[0]
+    assert announcement["age_state"] == "FRESH"
+    assert announcement["quotable_by_age"] is True
+    assert announcement["ceiling"] == "THROTTLE"
+    assert announcement["quotable_final"] is False
+    assert announcement["announced_on"] == "2026-09-08"
+    assert announcement["toolchain"] == "lean 4.34.0-rc2"
+
+
+def test_measurements_record_our_own_stale_claim_without_softening() -> None:
+    payload = build()
+    row = payload["results"]["adjudication_cases"][1]
+    assert row["source_age_days_at_write"] == 42
+    assert row["refuting_event_predated_write_days"] == 4
+    assert row["age_state"] == "STALE"
+    assert row["ceiling"] == "BLOCK"
+    assert row["quotable_final"] is False
+    assert row["age_days"] > row["shelf_window_days"]  # الأداةُ كانت ستصرخ لو طُبِّقت
+
+
+def test_shelf_window_in_adjudication_is_the_measured_risk_window() -> None:
+    """لا نافذةَ مُختلَقةَ للادّعاءات الوثائقية: هي نافذةُ المخاطرَ نفسها، محسوبةً من نفسِ المُدخلات."""
+    churn = ChurnRates.from_cadences(release_cadence_days=84.0)
+    expected = round(warranty_window_days(churn, 0.9), 2)
+    for row in build()["results"]["adjudication_cases"]:
+        assert row["shelf_window_days"] == expected
+
+
+def test_stored_measurements_carry_the_adjudication_block_verbatim() -> None:
+    path = ROOT / "docs" / "research" / "AHW_MEASUREMENTS.json"
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    computed = build()
+    assert stored["results"]["adjudication_cases"] == computed["results"]["adjudication_cases"]
+    assert stored["results"]["acceptance_corridor"] == computed["results"]["acceptance_corridor"]
+    assert stored["results"]["acceptance_corridor"]["corridor_days_if_published"] == 731
+    assert stored["results"]["acceptance_corridor"]["clock_started_as_filed"] is False

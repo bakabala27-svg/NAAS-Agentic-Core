@@ -36,6 +36,8 @@
 from __future__ import annotations
 
 from .assurance_window import (
+    AcceptanceCorridor,
+    Adjudication,
     AssuranceCurve,
     AssurancePoint,
     AssuranceWindowError,
@@ -45,6 +47,8 @@ from .assurance_window import (
     RepatriationRef,
     ReportPin,
     SuiteDrift,
+    acceptance_corridor,
+    adjudicate,
     budget_is_stated,
     buffer_days,
     curve_family,
@@ -60,6 +64,7 @@ from .assurance_window import (
     horizon_risk_exponent,
     horizon_sensitivity,
     legal_term_ceiling,
+    pin_is_quotable,
     release_beat_probability,
     require_horizon_band,
     robust_terms,
@@ -173,6 +178,8 @@ __all__ = [
     # VEP — البرهان القابل للحمل: الاقتصاد والقرار
     # VEP — البرهان القابل للحمل: الإيصال
     "AcceptDecision",
+    "AcceptanceCorridor",
+    "Adjudication",
     "AssuranceCurve",
     "AssurancePoint",
     "AssuranceWindowError",
@@ -182,6 +189,8 @@ __all__ = [
     "RepatriationRef",
     "ReportPin",
     "SuiteDrift",
+    "acceptance_corridor",
+    "adjudicate",
     "budget_is_stated",
     "buffer_days",
     "curve_family",
@@ -197,6 +206,7 @@ __all__ = [
     "horizon_risk_exponent",
     "horizon_sensitivity",
     "legal_term_ceiling",
+    "pin_is_quotable",
     "release_beat_probability",
     "require_horizon_band",
     "robust_terms",

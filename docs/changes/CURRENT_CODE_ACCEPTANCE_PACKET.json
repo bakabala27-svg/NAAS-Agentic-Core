@@ -1,9 +1,9 @@
 {
   "$schema_version": "1",
-  "packet_id": "CAP-2026-09-12-ahw-assurance-window-research-batch-4",
+  "packet_id": "CAP-2026-09-12b-ahw-correction-adjudication-axis",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "D-292",
+  "decision_of_change": "D-293",
   "standards": [
     "system-design-primer",
     "coding-interview-university",
@@ -26,7 +26,7 @@
         "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_AHW.md"
       ],
       "gate": "python3 scripts/research/measure_assurance_window.py --check",
-      "application_ar": "فصلُ الطبقات داخل الأصل المتقادم: نقطةُ إسناد (أفق/معدّل) ← مرونةٌ HRE ← منحنى اطمئنانٍ/ميزانيةِ خصم ABAC ← نافذةُ ضمانٍ بحدَّين (سرعةُ تقادم + مخاطرُ متزاحمة) ← دبوسُ تقريرٍ بستةِ حقول ← حالةُ صلاحيةٍ من مجموعة مغلقة ← قيدُ عقدٍ تنظيميٍّ ناجٍ تحت كلِّ مرجعٍ مُسند. لا طبقةَ تعرف ما فوقها؛ وكلُّ طبقةٍ تُرجِع `None` عند عدمِ النضج بدل صفرٍ مُخترع؛ والفشلُ استثناءٌ مسمّى من مجموعة مغلقة لا صمتٌ."
+      "application_ar": "فصلُ الطبقات داخل الأصل المتقادم: نقطةُ إسناد (أفق/معدّل) ← مرونةٌ HRE ← منحنى اطمئنانٍ/ميزانيةِ خصم ABAC ← نافذةُ ضمانٍ بحدَّين (سرعةُ تقادم + مخاطرُ متزاحمة) ← دبوسُ تقريرٍ بستةِ حقول ← حالةُ صلاحيةٍ من مجموعة مغلقة ← قيدُ عقدٍ تنظيميٍّ ناجٍ تحت كلِّ مرجعٍ مُسند. لا طبقةَ تعرف ما فوقها؛ وكلُّ طبقةٍ تُرجِع `None` عند عدمِ النضج بدل صفرٍ مُخترع؛ والفشلُ استثناءٌ مسمّى من مجموعة مغلقة لا صمتٌ. وأُضيفَ محورٌ ثانٍ للصلاحية (§5b): قِدَمُ الرقمِ واستقلالُ مَن صدَّقَه محورانِ لا يُجمَّعانِ جمعاً، بل يُشترطُ الرضاؤانِ معاً (`pin_is_quotable`)؛ ومَن برهَنَ لا يملكُ وحدَه أن يقرّرَ أنّ العبارةَ هي العبارةُ المطلوبة."
     },
     {
       "standard": "coding-interview-university",
@@ -43,7 +43,7 @@
         "tests/shared/test_ahw_assurance_window.py"
       ],
       "gate": "python3 -m pytest tests/shared/test_ahw_assurance_window.py -q -k \"monotone or extrapolate or nan or matches_recomputation or saturat\"",
-      "application_ar": "الخصائصُ تُختبَر لا الأرقامُ المنسوخة: رتابةُ النافذة مع السعة، `None` عند extrapolation خارج سقفِ الإسناد، ⛔ لا `NaN`/`Infinity` في ملفِّ القياس (JSON صارم)، وملفُّ القياس المودَع **يطابق إعادةَ الحساب** — فيمتنع أن يتقوّل الوثيقةُ التجارية رقماً لا يُنتجه الكود."
+      "application_ar": "الخصائصُ تُختبَر لا الأرقامُ المنسوخة: رتابةُ النافذة مع السعة، `None` عند extrapolation خارج سقفِ الإسناد، ⛔ لا `NaN`/`Infinity` في ملفِّ القياس (JSON صارم)، وملفُّ القياس المودَع **يطابق إعادةَ الحساب** — فيمتنع أن يتقوّل الوثيقةُ التجارية رقماً لا يُنتجه الكود. و100 اختبارٍ تمرّ كلها (منها مغلقيّةُ حالاتِ الاستقلال وحشرُ 29 فبراير في الممرّ)."
     },
     {
       "standard": "build-your-own-x",
@@ -52,7 +52,7 @@
         "shared/research/assurance_window.py"
       ],
       "gate": "python3 scripts/fitness/check_agent_reliability_constitution.py",
-      "application_ar": "افحص ما بُني قبل أن تبني فوقه: 17 ادّعاءً متداولاً حُوِّلت إلى أحكامٍ بمصدرٍ مؤرَّخ وحالةِ استقلال ومحفِّزِ إعادةِ تحقق (S46–S65) — بما فيها دحضُ «معادلةِ 90 سنة» (العمرُ ≈80 و«90» رقمُ الفهرس) و«95% SWE-bench Verified» (لا مصدرَ من الصانع) و«الوكلاءُ المتعدّدون خارقون» (MAST/HiddenBench)."
+      "application_ar": "افحص ما بُني قبل أن تبني فوقه: 17 ادّعاءً متداولاً حُوِّلت إلى أحكامٍ بمصدرٍ مؤرَّخ وحالةِ استقلال ومحفِّزِ إعادةِ تحقق (S46–S65) — بما فيها دحضُ «معادلةِ 90 سنة» (العمرُ ≈80 و«90» رقمُ الفهرس) و«95% SWE-bench Verified» (لا مصدرَ من الصانع) و«الوكلاءُ المتعدّدون خارقون» (MAST/HiddenBench). وفي 2026-09-12 دُحِضَ حكمٌ من أحكامِنا (A3: «لا مسائل الألفية») بإعلانِ OpenAI عن برهانِ blowup لنافير–ستوكس يثبِت Bديلَي C وD من صيغة كلاي؛ فأُضيفَ الحُكمُ الجديدُ ولم يُحذَف القديم (S66–S73)."
     },
     {
       "standard": "openhands-agent-canvas",
@@ -61,7 +61,7 @@
         "docs/commercial/AHW_EXPORT_OFFER.md"
       ],
       "gate": "python3 scripts/fitness/check_dual_track_alignment.py",
-      "application_ar": "الوكيلُ يُحاسَب على المسار لا على المخرَج وحده: لا يُقبل «رقمُ التقاطٍ» بلا ميزانيةِ خصمٍ مُعلنة (`budget_is_stated`)، ولا تقريرٌ بلا دبوسٍ كامل (`evaluate_pin ⇒ UNPINNED`)، ولا يُذكَر أفقٌ من دون شريطٍ مسمّى (`require_horizon_band`) — وهي ثلاثُ عقوباتٍ بنيوية على السردِ المريح."
+      "application_ar": "الوكيلُ يُحاسَب على المسار لا على المخرَج وحده: لا يُقبل «رقمُ التقاطٍ» بلا ميزانيةِ خصمٍ مُعلنة (`budget_is_stated`)، ولا تقريرٌ بلا دبوسٍ كامل (`evaluate_pin ⇒ UNPINNED`)، ولا يُذكَر أفقٌ من دون شريطٍ مسمّى (`require_horizon_band`) — وهي ثلاثُ عقوباتٍ بنيوية على السردِ المريح. ورابعةٌ: لا يُقبَلُ رقمٌ بحالةِ قِدَمٍ وحدها — `adjudicate` يمنعُ الاقتباسَ إذا كان الاستقلالُ `UNSTATED` أو `VENDOR_ONLY`/`CONTESTED_PRIORITY`، ولو كان الرقمُ ابنَ أربعةِ أيام."
     },
     {
       "standard": "developer-roadmap",
@@ -78,7 +78,7 @@
     "status": "RESEARCH_LIBRARY_AND_STUDY_NO_PRODUCTION_PATH",
     "interfaces": [
       "shared/research/assurance_window.py — مكتبة بحثية stdlib فقط (HRE/ABAC/AWW/ReportPin)؛ لا يستوردها أيّ مسارٍ إنتاجي",
-      "scripts/research/measure_assurance_window.py — مولِّد قياسٍ حتمي بوضع `--check` يفشل عند أيّ انحرافٍ بين المودَع والمحسوب",
+      "scripts/research/measure_assurance_window.py — مولِّدُ قياسٍ حتمي بوضع `--check` يفشل عند أيّ انحرافٍ بين المودَع والمحسوب؛ ويُخرِجُ الآن كتلتَي `adjudication_cases` و`acceptance_corridor`",
       "docs/research/AHW_MEASUREMENTS.json — ملفُّ القياس المودَع (بصمةُ مُدخلات · `model_runs_executed = 0` · `client_measurements = 0` · محفِّزاتُ إعادةِ التحقق)",
       "docs/research/FRONTIER_CLAIM_LEDGER_2026-09.md — سجلُّ الادعاءات بسندٍ مؤرَّخ لكلِّ حُكم",
       "docs/commercial/AHW_EXPORT_OFFER.md — عرضٌ بحالة `PROPOSED` على الخطوط 1·5·6 (⛔ لا ثامن)",
@@ -101,7 +101,7 @@
       ".memory/agent_reliability_hard_currency_truth.md",
       ".memory/fx_doctrine_truth.md"
     ],
-    "failure_behavior_ar": "لا مسارَ إنتاجيّاً: لا `app/` ولا `microservices/` يستورد الوحدةَ الجديدة (`grep -rn assurance_window app/ microservices/` ⇒ صفرُ نتيجة). أسوأُ فشلٍ ممكن: (أ) رقمٌ في وثيقةٍ بيعية لا يطابق الكود — محجوبٌ باختبارِ المطابقة وبـ`--check`؛ (ب) ادّعاءُ «منحنًى» من نقطتين — محجوبٌ بإرجاعِ عائلةِ أشكالٍ و`None` خارج سقفِ الإسناد؛ (ج) نقلُ سرعةِ تقادمِ حزمةِ صانعٍ إلى حُزمتنا — ممنوعٌ نصّاً في §3.3/§7 وتستعمل جولةُ القرار 03 بطاقةَ T38 لإزالته؛ (د) قراءةُ أجلٍ تنظيميٍّ واحدٍ وحسمُه — محجوبٌ بـ`robust_terms` الذي يشترط النجاةَ تحت **كل** مرجعٍ مُسند مع هامشٍ أدنى.",
+    "failure_behavior_ar": "لا مسارَ إنتاجيّاً: لا `app/` ولا `microservices/` يستورد الوحدةَ الجديدة (`grep -rn assurance_window app/ microservices/` ⇒ صفرُ نتيجة). أسوأُ فشلٍ ممكن: (أ) رقمٌ في وثيقةٍ بيعية لا يطابق الكود — محجوبٌ باختبارِ المطابقة وبـ`--check`؛ (ب) ادّعاءُ «منحنًى» من نقطتين — محجوبٌ بإرجاعِ عائلةِ أشكالٍ و`None` خارج سقفِ الإسناد؛ (ج) نقلُ سرعةِ تقادمِ حزمةِ صانعٍ إلى حُزمتنا — ممنوعٌ نصّاً في §3.3/§7 وتستعمل جولةُ القرار 03 بطاقةَ T38 لإزالته؛ (د) قراءةُ أجلٍ تنظيميٍّ واحدٍ وحسمُه — محجوبٌ بـ`robust_terms` الذي يشترط النجاةَ تحت **كل** مرجعٍ مُسند مع هامشٍ أدنى. (هـ) قراءةُ حُكمٍ سابقٍ على أنّه جارٍ: حُجبَ بقاعدةِ AW8 — لا 🟢 بمصدرٍ أسبقَ من سقفِ الصلاحية المحسوبِ عندنا (8.85 يوماً) إلا بوَسمِ `🟡 (STALE)`، ويُطابَقُ آليّاً في ملفِّ القياس.",
     "observability_ar": "المُخرَجُ ملفُّ قياسٍ مؤرَّخٌ واحد (`AHW_MEASUREMENTS.json`) يُعاد توليدُه حتمياً؛ لا خدمةَ ولا مقياسَ زمنٍ حيّ، لأنّ أيَّ رقمٍ حيّ اليوم سيكون ادّعاءً بلا تشغيل. البوابةُ المستعملةُ للحارس هي اختبارُ المطابقة لا فارضٌ جديدٌ في `scripts/fitness/` (صفرُ إعادةِ تسليكٍ للـCI).",
     "security_boundary_ar": "لا أسرارَ ولا شبِكةَ ولا نموذج: stdlibٌ حسابيٌّ فقط، و⛔ لا ذخيرةَ ضارّة. المدخلاتُ الخارجيةُ منشورةٌ وتُستعمل بوصفها مُعامِلاتٍ لا بياناتٍ عميل؛ ولا يُنشَر مفتاحٌ ولا اتصالٌ في أيِّ ملفٍّ من هذه الدفعة.",
     "rollback_ar": "التراجعُ حذفُ أصولٍ مُضافةٍ بلا مسٍّ لأيِّ قانون: الوثائقُ والملفاتُ المولَّدة مستقلةٌ عن المنتج، والدستورُ (D-290) لم يُعدَّل، والكتالوجُ بقي سبعةَ خطوط، ولا بوابةَ جديدةً أُضيفت فـ«فكُّ الأسلاك» غيرُ ممكنٍ تعريفاً. تُترَك وثيقةُ الحالة شاهدةً على ما أُضيف ثم أُزيل."
@@ -113,31 +113,30 @@
       "eu-ai-act-compliance"
     ],
     "customer_problem_ar": "منظَّمٌ يشتري «دليلاً» على أنّ وكلاءه جاهزون يصطدم بثلاثِ حقائق مقيسةٍ في 2026: الرقمُ الذي يُسلَّم له يتقادم بأسابيع (نافذةٌ صلبة 8.85 يوماً عند ±5 نقاط على أسرعِ حزمةٍ مفحوصة)، ولا معنى لأيِّ نسبةِ التقاطٍ بلا ميزانيةِ خصم (94.9% ⇒ 60.3% عند 4,783 محاولةِ تصعيد)، والتحسّنُ غيرُ مونوتونيٍّ مجالِيّاً (−4.58 نقطة على مهمةٍ قانونية بين إصدارَين متجاورَين). فالدفعُ الذي يخافه ليس «تقييماً رديئاً» بل **تقييمٌ صحيحٌ يومَ تسليمِه وباطلٌ عند قرارِه التالي**.",
-    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 أطروحة، ⛔ ليست نتيجةً ولا إيراداً): دبوسُ تقريرٍ بستةِ حقول + نافذةُ صلاحيةٍ محسوبة + إعادةُ قياسٍ **مُفعَّلةٌ بحدثِ الإصدار** ⇒ زمنُ كشفٍ أقصرُ بدوراتٍ، وقيمةُ القرارِ تبقى داخل السعة. الجدّةُ المتبقّية **أربعةُ محاور لا عشرة**: الدبوسُ الإلزامي · النافذةُ المحسوبة · مقرونيةُ `(A,B)` · وحدةُ البيعِ بالحدث. ⛔ ولا يُدّعى أنّ «قياسَ التقادم» اختراعٌ لنا: METR تُقيّم دورياً **كياناً** لا مودلاً وتصرّح أنّ suitesها تشبعت فوق 16 ساعة [S56]؛ ولا يُدّعى أنّ شهادةِ Lean ابتكارٌ [S48].",
+    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 أطروحة، ⛔ ليست نتيجةً ولا إيراداً): دبوسُ تقريرٍ بستةِ حقول + نافذةُ صلاحيةٍ محسوبة + إعادةُ قياسٍ **مُفعَّلةٌ بحدثِ الإصدار** ⇒ زمنُ كشفٍ أقصرُ بدوراتٍ، وقيمةُ القرارِ تبقى داخل السعة. الجدّةُ المتبقّية **خمسةُ محاور لا عشرة** (رابعاً: مقرونيةُ القِدَمِ بالاستقلال؛ وخامساً: تصميمُ نطاقِ الدليل): الدبوسُ الإلزامي · النافذةُ المحسوبة · مقرونيةُ `(A,B)` · وحدةُ البيعِ بالحدث. ⛔ ولا يُدّعى أنّ «قياسَ التقادم» اختراعٌ لنا: METR تُقيّم دورياً **كياناً** لا مودلاً وتصرّح أنّ suitesها تشبعت فوق 16 ساعة [S56]؛ ولا يُدّعى أنّ شهادةِ Lean ابتكارٌ [S48].",
     "foreign_currency_path_ar": "ثلاثةُ خطوط قائمةٍ في `OFFER_CATALOG.json` (⛔ لا خطَّ ثامناً — `check_agent_reliability_constitution.py` يحجب الثامن آلياً): الخطّ 1 `ai-red-teaming-multilingual` (أحمرُ مُقيَّدٌ بميزانيةٍ معلنة ودبوسٍ كامل) · الخطّ 5 `formal-verification-ai` (حزمةُ دليلٍ تُبنى بأمرٍ واحدٍ عند المشتري: `measure_assurance_window.py --check`) · الخطّ 6 `eu-ai-act-compliance` (ملفُّ أدلةٍ بصلاحيةٍ معلنةٍ لكلِّ دليل — التزاماتُ الإنذار منذ 2026-08-02 وحقُّ Model Documentation Form خلال 14 يوماً [S62]). الأسعارُ `PRICING HYPOTHESIS` داخل نطاقات D-273 §03 فقط (25k–200k · 10k–80k · نطاقُ الخطّ الخامس)، و**الأجلُ التعاقدي ضمن {30·45·60·90} يوماً** — الآجالُ الناجية تحت المرجعَين المُسندَين (306 معتمَداً و120 مُبلَّغاً 2026-08-20) بهامشٍ ≥30 يوماً؛ وNet-120 بهامشٍ صفريّ **لا يُعرض**. وكلُّ الخطوط `PROPOSED`: ⛔ صفرُ مقابلات، صفرُ دفعات، و⛔ لا ادّعاءَ إيرادٍ قبل إثباتٍ مستقرّ (D-290 L6/L10).",
     "foundation_exception_ar": "لا استثناءَ أساسيات: **صفرُ اعتماديةٍ جديدة** (stdlib فقط، ويحرسها اختبارُ AST)، وصفرُ استيرادٍ من `app/`، وصفرُ تعديلٍ على أيِّ قانونٍ أو دستورٍ أو كتالوج، وصفرُ إضافةِ بوابةٍ إلى CI. كما أنّ الدبوسَ والنافذةَ **حسابٌ على مُعامِلاتٍ مُسندة** — لا تشغيلُ نموذجٍ ولا قياسُ عميل: `model_runs_executed = 0` و`client_measurements = 0` مكتوبان في رأسِ ملفِّ القياس."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفرُ حذف: كلُّ التغيير إضافةُ أصولٍ جديدة (وحدةٌ بحثية · مولِّدُ قياس · ملفُّ قياس · سجلُّ ادعاءات · وثيقةُ معرفة · عرضٌ بحالة `PROPOSED` · جولةُ قرار 03 بسجلَّيها · وثيقةُ حالة). وفي الملفاتِ القائمة لم يُحذَف سطرٌ واحد: (أ) جدولُ الحُزمِ في `docs/research/README_NEW_KNOWLEDGE.md` بقي كما هو وأُضيفت له §4؛ (ب) الوثيقةُ الاستراتيجية احتفظت بمصفوفةِ §2 وببروتوكولاتِ §9 حرفيّاً، وأُضيفت مصادرُ R17–R26 وملحَقُ §16؛ (ج) `agent_reliability_hard_currency_truth.md` احتفظت بكلِّ صفوفِ H1–H7 وأُضيف صفُّ **H8** بحدِّه (`OPEN`، لا قياس) وملحَقُ §6؛ (د) عقيدةُ FX لم تُمسَّ أرقامُها — الرقمان (306 و120) يبقىان متعارضَين حتى نصِّ JORADP. وتصحيحُ الكمّيةِ المشتقّة «أقصى قرارٍ مُسجَّل» من 291 إلى **292** في `README.md`/`README.ar.md`/`docs/DOCUMENTATION_INDEX.md` زيادةُ صدقٍ تفرضه `check_constitution_reality.py` (D-192/D-209: الكمّيةُ الواحدة لا تحمل قيمتين) — لا حذفُ قانون."
+    "policy_ar": "صفرُ حذف: كلُّ التغيير إضافةُ أصولٍ جديدة (وحدةٌ بحثية · مولِّدُ قياس · ملفُّ قياس · سجلُّ ادعاءات · وثيقةُ معرفة · عرضٌ بحالة `PROPOSED` · جولةُ قرار 03 بسجلَّيها · وثيقةُ حالة). وفي الملفاتِ القائمة لم يُحذَف سطرٌ واحد: (أ) جدولُ الحُزمِ في `docs/research/README_NEW_KNOWLEDGE.md` بقي كما هو وأُضيفت له §4؛ (ب) الوثيقةُ الاستراتيجية احتفظت بمصفوفةِ §2 وببروتوكولاتِ §9 حرفيّاً، وأُضيفت مصادرُ R17–R26 وملحَقُ §16؛ (ج) `agent_reliability_hard_currency_truth.md` احتفظت بكلِّ صفوفِ H1–H7 وأُضيف صفُّ **H8** بحدِّه (`OPEN`، لا قياس) وملحَقُ §6؛ (د) عقيدةُ FX لم تُمسَّ أرقامُها — الرقمان (306 و120) يبقىان متعارضَين حتى نصِّ JORADP. وتصحيحُ الكمّيةِ المشتقّة «أقصى قرارٍ مُسجَّل» من 291 إلى **292** في `README.md`/`README.ar.md`/`docs/DOCUMENTATION_INDEX.md` زيادةُ صدقٍ تفرضه `check_constitution_reality.py` (D-192/D-209: الكمّيةُ الواحدة لا تحمل قيمتين) — لا حذفُ قانون. (هـ) تصحيحُ D-293 **لم يحذف** عبارةَ A3 الخاطئة من سجلِّ الادّعاءات: أُبقيَ نصُّها وأُضيفَ داخلَها «تصحيحٌ مؤرَّخ 2026-09-12»، لأّن الحذفَ كان يَمْحُو الدليلَ المنهجيَّ الوحيد. ولا أُزيلت عبارةُ منعٍ قديمة، بل **ضُيِّق نطاقُها** («90 سنة» ممنوعةٌ إن نُسِبَت لمسألةِ المسافةِ الواحدة، جائزةُ الحرفيةِ لنافير–ستوكس بمعنى «منذ ليراي 1934»)."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 scripts/research/measure_assurance_window.py --check  # PASS — بصمةُ المُدخلات 901b3006c177b6f1… والأرقامُ المودَعة مطابقةٌ للمحسوب حتمياً",
-      "python3 -m pytest tests/shared/test_ahw_assurance_window.py -q  # PASS — 77 اختباراً (HRE · ABAC · النافذةُ الصلبة · الدبوسُ والحالات · الآجالُ الناجية · لا NaN · مطابقةُ ملفِّ القياس · stdlibٌ فقط)",
-      "python3 scripts/fitness/check_agent_reliability_constitution.py  # PASS — D-290 L1–L10: الوثائقُ الثلاث، H1–H8 بحالاتٍ مغلقة، لا عبارةٍ غيرَ قابلةٍ للتفنيد، لا رقمَ سوقٍ بلا إحالة، سبعةُ خطوطٍ فقط",
-      "python3 scripts/fitness/check_deep_tech_constitution.py  # PASS — D-273: لا خطَّ ثامناً، ومساراتُ العملةِ الصعبة محترمة",
-      "python3 scripts/fitness/check_revenue_doctrine.py  # PASS",
-      "python3 scripts/fitness/check_decision_round02.py  # PASS — الجولةُ السابقة لم تتأثر (إضافةٌ لا استبدال)",
-      "python3 scripts/fitness/check_memory_coherence.py  # PASS — الفهرسُ طازج (D-292)، الترتيبُ صارم، القفلُ مُحدَّث",
-      "python3 scripts/fitness/check_constitution_reality.py  # PASS — D-292 مُشتَقٌّ لا مكتوبٌ يدويّاً عبر 15 وثيقةِ سلطة",
-      "python3 scripts/fitness/check_documentation_contract.py  # PASS — الروابطُ والمساراتُ متسقة (28 وثيقةً حية)",
-      "python3 scripts/fitness/check_agent_context.py · check_source_adoption_matrix.py · check_dual_track_alignment.py · check_gate_parse_honesty.py · check_naas_verification.py · check_reference_backbone.py  # PASS",
-      "python3 scripts/ci_guardrails.py  # PASS — صفرُ انحرافٍ معماري"
+      "python3 scripts/research/measure_assurance_window.py --check  # PASS — بصمةُ مُدخلاتٍ 338eaafecbc96138… (بما فيها كتلتا التحكيمِ والممرّ)",
+      "python3 -m pytest tests/shared/test_ahw_assurance_window.py -q  # PASS — 100 اختبار (منها 23 لـ§5b: محورُ الاستقلال وممرُّ 731 يوماً)",
+      "python3 scripts/fitness/check_agent_reliability_constitution.py  # PASS — D-290 L1–L10 + H1–H8",
+      "python3 scripts/fitness/check_deep_tech_constitution.py  # PASS — D-273: لا خطَّ ثامناً",
+      "python3 scripts/fitness/check_revenue_doctrine.py · check_decision_round02.py  # PASS",
+      "python3 scripts/fitness/check_memory_coherence.py  # PASS — الفهرسُ طازج، D-001→D-293",
+      "python3 scripts/fitness/check_constitution_reality.py  # PASS — D-293 مُشتَقٌّ عبر 15 وثيقةِ سلطة",
+      "python3 scripts/fitness/check_documentation_contract.py  # PASS — 28 وثيقةً حية",
+      "python3 scripts/fitness/check_agent_context.py · check_source_adoption_matrix.py · check_dual_track_alignment.py · check_gate_parse_honesty.py · check_naas_verification.py · check_reference_backbone.py · check_spec_kit_governance.py  # PASS",
+      "python3 scripts/ci_guardrails.py  # PASS"
     ],
-    "not_run_ar": "⛔ لم يُشغَّل: (١) أيُّ نموذجٍ لغوي — فلا قياسَ على حُزَمِنا ولا `v` خاصٌّ بنا (T38)؛ (٢) `pytest tests/fitness/test_decision_round02_gate.py` وسواها من بواباتٍ تتطلّب `yaml`/`httpx` غيرَ المتوفّرين في بيئةِ التحققِ المحلية (4 أخطاءِ جمعٍ في `tests/fitness/` بسبب الاستيراد لا بسبب المحتوى)؛ (٣) `check_governance_registry.py` محليّاً لنفسِ العلة (ModuleNotFoundError: yaml) — وهو يُنفَّذ في CI. الوسمُ لذلك 🟢⟨ح⟩ حتميٌّ محسوب، لا قياسُ عميل."
+    "not_run_ar": "⛔ لم يُشغَّل: (١) أيُّ نموذجٍ لغويٍّ ولا مُدقِّقُ Lean (`lake build`/`comparator`) — **لم نقرأ نصَّ برهانِ نافير–ستوكس ولم نُعِدْ بناءَه**، فكلُّ ما عندنا عن الحدثِ تواريخُ وحالةُ قائمةٍ رسميةٍ وقابليةُ اقتباس؛ (٢) `pytest tests/fitness/` (4 أخطاءِ جمعٍ لغياب `yaml`/`httpx` في بيئةِ التحققِ المحلية، لا لعلّةٍ في المحتوى)؛ (٣) `check_governance_registry.py` لنفسِ العلة — يُنفَّذ في CI."
   },
   "curriculum": {
     "catalog_path": "docs/research/UNIVERSITY_CURRICULUM_CATALOG.json",

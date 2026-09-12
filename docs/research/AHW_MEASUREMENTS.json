@@ -85,6 +85,23 @@
         "source": "MonitoringBench (arXiv:2605.09684، مايو 2026) — 4,783 محاولة تصعيد، و83.78% من المحاولات نجحت في مهمةٍ جانبية بعد التصعيد"
       }
     ],
+    "frontier_event": [
+      {
+        "event": "إعلانُ OpenAI عن حلِّ مسألة Navier–Stokes existence and smoothness",
+        "announced_on": "2026-09-08",
+        "provenance": "منشورُ الصانع + PDF + مستودع Lean عامّ؛ بيانُ أسبقيةٍ مضادٍّ قبل 12 ساعة",
+        "source": "openai.com/index/navier-stokes-solution/ · github.com/openai/NavierStokesAndEuler · en.wikipedia.org/wiki/Navier%E2%80%93Stokes_priority_controversy"
+      },
+      {
+        "event": "قواعدُ جائزة الألفية: منفذٌ مؤهَّل + عامّان + قبولٌ عامّ، ولا استلامَ مشاركةٍ مباشرة",
+        "source": "claymath.org/millennium-problems/rules/ (قواعدُ 2018-09-26) وclaymath.org/millennium/navier-stokes-equation/ (الحالة: Active)"
+      }
+    ],
+    "ledger_self_audit_dates": {
+      "ledger_source_on": "2026-08-01",
+      "ledger_written_on": "2026-09-12",
+      "note": "الفارقُ بين تاريخِ المصدر وتاريخِ الكتابة هو عمرُ الادّعاء عند النشر؛ الفارقُ بين الحادثِ الداحض وتاريخِ الكتابة هو كم كان المسحُ متأخّراً"
+    },
     "regulatory_references": [
       {
         "name": "نظامُ 16-04 م61 (المرجع المُعتمَد في العقيدة)",
@@ -424,7 +441,62 @@
           "adversary_budget"
         ]
       }
-    ]
+    ],
+    "adjudication_cases": [
+      {
+        "case": "إعلانُ 2026-09-08 بعد 4 أيام — القِدَمُ يسمح، الاستقلالُ يمنع",
+        "age_state": "FRESH",
+        "age_state_label": "صالحٌ للاقتباس",
+        "age_days": 4.0,
+        "shelf_window_days": 8.85,
+        "ceiling": "THROTTLE",
+        "quotable_by_age": true,
+        "quotable_final": false,
+        "reasons": [
+          "النتيجةُ منشورةٌ من صاحبِ المصلحة وحدَه: تُذكر بوصفها إعلاناً لا دليلاً",
+          "نزاعٌ مُسندٌ على مصدرِ المُدخلات أو الأسبقية — لا تُباع شهادةً"
+        ],
+        "notes": [
+          "أداةُ التحقق نفسها إصدارٌ غيرُ نهائي (lean 4.34.0-rc2): المُدقِّقُ جزءٌ من الأفق المتقادم، ويُعادُ البناءُ عند كلِّ ترقيةِ سلسلةِ أدوات",
+          "لا قائمةَ مُدقِّقين مستقلّين مُسندةٍ بتاريخ — ⛔ لا يُذكر عددُ الساعاتِ بديلاً عنها"
+        ],
+        "lean_hours_after_solve": 17,
+        "solve_hours": 88,
+        "solved_on": "2026-09-05",
+        "announced_on": "2026-09-08",
+        "scope_source": "THIRD_PARTY",
+        "toolchain": "lean 4.34.0-rc2"
+      },
+      {
+        "case": "صفُّ A3 من سجلِّنا عند كتابته — المصدرُ أسبقُ 42 يوماً والحادثُ الداحضُ أسبقُ 4",
+        "age_state": "STALE",
+        "age_state_label": "منتهيُ الصلاحية",
+        "age_days": 42.0,
+        "shelf_window_days": 8.85,
+        "ceiling": "BLOCK",
+        "quotable_by_age": false,
+        "quotable_final": false,
+        "reasons": [
+          "استقلالُ المصدر غيرُ مُعلَن — يُمنع الاقتباس لا يُرجَّأ",
+          "نطاقُ العبارةِ صاغه الطرفُ المعنيّ نفسُه (أو لم يُعلَن): البرهانُ على صيغةٍ غيرِ مُستقلّةٍ لا يُثبتُ أنّها الصيغةُ المطلوبة"
+        ],
+        "notes": [
+          "لا قائمةَ مُدقِّقين مستقلّين مُسندةٍ بتاريخ — ⛔ لا يُذكر عددُ الساعاتِ بديلاً عنها"
+        ],
+        "source_age_days_at_write": 42,
+        "refuting_event_predated_write_days": 4,
+        "scope_source": "SELF"
+      }
+    ],
+    "acceptance_corridor": {
+      "clock_started_as_filed": false,
+      "earliest_eligible_if_published_on_announcement_day": "2028-09-08",
+      "corridor_days_if_published": 731,
+      "elapsed_days": 4,
+      "remaining_days": 727,
+      "fraction_elapsed": 0.005472,
+      "reading": "الممرُّ 731 يوماً من «برهانٍ موجودٍ ولا يُشترى»، **و** العدُّ لم يبدأ لأنّ النشرَ لم يكن في منفذٍ مؤهَّل. القيمةُ التي تُباع ليست البرهانَ بل **ما يحدث داخل الممرّ**: قياسٌ مُفعَّلٌ بالحدث يُبقي ادّعاءَ العميل صحيحاً أثناء انتظار القبول"
+    }
   },
   "boundaries": {
     "not_claimed": [
@@ -438,9 +510,12 @@
       "إصدارُ نموذجٍ جديد على الخطِّ المفحوص (يلغي n-warranty المقيس)",
       "تغيّرُ إصدار الحزمة المعيارية أو تكليفُها (churn حزمٍ لا churn نماذج)",
       "نشرُ JORADP نصَّ تنظيمِ الترحيل 2026 (يُغلِق D-282 أو يُثبِّت التعارض)",
-      "أيُّ عرضٍ بيعيٍّ يقتبس رقماً من هذا الملف بلا دبوسٍ من `pin_status_cases`"
+      "أيُّ عرضٍ بيعيٍّ يقتبس رقماً من هذا الملف بلا دبوسٍ من `pin_status_cases`",
+      "انتهاءُ الممرِّ الرسميِّ (2028-09-08 إن بدأ العدُّ) أو صدورُ بيانٍ من Clay عن الحالة",
+      "أيُّ بيانٍ مُوقَّعٍ من مُدقِّقٍ مستقلٍّ خارج الصانع يُغيّر `ceiling` من THROTTLE",
+      "كلُّ مسحٍ أدبيٍّ يُكتب في سجلِّ الادعاءات: إن تجاوز عمرُهُ `shelf_window_days` عند الكتابة فالحكمُ يُكتب `STALE` لا `🟢`"
     ]
   },
-  "generated_at": "2026-09-12T02:11:08Z",
-  "inputs_digest_sha256": "901b3006c177b6f189446a680bd7d7299c048216644823e89fad5b9680f67ca6"
+  "generated_at": "2026-09-12T02:33:43Z",
+  "inputs_digest_sha256": "338eaafecbc961383f9be9375c3bc4ab36198317a2a0e405a8020b995bd2e09c"
 }

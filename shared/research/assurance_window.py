@@ -48,7 +48,10 @@
    نقلُها إلى حزمةٍ أخرى ممنوع — تُحسب v لكل حزمة أو تُعلَّم `unmeasured`.
 4. **الأجلُ التنظيميُّ ليس رأياً قانونياً**: أدواتُ الترحيل هنا تُخرج **مجموعةَ آجالٍ
    تنجو تحت كل مرجحٍ مُسند**، ولا تحسم أيَّ نصٍّ تنظيمي؛ الحسمُ لوثيقةٍ رسمية.
-5. **الحزمة stdlib فقط** ولا استيراد من `app/`: تُشحن إلى عميلٍ لا يملك تبعياتنا.
+5. **قيدُ التحكيم محورٌ مستقلٌّ عن القِدَم**: `adjudicate` و`acceptance_corridor` لا
+   يُخرجان حكماً في الرياضيات ولا رأياً قانونياً؛ يُخرجان فقط «هل يُقتبسُ هذا اليومَ» و
+   «متى يبدأُ العدُّ الرسميُّ بعد النشر» — وكلُّ حالةٍ في مجموعةٍ مغلقة.
+6. **الحزمة stdlib فقط** ولا استيراد من `app/`: تُشحن إلى عميلٍ لا يملك تبعياتنا.
 """
 
 from __future__ import annotations
@@ -647,6 +650,192 @@ def robust_terms(
             }
         )
     return rows
+
+
+# ── 5b) قيدُ التحكيم: مَن صدّق الشهادة، وعلى أيّ نطاق، وضمن أيّ أفق ──────────────
+#
+# وُلد هذا القيدُ من حدثٍ مُسندٍ بتاريخٍ واحد (2026-09-08): شهادةُ Lean بصفر `sorry`
+# لمسألة ألفية، مُعلَنةٌ من صاحبِ المصلحة، وفيها دعوةُ تحقّق مستقلّ، ومعه نزاعُ أسبقيةٍ
+# على المُدخلات — فصار **العمرُ يومَين والحالةُ غيرُ قابلةٍ للاقتباس**. أي أنّ الصلاحية
+# محوراَنِ مستقلّان: **قِدَمُ الرقم** (§4) و**استقلالُ مَن صدّقه** (هنا)، ولا يُنتج أحدهما
+# الآخر. ولا يُخرج هذا القسمُ رأياً قانونياً ولا حكماً في الرياضيات: يصفُ فقط **ما يجوز
+# لنا أن نقتبسَه في وثيقةٍ بيعية** وبأيّ تاريخٍ تُعادُ القراءة.
+
+#: حالاتُ استقلالِ المصدر — مجموعةٌ مغلقة؛ لا «موثوقٌ عادةً».
+PROVENANCE_STATES: tuple[str, ...] = (
+    "INDEPENDENTLY_VERIFIED",
+    "VENDOR_ONLY",
+    "CONTESTED_PRIORITY",
+    "REFUTED_INDEPENDENTLY",
+    "UNSTATED",
+)
+
+#: سقْفُ الاقتباس لكل حالةٍ — ⛔ لا يُرفَع بثقةٍ سردية.
+_PROVENANCE_CEILING: dict[str, str] = {
+    "INDEPENDENTLY_VERIFIED": "ACCEPT",
+    "VENDOR_ONLY": "THROTTLE",
+    "CONTESTED_PRIORITY": "THROTTLE",
+    "REFUTED_INDEPENDENTLY": "BLOCK",
+    "UNSTATED": "BLOCK",
+}
+
+_CEILING_RANK: dict[str, int] = {"ACCEPT": 0, "THROTTLE": 1, "BLOCK": 2}
+
+#: من صاغَ **نطاقَ** العبارة المُبرهَن عليها (لا البرهانَ نفسه). القاعدةُ عندنا:
+#: مَن بنى البرهانَ لا يملكُ أن يكون وحده مَن قرّر أنّ العبارةُ هي العبارةُ المطلوبة.
+SCOPE_SOURCE_STATES: tuple[str, ...] = ("THIRD_PARTY", "SELF", "UNSTATED")
+
+#: قاعدةُ معهد كلاي (قواعدُ 2018-09-26): لا تُقبل مشاركةٌ مباشرة، ويُشترط نشرٌ في منفذٍ
+#: مؤهَّل **و** مضيُّ عامَين **و** قبولٌ عامّ. هذا الرقمُ مُعامِلُ تصميمِ عقدٍ عندنا،
+#: لا توقّعٌ بقبول أيّ نتيجة.
+CLAY_MIN_YEARS_AFTER_PUBLICATION = 2
+
+
+@dataclass(frozen=True)
+class Adjudication:
+    """قرارُ الاقتباس على محورِ الاستقلال — مستقلٌّ عن قرارِ القِدَم في `PinStatus`."""
+
+    ceiling: str  # ACCEPT | THROTTLE | BLOCK
+    quotable: bool
+    reasons: tuple[str, ...] = ()
+    notes: tuple[str, ...] = ()
+
+
+def adjudicate(
+    *provenance: str,
+    scope_source: str = "UNSTATED",
+    toolchain: str = "",
+    verified_by: tuple[str, ...] = (),
+) -> Adjudication:
+    """يسقي قرارَ الاقتباس من حالاتِ الاستقلال المُعلَنة، ويُشدِّدُ الأضعفَ بينها.
+
+    لا «تخفيفاً بالسرد»: حالةٌ واحدةٌ `UNSTATED` تكفي للمنع، لأنّ المجهولَ عندنا يُعامَلُ
+    مرفوضاً، لا مقبولاً بانتظارِ حُسنِ نيّة.
+    """
+    if not provenance:
+        raise AssuranceWindowError("لا قرارَ تحكيمٍ بلا حالةِ استقلالٍ واحدةٍ على الأقلّ")
+    for state in provenance:
+        if state not in PROVENANCE_STATES:
+            raise AssuranceWindowError(f"حالةُ استقلالٍ خارج المجموعة المغلقة: {state!r}")
+    if scope_source not in SCOPE_SOURCE_STATES:
+        raise AssuranceWindowError(f"مصدرُ نطاقٍ غيرُ مسموح: {scope_source!r}")
+
+    reasons: list[str] = []
+    ceiling = "ACCEPT"
+    for state in provenance:
+        candidate = _PROVENANCE_CEILING[state]
+        if _CEILING_RANK[candidate] > _CEILING_RANK[ceiling]:
+            ceiling = candidate
+    if "UNSTATED" in provenance:
+        reasons.append("استقلالُ المصدر غيرُ مُعلَن — يُمنع الاقتباس لا يُرجَّأ")
+    if "VENDOR_ONLY" in provenance:
+        reasons.append("النتيجةُ منشورةٌ من صاحبِ المصلحة وحدَه: تُذكر بوصفها إعلاناً لا دليلاً")
+    if "CONTESTED_PRIORITY" in provenance:
+        reasons.append("نزاعٌ مُسندٌ على مصدرِ المُدخلات أو الأسبقية — لا تُباع شهادةً")
+    if "REFUTED_INDEPENDENTLY" in provenance:
+        reasons.append("دُحضَت استقلالياً — تُترك في سجلِّ الدحض لا في العرض")
+
+    if scope_source != "THIRD_PARTY":
+        if _CEILING_RANK["THROTTLE"] > _CEILING_RANK[ceiling]:
+            ceiling = "THROTTLE"
+        reasons.append(
+            "نطاقُ العبارةِ صاغه الطرفُ المعنيّ نفسُه (أو لم يُعلَن): البرهانُ على صيغةٍ "
+            "غيرِ مُستقلّةٍ لا يُثبتُ أنّها الصيغةُ المطلوبة"
+        )
+
+    notes: list[str] = []
+    if toolchain and ("-rc" in toolchain.lower() or "dev" in toolchain.lower()):
+        notes.append(
+            f"أداةُ التحقق نفسها إصدارٌ غيرُ نهائي ({toolchain}): المُدقِّقُ جزءٌ من الأفق "
+            "المتقادم، ويُعادُ البناءُ عند كلِّ ترقيةِ سلسلةِ أدوات"
+        )
+    if not verified_by:
+        notes.append("لا قائمةَ مُدقِّقين مستقلّين مُسندةٍ بتاريخ — ⛔ لا يُذكر عددُ الساعاتِ بديلاً عنها")
+    return Adjudication(ceiling, ceiling == "ACCEPT", tuple(reasons), tuple(notes))
+
+
+def pin_is_quotable(status: PinStatus, adjudication: Adjudication) -> bool:
+    """المحورَان معاً: رقمٌ طازجٌ غيرُ مستقلّ لا يُقتبس، ومستقلٌّ منتهٍ لا يُقتبس."""
+    return status.quotable and adjudication.quotable
+
+
+@dataclass(frozen=True)
+class AcceptanceCorridor:
+    """مِدةُ «البرهانُ موجودٌ ولا يُشترى»: من النشر إلى أوّلِ تاريخٍ يُعتَدُّ به رسميّاً."""
+
+    clock_started: bool
+    published_on: date | None
+    earliest_eligible_on: date | None
+    corridor_days: int | None
+    elapsed_days: int | None
+    remaining_days: int | None
+    inside: bool
+    rule_ar: str
+
+    @property
+    def fraction_elapsed(self) -> float | None:
+        if not self.corridor_days:
+            return None
+        assert self.elapsed_days is not None
+        return round(min(1.0, self.elapsed_days / self.corridor_days), 6)
+
+
+def _add_years(anchor: date, years: int) -> date:
+    """تاريخٌ تقويميٌّ بديلٌ عند 29 فبراير — بلا جُزَئاتٍ مُستديرة تُغيّر عدَّ الأيام."""
+    try:
+        return anchor.replace(year=anchor.year + years)
+    except ValueError:
+        return anchor.replace(year=anchor.year + years, day=28)
+
+
+def acceptance_corridor(
+    published_on: date | None,
+    as_of: date,
+    *,
+    qualifying_outlet: bool = True,
+    min_years: int = CLAY_MIN_YEARS_AFTER_PUBLICATION,
+) -> AcceptanceCorridor:
+    """يُحوّل شرطَ «عامان في منفذٍ مؤهَّل» إلى عدِّ أيامٍ يعمل عليه العقدُ والسعر.
+
+    ⛔ لا يحكم بقبولٍ ولا برفضٍ ولا بصحّةِ برهان: يُخرج فقط **متى يبدأُ العدُّ ومتى
+    ينتهي**، لأنّ قيمةَ شهادتِنا كلِّها تقع داخل هذا الممرّ لا بعده.
+    """
+    if min_years < 1:
+        raise AssuranceWindowError(f"عامانِ على الأقلّ قبلَ أيّ اعتداد: min_years={min_years}")
+    if published_on is None or not qualifying_outlet:
+        return AcceptanceCorridor(
+            clock_started=False,
+            published_on=published_on,
+            earliest_eligible_on=None,
+            corridor_days=None,
+            elapsed_days=None,
+            remaining_days=None,
+            inside=True,
+            rule_ar=(
+                "لم يبدأ العدُّ: لا نشرٌ في منفذٍ مؤهَّل. الممرُّ مفتوحٌ بلا تاريخِ انتهاءٍ "
+                "محسوب — أي أنّ الادّعاءَ لا يملكُ جدولاً زمنياً للاعتداد"
+            ),
+        )
+    if published_on > as_of:
+        raise AssuranceWindowError("تاريخُ النشر أسبقُ من تاريخِ المراجعة؟ لا يُقبل")
+    earliest = _add_years(published_on, min_years)
+    corridor = (earliest - published_on).days
+    elapsed = (as_of - published_on).days
+    remaining = max(0, (earliest - as_of).days)
+    return AcceptanceCorridor(
+        clock_started=True,
+        published_on=published_on,
+        earliest_eligible_on=earliest,
+        corridor_days=corridor,
+        elapsed_days=elapsed,
+        remaining_days=remaining,
+        inside=remaining > 0,
+        rule_ar=(
+            f"من {published_on.isoformat()} إلى {earliest.isoformat()} = {corridor} يوماً "
+            "من «برهانٍ موجودٍ ولا يُشترى» (شرطُ المنفذِ المؤهَّل + العامَّين؛ يبقى القبولُ "
+            "العامُّ شرطاً ثالثاً لا يُحسب هنا)"
+        ),
+    )
 
 
 # ── 6) خلاصةٌ مُعلنة الأرقام (يستعملها سكربتُ القياس والتوثيق التجاري) ──────────
