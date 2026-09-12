@@ -117,7 +117,7 @@
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفرُ حذف: كلُّ التغيير إضافةُ أصولٍ جديدة (وحدةٌ بحثية · ذخيرة · مولِّد قياس · ملفّ قياس · جردُ مصادر · وثيقةُ معرفة · عرضٌ بحالة PROPOSED · جولةُ قرار 02 بسجلَّيها · فارضٌ وبرهانه السلبي · وثيقةُ حالة) وزيادةٌ نصية في `.memory/{decisions,README,ci-gates}.md` و`docs/{DOCUMENTATION_INDEX,research/README_NEW_KNOWLEDGE}.md` و`docs/governance/NEGATIVE_PROOFS.json` (سطرٌ واحد في `proven`) — ولا سطرَ محذوفاً من أيّ قانون أو دستور أو بوّابة. وتصحيحُ رقمٍ نثريٍّ متقادم في `.memory/ci-gates.md` (92 ⇒ 95 المشتقّ) **زيادةُ صدق** لا حذفُ قانون: العلامة المشتقّة هي المصدر، والنثرُ كان يكذب عليها."
+    "policy_ar": "صفرُ حذف: كلُّ التغيير إضافةُ أصولٍ جديدة (وحدةٌ بحثية · ذخيرة · مولِّد قياس · ملفّ قياس · جردُ مصادر · وثيقةُ معرفة · عرضٌ بحالة PROPOSED · جولةُ قرار 02 بسجلَّيها · فارضٌ وبرهانه السلبي · وثيقةُ حالة) وزيادةٌ نصية في `.memory/{decisions,README,ci-gates}.md` و`docs/{DOCUMENTATION_INDEX,research/README_NEW_KNOWLEDGE}.md` و`docs/governance/NEGATIVE_PROOFS.json` (سطرٌ واحد في `proven`) — ولا سطرَ محذوفاً من أيّ قانون أو دستور أو بوّابة. وتصحيحُ رقمٍ نثريٍّ متقادم في `.memory/ci-gates.md` (92 ⇒ 95 المشتقّ) **زيادةُ صدق** لا حذفُ قانون: العلامة المشتقّة هي المصدر، والنثرُ كان يكذب عليها. وكذلك تصحيحُ الكمية المشتقّة «أقصى قرار مُسجَّل» في سبعة مواضع (README.md:331,342,388 · README.ar.md:330,341,387 · docs/DOCUMENTATION_INDEX.md:13) من 290 إلى **291 المشتقّ** بعد إضافة D-291 — وهو ما يفرضه check_constitution_reality.py (D-192/D-209: الكمّية الواحدة لا تحمل قيمتين): استبدالُ رقمٍ يدويٍّ متقادم بمشتقٍّ صحيح زيادةُ صدق، لا حذفُ قانون."
   },
   "verification": {
     "result": "PASS",
@@ -227,6 +227,8 @@
     ".memory/cnd_null_invariance_truth.md",
     ".memory/decisions.md",
     ".runtime/truth_table.lock.json",
+    "README.ar.md",
+    "README.md",
     "docs/DOCUMENTATION_INDEX.md",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
     "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
@@ -254,6 +256,8 @@
       ".memory/cnd_null_invariance_truth.md",
       ".memory/decisions.md",
       ".runtime/truth_table.lock.json",
+      "README.ar.md",
+      "README.md",
       "docs/DOCUMENTATION_INDEX.md",
       "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
       "docs/governance/NEGATIVE_PROOFS.json",
@@ -272,8 +276,8 @@
       "tests/fitness/test_decision_round02_gate.py",
       "tests/shared/test_cnd_null_invariance.py"
     ],
-    "content_sha256_excluding_packet": "3bf074f19a27627b8a6db22443e7ba009aaa23bed067048e376d6c12b68ee75e",
-    "refreshed_on": "2026-09-11",
+    "content_sha256_excluding_packet": "30f6920c7f6d264e18efa08bf3330d163de0bd611f4201289b08aab84de41d3f",
+    "refreshed_on": "2026-09-12",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
 }
