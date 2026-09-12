@@ -1,0 +1,151 @@
+== 1. public-set column means (my 300-cell reconstruction) vs v0.4 §11 ==
+  max   : mine= 68.340  v0.4= 68.34  diff=+0.000
+  xhigh : mine= 61.764  v0.4= 61.76  diff=+0.004
+  high  : mine= 65.180  v0.4= 65.18  diff=+0.000
+  medium: mine= 54.388  v0.4= 54.39  diff=-0.002
+  low   : mine= 38.808  v0.4= 38.81  diff=-0.002
+  none  : mine= 56.252  v0.4= 56.25  diff=+0.002
+
+== 2. aggregate layer recomputed from 2-decimal verified scores [P] ==
+  standard max   : RHAE= 62.71%  E=sqrt(RHAE)=0.791896  actions/human=1/E=1.2628x  cost=$26,098
+  standard xhigh : RHAE= 59.34%  E=sqrt(RHAE)=0.770325  actions/human=1/E=1.2982x  cost=$37,317
+  standard high  : RHAE= 54.82%  E=sqrt(RHAE)=0.740405  actions/human=1/E=1.3506x  cost=$40,705
+  standard medium: RHAE= 38.59%  E=sqrt(RHAE)=0.621208  actions/human=1/E=1.6098x  cost=$48,090
+  standard low   : RHAE= 17.45%  E=sqrt(RHAE)=0.417732  actions/human=1/E=2.3939x  cost=$38,166
+  standard none  : RHAE= 35.18%  E=sqrt(RHAE)=0.593127  actions/human=1/E=1.6860x  cost=$49,791
+  adapter  max   : RHAE= 98.55%  E=sqrt(RHAE)=0.992724  actions/human=1/E=1.0073x  cost=$17,332
+  adapter  xhigh : RHAE= 98.44%  E=sqrt(RHAE)=0.992169  actions/human=1/E=1.0079x  cost=$18,147
+  adapter  high  : RHAE= 99.95%  E=sqrt(RHAE)=0.999750  actions/human=1/E=1.0003x  cost=$18,817
+  adapter  medium: RHAE= 98.44%  E=sqrt(RHAE)=0.992169  actions/human=1/E=1.0079x  cost=$19,285
+  adapter  low   : RHAE= 98.03%  E=sqrt(RHAE)=0.990101  actions/human=1/E=1.0100x  cost=$21,298
+  adapter  none  : RHAE= 96.72%  E=sqrt(RHAE)=0.983463  actions/human=1/E=1.0168x  cost=$23,457
+
+== 3. Pareto dominance (adapter vs standard, all 36 effort pairs) ==
+  violations: 0/36; cost margin = cheapest standard - priciest adapter = $2,641 (10.1%)
+
+== 4. amplification dS/dE=2E ==
+  at 99.95 (adapter high)      : 1 RHAE pt = 0.500% actions-efficiency; amp=2E=1.999x
+  at 62.71 (std max)           : 1 RHAE pt = 0.631% actions-efficiency; amp=2E=1.584x
+  at 17.45 (std low)           : 1 RHAE pt = 1.197% actions-efficiency; amp=2E=0.835x
+  at 2.11 (Grok 4.6, relay)    : 1 RHAE pt = 3.442% actions-efficiency; amp=2E=0.291x
+  99.95 vs 98.55: score gap 1.40 pts -> action-efficiency gap 0.703% (=divide by ~1.99)
+
+== 5. effort-dial economics ==
+  adapter max->high: +1.40 RHAE pts for +$1,485 = $1,061/pt = $2,113 per 1% action-efficiency
+  adapter none->high: +3.23 RHAE pts = +1.63% action-efficiency; cost ratio none/high = 1.247x
+
+== 6. cap-signature decoder (tol=0.06, n=6..12 per report §3.4) ==
+  non-trivial standard cells (0 < score < 100): 95  [v0.4 claimed 95; strict count = 95]
+  raw cap matches: 51  [v0.4 claimed 50]
+  matches inside consistency-approved envs: 46
+    BP35: n-candidates -> n=9: [1] (4 cells)
+    KA59: n-candidates -> n=7: [5, 6] (5 cells)
+    LF52: n-candidates -> n=10: [2, 3] (3 cells)
+    M0R0: n-candidates -> n=6: [5] (4 cells)
+    RE86: n-candidates -> n=8: [6, 7] (6 cells)
+    SC25: n-candidates -> n=6: [4] (3 cells)
+    SU15: n-candidates -> n=9: [3, 4] (2 cells)
+    TN36: n-candidates -> n=7: [1, 5] (5 cells)
+    TU93: n-candidates -> n=9: [1, 2] (4 cells)
+    VC33: n-candidates -> n=7: [4, 5] (4 cells)
+    WA30: n-candidates -> n=9: [6, 8] (4 cells)
+  near-misses at tol 0.10 (excluded at 0.06): [('BP35', 'none', 1.9), ('SC25', 'low', 10.8), ('SU15', 'high', 41.6), ('TU93', 'medium', 2.7)]
+
+== 7. identifiability: 58 distinct cap values at 0.1-pt resolution (n=6..12); collisions: 2 ==
+       0.0% <- [(6, 0), (7, 0), (8, 0), (9, 0), (10, 0), (11, 0), (12, 0)]
+     100.0% <- [(6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12)]
+  published-grid bins covered by any cap value: 64/999 -> p(match by chance)=0.0641
+  expected chance matches in 95 cells: 6.1; observed 51; exact binomial tail p = 1.981e-35
+
+== 8. Figure-4 anchor (Technical Report): re86 = 8 levels, 11 human playthroughs ==
+  every human score <= cap(8,k): True  (cap(8,2)=8.33, cap(8,6)=58.33)
+  decoder on our RE86 cells: [(8, 6), (8, 7)]
+  Astra RE86 max/xhigh/high = 77.8 = cap(8,7)=77.78 -> k=7 of n=8; KILL GATE: report says Lvl/8 -> SURVIVES
+  ls20 decoder hits: [(7, 1), (10, 4)] -> consistency filter must reject n=10 spurious; ground truth n=7 (Fig.8)
+
+== 9. max-effort classification ==
+  perfect=10 ['AR25', 'CN04', 'DC22', 'FT09', 'LP85', 'R11L', 'S5I5', 'SB26', 'SP80', 'TR87']
+  cap-limited=8 [('BP35', 2.2), ('KA59', 75.0), ('LF52', 10.9), ('M0R0', 71.4), ('RE86', 77.8), ('SC25', 47.6), ('TN36', 53.6), ('WA30', 80.0)]
+  efficiency-limited=6 [('CD82', 82.9), ('LS20', 83.5), ('SK48', 19.7), ('SU15', 27.4), ('TU93', 3.1), ('VC33', 73.4)]
+  zero=1 ['G50T']
+
+== 10. low-effort anomaly ==
+  envs with low < none: 13/25 ['BP35', 'CD82', 'CN04', 'G50T', 'KA59', 'LF52', 'LS20', 'M0R0', 'R11L', 'SB26', 'SP80', 'TR87', 'WA30']
+  ties (low == none): 6 ['AR25', 'FT09', 'LP85', 'RE86', 'S5I5', 'TU93']
+  public drop none->low = 17.44 pts; semi-private drop = 17.73 pts; cross-set difference = 0.29 pts
+  of the 13: collapse-to-cap at low (completion stop): ['CD82', 'G50T', 'LF52', 'LS20', 'R11L', 'SB26']
+
+== 11. public vs semi-private inflation (standard harness) ==
+  max   : public= 68.34  semi-private= 62.71  inflation= +5.63
+  xhigh : public= 61.76  semi-private= 59.34  inflation= +2.42
+  high  : public= 65.18  semi-private= 54.82  inflation=+10.36
+  medium: public= 54.39  semi-private= 38.59  inflation=+15.80
+  low   : public= 38.81  semi-private= 17.45  inflation=+21.36
+  none  : public= 56.25  semi-private= 35.18  inflation=+21.07
+  inflation ranking (high->low): ['low', 'none', 'medium', 'high', 'max', 'xhigh']
+
+== 12. adapter public saturation ==
+  cells at exactly 100.0: 147/150 (incl. 22 inferred)
+  exceptions: [('SK48', 'none', 27.8), ('TN36', 'high', 91.8), ('TN36', 'low', 88.8)]
+  adapter 'none' public mean = 97.112  [blog-era figure 97.11 -> MATCH]
+  adapter max: all-100 = True (direct-only: True)
+  adapter xhigh: all-100 = True (direct-only: True)
+  adapter medium: all-100 = True (direct-only: True)
+
+== 13. cost-vs-score across the dial ==
+  standard: spearman(cost,score) = -0.657  (scores [62.71, 59.34, 54.82, 38.59, 17.45, 35.18], costs [26098, 37317, 40705, 48090, 38166, 49791])
+  adapter : spearman(cost,score) = -0.400  (scores [98.55, 98.44, 99.95, 98.44, 98.03, 96.72], costs [17332, 18147, 18817, 19285, 21298, 23457])
+  blog's own sentence: 'Higher reasoning levels generally cost LESS' [P]
+
+== 14. per-env dial variance (standard public) — discrimination ranking ==
+  SB26: var=  1312.2 range=  97.2 cum_share= 18.1%
+  CD82: var=  1076.8 range= 100.0 cum_share= 33.0%
+  R11L: var=  1020.1 range=  85.7 cum_share= 47.0%
+  LS20: var=   629.0 range=  79.9 cum_share= 55.7%
+  SP80: var=   380.7 range=  54.6 cum_share= 61.0%
+  SC25: var=   373.9 range=  47.6 cum_share= 66.1%
+  DC22: var=   357.6 range=  43.6 cum_share= 71.0%
+  M0R0: var=   354.0 range=  51.0 cum_share= 75.9%
+  TN36: var=   333.6 range=  50.0 cum_share= 80.5%
+  TR87: var=   328.1 range=  48.6 cum_share= 85.1%
+  WA30: var=   241.7 range=  37.3 cum_share= 88.4%
+  CN04: var=   231.4 range=  41.2 cum_share= 91.6%
+  VC33: var=   185.7 range=  37.7 cum_share= 94.1%
+  KA59: var=   162.2 range=  31.1 cum_share= 96.4%
+  SU15: var=   130.6 range=  33.9 cum_share= 98.2%
+  RE86: var=    95.1 range=  19.5 cum_share= 99.5%
+  SK48: var=    20.3 range=  10.8 cum_share= 99.8%
+  LF52: var=    12.0 range=   8.7 cum_share= 99.9%
+  TU93: var=     2.6 range=   4.5 cum_share=100.0%
+  G50T: var=     1.2 range=   3.0 cum_share=100.0%
+  BP35: var=     0.4 range=   1.8 cum_share=100.0%
+  S5I5: var=     0.0 range=   0.0 cum_share=100.0%
+  LP85: var=     0.0 range=   0.0 cum_share=100.0%
+  FT09: var=     0.0 range=   0.0 cum_share=100.0%
+  AR25: var=     0.0 range=   0.0 cum_share=100.0%
+
+== 15. harness contribution per env (adapter_max - standard_max) ==
+  total delta = 791.5 pts over 25 envs; mean = 31.66
+  top-5 pure-state-continuity gaps: [(100.0, 'G50T'), (97.8, 'BP35'), (96.9, 'TU93'), (89.1, 'LF52'), (80.3, 'SK48')]
+
+== 16. ratios ==
+  viral (adapter-high / Sol std): 12.814x score -> 3.580x actions
+  like-for-like (std-max / Sol std): 8.040x score -> 2.835x actions
+  score-space inflation vs action-space: 258.0%
+  vs April-2026 official frontier top (Opus 4.6 Max = 0.50%, Table 2): std-max 125.4x score / 11.2x actions
+  human wage anchor: 55 envs x $12.78 = $702.90; cheapest adapter run = 24.7x; cheapest standard = 37.1x
+  re86 human RHAE distribution (Fig.4): mean=57.5% median=56% -> share of humans at 100% = 4/11
+
+== 17. action-budget floor: any completed level contributes >= 4% of its weight ==
+  cells below the k=1 floor across all 300: 0 []  (n=12 worst case: 0.051%)
+
+== 18. v0.2 derived_metrics.csv replication from verified 1-decimal table ==
+  max   : delta=35.9 ratio=1.57  [ledger D01]
+  xhigh : delta=39.1 ratio=1.66  [ledger D01]
+  high  : delta=45.1 ratio=1.82  [ledger D01]
+  medium: delta=59.8 ratio=2.55  [ledger D01]
+  low   : delta=80.5 ratio=5.60  [ledger D01]
+  none  : delta=61.5 ratio=2.75  [ledger D01]
+  Pareto min-adapter 96.7 > max-standard 62.7; costs max-adapter 23457 < min-standard 26098 [D02]
+  inflation (99.9/7.8)/(62.7/7.8) = 1.593 [D05]
+  per-pair: 18817/167=$112.68; 26098/167=$156.28 [D06]

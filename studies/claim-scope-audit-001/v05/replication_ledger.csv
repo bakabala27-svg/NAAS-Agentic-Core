@@ -1,0 +1,25 @@
+claim_id,source,claim,verdict,evidence_v05
+R01,v0.2 D01-D07,derived layer from 6x2 table,CONFIRMED,analyze_v05.py §18 recomputes all seven rows from verified scores
+R02,v0.4 §0.1,audited top figure is 99.95% (blog rounds to 99.9),CONFIRMED,results page Verified scores: High = 99.95% (2 decimals) fetched direct 2026-09-12
+R03,v0.4 §0.2,embargo-draft 98.6% = adapter-max cell,CONFIRMED,Verified scores Max = 98.55% (rounds to 98.6 at 1 decimal)
+R04,v0.4 §2,aggregate E=sqrt(RHAE) table incl. actions-per-human-action,CONFIRMED,recomputed from 2-decimal verified scores; all 12 E and 1/E values match to 3 decimals
+R05,v0.4 N1,amplification table dS/dE=2E,CONFIRMED,0.500/0.631/1.197/3.442 %-per-pt and 2.00/1.58/0.84/0.29x all reproduce
+R06,v0.4 N2,Pareto dominance 36/36 with $2641 (10.1%) margin,CONFIRMED,0 violations over 36 pairs; margin 26098-23457=2641
+R07,v0.4 N3 + §13,low-effort anomaly; 13/25 envs low<none,CONFIRMED+EXTENDED,13/25 reproduced with exact env list: BP35 CD82 CN04 G50T KA59 LF52 LS20 M0R0 R11L SB26 SP80 TR87 WA30
+R08,v0.4 N4,"adapter dial buys +1.63% action-eff at 1.35x cost; $2,113 per 1% action-eff",CONFIRMED+REFINED,+1.63%/$2113 exact; 1.35x is the none->max span; none->high ratio is 1.247x; NEW: adapter-max is strictly dominated by adapter-high on BOTH axes
+R09,v0.4 §4,viral 12.85x score = 3.58x actions; 258% inflation,CONFIRMED,at published precision: 12.814x score / 3.580x actions / 258.0% score-vs-action inflation; v0.4's 12.847 implies Sol=7.78 (published is 7.8)
+R10,v0.4 §5,24.7x and 37.1x human-wage multiples over 55 envs,CONFIRMED,55x12.78=702.90; 17332/702.9=24.7; 26098/702.9=37.1
+R11,v0.4 §9,95 non-trivial standard cells; 50 cap matches,REFINED,95 exact; matches = 51 (44 on direct cells + 7 on reconstructed M0R0/VC33 cells); v0.4's 50 sits inside the reconstruction-boundary tolerance
+R12,v0.4 §9,(n,k) for 9 envs: RE86=8; KA59 TN36 VC33=7; WA30 BP35 TU93=9; M0R0 SC25=6,CONFIRMED,all nine reproduce exactly; NEW: LF52 (n=10 k=2-3) and SU15 (n=9 k=3-4) also pass the consistency filter
+R13,v0.4 §9 kill gate,RE86 has 8 levels,CLOSED-SURVIVES,Technical Report Fig.4 'Lvl/8' + 11 human playthroughs; every human score <= cap(8,k)
+R14,v0.4 §10,max-effort classification 10 perfect / 8 cap-limited / 6 efficiency-limited / 1 zero,CONFIRMED,identical env sets incl. zero=G50T
+R15,v0.4 §11,public-vs-semi-private inflation table,CONFIRMED,all 6 effort rows reproduce from my reconstructed public means (+21.36/+21.07/+15.80/+10.36/+5.63/+2.42)
+R16,v0.4 §12,147/150 adapter public cells at 100.0; exceptions TN36+SK48; none-aggregate 97.11,CONFIRMED,125 direct-100 + 22 inferred-100; exceptions exactly TN36-high 91.8 TN36-low 88.8 SK48-none 27.8; recomputed none-mean 97.112
+R17,v0.4 §13,SB26 low = level 1 of 8; R11L low = level 2 of 6 (completion stop not slowdown),CONFIRMED,SB26 low=2.8=cap(8,1); R11L low=14.3=cap(6,2); NEW: M0R0 low=20.4 is k>=3 efficiency collapse NOT a stop
+R18,v0.4 §14,level cap 115%; sqrt(1.15)=1.0724,CONFIRMED,Report eq.(1) min(1.15 h/a)^2 verbatim
+R19,v0.3/v0.4 E=sqrt(RHAE) kill gate,median must not precede squaring,CLOSED-SURVIVES,Report eqs.(1)-(3): square per level -> weighted mean per env -> arithmetic mean over envs; E=sqrt(T) is exactly the RMS action-efficiency
+R20,v0.4 §5,set sizes 25/55/55,CONFIRMED,Report Table 1 verbatim
+R21,v0.4 §4,mean human test-taker ~48% RHAE (OpenAI estimate from play logs),UNVERIFIED,no such figure in blog or Technical Report; remains grade [A] pending source
+R22,v0.4 §6,Chollet 66% vs table 62.7%,CONFIRMED-AS-RELAYED,blog (primary record) prints 62.7/$26K; 66% stands as relay-grade discrepancy
+R23,v0.4 security note,poisoned RHAE helpers circulate (cap 2.15 / exponent 3),CORROBORATED-CONTEXTUALLY,Report Fig.6 contains a legitimate '215%' human-efficiency bin - a plausible confusion source; IOC registry written (v05/cap_decoder.py constant asserts)
+R24,v0.4 §8 pending,archive snapshots + fingerprints for [F] rows,PARTIAL,text-level snapshots via fetch_page with as_of dates; raw-byte SHA-256 blocked (sandbox has no direct egress; curl exit 35 SSL); pending environment with egress

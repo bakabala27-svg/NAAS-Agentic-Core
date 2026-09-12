@@ -1,0 +1,51 @@
+id,statement,value,unit,provenance,computed_by
+V5-01,verified adapter-high semi-private score,99.95,pct,P-direct results page,fetch 2026-09-12
+V5-02,verified adapter-max semi-private score,98.55,pct,P-direct results page,fetch 2026-09-12
+V5-03,verified standard-max semi-private score,62.71,pct,P-direct results page,fetch 2026-09-12
+V5-04,300-cell reconstruction: direct cells,268,cells,D,csv provenance count
+V5-05,300-cell reconstruction: column-sum/lattice-reconstructed (M0R0+VC33 standard),10,cells,D,csv provenance count
+V5-06,300-cell reconstruction: saturation-inferred (adapter KA59/LF52/LP85 + BP35x4),22,cells,D,csv provenance count
+V5-07,reconstruction fit: worst column-mean deviation vs v0.4 aggregates,0.004,pts,D,analyze §1
+V5-08,non-trivial standard public cells,95,cells,D,analyze §6
+V5-09,cap matches total (tol 0.06),51,cells,D,analyze §6
+V5-10,cap matches on direct-observed cells,44,cells,D,match list
+V5-11,expected chance matches (64/999 grid bins),6.1,cells,D,analyze §7
+V5-12,exact binomial tail p-value,3.288e-34,p,D,analyze §7
+V5-13,distinct cap values at 0.1-pt resolution n=6..12,58,values,D,analyze §7
+V5-14,cap-value collisions excluding trivial 0/100,0,pairs,D,analyze §7
+V5-15,environments passing consistency filter,11,envs,D,analyze §6 (v0.4 listed 9; +LF52 n=10 +SU15 n=9)
+V5-16,RE86 kill gate: levels per Technical Report Fig.4,8,levels,P-direct report,closed
+V5-17,Figure-4 human playthroughs obeying cap arithmetic,11/11,runs,D,analyze §8
+V5-18,re86 human RHAE mean / median (Fig.4),57.5/56,pct,P-direct report,analyze §16
+V5-19,re86 humans scoring 100% RHAE,4/11,people,P-direct report,analyze §16
+V5-20,low-effort anomaly public drop,17.44,pts,D,analyze §10
+V5-21,low-effort anomaly semi-private drop,17.73,pts,D,analyze §10
+V5-22,cross-set anomaly difference (additivity),0.29,pts,D,analyze §10
+V5-23,anomaly envs with low<none,13/25,envs,D,analyze §10
+V5-24,anomaly envs collapsing to exact cap at low (pure completion stop),5,envs,D,SB26 R11L CD82 G50T(k=0) LS20
+V5-25,spearman cost-vs-score standard harness,-0.657,rho,D,analyze §13
+V5-26,spearman cost-vs-score adapter harness,-0.400,rho,D,analyze §13
+V5-27,adapter-max vs adapter-high dominance,dominated on score AND cost,relation,D,98.55<99.95 and 17332<18817
+V5-28,adapter max->high marginal cost per 1% action-efficiency,2113,USD,D,analyze §5
+V5-29,harness contribution at max effort summed over 25 envs,791.5,pts,D,analyze §15
+V5-30,mean harness delta at max,31.66,pts,D,analyze §15
+V5-31,pure state-continuity gaps >=80 pts at max,G50T+100/BP35+97.8/TU93+96.9/LF52+89.1/SK48+80.3,envs,D,analyze §15
+V5-32,adapter public exceptions to saturation,TN36-high 91.8 / TN36-low 88.8 / SK48-none 27.8,cells,P-direct,analyze §12
+V5-33,recomputed adapter-none public mean,97.112,pct,D,analyze §12 (v0.4: 97.11)
+V5-34,viral ratio at published precision,12.814x score / 3.580x actions,ratio,D,analyze §16
+V5-35,like-for-like ratio,8.040x score / 2.835x actions,ratio,D,analyze §16
+V5-36,score-vs-action inflation of viral comparison,258.0,pct,D,analyze §16
+V5-37,Astra std-max vs April-2026 official frontier top (Opus 4.6 Max 0.50%),125.4x score / 11.2x actions,ratio,D,analyze §16 + Report Table 2
+V5-38,human-wage anchor over 55-env semi-private,702.90,USD,D,analyze §16
+V5-39,cheapest adapter run vs human wage,24.7x,ratio,D,analyze §16
+V5-40,cheapest standard run vs human wage,37.1x,ratio,D,analyze §16
+V5-41,per-level score floor for any completed level (5x action budget),4.0,pct,D,Report §4.3; analyze §17
+V5-42,cells violating the k=1 floor across all 300,0,cells,D,analyze §17
+V5-43,dial-variance top-10 envs share of total standard variance,85.2,pct,D,analyze §14
+V5-44,dial-variance top-5 panel,SB26 CD82 R11L LS20 M0R0,envs,D,analyze §14
+V5-45,ls20 levels per Report Fig.8,7,levels,P-direct report,out-of-sample decoder test
+V5-46,vc33 minimum levels per Report §4.2 text,6,levels,P-direct report,decoder n=7 consistent
+V5-47,design constraint: minimum levels per environment,6,levels,P-direct report §3.4,tightens decoder n-range
+V5-48,human testing scale,486 participants / 414 candidate envs / 2893 attempts / 427.9 h,count,P-direct report §5.3,
+V5-49,human baseline definition conflict: blog 'median of completers' vs report 'upper-median best',OPEN CONFLICT,finding,P-direct both,Scope Watch item
+V5-50,official leaderboard policy: no harness; public set never on official board,quoted policy,finding,P-direct report §4.3.1,
