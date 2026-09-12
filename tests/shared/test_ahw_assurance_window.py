@@ -30,16 +30,16 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.research.measure_assurance_window import build  # noqa: E402
-from shared.research.assurance_window import (  # noqa: E402
+from scripts.research.measure_assurance_window import build
+from shared.research.assurance_window import (
+    MIN_TOLERANCE_POINTS,
+    PROVENANCE_STATES,
     AcceptanceCorridor,
     Adjudication,
     AssurancePoint,
     AssuranceWindowError,
     ChurnRates,
     HorizonAnchor,
-    MIN_TOLERANCE_POINTS,
-    PROVENANCE_STATES,
     RepatriationRef,
     ReportPin,
     SuiteDrift,
@@ -64,8 +64,8 @@ from shared.research.assurance_window import (  # noqa: E402
     require_horizon_band,
     robust_terms,
     robust_warranty_days,
-    survival_probability,
     summarize,
+    survival_probability,
     term_survives,
     warranty_days,
     warranty_table,
@@ -125,7 +125,9 @@ def test_horizon_bands_are_labelled_and_monotone() -> None:
     bands = horizon_band_flags(horizon_risk_exponent(LOW, HIGH), (2.0, 4.0, 8.0, 16.0))
     values = [bands[key] for key in ("x2", "x4", "x8", "x16")]
     assert values == sorted(values)
-    assert bands["x16"] == pytest.approx(math.exp(horizon_risk_exponent(LOW, HIGH) * math.log(16)), abs=1e-3)
+    assert bands["x16"] == pytest.approx(
+        math.exp(horizon_risk_exponent(LOW, HIGH) * math.log(16)), abs=1e-3
+    )
 
 
 def test_exposure_ratio_must_be_positive() -> None:
@@ -185,7 +187,9 @@ def test_marginal_at_zero_is_measured_from_scale_unit_not_from_zero() -> None:
     curve = fit_assurance_curve(AssurancePoint(0, 0.949), AssurancePoint(4783, 0.603), b0=10.0)
     at_zero = curve.marginal_per_doubling(0)
     assert at_zero is not None
-    assert at_zero == pytest.approx((curve.assurance_at(10) or 0.0) - (curve.assurance_at(20) or 0.0))
+    assert at_zero == pytest.approx(
+        (curve.assurance_at(10) or 0.0) - (curve.assurance_at(20) or 0.0)
+    )
 
 
 def test_marginal_outside_supported_range_is_none_not_zero() -> None:
@@ -566,7 +570,10 @@ def test_measurements_file_is_strict_json_without_nan_or_infinity() -> None:
 
 
 def test_module_is_stdlib_only_and_imports_nothing_from_app() -> None:
-    for rel in ("shared/research/assurance_window.py", "scripts/research/measure_assurance_window.py"):
+    for rel in (
+        "shared/research/assurance_window.py",
+        "scripts/research/measure_assurance_window.py",
+    ):
         tree = ast.parse((ROOT / rel).read_text(encoding="utf-8"))
         for node in ast.walk(tree):
             names: list[str] = []
@@ -616,7 +623,9 @@ def test_independent_refutation_is_blocked() -> None:
 def test_ceiling_is_the_weakest_link_not_the_strongest() -> None:
     """إضافةُ حالةٍ مُستقلَّةٍ لا ترفع السقفَ فوق أضعفِ حالةٍ معلَنة."""
     alone = adjudicate("INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY")
-    with_vendor_only = adjudicate("INDEPENDENTLY_VERIFIED", "VENDOR_ONLY", scope_source="THIRD_PARTY")
+    with_vendor_only = adjudicate(
+        "INDEPENDENTLY_VERIFIED", "VENDOR_ONLY", scope_source="THIRD_PARTY"
+    )
     assert alone.ceiling == "ACCEPT"
     assert with_vendor_only.ceiling == "THROTTLE"
     assert not with_vendor_only.quotable
@@ -641,8 +650,12 @@ def test_third_party_scope_plus_independent_verification_is_quotable() -> None:
 
 def test_release_candidate_toolchain_is_reported_as_note_not_as_verdict() -> None:
     """سلسلةُ الأدواتِ المتقادمة تُذكَرُ ولا تُحاسَب: لا نملكُ مِقياسَ انحدارِ Lean."""
-    plain = adjudicate("INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY", toolchain="lean 4.34.0")
-    rc = adjudicate("INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY", toolchain="lean 4.34.0-rc2")
+    plain = adjudicate(
+        "INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY", toolchain="lean 4.34.0"
+    )
+    rc = adjudicate(
+        "INDEPENDENTLY_VERIFIED", scope_source="THIRD_PARTY", toolchain="lean 4.34.0-rc2"
+    )
     assert plain.ceiling == rc.ceiling == "ACCEPT"
     assert any("4.34.0-rc2" in note for note in rc.notes)
     assert not any("4.34.0-rc2" in note for note in plain.notes)

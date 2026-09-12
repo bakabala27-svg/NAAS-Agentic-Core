@@ -123,10 +123,10 @@ def _ordered_anchors(a: HorizonAnchor, b: HorizonAnchor) -> tuple[float, float, 
 
 
 def horizon_exposure_multiplier(eps: float, ratio: float) -> float:
-    """معاملُ التعرّض عند تكبير الأفق بضعف `ratio`: `ratio**eps`."""
+    """معاملُ التعرّض عند تكبير الأفق بضعف `ratio`: `ratio^eps` (أسٌّ فوق الخطّي)."""
     if ratio <= 0:
         raise AssuranceWindowError("نسبةُ تكبير الأفق يجب أن تكون > 0")
-    return ratio**eps
+    return math.pow(ratio, eps)
 
 
 def horizon_sensitivity(
@@ -172,9 +172,7 @@ class AssurancePoint:
         if self.budget < 0:
             raise AssuranceWindowError(f"ميزانيةُ المهاجم لا تكون سالبة: {self.budget}")
         if not 0 < self.assurance <= 1:
-            raise AssuranceWindowError(
-                f"الاطمئنانُ نسبةٌ في (0,1]: لا {self.assurance}"
-            )
+            raise AssuranceWindowError(f"الاطمئنانُ نسبةٌ في (0,1]: لا {self.assurance}")
 
 
 @dataclass(frozen=True)
@@ -221,10 +219,10 @@ class AssuranceCurve:
         if target <= 0.0:
             return None
         exponent = (self.a0 - target) / self.kappa
-        budget = self.b0 * (10.0**exponent - 1.0)
+        budget = self.b0 * (math.pow(10.0, exponent) - 1.0)
         if budget > self.ceiling_budget:
             return None
-        return int(math.ceil(budget))
+        return math.ceil(budget)
 
     def attempts_per_point(self) -> float:
         """محاولاتُ التصعيد لكل نقطة اطمئنان فُقدت بين نقطتَي الإسناد — سعرُ العمل."""
@@ -235,6 +233,7 @@ class AssuranceCurve:
             return float("inf")
         return self.ceiling_budget / (lost * 100.0)
 
+
 def fit_assurance_curve(
     base: AssurancePoint,
     refined: AssurancePoint,
@@ -244,9 +243,7 @@ def fit_assurance_curve(
     if refined.budget <= base.budget:
         raise AssuranceWindowError("ميزانيةُ النقطة الثانية يجب أن تكون أكبر من الأولى")
     if refined.assurance >= base.assurance:
-        raise AssuranceWindowError(
-            "لا يُعاَر منحنًى متناقصٌ على نقطتين غيرِ متناقصتين — راجع الأرقام"
-        )
+        raise AssuranceWindowError("لا يُعاَر منحنًى متناقصٌ على نقطتين غيرِ متناقصتين — راجع الأرقام")
     if b0 <= 0:
         raise AssuranceWindowError(f"B₀ مقياسُ الميزانية يجب أن يكون > 0، لا {b0}")
     drop = base.assurance - refined.assurance
@@ -263,16 +260,21 @@ def curve_family(
     base: AssurancePoint,
     refined: AssurancePoint,
     scales: tuple[float, ...] = (1.0, 10.0, 100.0, 1000.0),
-) -> list[dict[str, float]]:
-    """عائلةُ المنحنيات المعلنة: `B₀` يتغيّر، والأثرُ عند الميزانية المقيسة ثابت."""
-    rows: list[dict[str, float]] = []
+) -> list[dict[str, float | None]]:
+    """عائلةُ المنحنيات المعلنة: `B₀` يتغيّر، والأثرُ عند الميزانية المقيسة ثابت.
+
+    ⛔ لا يُستدار حول `None` بـ`or 0.0`: المنحنى الذي لا يُنتج أثراً عند ميزانيةٍ ما
+    يقول ذلك صراحةً في صفّه، لأنّ «صِفرَ أثر» ادّعاءٌ و«لا يُحسب» أمانة.
+    """
+    rows: list[dict[str, float | None]] = []
     for scale in scales:
         curve = fit_assurance_curve(base, refined, b0=scale)
+        marginal = curve.marginal_per_doubling(0)
         rows.append(
             {
                 "b0": scale,
                 "kappa_points_per_log10": round(curve.kappa * 100.0, 4),
-                "first_doubling_points": round(curve.marginal_per_doubling(0) * 100.0, 4),
+                "first_doubling_points": None if marginal is None else round(marginal * 100.0, 4),
                 "attempts_per_point": round(curve.attempts_per_point(), 2),
                 "points_per_doubling_asymptote": round(curve.points_per_doubling_asymptote(), 4),
                 "budget_for_minus_10pts": curve.budget_for_target(curve.a0 - 0.10),
@@ -405,7 +407,7 @@ class ChurnRates:
         adversary_doubling_days: float | None = None,
     ) -> ChurnRates:
         """يحوّل **دورياتٍ معلنة** إلى معدلات؛ المعدّلُ المجهول يبقى صفراً مسمّى، لا تخميناً."""
-        rates = {}
+        rates: dict[str, float] = {}
         if release_cadence_days is not None:
             if release_cadence_days <= 0:
                 raise AssuranceWindowError("دوريةُ الإصدار يجب أن تكون > 0 يوم")
@@ -418,7 +420,7 @@ class ChurnRates:
             if adversary_doubling_days <= 0:
                 raise AssuranceWindowError("مضاعفةُ ميزانية الخصم يجب أن تكون > 0 يوم")
             rates["adversary_growth_per_day"] = math.log(2.0) / adversary_doubling_days
-        return cls(**rates)  # type: ignore[arg-type]
+        return cls(**rates)
 
 
 def survival_probability(churn: ChurnRates, days: float) -> float:
@@ -540,7 +542,12 @@ class PinStatus:
 
     @property
     def label(self) -> str:
-        return {"FRESH": "صالحٌ للاقتباس", "THROTTLED": "مقيَّدٌ بحذر", "STALE": "منتهيُ الصلاحية", "UNPINNED": "غيرُ مُدبَّس"}[self.state]
+        return {
+            "FRESH": "صالحٌ للاقتباس",
+            "THROTTLED": "مقيَّدٌ بحذر",
+            "STALE": "منتهيُ الصلاحية",
+            "UNPINNED": "غيرُ مُدبَّس",
+        }[self.state]
 
 
 def evaluate_pin(
@@ -551,32 +558,46 @@ def evaluate_pin(
     churn: ChurnRates | None = None,
     theta: float = 0.9,
 ) -> PinStatus:
-    """يُحوّل الدبوسَ + سرعةَ التقادم إلى حالةٍ تُستعمل في CI وفي نصّ العرض معاً."""
+    """يُحوّل الدبوسَ + سرعةَ التقادم إلى حالةٍ تُستعمل في CI وفي نصّ العرض معاً.
+
+    ثلاثُ دوالَ صغيرةٌ لا سُلَّمُ شروطٍ واحد: `window_of` (من أيِّ مُدخلٍ تُحسب النافذة)،
+    `pin_state` (كيف يُصنَّفُ العمر)، وهنا التركيبُ فقط — لأنّ السُلَّمَ الطويلَ هو ما
+    يجعلُ القاعدةَ غيرَ قابلةٍ للاختبارِ حالةً حالة.
+    """
     missing = pin.missing_fields()
-    age = (as_of - pin.issued_on).days
+    age = float((as_of - pin.issued_on).days)
     if age < 0:
         raise AssuranceWindowError("تاريخُ المراجعة أسبقُ من تاريخ الإصدار")
-    window: float | None = None
+    window = window_of(drift, tolerance_points, churn, theta)
+    state = "UNPINNED" if missing else pin_state(age, window)
+    return PinStatus(state, age, None if window is None else round(window, 2), missing)
+
+
+def window_of(
+    drift: SuiteDrift | None,
+    tolerance_points: float,
+    churn: ChurnRates | None,
+    theta: float,
+) -> float | None:
+    """النافذةُ من أسرعِ مُدخلٍ ناضج: سرعةُ تقادمٍ إن وُجدت، وإلا مخاطرُ التزاحم وحدها."""
     if drift is not None:
-        window = robust_warranty_days(
-            drift, tolerance_points, churn or ChurnRates(), theta
-        )
-    elif churn is not None:
-        window = warranty_window_days(churn, theta)
-    if missing:
-        rounded = None if window is None else round(window, 2)
-        return PinStatus("UNPINNED", float(age), rounded, missing)
-    if window is None:
-        if age > MAX_REPORT_AGE_DAYS:
-            return PinStatus("STALE", float(age), None, missing)
-        if age > FRESH_DAYS:
-            return PinStatus("THROTTLED", float(age), None, missing)
-        return PinStatus("FRESH", float(age), None, missing)
-    if age > window:
-        return PinStatus("STALE", float(age), round(window, 2), missing)
-    if age > FRESH_DAYS or age > 0.75 * window:
-        return PinStatus("THROTTLED", float(age), round(window, 2), missing)
-    return PinStatus("FRESH", float(age), round(window, 2), missing)
+        return robust_warranty_days(drift, tolerance_points, churn or ChurnRates(), theta)
+    if churn is not None:
+        return warranty_window_days(churn, theta)
+    return None
+
+
+def pin_state(age_days: float, window_days: float | None) -> str:
+    """تصنيفُ القِدَمِ **لا يُزيَّف**: بلا نافذةٍ يُستعمل سقفُ الوثيقة؛ وبها يُقارَنُ بها."""
+    if window_days is None:
+        if age_days > MAX_REPORT_AGE_DAYS:
+            return "STALE"
+        return "THROTTLED" if age_days > FRESH_DAYS else "FRESH"
+    if age_days > window_days:
+        return "STALE"
+    if age_days > FRESH_DAYS or age_days > 0.75 * window_days:
+        return "THROTTLED"
+    return "FRESH"
 
 
 # ── 5) الأجلُ التنظيميُّ كقيدِ تصميم عقد (لا كرأيٍ قانوني) ──────────────────────
@@ -670,6 +691,15 @@ PROVENANCE_STATES: tuple[str, ...] = (
     "UNSTATED",
 )
 
+#: سببُ كلِّ حالةٍ كما يُكتبُ في التقرير — لا سُلَّمَ `if` يقرّرُ السرد.
+_PROVENANCE_REASONS: dict[str, str] = {
+    "INDEPENDENTLY_VERIFIED": "",
+    "VENDOR_ONLY": "النتيجةُ منشورةٌ من صاحبِ المصلحة وحدَه: تُذكر بوصفها إعلاناً لا دليلاً",
+    "CONTESTED_PRIORITY": "نزاعٌ مُسندٌ على مصدرِ المُدخلات أو الأسبقية — لا تُباع شهادةً",
+    "REFUTED_INDEPENDENTLY": "دُحضَت استقلالياً — تُترك في سجلِّ الدحض لا في العرض",
+    "UNSTATED": "استقلالُ المصدر غيرُ مُعلَن — يُمنع الاقتباس لا يُرجَّأ",
+}
+
 #: سقْفُ الاقتباس لكل حالةٍ — ⛔ لا يُرفَع بثقةٍ سردية.
 _PROVENANCE_CEILING: dict[str, str] = {
     "INDEPENDENTLY_VERIFIED": "ACCEPT",
@@ -689,6 +719,11 @@ SCOPE_SOURCE_STATES: tuple[str, ...] = ("THIRD_PARTY", "SELF", "UNSTATED")
 #: مؤهَّل **و** مضيُّ عامَين **و** قبولٌ عامّ. هذا الرقمُ مُعامِلُ تصميمِ عقدٍ عندنا،
 #: لا توقّعٌ بقبول أيّ نتيجة.
 CLAY_MIN_YEARS_AFTER_PUBLICATION = 2
+
+
+def _tighten(ceiling: str, candidate: str) -> str:
+    """السقفُ هو **أضعفُ** حلقةٍ معلَنة — لا تُرفَعُ حالةٌ بحالةٍ أخرى مجاورة."""
+    return candidate if _CEILING_RANK[candidate] > _CEILING_RANK[ceiling] else ceiling
 
 
 @dataclass(frozen=True)
@@ -720,24 +755,17 @@ def adjudicate(
     if scope_source not in SCOPE_SOURCE_STATES:
         raise AssuranceWindowError(f"مصدرُ نطاقٍ غيرُ مسموح: {scope_source!r}")
 
-    reasons: list[str] = []
     ceiling = "ACCEPT"
     for state in provenance:
-        candidate = _PROVENANCE_CEILING[state]
-        if _CEILING_RANK[candidate] > _CEILING_RANK[ceiling]:
-            ceiling = candidate
-    if "UNSTATED" in provenance:
-        reasons.append("استقلالُ المصدر غيرُ مُعلَن — يُمنع الاقتباس لا يُرجَّأ")
-    if "VENDOR_ONLY" in provenance:
-        reasons.append("النتيجةُ منشورةٌ من صاحبِ المصلحة وحدَه: تُذكر بوصفها إعلاناً لا دليلاً")
-    if "CONTESTED_PRIORITY" in provenance:
-        reasons.append("نزاعٌ مُسندٌ على مصدرِ المُدخلات أو الأسبقية — لا تُباع شهادةً")
-    if "REFUTED_INDEPENDENTLY" in provenance:
-        reasons.append("دُحضَت استقلالياً — تُترك في سجلِّ الدحض لا في العرض")
+        ceiling = _tighten(ceiling, _PROVENANCE_CEILING[state])
+    reasons = [
+        _PROVENANCE_REASONS[s]
+        for s in PROVENANCE_STATES
+        if s in provenance and _PROVENANCE_REASONS[s]
+    ]
 
     if scope_source != "THIRD_PARTY":
-        if _CEILING_RANK["THROTTLE"] > _CEILING_RANK[ceiling]:
-            ceiling = "THROTTLE"
+        ceiling = _tighten(ceiling, "THROTTLE")
         reasons.append(
             "نطاقُ العبارةِ صاغه الطرفُ المعنيّ نفسُه (أو لم يُعلَن): البرهانُ على صيغةٍ "
             "غيرِ مُستقلّةٍ لا يُثبتُ أنّها الصيغةُ المطلوبة"
@@ -860,13 +888,13 @@ def summarize(
     """
     eps, mult = horizon_sensitivity(low, high, ratio)
     table = warranty_table(drifts, tolerances=(2.0, 5.0, 10.0))
-    windows = [
-        row[f"warranty_days_at_{tolerance_points:g}pts"]
-        for row in table
-        if row[f"warranty_days_at_{tolerance_points:g}pts"] is not None
-    ]
-    fastest = max(table, key=lambda r: float(str(r["velocity_points_per_day"]))) if table else None
-    min_window = min((float(w) for w in windows), default=None)
+    windows: list[float] = []
+    for row in table:
+        value = row[f"warranty_days_at_{tolerance_points:g}pts"]
+        if value is not None:
+            windows.append(float(value))
+    fastest = max(drifts, key=drift_velocity) if drifts else None
+    min_window = min(windows) if windows else None
     risk_days = warranty_window_days(churn, theta)
     cadence = (
         release_cadence_days
@@ -880,7 +908,7 @@ def summarize(
         "suite_count": len(table),
         "warranty_table": table,
         "shortest_warranty_days": None if min_window is None else round(min_window, 2),
-        "most_volatile_suite": None if fastest is None else fastest["suite"],
+        "most_volatile_suite": None if fastest is None else fastest.suite,
         "risk_warranty_days": None if risk_days is None else round(risk_days, 2),
         "release_beat_probability_per_cycle": (
             None if cadence is None else round(release_beat_probability(cycle_days, cadence), 4)
@@ -888,8 +916,7 @@ def summarize(
         "detection_lag_days": detection_lag_days(cycle_days),
         "eval_events_per_year": None if cadence is None else round(events_per_year(cadence), 2),
         "drift_before_detection": {
-            drift.suite: round(drift_before_detection(drift, cycle_days), 4)
-            for drift in drifts
+            drift.suite: round(drift_before_detection(drift, cycle_days), 4) for drift in drifts
         },
         "boundaries": (
             "نقطتا إسناد لا نموذج عالمي؛ سرعةُ التقادم خاصةٌ بحزمتها؛ ⛔ لا قياسَ عميل "

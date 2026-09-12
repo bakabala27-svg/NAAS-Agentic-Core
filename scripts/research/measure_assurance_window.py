@@ -35,15 +35,14 @@ import argparse
 import hashlib
 import json
 import sys
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from shared.research.assurance_window import (  # noqa: E402
-    AcceptanceCorridor,
+from shared.research.assurance_window import (
     AssurancePoint,
     ChurnRates,
     HorizonAnchor,
@@ -53,17 +52,16 @@ from shared.research.assurance_window import (  # noqa: E402
     acceptance_corridor,
     adjudicate,
     curve_family,
-    drift_before_detection,
     drift_sample_note,
     evaluate_pin,
     fit_assurance_curve,
     horizon_risk_exponent,
     pin_is_quotable,
     release_beat_probability,
-    survival_probability,
     robust_terms,
     robust_warranty_days,
     summarize,
+    survival_probability,
     warranty_table,
     warranty_window_days,
 )
@@ -183,22 +181,29 @@ def _adjudication_cases() -> list[dict[str, object]]:
 
     rows: list[dict[str, object]] = []
     for label, status, adjud, extra in (
-        ("إعلانُ 2026-09-08 بعد 4 أيام — القِدَمُ يسمح، الاستقلالُ يمنع", ann_status, ann_adjud,
-         {
-             "lean_hours_after_solve": NS_LEAN_HOURS,
-             "solve_hours": NS_SOLVE_HOURS,
-             "solved_on": NS_SOLVED_ON.isoformat(),
-             "announced_on": NS_ANNOUNCED_ON.isoformat(),
-             "scope_source": "THIRD_PARTY",
-             "toolchain": NS_TOOLCHAIN,
-         }),
-        ("صفُّ A3 من سجلِّنا عند كتابته — المصدرُ أسبقُ 42 يوماً والحادثُ الداحضُ أسبقُ 4",
-         self_status, self_adjud,
-         {
-             "source_age_days_at_write": (LEDGER_WRITTEN_ON - LEDGER_SOURCE_ON).days,
-             "refuting_event_predated_write_days": (LEDGER_WRITTEN_ON - NS_ANNOUNCED_ON).days,
-             "scope_source": "SELF",
-         }),
+        (
+            "إعلانُ 2026-09-08 بعد 4 أيام — القِدَمُ يسمح، الاستقلالُ يمنع",
+            ann_status,
+            ann_adjud,
+            {
+                "lean_hours_after_solve": NS_LEAN_HOURS,
+                "solve_hours": NS_SOLVE_HOURS,
+                "solved_on": NS_SOLVED_ON.isoformat(),
+                "announced_on": NS_ANNOUNCED_ON.isoformat(),
+                "scope_source": "THIRD_PARTY",
+                "toolchain": NS_TOOLCHAIN,
+            },
+        ),
+        (
+            "صفُّ A3 من سجلِّنا عند كتابته — المصدرُ أسبقُ 42 يوماً والحادثُ الداحضُ أسبقُ 4",
+            self_status,
+            self_adjud,
+            {
+                "source_age_days_at_write": (LEDGER_WRITTEN_ON - LEDGER_SOURCE_ON).days,
+                "refuting_event_predated_write_days": (LEDGER_WRITTEN_ON - NS_ANNOUNCED_ON).days,
+                "scope_source": "SELF",
+            },
+        ),
     ):
         rows.append(
             {
@@ -220,12 +225,18 @@ def _adjudication_cases() -> list[dict[str, object]]:
 
 def _corridor_block() -> dict[str, object]:
     """كم يوماً يبقى البرهانُ «غيرَ قابلٍ للشراء»؟ حسابٌ من نصِّ قواعد كلاي، لا تنبّؤ."""
-    as_filed = acceptance_corridor(NS_ANNOUNCED_ON, LEDGER_WRITTEN_ON, qualifying_outlet=NS_QUALIFYING_OUTLET)
-    as_if_published = acceptance_corridor(NS_ANNOUNCED_ON, LEDGER_WRITTEN_ON, qualifying_outlet=True)
+    as_filed = acceptance_corridor(
+        NS_ANNOUNCED_ON, LEDGER_WRITTEN_ON, qualifying_outlet=NS_QUALIFYING_OUTLET
+    )
+    as_if_published = acceptance_corridor(
+        NS_ANNOUNCED_ON, LEDGER_WRITTEN_ON, qualifying_outlet=True
+    )
     return {
         "clock_started_as_filed": as_filed.clock_started,
         "earliest_eligible_if_published_on_announcement_day": (
-            None if as_if_published.earliest_eligible_on is None else as_if_published.earliest_eligible_on.isoformat()
+            None
+            if as_if_published.earliest_eligible_on is None
+            else as_if_published.earliest_eligible_on.isoformat()
         ),
         "corridor_days_if_published": as_if_published.corridor_days,
         "elapsed_days": as_if_published.elapsed_days,
@@ -393,11 +404,9 @@ def build() -> dict[str, object]:
             "not_claimed": [
                 "لا قياسَ عميلٍ ولا تشغيلَ نموذج — المدخلاتُ منشورةٌ لا مقيسةٌ عندنا",
                 "لا سعرَ ولا إيرادَ ولا «ضمان» — ⛔ عبارةُ الضمان ممنوعةٌ دستورياً (L3)",
-                "سرعةُ التقادم خاصةٌ بالحزمة بين إصدارَين محدّدَين؛ نقلُها إلى حزمةٍ "
-                "أخرى غيرُ مبرَّر",
+                "سرعةُ التقادم خاصةٌ بالحزمة بين إصدارَين محدّدَين؛ نقلُها إلى حزمةٍ أخرى غيرُ مبرَّر",
                 "ε محسوبةٌ من نقطتَين؛ لا تُستعمل تنبّؤاً خارج [30 دقيقة، 8 ساعات]",
-                "مرجعُ الترحيل الأقصر **مُبلَّغٌ صحفياً** ولم يُحسم من الجريدة الرسمية؛ "
-                "العقيدة لم تُعدَّل",
+                "مرجعُ الترحيل الأقصر **مُبلَّغٌ صحفياً** ولم يُحسم من الجريدة الرسمية؛ العقيدة لم تُعدَّل",
             ],
             "reverification_triggers": [
                 "إصدارُ نموذجٍ جديد على الخطِّ المفحوص (يلغي n-warranty المقيس)",
@@ -486,11 +495,13 @@ def _canonical_digest(payload: dict[str, object]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__ or "")
-    parser.add_argument("--check", action="store_true", help="يقارن المودَع بالمحسوب ويفشل عند الانحراف")
+    parser.add_argument(
+        "--check", action="store_true", help="يقارن المودَع بالمحسوب ويفشل عند الانحراف"
+    )
     args = parser.parse_args()
 
     payload = build()
-    payload["generated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    payload["generated_at"] = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     payload["inputs_digest_sha256"] = _canonical_digest(payload)
 
     if args.check:
@@ -500,10 +511,15 @@ def main() -> int:
         stored = json.loads(OUT.read_text(encoding="utf-8"))
         for key in ("kind", "as_of", "inputs_digest_sha256"):
             if stored.get(key) != payload.get(key):
-                print(f"❌ انحراف في {key}: {stored.get(key)!r} ≠ {payload.get(key)!r}", file=sys.stderr)
+                print(
+                    f"❌ انحراف في {key}: {stored.get(key)!r} ≠ {payload.get(key)!r}",
+                    file=sys.stderr,
+                )
                 return 1
         if stored.get("results") != payload["results"]:
-            print("❌ انحرافٌ في الأرقام المحسوبة — أُعيد توليدُ الملفّ أو صحّح المدخلات", file=sys.stderr)
+            print(
+                "❌ انحرافٌ في الأرقام المحسوبة — أُعيد توليدُ الملفّ أو صحّح المدخلات", file=sys.stderr
+            )
             return 1
         print("measure_assurance_window --check: PASS")
         return 0
