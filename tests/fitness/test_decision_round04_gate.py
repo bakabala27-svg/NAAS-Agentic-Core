@@ -318,7 +318,9 @@ def test_dropping_an_adjudication_case_is_blocked(tmp_path: Path) -> None:
     assert "والمتوقّع 6" in output
 
 
-def test_removing_the_adjudication_verdict_summary_from_the_document_is_blocked(tmp_path: Path) -> None:
+def test_removing_the_adjudication_verdict_summary_from_the_document_is_blocked(
+    tmp_path: Path,
+) -> None:
     paths = _tree(tmp_path)
     _edit_doc(Path(paths["ROUND"]), r"خمسةٌ ممنوعةُ الاقتباس كما وردت", "بعضُ الادّعاءات ممنوعة")
     code, output = _run(**paths)
@@ -439,7 +441,7 @@ def test_refuted_rate_claim_outside_negation_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
     _append_doc(Path(paths["ROUND"]), "\nمتوسطُ الأجر 143 دولار/ساعة وهو معيارُ التسعير.\n")
     code, output = _run(**paths)
-    assert code == 1
+    assert code == 1, output
 
 
 def test_refuted_window_conflation_outside_negation_is_blocked(tmp_path: Path) -> None:
@@ -447,7 +449,7 @@ def test_refuted_window_conflation_outside_negation_is_blocked(tmp_path: Path) -
     paths = _tree(tmp_path)
     _append_doc(Path(paths["ROUND"]), "\nاختراقٌ كامل استمرّ 4.5 يوم داخل بنية الإنتاج.\n")
     code, output = _run(**paths)
-    assert code == 1
+    assert code == 1, output
 
 
 def test_the_knowledge_document_is_scanned_too(tmp_path: Path) -> None:
@@ -821,7 +823,9 @@ def test_every_derived_figure_path_resolves_in_the_real_artifact() -> None:
     payload = json.loads(ARTIFACT.read_text(encoding="utf-8"))
     for dotted, spec, want, doc_token in gate.DERIVED_FIGURES:
         value = gate.dig(payload, dotted)  # يرفع KeyError إن غاب
-        assert gate.render(value, spec) == want, f"{dotted}: {value!r} ⇒ {gate.render(value, spec)!r} ≠ {want!r}"
+        assert gate.render(value, spec) == want, (
+            f"{dotted}: {value!r} ⇒ {gate.render(value, spec)!r} ≠ {want!r}"
+        )
         assert doc_token, f"{dotted}: رمزُ وثيقةٍ فارغ"
 
 
@@ -865,9 +869,9 @@ def test_forbidden_claims_present_in_the_round_document_are_all_negated() -> Non
         if not hits:
             continue
         present += 1
-        assert all(
-            any(marker in line for marker in gate.NEGATION_MARKERS) for line in hits
-        ), f"محرَّمٌ مذكورٌ خارج منع: {needle!r} → {hits[0][:80]}"
+        assert all(any(marker in line for marker in gate.NEGATION_MARKERS) for line in hits), (
+            f"محرَّمٌ مذكورٌ خارج منع: {needle!r} → {hits[0][:80]}"
+        )
     assert present * 2 > len(gate.FORBIDDEN_CLAIMS), (
         f"{present} من {len(gate.FORBIDDEN_CLAIMS)} محرَّماً مذكور — فالقائمةُ صارت زينة"
     )

@@ -163,9 +163,7 @@ class LatencySegment:
         if self.kind not in SEGMENT_KINDS:
             raise DecisionLatencyError(f"نوعُ مقطعٍ خارج {SEGMENT_KINDS}: {self.kind!r}")
         if self.end.on < self.start.on:
-            raise DecisionLatencyError(
-                f"المقطع {self.name!r} ينتهي قبل أن يبدأ — ترتيبٌ مستحيل"
-            )
+            raise DecisionLatencyError(f"المقطع {self.name!r} ينتهي قبل أن يبدأ — ترتيبٌ مستحيل")
 
     @property
     def days(self) -> float:
@@ -228,8 +226,7 @@ class LatencySplit:
             sum(
                 seg.days
                 for seg in self.segments
-                if (party is None or seg.party == party)
-                and (kind is None or seg.kind == kind)
+                if (party is None or seg.party == party) and (kind is None or seg.kind == kind)
             )
         )
 
@@ -258,7 +255,9 @@ class LatencySplit:
     def layer_total(self, layer: str) -> float:
         """مجموعُ أيام طبقةٍ واحدة — لأنّ الحكم الإجمالي يُخفي أيّ طبقةٍ حملت الكمون."""
         if layer not in BINDING_LAYERS:
-            raise DecisionLatencyError(f"طبقةٌ غير معروفة: {layer!r} — الصالح {sorted(BINDING_LAYERS)}")
+            raise DecisionLatencyError(
+                f"طبقةٌ غير معروفة: {layer!r} — الصالح {sorted(BINDING_LAYERS)}"
+            )
         return float(sum(seg.days for seg in self.segments if seg.layer == layer))
 
     @property
@@ -427,9 +426,7 @@ class TranscriptSpoofing:
 
     def __post_init__(self) -> None:
         if not 0.0 <= self.spoof_rate < 1.0:
-            raise DecisionLatencyError(
-                f"معدّلُ الانتحال يجب أن يكون في [0,1)، لا {self.spoof_rate}"
-            )
+            raise DecisionLatencyError(f"معدّلُ الانتحال يجب أن يكون في [0,1)، لا {self.spoof_rate}")
         if not self.source.strip():
             raise DecisionLatencyError("معدّلٌ بلا مصدر — لا يُقتبس")
 
@@ -485,9 +482,7 @@ class HarnessDelta:
 
     def __post_init__(self) -> None:
         if self.at_least_factor <= 1.0:
-            raise DecisionLatencyError(
-                f"عاملٌ ≤ 1 ليس دلتا حماية، لا {self.at_least_factor}"
-            )
+            raise DecisionLatencyError(f"عاملٌ ≤ 1 ليس دلتا حماية، لا {self.at_least_factor}")
         if not self.harness.strip() or not self.model.strip():
             raise DecisionLatencyError(
                 "⛔ دلتا بلا اسم الحزام والنموذج معاً: الرقمُ ملكُ الزوج لا المكوّن"
@@ -667,9 +662,7 @@ def market_dispersion(estimates: tuple[MarketEstimate, ...]) -> dict[str, object
     ويُبلَّغ عنه في `excluded` بدلَ أن يُبتلع صمتاً.
     """
     if len(estimates) < MIN_MARKET_ESTIMATES:
-        raise DecisionLatencyError(
-            f"تقديرٌ واحد ليس تشتّتاً (الحدّ الأدنى {MIN_MARKET_ESTIMATES})"
-        )
+        raise DecisionLatencyError(f"تقديرٌ واحد ليس تشتّتاً (الحدّ الأدنى {MIN_MARKET_ESTIMATES})")
     names = {(e.market_name.strip().lower(), e.base_year) for e in estimates}
     if len(names) != 1:
         raise DecisionLatencyError(
@@ -698,7 +691,9 @@ def _self_contradictions(estimates: tuple[MarketEstimate, ...]) -> list[dict[str
     out: list[dict[str, object]] = []
     for src, vals in sorted(by_source.items()):
         if len(set(vals)) > 1:
-            out.append({"source": src, "values_usd": sorted(vals), "spread_ratio": max(vals) / min(vals)})
+            out.append(
+                {"source": src, "values_usd": sorted(vals), "spread_ratio": max(vals) / min(vals)}
+            )
     return out
 
 
@@ -756,7 +751,11 @@ def rate_bias(anchors: tuple[RateAnchor, ...]) -> dict[str, object]:
         "band_usd_per_hour": [values[0], values[-1]],
         "self_report_bias_factor": bias,
         "bias_direction": (
-            "SELF_REPORT_HIGHER" if bias and bias > 1.0 else "FLAT_OR_LOWER" if bias else "UNMEASURED"
+            "SELF_REPORT_HIGHER"
+            if bias and bias > 1.0
+            else "FLAT_OR_LOWER"
+            if bias
+            else "UNMEASURED"
         ),
         "realized_anchor_present": bool(realized),
         "planning_rule": (
@@ -810,9 +809,7 @@ class LossSplit:
                 "لا ضررَ ولا كلفةَ استجابة — ⛔ لا يُقرأ الغيابُ «حادثاً بلا أثر»"
             )
         if self.third_party_protected_asset_affected and not self.confirmed_damage_items:
-            raise DecisionLatencyError(
-                "إصابةُ أصلِ طرفٍ ثالث بلا بند ضررٍ مُسمّى — ادّعاءٌ بلا مفردة"
-            )
+            raise DecisionLatencyError("إصابةُ أصلِ طرفٍ ثالث بلا بند ضررٍ مُسمّى — ادّعاءٌ بلا مفردة")
         if not self.third_party_source.strip():
             raise DecisionLatencyError("حكمٌ على أصلِ طرفٍ ثالث بلا مصدر")
 
@@ -846,6 +843,17 @@ def controls_held_share(split: LossSplit) -> float | None:
 # ── 8) الملخّص الهندسي (بلا لغةٍ بيعية) ─────────────────────────────────────
 
 
+def _require_ratio(value: object) -> float:
+    """تضييقُ الحدود: `dict[str, object]` تخرج منه `object`، و`float()` تريد عدداً.
+
+    ⛔ لا `cast` صامت: فقيمةٌ غيرُ رقميةٍ هنا تعني أنّ `market_dispersion` غيّرت
+    عقدَها، والسكوتُ عليها يُنتج قراراً من قمامةٍ مُنمَّقة.
+    """
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise DecisionLatencyError(f"نسبةُ تشتّتٍ غيرُ رقمية: {value!r}")
+    return float(value)
+
+
 def summarize(
     split: LatencySplit,
     machine: MachineTempo,
@@ -876,9 +884,7 @@ def summarize(
         "machine_actions_per_day": machine.actions_per_day,
         "machine_actions_per_hour": machine.actions_per_hour,
         "tempo_ratio_actions_per_human_decision": tempo_ratio(machine, human),
-        "projected_volume_outside_measurement_window": projected_volume(
-            machine, human.over_days
-        ),
+        "projected_volume_outside_measurement_window": projected_volume(machine, human.over_days),
         "transcript_trust_ceiling": spoofing.trust_ceiling,
         "transcript_bound_direction": spoofing.bound_direction,
         "requires_out_of_band_evidence": spoofing.requires_out_of_band,
@@ -893,7 +899,7 @@ def summarize(
         "phantom_requirements": divergence["phantom_requirements"],
         "market_dispersion_ratio": dispersion["dispersion_ratio"],
         "market_number_is_decision_grade": dispersion_is_decision_grade(
-            float(dispersion["dispersion_ratio"]), decision_gap_ratio
+            _require_ratio(dispersion["dispersion_ratio"]), decision_gap_ratio
         ),
         "self_report_bias_factor": bias["self_report_bias_factor"],
         "blocklist_yield_of_partial_block": blocklist_yield(transports, blocked, True),

@@ -46,7 +46,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from shared.research.decision_latency import (  # noqa: E402
+from shared.research.decision_latency import (
     DatedEvent,
     EscalationPolicy,
     HarnessDelta,
@@ -84,7 +84,9 @@ AS_OF = date(2026, 9, 12)
 # المصادر الأوّلية (تُقرأ أسماؤها في كل مُخرَج — ⛔ لا رقمَ بلا مصدر)
 # ══════════════════════════════════════════════════════════════════════════════
 SRC_OAI_0721 = "OpenAI — «OpenAI and Hugging Face partner to address security incident during model evaluation» (2026-07-21، مع تحديثات 07-28 و07-29)"
-SRC_OAI_0826 = "OpenAI — «The Hugging Face incident and the road ahead» + التقرير التقني 37 صفحة (2026-08-26)"
+SRC_OAI_0826 = (
+    "OpenAI — «The Hugging Face incident and the road ahead» + التقرير التقني 37 صفحة (2026-08-26)"
+)
 SRC_HF_0727 = "Hugging Face — «Anatomy of a Frontier Lab Agent Intrusion» (2026-07-27)"
 SRC_METR_0826 = "METR + Redwood Research — تحقيقٌ مستقلٌّ **بلا أجرٍ من OpenAI** (2026-08-26)"
 
@@ -95,14 +97,24 @@ SRC_METR_0826 = "METR + Redwood Research — تحقيقٌ مستقلٌّ **بل�
 
 def _events() -> dict[str, DatedEvent]:
     return {
-        "board_first_entry": DatedEvent("أوّل إدخالٍ في لوحة الرسائل", date(2026, 5, 12), "DETECTION"),
-        "team_observed": DatedEvent("فريقٌ داخلي يرصد اللوحةَ ووصولاً غيرَ مسموح", date(2026, 5, 26), "DETECTION"),
-        "incident_opened": DatedEvent("فتحُ حادثةٍ أمنية (بلا علمٍ بدلالة اللوحة)", date(2026, 7, 5), "DECISION"),
-        "rebuilt_resumed": DatedEvent("إعادةُ بناء Artifactory واستئنافُ التقييمات", date(2026, 7, 8), "AUTHORITY"),
+        "board_first_entry": DatedEvent(
+            "أوّل إدخالٍ في لوحة الرسائل", date(2026, 5, 12), "DETECTION"
+        ),
+        "team_observed": DatedEvent(
+            "فريقٌ داخلي يرصد اللوحةَ ووصولاً غيرَ مسموح", date(2026, 5, 26), "DETECTION"
+        ),
+        "incident_opened": DatedEvent(
+            "فتحُ حادثةٍ أمنية (بلا علمٍ بدلالة اللوحة)", date(2026, 7, 5), "DECISION"
+        ),
+        "rebuilt_resumed": DatedEvent(
+            "إعادةُ بناء Artifactory واستئنافُ التقييمات", date(2026, 7, 8), "AUTHORITY"
+        ),
         "campaign_start": DatedEvent("أوّل إجراءٍ مُستعاد في حملة HF", date(2026, 7, 9), "DETECTION"),
         "hf_cut_access": DatedEvent("HF تقطع الوصول (13:37 UTC)", date(2026, 7, 13), "DETECTION"),
         "hf_disclosed": DatedEvent("إفصاحُ HF العلني", date(2026, 7, 16), "DECISION"),
-        "oai_alert": DatedEvent("إنذارُ رصد OpenAI (نداءات هويةٍ غير معتادة)", date(2026, 7, 19), "DETECTION"),
+        "oai_alert": DatedEvent(
+            "إنذارُ رصد OpenAI (نداءات هويةٍ غير معتادة)", date(2026, 7, 19), "DETECTION"
+        ),
         "oai_disclosed": DatedEvent("إفصاحُ OpenAI العلني", date(2026, 7, 21), "DECISION"),
     }
 
@@ -111,37 +123,66 @@ def _split() -> LatencySplit:
     e = _events()
     segs = (
         LatencySegment(
-            "OAI_signal_to_observation", e["board_first_entry"], e["team_observed"],
-            "DETECTION", "OPERATOR", "ORGANIZATIONAL",
+            "OAI_signal_to_observation",
+            e["board_first_entry"],
+            e["team_observed"],
+            "DETECTION",
+            "OPERATOR",
+            "ORGANIZATIONAL",
         ),
         LatencySegment(
-            "OAI_observation_to_incident", e["team_observed"], e["incident_opened"],
-            "DECISION", "OPERATOR", "ORGANIZATIONAL",
+            "OAI_observation_to_incident",
+            e["team_observed"],
+            e["incident_opened"],
+            "DECISION",
+            "OPERATOR",
+            "ORGANIZATIONAL",
         ),
         LatencySegment(
-            "OAI_remediation_without_stopping_runs", e["incident_opened"], e["rebuilt_resumed"],
-            "AUTHORITY", "OPERATOR", "ORGANIZATIONAL",
+            "OAI_remediation_without_stopping_runs",
+            e["incident_opened"],
+            e["rebuilt_resumed"],
+            "AUTHORITY",
+            "OPERATOR",
+            "ORGANIZATIONAL",
         ),
         LatencySegment(
-            "OAI_campaign_to_monitoring_alert", e["campaign_start"], e["oai_alert"],
-            "DETECTION", "OPERATOR", "TECHNICAL",
+            "OAI_campaign_to_monitoring_alert",
+            e["campaign_start"],
+            e["oai_alert"],
+            "DETECTION",
+            "OPERATOR",
+            "TECHNICAL",
         ),
         LatencySegment(
-            "OAI_alert_to_public_disclosure", e["oai_alert"], e["oai_disclosed"],
-            "DECISION", "OPERATOR", "ORGANIZATIONAL",
+            "OAI_alert_to_public_disclosure",
+            e["oai_alert"],
+            e["oai_disclosed"],
+            "DECISION",
+            "OPERATOR",
+            "ORGANIZATIONAL",
         ),
         LatencySegment(
-            "HF_first_action_to_access_cut", e["campaign_start"], e["hf_cut_access"],
-            "DETECTION", "DEFENDER", "TECHNICAL",
+            "HF_first_action_to_access_cut",
+            e["campaign_start"],
+            e["hf_cut_access"],
+            "DETECTION",
+            "DEFENDER",
+            "TECHNICAL",
         ),
         LatencySegment(
-            "HF_containment_to_public_disclosure", e["hf_cut_access"], e["hf_disclosed"],
-            "DECISION", "DEFENDER", "ORGANIZATIONAL",
+            "HF_containment_to_public_disclosure",
+            e["hf_cut_access"],
+            e["hf_disclosed"],
+            "DECISION",
+            "DEFENDER",
+            "ORGANIZATIONAL",
         ),
     )
     gaps = (
         UnmeasuredGap(
-            "DEFENDER", "CORRELATION",
+            "DEFENDER",
+            "CORRELATION",
             "«those were correlated by our AI-based security agent stack and resolved into a "
             "coherent attack signal. However, it failed to correctly raise the alert's "
             "criticality and trigger the on-call team, costing precious time» — الفشلُ "
@@ -149,7 +190,8 @@ def _split() -> LatencySplit:
             SRC_HF_0727,
         ),
         UnmeasuredGap(
-            "DEFENDER", "DECISION",
+            "DEFENDER",
+            "DECISION",
             "تاريخُ الإفصاح متنازَعٌ بين 07-16 و07-17 (TechCrunch 2026-07-20 يقول "
             "«disclosed on Friday») — يومٌ واحدٌ من التناقض في مصدرٍ أوّلي",
             SRC_HF_0727,
@@ -211,17 +253,36 @@ DECLARED_DECISION_GAP_RATIO = 2.0
 
 MARKET_ESTIMATES = (
     MarketEstimate("AI Agent Security", 2025, 450e6, "MarketIntelo (2026-07-04)", date(2026, 7, 4)),
-    MarketEstimate("AI Agent Security", 2025, 18.72e9, "SNS Insider (2026-07-23)", date(2026, 7, 23)),
-    MarketEstimate("AI Agent Security", 2025, 35.09e9, "SNS Insider (2026-07-23)", date(2026, 7, 23)),
+    MarketEstimate(
+        "AI Agent Security", 2025, 18.72e9, "SNS Insider (2026-07-23)", date(2026, 7, 23)
+    ),
+    MarketEstimate(
+        "AI Agent Security", 2025, 35.09e9, "SNS Insider (2026-07-23)", date(2026, 7, 23)
+    ),
 )
 
 RATE_ANCHORS = (
-    RateAnchor("contractrates.fyi — متوسط 233 بلاغاً ذاتياً", 144.0, "SELF_REPORTED_ASKED",
-               "contractrates.fyi (تحديث 2026-06)", date(2026, 6, 30)),
-    RateAnchor("ZipRecruiter — Independent Contractor Cyber Security (US)", 63.92, "POSTING_DERIVED_OFFERED",
-               "ZipRecruiter (2026-07-09)", date(2026, 7, 9)),
-    RateAnchor("ZipRecruiter — Freelance Penetration Tester (US)", 57.64, "POSTING_DERIVED_OFFERED",
-               "ZipRecruiter (2026-09-10)", date(2026, 9, 10)),
+    RateAnchor(
+        "contractrates.fyi — متوسط 233 بلاغاً ذاتياً",
+        144.0,
+        "SELF_REPORTED_ASKED",
+        "contractrates.fyi (تحديث 2026-06)",
+        date(2026, 6, 30),
+    ),
+    RateAnchor(
+        "ZipRecruiter — Independent Contractor Cyber Security (US)",
+        63.92,
+        "POSTING_DERIVED_OFFERED",
+        "ZipRecruiter (2026-07-09)",
+        date(2026, 7, 9),
+    ),
+    RateAnchor(
+        "ZipRecruiter — Freelance Penetration Tester (US)",
+        57.64,
+        "POSTING_DERIVED_OFFERED",
+        "ZipRecruiter (2026-09-10)",
+        date(2026, 9, 10),
+    ),
 )
 
 #: قنواتُ التواصل المُسمّاة في تقرير HF — الغلافُ البروتوكولي واحدٌ عليها جميعاً.
@@ -305,8 +366,12 @@ def _adjudication_cases() -> list[dict[str, object]]:
     ) -> dict[str, object]:
         pin_applies = claim_kind == "BENCHMARK_SCORE"
         unpinned = ReportPin(
-            model_id="", harness="", safeguard_config="", suite_version="",
-            adversary_budget=None, issued_on=issued_on,
+            model_id="",
+            harness="",
+            safeguard_config="",
+            suite_version="",
+            adversary_budget=None,
+            issued_on=issued_on,
         )
         status = evaluate_pin(unpinned, AS_OF)
         adj_cited = adjudicate(as_cited_provenance, scope_source=scope_source)
@@ -341,7 +406,10 @@ def _adjudication_cases() -> list[dict[str, object]]:
     return [
         _case(
             "«سوق تأمين الوكلاء المستقلين … تُقدّر Gartner جزءاً منه بـ4.8 مليار دولار في 2027»",
-            "UNSTATED", "INDEPENDENTLY_VERIFIED", "THIRD_PARTY", date(2026, 8, 26),
+            "UNSTATED",
+            "INDEPENDENTLY_VERIFIED",
+            "THIRD_PARTY",
+            date(2026, 8, 26),
             "REFUTED_CATEGORY",
             "الرقمُ صحيحٌ والغرضُ خاطئ: Gartner تُسمّيه «securing AI» وتصرّح أنّه **سوقٌ منفصل** "
             "عن «AI security»، وهو سوقُ برمجيات/منصّات لا سوقُ تأمين. وعمرُه 17 يوماً ⇒ STALE "
@@ -357,7 +425,10 @@ def _adjudication_cases() -> list[dict[str, object]]:
         ),
         _case(
             "«سوق أمن الوكلاء ينمو بـCAGR ~42% إلى 13.5 مليار بحلول 2032»",
-            "UNSTATED", "UNSTATED", "UNSTATED", date(2026, 9, 12),
+            "UNSTATED",
+            "UNSTATED",
+            "UNSTATED",
+            date(2026, 9, 12),
             "REFUTED_DISPERSION",
             "لا يُطابق أيَّ تقديرٍ منشور؛ والمنشورُ للسوق المُسمّى نفسه يتراوح بين 450M$ "
             "و35.09B$ لسنة الأساس 2025 (≈77.98×)، ومصدرٌ واحد يناقض نفسَه على الصفحة نفسها.",
@@ -374,7 +445,10 @@ def _adjudication_cases() -> list[dict[str, object]]:
         ),
         _case(
             "«منحة $10M أرصدة API لفرق أمن المصدر المفتوح» ضمن Trusted Access/Daybreak",
-            "UNSTATED", "REFUTED_INDEPENDENTLY", "THIRD_PARTY", date(2026, 9, 4),
+            "UNSTATED",
+            "REFUTED_INDEPENDENTLY",
+            "THIRD_PARTY",
+            date(2026, 9, 4),
             "REFUTED",
             "المرصود ≈**1 مليار دولار** (2026-09-04، «Daybreak for Frontline Defenders»)، لا 10M$. "
             "والأهمّ تجارياً: حدودُ البرنامج تمنع صراحةً «resale, proxying, or downstream "
@@ -393,7 +467,10 @@ def _adjudication_cases() -> list[dict[str, object]]:
         ),
         _case(
             "«متوسط أجر استشاري الأمن المستقل ~143 دولار/ساعة (90–178)»",
-            "UNSTATED", "VENDOR_ONLY", "THIRD_PARTY", date(2026, 6, 30),
+            "UNSTATED",
+            "VENDOR_ONLY",
+            "THIRD_PARTY",
+            date(2026, 6, 30),
             "THROTTLED_AND_STALE",
             "المصدرُ موجود (144$/س، وسيط 138$، 233 بلاغاً، تحديث 2026-06) لكنّه **مُبلَّغٌ "
             "ذاتياً عن أجرٍ مطلوب**، وعمرُه ≈104 أيام ⇒ STALE. ومشتقّاتُ الإعلانات الأميركية "
@@ -408,7 +485,10 @@ def _adjudication_cases() -> list[dict[str, object]]:
         ),
         _case(
             "«14 من 16 نشراً مُدقَّقاً في 2026 افتقرت لسجلات تدقيق بالدقة المطلوبة»",
-            "UNSTATED", "UNSTATED", "UNSTATED", date(2026, 9, 12),
+            "UNSTATED",
+            "UNSTATED",
+            "UNSTATED",
+            date(2026, 9, 12),
             "UNSOURCED",
             "لا مصدرَ ولا تاريخَ ولا عيّنةً ولا تعريفَ «دقة مطلوبة» ⇒ ⛔ لا يُستعمل في أيّ "
             "حجّةٍ بيعية. البديلُ المُسند: 7% من المحاضر انتُحلت (METR، غيرُ مدفوع).",
@@ -422,7 +502,10 @@ def _adjudication_cases() -> list[dict[str, object]]:
         ),
         _case(
             "وقائعُ الحادث التقنية (17,600 إجراء · 4.5 يوم · 14 رمزاً · HDF5/Jinja2 · Modal · IM1)",
-            "INDEPENDENTLY_VERIFIED", "INDEPENDENTLY_VERIFIED", "THIRD_PARTY", date(2026, 8, 26),
+            "INDEPENDENTLY_VERIFIED",
+            "INDEPENDENTLY_VERIFIED",
+            "THIRD_PARTY",
+            date(2026, 8, 26),
             "ACCEPTED_WITH_ONE_CORRECTION",
             "مُثبتةٌ من مصدرَين أوّليين + تحقيقٍ مستقلٍّ غيرِ مدفوع. **تصحيحٌ واحد**: جدولُ "
             "الأطوار في المدخل أسقط ثلاثةَ أطوار (c2=114 · evasion=6 · tailscale=115) فصار "
@@ -499,7 +582,8 @@ def build() -> dict[str, object]:
     results["defender_organizational_days"] = split.total(party="DEFENDER", kind="ORGANIZATIONAL")
     results["defender_technical_days"] = split.total(party="DEFENDER", kind="TECHNICAL")
     results["layer_totals_days"] = {
-        layer: split.layer_total(layer) for layer in ("DETECTION", "CORRELATION", "DECISION", "AUTHORITY")
+        layer: split.layer_total(layer)
+        for layer in ("DETECTION", "CORRELATION", "DECISION", "AUTHORITY")
     }
     results["measurement_window_days"] = MACHINE.window_days
     results["transcript_integrity"] = transcript_evidence_share(SPOOFING)
@@ -516,7 +600,10 @@ def build() -> dict[str, object]:
         **concentration,
         "source": SRC_OAI_0826,
     }
-    results["grader_spec_divergence"] = {**divergence, "source": f"{SRC_OAI_0826} + {SRC_METR_0826}"}
+    results["grader_spec_divergence"] = {
+        **divergence,
+        "source": f"{SRC_OAI_0826} + {SRC_METR_0826}",
+    }
     results["market_size_dispersion"] = {
         **dispersion,
         "decision_grade_at_declared_gap": dispersion_is_decision_grade(
@@ -525,12 +612,24 @@ def build() -> dict[str, object]:
         "declared_decision_gap_ratio": DECLARED_DECISION_GAP_RATIO,
         "verdict_flips_only_if_gap_exceeds": float(dispersion["dispersion_ratio"]),
         "excluded_as_different_quantity": [
-            {"name": "Securing AI (Gartner)", "value_usd": 4_783e6, "year": 2027,
-             "why": "اسمٌ مختلف وسنةُ أساسٍ مختلفة — ⛔ لا يُدمج"},
-            {"name": "AI Agent Security Assessment Services (QYResearch)", "value_usd": 734e6, "year": 2025,
-             "why": "خدماتُ تقييمٍ لا سوقُ منتجات — نطاقٌ مختلف"},
-            {"name": "Cybersecurity agentic AI", "value_usd": 1.83e9, "year": 2025,
-             "why": "اتجاهٌ معاكس: أمنٌ **بواسطة** الوكلاء لا أمنٌ **للوكلاء**"},
+            {
+                "name": "Securing AI (Gartner)",
+                "value_usd": 4_783e6,
+                "year": 2027,
+                "why": "اسمٌ مختلف وسنةُ أساسٍ مختلفة — ⛔ لا يُدمج",
+            },
+            {
+                "name": "AI Agent Security Assessment Services (QYResearch)",
+                "value_usd": 734e6,
+                "year": 2025,
+                "why": "خدماتُ تقييمٍ لا سوقُ منتجات — نطاقٌ مختلف",
+            },
+            {
+                "name": "Cybersecurity agentic AI",
+                "value_usd": 1.83e9,
+                "year": 2025,
+                "why": "اتجاهٌ معاكس: أمنٌ **بواسطة** الوكلاء لا أمنٌ **للوكلاء**",
+            },
         ],
     }
     results["rate_bias"] = {
@@ -641,16 +740,30 @@ def build() -> dict[str, object]:
             "hf_clusters": 6_280,
             "hf_phases": 9,
             "hf_phase_volumes": {
-                "recon": 6_191, "rce": 2_911, "dropper": 6_972, "exfil": 56,
-                "c2": 114, "evasion": 6, "k8s": 87, "supply-chain": 69, "tailscale": 115,
+                "recon": 6_191,
+                "rce": 2_911,
+                "dropper": 6_972,
+                "exfil": 56,
+                "c2": 114,
+                "evasion": 6,
+                "k8s": 87,
+                "supply-chain": 69,
+                "tailscale": 115,
             },
             "hf_daily_volumes": {
-                "2026-07-09": 3_779, "2026-07-10": 1_135, "2026-07-11": 7_677,
-                "2026-07-12": 3_892, "2026-07-13": 1_130,
+                "2026-07-09": 3_779,
+                "2026-07-10": 1_135,
+                "2026-07-11": 7_677,
+                "2026-07-12": 3_892,
+                "2026-07-13": 1_130,
             },
             "phases_omitted_by_input_under_review": ["c2", "evasion", "tailscale"],
             "input_omitted_actions_total": 114 + 6 + 115,
-            "exploitgym_unsolvable": {"never_solved": 198, "suite_total": 898, "chatter_share": 0.93},
+            "exploitgym_unsolvable": {
+                "never_solved": 198,
+                "suite_total": 898,
+                "chatter_share": 0.93,
+            },
             "metr_scale": {
                 "agents_communicating": 1_200,
                 "messages_and_files": 70_000,
@@ -674,11 +787,21 @@ def build() -> dict[str, object]:
                 "pod_to_cluster_admin_hours": "<13",
             },
             "market_estimates": [
-                {"market": e.market_name, "year": e.base_year, "usd": e.value_usd, "source": e.source}
+                {
+                    "market": e.market_name,
+                    "year": e.base_year,
+                    "usd": e.value_usd,
+                    "source": e.source,
+                }
                 for e in MARKET_ESTIMATES
             ],
             "rate_anchors": [
-                {"label": a.label, "usd_per_hour": a.usd_per_hour, "kind": a.measurement_kind, "source": a.source}
+                {
+                    "label": a.label,
+                    "usd_per_hour": a.usd_per_hour,
+                    "kind": a.measurement_kind,
+                    "source": a.source,
+                }
                 for a in RATE_ANCHORS
             ],
             "declared_decision_gap_ratio": DECLARED_DECISION_GAP_RATIO,
@@ -720,7 +843,9 @@ def _canonical_digest(payload: dict[str, object]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__ or "")
-    parser.add_argument("--check", action="store_true", help="يقارن المودَع بالمحسوب ويفشل عند الانحراف")
+    parser.add_argument(
+        "--check", action="store_true", help="يقارن المودَع بالمحسوب ويفشل عند الانحراف"
+    )
     args = parser.parse_args()
 
     payload = build()
@@ -734,10 +859,15 @@ def main() -> int:
         stored = json.loads(OUT.read_text(encoding="utf-8"))
         for key in ("kind", "as_of", "inputs_digest_sha256"):
             if stored.get(key) != payload.get(key):
-                print(f"❌ انحراف في {key}: {stored.get(key)!r} ≠ {payload.get(key)!r}", file=sys.stderr)
+                print(
+                    f"❌ انحراف في {key}: {stored.get(key)!r} ≠ {payload.get(key)!r}",
+                    file=sys.stderr,
+                )
                 return 1
         if stored.get("results") != payload["results"]:
-            print("❌ انحرافٌ في الأرقام المحسوبة — أُعيد توليدُ الملفّ أو صحّح المدخلات", file=sys.stderr)
+            print(
+                "❌ انحرافٌ في الأرقام المحسوبة — أُعيد توليدُ الملفّ أو صحّح المدخلات", file=sys.stderr
+            )
             return 1
         print("measure_decision_latency --check: PASS")
         return 0

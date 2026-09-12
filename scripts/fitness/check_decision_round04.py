@@ -172,7 +172,12 @@ DERIVED_FIGURES: tuple[tuple[str, str, str, str], ...] = (
     ("results.phantom_requirements", "int", "1", "شرطٌ شبحيٌّ واحد"),
     ("results.market_dispersion_ratio", "f4", "77.9778", "**77.9778×**"),
     ("results.market_number_is_decision_grade", "bool", "False", "قرارِيٌّ = `False`"),
-    ("results.market_size_dispersion.verdict_flips_only_if_gap_exceeds", "f4", "77.9778", "> 77.9778 فقط"),
+    (
+        "results.market_size_dispersion.verdict_flips_only_if_gap_exceeds",
+        "f4",
+        "77.9778",
+        "> 77.9778 فقط",
+    ),
     ("inputs.declared_decision_gap_ratio", "f1", "2.0", "`declared_decision_gap_ratio = 2.0`"),
     ("results.self_report_bias_factor", "f4", "2.4983", "**2.4983×**"),
     ("results.rate_bias.band_usd_per_hour.0", "f2", "57.64", "[57.64, 144.00]"),
@@ -221,27 +226,62 @@ def dig(artifact: dict, dotted: str) -> object:
     return node
 
 
+def _render_bool(value: object) -> str:
+    return "True" if value is True else "False"
+
+
+def _render_none(value: object) -> str:
+    return "None" if value is None else f"⛔ القيمة ليست None: {value!r}"
+
+
+def _render_int(value: object) -> str:
+    return str(int(value))  # type: ignore[arg-type]
+
+
+def _render_f1(value: object) -> str:
+    return f"{float(value):.1f}"  # type: ignore[arg-type]
+
+
+def _render_f2(value: object) -> str:
+    return f"{float(value):.2f}"  # type: ignore[arg-type]
+
+
+def _render_f4(value: object) -> str:
+    return f"{float(value):.4f}"  # type: ignore[arg-type]
+
+
+def _render_f1c(value: object) -> str:
+    return f"{float(value):,.1f}"  # type: ignore[arg-type]
+
+
+def _render_f2c(value: object) -> str:
+    return f"{float(value):,.2f}"  # type: ignore[arg-type]
+
+
+#: جدولُ التوزيع: الصيغةُ مفتاحٌ لا سلسلةُ فروع — فإضافةُ صيغةٍ جديدة لا ترفع
+#: عدّادَ الفروع في `render` (PLR0911/PLR0912)، و`ValueError` على المجهولة باقٍ عقداً.
+#: بلا تعليقٍ نوعيٍّ عمداً: `test_gate_module_is_stdlib_only` يُبقي سطحَ استيرادِ
+#: البوّابةِ خمسَ وحداتٍ لا أكثر، و`collections.abc` سادسةٌ لا يبرّرها شيء.
+_RENDERERS = {
+    "str": str,
+    "bool": _render_bool,
+    "none": _render_none,
+    "int": _render_int,
+    "f1": _render_f1,
+    "f2": _render_f2,
+    "f4": _render_f4,
+    "f1c": _render_f1c,
+    "f2c": _render_f2c,
+}
+
+
 def render(value: object, spec: str) -> str:
     """يُصيّر قيمة JSON إلى نصّها في الوثيقة — والصيغةُ جزءٌ من العقد لا تفصيلٌ تجميلي."""
-    if spec == "str":
-        return str(value)
-    if spec == "bool":
-        return "True" if value is True else "False"
-    if spec == "none":
-        return "None" if value is None else f"⛔ القيمة ليست None: {value!r}"
-    if spec == "int":
-        return str(int(value))
-    if spec == "f1":
-        return f"{float(value):.1f}"
-    if spec == "f2":
-        return f"{float(value):.2f}"
-    if spec == "f4":
-        return f"{float(value):.4f}"
-    if spec == "f1c":
-        return f"{float(value):,.1f}"
-    if spec == "f2c":
-        return f"{float(value):,.2f}"
-    raise ValueError(f"صيغةُ تنسيقٍ غير معروفة: {spec!r}")
+    try:
+        renderer = _RENDERERS[spec]
+    except KeyError:
+        raise ValueError(f"صيغةُ تنسيقٍ غير معروفة: {spec!r}") from None
+    return renderer(value)
 
 
 def bucket_state(state: str) -> str:
@@ -257,9 +297,8 @@ def bucket_state(state: str) -> str:
     return "other"
 
 
-def check_ledger(ledger: list[dict[str, str]], failures: list[str]) -> dict[str, int]:
-    """بنيةُ السجل: صفّية، تفريد، اتصالُ الترقيم، ⛔ ولا مستوى فوق E1."""
-    counts = dict.fromkeys(DECLARED_KEYS, 0)
+def _check_ledger_identity(ledger: list[dict[str, str]], failures: list[str]) -> None:
+    """صفّيةُ السجل وتفريدُ معرّفاته واتصالُها وسقوفُ التزامه — خمسةُ فروعٍ لا أكثر."""
     if len(ledger) != EXPECTED_HYPOTHESES:
         failures.append(f"سجلّ الجولة 04 يحوي {len(ledger)} صفاً، والمتوقّع {EXPECTED_HYPOTHESES}")
     ids = [row["id"] for row in ledger]
@@ -274,32 +313,51 @@ def check_ledger(ledger: list[dict[str, str]], failures: list[str]) -> dict[str,
             f"مستويات التزام خارج E0/E1 معلَنة في السجل: {sorted(levels - EXPECTED_LEVELS)} — "
             f"⛔ {NO_SPEND_PHRASE}، فلا E2 في هذه الجولة (محرك الالتزام §5)"
         )
-    for row in ledger:
-        key = bucket_state(row["gate_state"])
-        if key in counts:
-            counts[key] += 1
-        if not (row["hypothesis_ar"] and row["counterparty"]):
-            failures.append(f"{row['id']}: صفٌّ بلا فرضيةٍ أو بلا طرفٍ مقابل")
-        if not (row["binding_gate"] and row["gate_state"] and row["decision"]):
-            failures.append(f"{row['id']}: صفٌّ بلا بوّابة حاكمة أو حالة أو قرار")
-        if not row["shared_dependency"]:
-            failures.append(f"{row['id']}: صفٌّ بلا اعتماد مشترك — «محفظة متنوّعة» بلا فحص العُقد")
-        if bucket_state(row["gate_state"]) == "other":
-            failures.append(
-                f"{row['id']}: حالةُ بوّابةٍ لا تُصنَّف ({row['gate_state'][:40]}…) — "
-                "⛔ الحالةُ المعلَنة يجب أن تبدأ بأحد التصريحات الأربعة في §6.1"
-            )
-        for field in ("key_claim", "key_test"):
-            value = row[field]
-            if value != "-" and not re.fullmatch(r"[CT]\d\d( [CT]\d\d)*", value):
-                failures.append(f"{row['id']}: {field}={value!r} خارج الصيغة [CT]nn")
-    #: اتصالُ الترقيم مع الجولة 03 (C38–C46 · T37–T44): ⛔ لا إعادةُ استعمالٍ ولا قفز.
+
+
+def _check_ledger_row(row: dict[str, str], counts: dict[str, int], failures: list[str]) -> None:
+    """صفٌّ واحد: اكتمالُ الحقول وحصيلتُه وصيغةُ ترقيمه — والمنطقُ حرفيٌّ كما كان."""
+    key = bucket_state(row["gate_state"])
+    if key in counts:
+        counts[key] += 1
+    if not (row["hypothesis_ar"] and row["counterparty"]):
+        failures.append(f"{row['id']}: صفٌّ بلا فرضيةٍ أو بلا طرفٍ مقابل")
+    if not (row["binding_gate"] and row["gate_state"] and row["decision"]):
+        failures.append(f"{row['id']}: صفٌّ بلا بوّابة حاكمة أو حالة أو قرار")
+    if not row["shared_dependency"]:
+        failures.append(f"{row['id']}: صفٌّ بلا اعتماد مشترك — «محفظة متنوّعة» بلا فحص العُقد")
+    if bucket_state(row["gate_state"]) == "other":
+        failures.append(
+            f"{row['id']}: حالةُ بوّابةٍ لا تُصنَّف ({row['gate_state'][:40]}…) — "
+            "⛔ الحالةُ المعلَنة يجب أن تبدأ بأحد التصريحات الأربعة في §6.1"
+        )
+    for field in ("key_claim", "key_test"):
+        value = row[field]
+        if value != "-" and not re.fullmatch(r"[CT]\d\d( [CT]\d\d)*", value):
+            failures.append(f"{row['id']}: {field}={value!r} خارج الصيغة [CT]nn")
+
+
+def _check_ledger_numbering(ledger: list[dict[str, str]], failures: list[str]) -> None:
+    """اتصالُ الترقيم مع الجولة 03 (C38–C46 · T37–T44): ⛔ لا إعادةُ استعمالٍ ولا قفز."""
     claims = {int(m) for row in ledger for m in re.findall(r"C(\d+)", row["key_claim"])}
     tests = {int(m) for row in ledger for m in re.findall(r"T(\d+)", row["key_test"])}
     if claims and min(claims) <= 46:
-        failures.append(f"أرقامُ ادّعاءاتٍ معادٌ استعمالها من الجولة 03: {sorted(c for c in claims if c <= 46)}")
+        failures.append(
+            f"أرقامُ ادّعاءاتٍ معادٌ استعمالها من الجولة 03: {sorted(c for c in claims if c <= 46)}"
+        )
     if tests and min(tests) <= 44:
-        failures.append(f"أرقامُ بطاقاتٍ معادٌ استعمالها من الجولة 03: {sorted(t for t in tests if t <= 44)}")
+        failures.append(
+            f"أرقامُ بطاقاتٍ معادٌ استعمالها من الجولة 03: {sorted(t for t in tests if t <= 44)}"
+        )
+
+
+def check_ledger(ledger: list[dict[str, str]], failures: list[str]) -> dict[str, int]:
+    """بنيةُ السجل: صفّية، تفريد، اتصالُ الترقيم، ⛔ ولا مستوى فوق E1."""
+    counts = dict.fromkeys(DECLARED_KEYS, 0)
+    _check_ledger_identity(ledger, failures)
+    for row in ledger:
+        _check_ledger_row(row, counts, failures)
+    _check_ledger_numbering(ledger, failures)
     return counts
 
 
@@ -308,7 +366,9 @@ def check_declared_counts(round_text: str, counts: dict[str, int], failures: lis
     for key, label in DECLARED_KEYS.items():
         want = counts[key]
         # الجدولُ يكتب «| **<label>** (…) | **N** |» أو «| <label> | N |».
-        row = re.search(rf"\|\s*(?:\*\*)?{re.escape(label)}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text)
+        row = re.search(
+            rf"\|\s*(?:\*\*)?{re.escape(label)}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text
+        )
         if not row:
             failures.append(f"§6.1: لا صفَّ معلن لـ«{label}» في جدول المسح")
             continue
@@ -319,14 +379,22 @@ def check_declared_counts(round_text: str, counts: dict[str, int], failures: lis
             )
 
 
-def check_levels_declared(round_text: str, ledger: list[dict[str, str]], failures: list[str]) -> None:
+def check_levels_declared(
+    round_text: str, ledger: list[dict[str, str]], failures: list[str]
+) -> None:
     """عددا E1 وE0 في §6.1 يجب أن يطابقا السجلّ."""
     n_e1 = sum(1 for row in ledger if row["max_level"] == "E1")
     n_e0 = sum(1 for row in ledger if row["max_level"] == "E0")
     for label, want in (("E1", n_e1), ("E0", n_e0)):
-        row = re.search(rf"\|\s*(?:\*\*)?سقفٌ أقصى مسموح = {label}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text)
+        row = re.search(
+            rf"\|\s*(?:\*\*)?سقفٌ أقصى مسموح = {label}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|",
+            round_text,
+        )
         if not row:
-            row = re.search(rf"\|\s*(?:\*\*)?الباقي عند {label}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text)
+            row = re.search(
+                rf"\|\s*(?:\*\*)?الباقي عند {label}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|",
+                round_text,
+            )
         if not row:
             failures.append(f"§6.1: لا صفَّ معلن لعدد {label}")
             continue
@@ -337,14 +405,27 @@ def check_levels_declared(round_text: str, ledger: list[dict[str, str]], failure
 def check_evidence(evidence: list[dict[str, str]], failures: list[str]) -> None:
     """سجلّ الأدلة: عدٌّ، اتصالُ نطاق S74–S95، تاريخُ استرجاعٍ لكلّ صفّ، وحالةُ مصدرٍ صالحة."""
     if len(evidence) != EXPECTED_EVIDENCE:
-        failures.append(f"سجلّ أدلّة الجولة 04 يحوي {len(evidence)} سنداً، والمتوقّع {EXPECTED_EVIDENCE}")
+        failures.append(
+            f"سجلّ أدلّة الجولة 04 يحوي {len(evidence)} سنداً، والمتوقّع {EXPECTED_EVIDENCE}"
+        )
     ids = [row["id"] for row in evidence]
-    want = [f"S{n}" for n in range(int(EXPECTED_EVIDENCE_RANGE[0][1:]), int(EXPECTED_EVIDENCE_RANGE[1][1:]) + 1)]
+    want = [
+        f"S{n}"
+        for n in range(int(EXPECTED_EVIDENCE_RANGE[0][1:]), int(EXPECTED_EVIDENCE_RANGE[1][1:]) + 1)
+    ]
     if ids != want:
         failures.append(f"معرّفات الأدلّة {ids[:3]}…{ids[-2:]}, والمتوقّع اتّصالاً {want[0]}–{want[-1]}")
     #: عُرفُ الأعمدة موروثٌ من الجولتين 02/03 — ⛔ لا اختراعَ مخطّطٍ جديد في الجولة 04.
-    want_cols = ["id", "claim_summary_ar", "source", "url", "as_of", "status",
-                 "independence_note", "reverification_trigger"]
+    want_cols = [
+        "id",
+        "claim_summary_ar",
+        "source",
+        "url",
+        "as_of",
+        "status",
+        "independence_note",
+        "reverification_trigger",
+    ]
     if evidence and list(evidence[0].keys()) != want_cols:
         failures.append(
             f"أعمدةُ سجلّ الأدلّة {list(evidence[0].keys())}، والمتوقّع عُرفَ الجولتين 02/03: {want_cols}"
@@ -354,10 +435,14 @@ def check_evidence(evidence: list[dict[str, str]], failures: list[str]) -> None:
     for row in evidence:
         sid = row.get("id", "?")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", row.get("as_of", "")):
-            failures.append(f"{sid}: `as_of` غائبٌ أو غير صالح ({row.get('as_of','')!r}) — T43 يلزم تاريخاً لكلّ صفّ")
+            failures.append(
+                f"{sid}: `as_of` غائبٌ أو غير صالح ({row.get('as_of', '')!r}) — T43 يلزم تاريخاً لكلّ صفّ"
+            )
         status = row.get("status", "")
         if not (grade.match(status) or status.startswith("UNSTATED")):
-            failures.append(f"{sid}: درجةُ مصدرٍ خارج العُرف (P/M/L ± H/M أو UNSTATED): {status[:30]!r}")
+            failures.append(
+                f"{sid}: درجةُ مصدرٍ خارج العُرف (P/M/L ± H/M أو UNSTATED): {status[:30]!r}"
+            )
         url = row.get("url", "")
         if not url and not status.startswith("UNSTATED"):
             failures.append(f"{sid}: سندٌ بلا رابطٍ ولا وسم UNSTATED")
@@ -368,9 +453,7 @@ def check_evidence(evidence: list[dict[str, str]], failures: list[str]) -> None:
                 "⛔ حاشيةٌ مكان الرابط تُقرأ إسناداً"
             )
         if status.startswith("UNSTATED") and url.startswith("http"):
-            failures.append(
-                f"{sid}: صفٌّ موسومٌ UNSTATED ومع ذلك يحمل رابطاً — ⛔ الوسمُ يناقض السند"
-            )
+            failures.append(f"{sid}: صفٌّ موسومٌ UNSTATED ومع ذلك يحمل رابطاً — ⛔ الوسمُ يناقض السند")
         if not row.get("independence_note"):
             failures.append(f"{sid}: سندٌ بلا ملاحظةِ استقلال — ومحورُ التحكيم الأوّل هو الاستقلال")
         if not row.get("reverification_trigger"):
@@ -502,7 +585,9 @@ def check_reproducibility(failures: list[str]) -> None:
         module = __import__(MEASURE.stem)
         rebuilt = module.build()
         rebuilt["inputs_digest_sha256"] = module._canonical_digest(rebuilt)
-    except Exception as exc:  # noqa: BLE001 — الفشلُ صريحٌ لا تجاوز
+    #: `BLE001` غيرُ مفعَّلةٍ في هذا المستودع — والتعليقُ يبقى توثيقاً لا توجيهاً:
+    #: التقاطُ `Exception` هنا فشلٌ صريحٌ يُبلَّغ، لا تجاوزٌ صامت.
+    except Exception as exc:
         failures.append(f"تعذّرت إعادةُ بناء ملفّ القياس: {type(exc).__name__}: {exc}")
         return
     on_disk = json.loads(ARTIFACT.read_text(encoding="utf-8"))
@@ -517,7 +602,8 @@ def check_reproducibility(failures: list[str]) -> None:
         disk_keys = set(on_disk.get("results", {}))
         new_keys = set(rebuilt.get("results", {}))
         diff = sorted(disk_keys ^ new_keys) or [
-            k for k in sorted(disk_keys & new_keys)
+            k
+            for k in sorted(disk_keys & new_keys)
             if on_disk["results"][k] != rebuilt["results"][k]
         ]
         failures.append(

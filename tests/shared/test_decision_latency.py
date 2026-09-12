@@ -96,7 +96,11 @@ def test_dated_event_rejects_layer_outside_closed_set() -> None:
 
 def test_binding_layers_is_a_closed_named_set() -> None:
     assert BINDING_LAYERS == (
-        "DETECTION", "CORRELATION", "DECISION", "AUTHORITY", "UNMEASURED",
+        "DETECTION",
+        "CORRELATION",
+        "DECISION",
+        "AUTHORITY",
+        "UNMEASURED",
     )
 
 
@@ -335,7 +339,10 @@ def test_failsafe_is_the_direction_of_the_default_not_the_length_of_the_timer() 
     assert failsafe_gap(pause)["defect"] is None
     assert "الصمتُ يُفسَّر إذناً" in str(failsafe_gap(continue_)["defect"])
     # المدّةُ نفسها مع اتجاهين مختلفَين ⇒ المنتجُ هو الاتجاه
-    assert failsafe_gap(pause)["decide_within_minutes"] == failsafe_gap(continue_)["decide_within_minutes"]
+    assert (
+        failsafe_gap(pause)["decide_within_minutes"]
+        == failsafe_gap(continue_)["decide_within_minutes"]
+    )
 
 
 def test_escalation_policy_rejects_undefined_default_and_missing_source() -> None:
@@ -368,7 +375,7 @@ def test_concentration_refuses_zero_unsolvable_and_bad_shares() -> None:
         unsolvable_concentration(0, 898, 0.93)
     with pytest.raises(DecisionLatencyError, match="متناقض"):
         unsolvable_concentration(900, 898, 0.5)
-    with pytest.raises(DecisionLatencyError, match="خارج \[0,1\]"):
+    with pytest.raises(DecisionLatencyError, match=r"خارج \[0,1\]"):
         unsolvable_concentration(10, 100, 1.5)
 
 
@@ -413,7 +420,7 @@ def test_dispersion_ratio_is_max_over_min_of_the_same_named_quantity() -> None:
 
 
 def test_dispersion_refuses_to_merge_different_markets_or_years() -> None:
-    mixed = ESTIMATES + (MarketEstimate("Securing AI", 2027, 4_783e6, "Gartner", date(2026, 8, 26)),)
+    mixed = (*ESTIMATES, MarketEstimate("Securing AI", 2027, 4_783e6, "Gartner", date(2026, 8, 26)))
     with pytest.raises(DecisionLatencyError, match="أسماء/سنواتٍ مختلفة"):
         market_dispersion(mixed)
     with pytest.raises(DecisionLatencyError, match="ليس تشتّتاً"):
@@ -430,10 +437,10 @@ def test_same_source_self_contradiction_is_named_not_averaged() -> None:
 
 def test_decision_grade_is_judged_against_the_decision_gap_not_a_constant() -> None:
     dispersion = 35.09e9 / 450e6  # 77.9778 — التشتّتُ المقيس فعلاً
-    assert dispersion_is_decision_grade(dispersion, 100.0) is True   # فجوةٌ أوسع من التشتّت ⇒ يُرتَّب
-    assert dispersion_is_decision_grade(dispersion, 77.0) is False   # فجوةٌ أضيق ⇒ لا يُرتَّب
-    assert dispersion_is_decision_grade(dispersion, 2.0) is False    # والفجوةُ المُعلَنة عندنا
-    assert dispersion_is_decision_grade(2.5, 3.0) is True            # تشتّتٌ ضيّقٌ يكفي للترتيب
+    assert dispersion_is_decision_grade(dispersion, 100.0) is True  # فجوةٌ أوسع من التشتّت ⇒ يُرتَّب
+    assert dispersion_is_decision_grade(dispersion, 77.0) is False  # فجوةٌ أضيق ⇒ لا يُرتَّب
+    assert dispersion_is_decision_grade(dispersion, 2.0) is False  # والفجوةُ المُعلَنة عندنا
+    assert dispersion_is_decision_grade(2.5, 3.0) is True  # تشتّتٌ ضيّقٌ يكفي للترتيب
     with pytest.raises(DecisionLatencyError, match="مستحيل"):
         dispersion_is_decision_grade(0.5, 2.0)
     with pytest.raises(DecisionLatencyError, match="ليست فجوة"):
@@ -442,9 +449,15 @@ def test_decision_grade_is_judged_against_the_decision_gap_not_a_constant() -> N
 
 def test_rate_bias_reports_band_and_direction_and_never_a_mean() -> None:
     anchors = (
-        RateAnchor("مُبلَّغ ذاتياً", 144.0, "SELF_REPORTED_ASKED", "contractrates.fyi", date(2026, 6, 30)),
-        RateAnchor("مشتقٌّ من إعلانات", 63.92, "POSTING_DERIVED_OFFERED", "ZipRecruiter", date(2026, 7, 9)),
-        RateAnchor("مشتقٌّ من إعلانات", 57.64, "POSTING_DERIVED_OFFERED", "ZipRecruiter", date(2026, 9, 10)),
+        RateAnchor(
+            "مُبلَّغ ذاتياً", 144.0, "SELF_REPORTED_ASKED", "contractrates.fyi", date(2026, 6, 30)
+        ),
+        RateAnchor(
+            "مشتقٌّ من إعلانات", 63.92, "POSTING_DERIVED_OFFERED", "ZipRecruiter", date(2026, 7, 9)
+        ),
+        RateAnchor(
+            "مشتقٌّ من إعلانات", 57.64, "POSTING_DERIVED_OFFERED", "ZipRecruiter", date(2026, 9, 10)
+        ),
     )
     out = rate_bias(anchors)
     assert out["band_usd_per_hour"] == [57.64, 144.0]
@@ -502,8 +515,11 @@ def test_internal_damage_alone_does_not_make_a_loss_insurable() -> None:
 
 def test_third_party_damage_flips_the_sellable_unit() -> None:
     flipped = LossSplit(
-        LOSSES.confirmed_damage_items, LOSSES.response_cost_items, LOSSES.controls_that_held,
-        True, LOSSES.third_party_source,
+        LOSSES.confirmed_damage_items,
+        LOSSES.response_cost_items,
+        LOSSES.controls_that_held,
+        True,
+        LOSSES.third_party_source,
     )
     assert flipped.sellable_unit == "LOSS_INDEMNITY_OR_PREVENTION"
 
@@ -556,7 +572,9 @@ def test_module_is_stdlib_only_and_imports_nothing_from_app() -> None:
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
-                assert alias.name.split(".")[0] in {a.split(".")[0] for a in allowed_roots}, alias.name
+                assert alias.name.split(".")[0] in {a.split(".")[0] for a in allowed_roots}, (
+                    alias.name
+                )
         elif isinstance(node, ast.ImportFrom):
             assert node.module and node.module.startswith(tuple(allowed_roots)), node.module
     assert "from app" not in src and "import app" not in src

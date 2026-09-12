@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.research.measure_benchmark_pin import (  # noqa: E402
+from scripts.research.measure_benchmark_pin import (
     AS_OF,
     DOMAIN_INSTANCES,
     OPENAI_UNSOLVED,
@@ -47,7 +47,7 @@ from scripts.research.measure_benchmark_pin import (  # noqa: E402
     self_contradictions,
     unsolved_conflict,
 )
-from shared.research.assurance_window import MAX_REPORT_AGE_DAYS, ReportPin, evaluate_pin  # noqa: E402
+from shared.research.assurance_window import MAX_REPORT_AGE_DAYS, ReportPin, evaluate_pin
 
 ARTIFACT = ROOT / "docs" / "research" / "BPIN_MEASUREMENTS.json"
 SCRIPT = ROOT / "scripts" / "research" / "measure_benchmark_pin.py"
@@ -102,9 +102,18 @@ def test_no_exploit_code_or_vector_detail_in_the_measurement_path() -> None:
     for path in (SCRIPT, ARTIFACT):
         text = path.read_text(encoding="utf-8")
         for banned in (
-            "169.254.169.254", "modprobe_path", "SROP", "signal-return-oriented",
-            "catflag", "heap groom", "fake string", "OOB heap read",
-            "reverse_shell", "__reduce__", "h5py.File(", "os.system(",
+            "169.254.169.254",
+            "modprobe_path",
+            "SROP",
+            "signal-return-oriented",
+            "catflag",
+            "heap groom",
+            "fake string",
+            "OOB heap read",
+            "reverse_shell",
+            "__reduce__",
+            "h5py.File(",
+            "os.system(",
         ):
             assert banned not in text, f"{path.name}: {banned}"
 
@@ -140,8 +149,19 @@ def test_pins_are_stale_by_age_and_that_is_a_quotation_limit_not_a_falsification
 def test_pin_evaluations_raises_if_an_unpinned_state_appears_in_domain() -> None:
     """⛔ `UNPINNED` هنا يعني دبوساً معطوباً أو إدخالاً ناقصاً — فيُرفع لا يُبلَّغ نتيجة."""
     broken = (
-        SuiteRun("m", "", "FILTERS_DISABLED+MITIGATIONS_OFF", 120, 1, (1, 0, 0), (0, 0, 0),
-                 None, None, None, None),
+        SuiteRun(
+            "m",
+            "",
+            "FILTERS_DISABLED+MITIGATIONS_OFF",
+            120,
+            1,
+            (1, 0, 0),
+            (0, 0, 0),
+            None,
+            None,
+            None,
+            None,
+        ),
     )
     with pytest.raises(BenchmarkPinError, match="UNPINNED"):
         pin_evaluations(broken)
@@ -164,10 +184,19 @@ def test_the_same_pin_is_unpinned_outside_its_domain_in_round04() -> None:
 
 # ── 3) SuiteRun: التحقّقُ يرفض المستحيل ──────────────────────────────────────
 def _run(**over) -> SuiteRun:
-    base = dict(model_id="m", harness="h", safeguard_config="FILTERS_DISABLED+MITIGATIONS_OFF",
-                adversary_budget_minutes=120, successes=10, by_domain=(6, 3, 1),
-                with_mitigations=(2, 1, 0), cpst_usd=5.0, cost_full_usd=9.0,
-                time_min_per_success=20.0, llm_calls_per_success=100.0)
+    base = {
+        "model_id": "m",
+        "harness": "h",
+        "safeguard_config": "FILTERS_DISABLED+MITIGATIONS_OFF",
+        "adversary_budget_minutes": 120,
+        "successes": 10,
+        "by_domain": (6, 3, 1),
+        "with_mitigations": (2, 1, 0),
+        "cpst_usd": 5.0,
+        "cost_full_usd": 9.0,
+        "time_min_per_success": 20.0,
+        "llm_calls_per_success": 100.0,
+    }
     base.update(over)
     return SuiteRun(**base)
 
@@ -224,19 +253,22 @@ def test_mitigation_effect_reproduces_the_published_tables() -> None:
     assert m["successes_mitigations_on"] == 69
     # ⚠️ القياسُ يُقرِّب عن قصدٍ لاستقرار البصمة (round 4/6) ⇒ المُقارنةُ بالحرف لا بـapprox:
     #    وتثبيتُ القيمة المُقرَّبة عقدٌ أقوى، فهو يُثبّت ما على القرص لا ما يقصده الكاتب.
-    assert m["reduction_factor"] == 5.3478          # round(369/69, 4)
-    assert m["residual_share"] == 0.186992          # round(69/369, 6)
+    assert m["reduction_factor"] == 5.3478  # round(369/69, 4)
+    assert m["residual_share"] == 0.186992  # round(69/369, 6)
     assert m["pairs_measured"] == 7
     assert m["pairs_zeroed_count"] == 4
     assert m["residual_top_pair"] == "claude-mythos-preview"
-    assert m["residual_top_share"] == 0.652174      # round(45/69, 6)
+    assert m["residual_top_share"] == 0.652174  # round(45/69, 6)
 
 
 def test_zeroed_pairs_are_counted_not_averaged_away() -> None:
     """⛔ متوسطُ نسبةِ انخفاضٍ تشمل أصفاراً يُخفي أنّ أربعةً من سبعة أُصفرت تماماً."""
     m = mitigation_effect(RUNS)
     assert sorted(m["pairs_zeroed"]) == [
-        "claude-opus-4.6", "claude-opus-4.7", "gemini-3.1-pro", "glm-5.1",
+        "claude-opus-4.6",
+        "claude-opus-4.7",
+        "gemini-3.1-pro",
+        "glm-5.1",
     ]
     assert len(m["residual_by_pair"]) == 3
     assert sum(d["successes"] for d in m["residual_by_pair"]) == 69
@@ -254,8 +286,8 @@ def test_cpst_band_is_primary_sourced_and_in_usd() -> None:
     c = cpst_band(RUNS)
     assert c["unit"] == "USD_PER_SUCCESSFUL_TASK"
     assert c["band_usd"] == [3.75, 22.99]
-    assert c["spread_factor"] == 6.1307             # round(22.99/3.75, 4)
-    assert c["median_usd"] == 8.6                   # (8.56 + 8.64) / 2
+    assert c["spread_factor"] == 6.1307  # round(22.99/3.75, 4)
+    assert c["median_usd"] == 8.6  # (8.56 + 8.64) / 2
     assert c["n_disclosed"] == 6
     assert c["n_undisclosed"] == 1
     assert c["undisclosed_models"] == ["claude-mythos-preview"]
@@ -293,10 +325,10 @@ def test_off_target_rate_reproduces_the_published_pairs() -> None:
     assert top["model_id"] == "gpt-5.5"
     assert top["flags_captured"] == 210 and top["successes_on_intended"] == 120
     assert top["off_target_count"] == 90
-    assert top["off_target_share"] == 0.428571      # round(90/210, 6)
+    assert top["off_target_share"] == 0.428571  # round(90/210, 6)
     second = o["per_pair"][1]
     assert second["model_id"] == "claude-mythos-preview"
-    assert second["off_target_share"] == 0.30531     # round(69/226, 6)
+    assert second["off_target_share"] == 0.30531  # round(69/226, 6)
     assert o["max_off_target_share"] == 0.428571
     assert o["min_off_target_share"] == 0.30531
 
@@ -323,7 +355,7 @@ def test_unsolved_conflict_keeps_both_primaries_and_refuses_to_average() -> None
     assert c["berkeley_unsolved_share"] == 0.802895  # round(721/898, 6)
     assert c["openai_never_solved"] == 198
     assert c["openai_never_solved_share"] == 0.22049  # round(198/898, 6)
-    assert c["share_spread_factor"] == 3.6414         # round(721/198, 4)
+    assert c["share_spread_factor"] == 3.6414  # round(721/198, 4)
     assert c["reconciled"] is False
     assert c["reconciliation_basis"] == "PIN_DIFFERENCE_NOT_AVERAGE"
 
@@ -363,7 +395,7 @@ def test_budget_sensitivity_reproduces_the_published_curve() -> None:
     b = budget_sensitivity()
     assert b["successes_at_120min"] == 127
     assert b["successes_at_360min"] == 204
-    assert b["growth_share"] == 0.606299             # round(77/127, 6)
+    assert b["growth_share"] == 0.606299  # round(77/127, 6)
     assert b["plateau_declared"] is False
     assert b["self_declared_undercount"] is True
     assert b["weaker_pair"]["plateau_value"] == 15
@@ -456,8 +488,14 @@ def test_pin_field_limitations_are_declared_not_hidden() -> None:
 def test_every_result_block_carries_its_own_source() -> None:
     """⛔ لا كتلةَ نتيجةٍ بلا مصدر — فالرقمُ بلا نسبٍ يُقرأ قياساً لنا."""
     results = build()["results"]
-    for key in ("mitigation_effect", "cpst_band", "off_target_rate",
-                "unsolved_conflict", "budget_sensitivity", "safeguard_pair"):
+    for key in (
+        "mitigation_effect",
+        "cpst_band",
+        "off_target_rate",
+        "unsolved_conflict",
+        "budget_sensitivity",
+        "safeguard_pair",
+    ):
         assert results[key]["source"], key
         assert "2026-05-13" in results[key]["source"] or "2026-08-26" in results[key]["source"], key
 
@@ -485,8 +523,18 @@ def test_flat_decision_heads_match_their_nested_blocks() -> None:
 def test_module_is_stdlib_only() -> None:
     """⛔ صفرُ تبعياتٍ خارجية — فالقياسُ يجب أن يُعاد في أيّ بيئةٍ بلا تثبيت."""
     tree = ast.parse(SCRIPT.read_text(encoding="utf-8"))
-    allowed = {"__future__", "argparse", "hashlib", "json", "sys", "dataclasses",
-               "datetime", "pathlib", "shared.research.assurance_window", "shared"}
+    allowed = {
+        "__future__",
+        "argparse",
+        "hashlib",
+        "json",
+        "sys",
+        "dataclasses",
+        "datetime",
+        "pathlib",
+        "shared.research.assurance_window",
+        "shared",
+    }
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
@@ -500,17 +548,30 @@ def test_module_has_no_network_or_shell_escape() -> None:
     tree = ast.parse(SCRIPT.read_text(encoding="utf-8"))
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
-            assert (node.module or "").split(".")[0] not in {"urllib", "requests", "socket", "http", "subprocess"}
+            assert (node.module or "").split(".")[0] not in {
+                "urllib",
+                "requests",
+                "socket",
+                "http",
+                "subprocess",
+            }
         elif isinstance(node, ast.Import):
             for alias in node.names:
-                assert alias.name.split(".")[0] not in {"urllib", "requests", "socket", "http", "subprocess", "os"}
+                assert alias.name.split(".")[0] not in {
+                    "urllib",
+                    "requests",
+                    "socket",
+                    "http",
+                    "subprocess",
+                    "os",
+                }
 
 
 def test_as_of_is_not_read_from_the_clock() -> None:
     """⛔ `AS_OF` ثابتٌ منطوق: فكلّ عمرٍ في الملفّ يُنسب إليه، وقراءتُه من الساعة تُفقد
     إعادةَ البناء حرفيتها."""
     assert isinstance(AS_OF, date)
-    assert AS_OF == date(2026, 9, 12)
+    assert date(2026, 9, 12) == AS_OF
     text = SCRIPT.read_text(encoding="utf-8")
     assert re.search(r"AS_OF = date\(2026, 9, 12\)", text)
 

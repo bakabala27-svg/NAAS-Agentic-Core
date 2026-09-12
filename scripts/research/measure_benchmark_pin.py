@@ -38,7 +38,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from shared.research.assurance_window import (  # noqa: E402
+from shared.research.assurance_window import (
     FRESH_DAYS,
     MAX_REPORT_AGE_DAYS,
     ReportPin,
@@ -106,12 +106,11 @@ class SuiteRun:
             raise BenchmarkPinError(f"{self.model_id}: نجاحٌ يتجاوز حجمَ الحزمة")
         if self.adversary_budget_minutes <= 0:
             raise BenchmarkPinError(f"{self.model_id}: ميزانيةٌ غير موجبة")
-        if self.with_mitigations is not None:
-            if sum(self.with_mitigations) > self.successes:
-                raise BenchmarkPinError(
-                    f"{self.model_id}: النجاحُ مع الحمايات {sum(self.with_mitigations)} "
-                    f"يتجاوز النجاحَ بدونها {self.successes} — ⛔ الحماياتُ لا تزيد النجاح"
-                )
+        if self.with_mitigations is not None and sum(self.with_mitigations) > self.successes:
+            raise BenchmarkPinError(
+                f"{self.model_id}: النجاحُ مع الحمايات {sum(self.with_mitigations)} "
+                f"يتجاوز النجاحَ بدونها {self.successes} — ⛔ الحماياتُ لا تزيد النجاح"
+            )
         if self.cpst_usd is not None and self.cpst_usd <= 0:
             raise BenchmarkPinError(f"{self.model_id}: CPST غير موجبة")
         if (self.flags_captured is None) != (self.successes_on_intended is None):
@@ -141,34 +140,121 @@ class SuiteRun:
 
 #: ⛔ كلّ رقمٍ هنا منسوبٌ إلى الجدول/الشكل الذي جاء منه في المصدر الأوّل.
 RUNS: tuple[SuiteRun, ...] = (
-    SuiteRun("claude-mythos-preview", "claude-code", "FILTERS_DISABLED+MITIGATIONS_OFF", 120,
-             157, (107, 38, 12), (25, 17, 3), None, None, 54.7, 225.5,
-             flags_captured=226, successes_on_intended=157),
-    SuiteRun("claude-opus-4.6", "claude-code", "FILTERS_DISABLED+MITIGATIONS_OFF", 120,
-             15, (12, 2, 1), (0, 0, 0), 8.08, 21.76, 18.1, 102.3),
-    SuiteRun("claude-opus-4.7", "claude-code", "FILTERS_DISABLED+MITIGATIONS_OFF", 120,
-             7, (4, 3, 0), (0, 0, 0), 8.64, 3.40, 22.1, 102.0),
-    SuiteRun("gemini-3.1-pro", "gemini-cli", "FILTERS_DISABLED+MITIGATIONS_OFF", 120,
-             12, (10, 2, 0), (0, 0, 0), 8.56, 9.02, 51.1, 169.5),
-    SuiteRun("glm-5.1", "claude-code", "FILTERS_DISABLED+MITIGATIONS_OFF", 120,
-             4, (4, 0, 0), (0, 0, 0), 3.75, 6.39, 63.3, 148.6),
-    SuiteRun("gpt-5.4", "codex-cli", "FILTERS_DISABLED+MITIGATIONS_OFF", 120,
-             54, (38, 15, 1), (2, 0, 1), 12.20, 25.43, 51.1, 220.1),
-    SuiteRun("gpt-5.5", "codex-cli", "FILTERS_DISABLED+MITIGATIONS_OFF", 120,
-             120, (71, 27, 22), (10, 3, 8), 22.99, 34.55, 49.6, 256.8,
-             flags_captured=210, successes_on_intended=120),
+    SuiteRun(
+        "claude-mythos-preview",
+        "claude-code",
+        "FILTERS_DISABLED+MITIGATIONS_OFF",
+        120,
+        157,
+        (107, 38, 12),
+        (25, 17, 3),
+        None,
+        None,
+        54.7,
+        225.5,
+        flags_captured=226,
+        successes_on_intended=157,
+    ),
+    SuiteRun(
+        "claude-opus-4.6",
+        "claude-code",
+        "FILTERS_DISABLED+MITIGATIONS_OFF",
+        120,
+        15,
+        (12, 2, 1),
+        (0, 0, 0),
+        8.08,
+        21.76,
+        18.1,
+        102.3,
+    ),
+    SuiteRun(
+        "claude-opus-4.7",
+        "claude-code",
+        "FILTERS_DISABLED+MITIGATIONS_OFF",
+        120,
+        7,
+        (4, 3, 0),
+        (0, 0, 0),
+        8.64,
+        3.40,
+        22.1,
+        102.0,
+    ),
+    SuiteRun(
+        "gemini-3.1-pro",
+        "gemini-cli",
+        "FILTERS_DISABLED+MITIGATIONS_OFF",
+        120,
+        12,
+        (10, 2, 0),
+        (0, 0, 0),
+        8.56,
+        9.02,
+        51.1,
+        169.5,
+    ),
+    SuiteRun(
+        "glm-5.1",
+        "claude-code",
+        "FILTERS_DISABLED+MITIGATIONS_OFF",
+        120,
+        4,
+        (4, 0, 0),
+        (0, 0, 0),
+        3.75,
+        6.39,
+        63.3,
+        148.6,
+    ),
+    SuiteRun(
+        "gpt-5.4",
+        "codex-cli",
+        "FILTERS_DISABLED+MITIGATIONS_OFF",
+        120,
+        54,
+        (38, 15, 1),
+        (2, 0, 1),
+        12.20,
+        25.43,
+        51.1,
+        220.1,
+    ),
+    SuiteRun(
+        "gpt-5.5",
+        "codex-cli",
+        "FILTERS_DISABLED+MITIGATIONS_OFF",
+        120,
+        120,
+        (71, 27, 22),
+        (10, 3, 8),
+        22.99,
+        34.55,
+        49.6,
+        256.8,
+        flags_captured=210,
+        successes_on_intended=120,
+    ),
 )
 
 #: الشكل 4: تقاطعُ مجموعات النجاح — ويُستعمل اشتقاقياً لا نقلاً.
 VENN = {"exclusive_mythos": 56, "exclusive_gpt55": 26, "shared_top_two": 91, "exclusive_others": 4}
 
 #: الشكل 5: حساسيةُ الميزانية (طرفٌ أوّل، والمصدرُ نفسه يعلن أنّ الساعتَين تُبخسان).
-BUDGET_CURVE = {"mythos_at_120min": 127, "mythos_at_360min": 204, "opus46_plateau_minutes": 30,
-                "opus46_plateau_value": 15}
+BUDGET_CURVE = {
+    "mythos_at_120min": 127,
+    "mythos_at_360min": 204,
+    "opus46_plateau_minutes": 30,
+    "opus46_plateau_value": 15,
+}
 
 #: مرشّحاتُ المزوّد الافتراضية على GPT-5.5 (الحاشية ‡ في الجدول 1).
-SAFEGUARD_PAIR = {"model_id": "gpt-5.5", "harness": "codex-cli",
-                  "default_filters_successes": 0, "filters_disabled_successes": 120}
+SAFEGUARD_PAIR = {
+    "model_id": "gpt-5.5",
+    "harness": "codex-cli",
+    "default_filters_successes": 0,
+    "filters_disabled_successes": 120,
+}
 
 #: ادّعاءُ الطرف الأوّل الثاني عن الحزمة نفسها (OpenAI، تشغيلُه الداخلي).
 OPENAI_UNSOLVED = {"never_solved": 198, "suite_total": SUITE_INSTANCES, "source": SRC_OPENAI}
@@ -229,8 +315,9 @@ def cpst_band(runs: tuple[SuiteRun, ...]) -> dict[str, object]:
         "undisclosed_models": undisclosed,
         "band_usd": [low, high],
         "spread_factor": round(high / low, 4),
-        "median_usd": round(disclosed[len(disclosed) // 2], 4) if len(disclosed) % 2 else
-                        round((disclosed[len(disclosed) // 2 - 1] + disclosed[len(disclosed) // 2]) / 2, 4),
+        "median_usd": round(disclosed[len(disclosed) // 2], 4)
+        if len(disclosed) % 2
+        else round((disclosed[len(disclosed) // 2 - 1] + disclosed[len(disclosed) // 2]) / 2, 4),
         "undisclosed_imputed": False,
         "doctrine_compliance": "D-290 L7: مقارنةُ الكلفة بـCPST لا بالأجر الساعي — وهذه أوّلُ مرساةٍ مُلتزمة",
         "reading": (
@@ -255,13 +342,15 @@ def off_target_rate(runs: tuple[SuiteRun, ...]) -> dict[str, object]:
         if r.flags_captured is None:
             continue
         off = r.flags_captured - int(r.successes_on_intended)
-        rows.append({
-            "model_id": r.model_id,
-            "flags_captured": r.flags_captured,
-            "successes_on_intended": int(r.successes_on_intended),
-            "off_target_count": off,
-            "off_target_share": round(off / r.flags_captured, 6),
-        })
+        rows.append(
+            {
+                "model_id": r.model_id,
+                "flags_captured": r.flags_captured,
+                "successes_on_intended": int(r.successes_on_intended),
+                "off_target_count": off,
+                "off_target_share": round(off / r.flags_captured, 6),
+            }
+        )
     if not rows:
         raise BenchmarkPinError("صفرُ زوجٍ بأعلامٍ مقبوضة — لا معدّلَ يُحسب")
     rows.sort(key=lambda d: -d["off_target_share"])
@@ -287,8 +376,12 @@ def unsolved_conflict(runs: tuple[SuiteRun, ...]) -> dict[str, object]:
     ⛔ لا يُؤخذ متوسطٌ ولا يُرجَّح طرف: فكلاهما أوّل، والفرقُ يُفسَّره اختلافُ الدبوس
     (النموذج · الميزانية · الحزام · الحماية)، وهو تفسيرٌ **يُختبر** لا يُدّعى.
     """
-    union_solved = (VENN["exclusive_mythos"] + VENN["exclusive_gpt55"]
-                    + VENN["shared_top_two"] + VENN["exclusive_others"])
+    union_solved = (
+        VENN["exclusive_mythos"]
+        + VENN["exclusive_gpt55"]
+        + VENN["shared_top_two"]
+        + VENN["exclusive_others"]
+    )
     berkeley_unsolved = SUITE_INSTANCES - union_solved
     oai = OPENAI_UNSOLVED["never_solved"]
     if OPENAI_UNSOLVED["suite_total"] != SUITE_INSTANCES:
@@ -336,9 +429,11 @@ def budget_sensitivity() -> dict[str, object]:
         "successes_at_360min": b,
         "growth_share": round((b - a) / a, 6),
         "plateau_declared": False,
-        "weaker_pair": {"model_id": "claude-opus-4.6",
-                        "plateau_minutes": BUDGET_CURVE["opus46_plateau_minutes"],
-                        "plateau_value": BUDGET_CURVE["opus46_plateau_value"]},
+        "weaker_pair": {
+            "model_id": "claude-opus-4.6",
+            "plateau_minutes": BUDGET_CURVE["opus46_plateau_minutes"],
+            "plateau_value": BUDGET_CURVE["opus46_plateau_value"],
+        },
         "self_declared_undercount": True,
         "reading": (
             f"الميزانيةُ محورُ دبوسٍ لا تفصيل: 120 دقيقة ← 360 دقيقة رفعت النجاح {a} ← {b} "
@@ -358,7 +453,10 @@ def safeguard_pair() -> dict[str, object]:
     ⛔ النسبةُ **غير معرَّفة** (مقامٌ صفري) فتُسجَّل زوجاً لا رقماً — القاعدةُ نفسها التي
     منعت `actions_per_unit_gain = inf` في الجولة 04.
     """
-    on, off = SAFEGUARD_PAIR["default_filters_successes"], SAFEGUARD_PAIR["filters_disabled_successes"]
+    on, off = (
+        SAFEGUARD_PAIR["default_filters_successes"],
+        SAFEGUARD_PAIR["filters_disabled_successes"],
+    )
     if on == 0 and off == 0:
         raise BenchmarkPinError("صفرٌ في الطرفين — لا زوجَ يُقاس")
     return {
@@ -383,20 +481,21 @@ def self_contradictions() -> list[dict[str, object]]:
     """تناقضاتُ المصدر الأوّل مع نفسه — تُسجَّل ولا تُحلّ صمتاً."""
     table1 = next(r.successes for r in RUNS if r.model_id == "claude-mythos-preview")
     fig5 = BUDGET_CURVE["mythos_at_120min"]
-    out = [{
-        "id": "D1",
-        "where": "الجدول 1 مقابل الشكل 5، للميزانية نفسها (120 دقيقة) والنموذج نفسه",
-        "values": {"table1_successes": table1, "figure5_at_120min": fig5},
-        "delta": table1 - fig5,
-        "resolved": False,
-        "why_unresolved": (
-            "⛔ لم يُقرأ نصُّ arXiv الكامل بعدُ (قُرئ الملخَّصُ ومدوّنةُ الطرف الأوّل). "
-            "والفرقُ قد يكون تعريفَ «نجاح» (علمٌ مقبوض مقابل ثغرةٌ مقصودة) أو عيّنةً "
-            "فرعية. ولا يُختار أحدُهما بلا نصٍّ — فالاختيارُ هنا اختلاق."
-        ),
-        "handling": "كلا الرقمَين مُسجَّل؛ ولا يُقتبس أيٌّ منهما بصفة «النجاح عند 120 دقيقة»",
-    }]
-    return out
+    return [
+        {
+            "id": "D1",
+            "where": "الجدول 1 مقابل الشكل 5، للميزانية نفسها (120 دقيقة) والنموذج نفسه",
+            "values": {"table1_successes": table1, "figure5_at_120min": fig5},
+            "delta": table1 - fig5,
+            "resolved": False,
+            "why_unresolved": (
+                "⛔ لم يُقرأ نصُّ arXiv الكامل بعدُ (قُرئ الملخَّصُ ومدوّنةُ الطرف الأوّل). "
+                "والفرقُ قد يكون تعريفَ «نجاح» (علمٌ مقبوض مقابل ثغرةٌ مقصودة) أو عيّنةً "
+                "فرعية. ولا يُختار أحدُهما بلا نصٍّ — فالاختيارُ هنا اختلاق."
+            ),
+            "handling": "كلا الرقمَين مُسجَّل؛ ولا يُقتبس أيٌّ منهما بصفة «النجاح عند 120 دقيقة»",
+        }
+    ]
 
 
 def pin_evaluations(runs: tuple[SuiteRun, ...]) -> dict[str, object]:
@@ -408,19 +507,21 @@ def pin_evaluations(runs: tuple[SuiteRun, ...]) -> dict[str, object]:
     rows, states = [], {}
     for r in runs:
         status = evaluate_pin(r.pin(), AS_OF)
-        rows.append({
-            "model_id": r.model_id,
-            "harness": r.harness,
-            "safeguard_config": r.safeguard_config,
-            "adversary_budget_minutes": r.adversary_budget_minutes,
-            "score_points": float(r.successes),
-            "pin_state": status.state,
-            "pin_label": status.label,
-            "age_days_at_as_of": status.age_days,
-            "window_days": status.window_days,
-            "missing_fields": list(status.missing),
-            "quotable": status.quotable,
-        })
+        rows.append(
+            {
+                "model_id": r.model_id,
+                "harness": r.harness,
+                "safeguard_config": r.safeguard_config,
+                "adversary_budget_minutes": r.adversary_budget_minutes,
+                "score_points": float(r.successes),
+                "pin_state": status.state,
+                "pin_label": status.label,
+                "age_days_at_as_of": status.age_days,
+                "window_days": status.window_days,
+                "missing_fields": list(status.missing),
+                "quotable": status.quotable,
+            }
+        )
         states[status.state] = states.get(status.state, 0) + 1
     unpinned = [row["model_id"] for row in rows if row["pin_state"] == "UNPINNED"]
     if unpinned:
@@ -545,12 +646,17 @@ def build() -> dict[str, object]:
         "inputs": {
             "runs": [
                 {
-                    "model_id": r.model_id, "harness": r.harness,
+                    "model_id": r.model_id,
+                    "harness": r.harness,
                     "safeguard_config": r.safeguard_config,
                     "adversary_budget_minutes": r.adversary_budget_minutes,
-                    "successes": r.successes, "by_domain": list(r.by_domain),
-                    "with_mitigations": None if r.with_mitigations is None else list(r.with_mitigations),
-                    "cpst_usd": r.cpst_usd, "cost_full_usd": r.cost_full_usd,
+                    "successes": r.successes,
+                    "by_domain": list(r.by_domain),
+                    "with_mitigations": None
+                    if r.with_mitigations is None
+                    else list(r.with_mitigations),
+                    "cpst_usd": r.cpst_usd,
+                    "cost_full_usd": r.cost_full_usd,
                     "time_min_per_success": r.time_min_per_success,
                     "llm_calls_per_success": r.llm_calls_per_success,
                     "flags_captured": r.flags_captured,
@@ -585,7 +691,9 @@ def _canonical_digest(payload: dict[str, object]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__ or "")
-    parser.add_argument("--check", action="store_true", help="يقارن المودَع بالمحسوب ويفشل عند الانحراف")
+    parser.add_argument(
+        "--check", action="store_true", help="يقارن المودَع بالمحسوب ويفشل عند الانحراف"
+    )
     args = parser.parse_args()
 
     payload = build()
@@ -599,10 +707,15 @@ def main() -> int:
         stored = json.loads(OUT.read_text(encoding="utf-8"))
         for key in ("kind", "as_of", "inputs_digest_sha256"):
             if stored.get(key) != payload.get(key):
-                print(f"❌ انحراف في {key}: {stored.get(key)!r} ≠ {payload.get(key)!r}", file=sys.stderr)
+                print(
+                    f"❌ انحراف في {key}: {stored.get(key)!r} ≠ {payload.get(key)!r}",
+                    file=sys.stderr,
+                )
                 return 1
         if stored.get("results") != payload["results"]:
-            print("❌ انحرافٌ في الأرقام المحسوبة — أُعيد توليدُ الملفّ أو صحّح المدخلات", file=sys.stderr)
+            print(
+                "❌ انحرافٌ في الأرقام المحسوبة — أُعيد توليدُ الملفّ أو صحّح المدخلات", file=sys.stderr
+            )
             return 1
         print("measure_benchmark_pin --check: PASS")
         return 0

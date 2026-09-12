@@ -68,14 +68,40 @@ DECLARED_KEYS = {
 #: ومحورا `suite_version` و`report_date` على مستوى الحزمة (`suite.version` · `suite_issued_on`)
 #: لأنّ الدبابيس السبعة تشترك فيهما — فتُفحصان مرّةً واحدة لا سبعاً.
 PIN_FIELDS = ("model_id", "harness", "safeguard_config", "adversary_budget_minutes")
-SUITE_PIN_FIELDS = (("suite.version", "suite_version"), ("results.pin_evaluations.suite_issued_on", "report_date"))
+SUITE_PIN_FIELDS = (
+    ("suite.version", "suite_version"),
+    ("results.pin_evaluations.suite_issued_on", "report_date"),
+)
 
 #: سياقُ المنع: سطرٌ يحمل علامة المنع أو كلمة نفي/تحريم/دحضٍ صريحة.
 NEGATION_MARKERS = (
-    "⛔", "ممنوع", "ممنوعة", "لا يجوز", "لا يُقتبس", "لا يُستعمل", "لا يُقرأ", "لا تُقرأ",
-    "لا يُحتسب", "لا تُحتسب", "لا تُنقل", "خطأُ فئة", "بلا مصدر", "بلا قيمةٍ ترتيبية",
-    "مدحوض", "يدحض", "خاطئة", "خاطئ", "ناقص", "غيرُ كاف", "فاشلة", "معلّقة", "ليست", "ليس",
-    "REFUTED", "UNSOURCED", "THROTTLED",
+    "⛔",
+    "ممنوع",
+    "ممنوعة",
+    "لا يجوز",
+    "لا يُقتبس",
+    "لا يُستعمل",
+    "لا يُقرأ",
+    "لا تُقرأ",
+    "لا يُحتسب",
+    "لا تُحتسب",
+    "لا تُنقل",
+    "خطأُ فئة",
+    "بلا مصدر",
+    "بلا قيمةٍ ترتيبية",
+    "مدحوض",
+    "يدحض",
+    "خاطئة",
+    "خاطئ",
+    "ناقص",
+    "غيرُ كاف",
+    "فاشلة",
+    "معلّقة",
+    "ليست",
+    "ليس",
+    "REFUTED",
+    "UNSOURCED",
+    "THROTTLED",
 )
 #: ⛔ «لا» المجرّدة **ليست** علامةَ نفيٍ هنا: فهي في أغلب الأسطر العربية (نافيةً كانت أو
 #: واصلةً أو part of «لا يُقتبس»), فعدُّها علامةً يجعل فحصَ المحرّمات يمرّ على كلّ سطرٍ تقريباً
@@ -84,9 +110,18 @@ NEGATION_MARKERS = (
 #: عباراتٌ يدحضها §3: ممنوعةٌ خارج سياق منعٍ صريح. والأربعُ الأخيرة جديدةٌ في هذه الجولة.
 FORBIDDEN_CLAIMS = (
     # موروثاتُ الجولة 03/04 — تبقى مدحوضةً في كلّ نصٍّ تُمسحه هذه البوّابة.
-    "13.5 مليار", "CAGR ~42%", "~42% إلى", "143 دولار/ساعة", "10 ملايين دولار أرصدة",
-    "$10M أرصدة", "14 من 16 نشراً", "4.5 يوم داخل بنية", "سوقُ تأمين الوكلاء المستقلين بـ",
-    "نضمن الامتثال", "اكتشفنا ثغرة", "إعادةُ إنتاج ناقلي HDF5 وJinja2 في مختبر محلي",
+    "13.5 مليار",
+    "CAGR ~42%",
+    "~42% إلى",
+    "143 دولار/ساعة",
+    "10 ملايين دولار أرصدة",
+    "$10M أرصدة",
+    "14 من 16 نشراً",
+    "4.5 يوم داخل بنية",
+    "سوقُ تأمين الوكلاء المستقلين بـ",
+    "نضمن الامتثال",
+    "اكتشفنا ثغرة",
+    "إعادةُ إنتاج ناقلي HDF5 وJinja2 في مختبر محلي",
     # R1: العبارةُ العامة صادقةٌ إجمالاً وخاطئةٌ تفصيلاً — فالتفصيلُ هو المسموح.
     "الحماياتُ القياسية لا تكفي",
     # R2: CPST المنشورة كلفةُ تشغيلِ وكيلٍ على حزمةٍ هجومية، لا سعرُ خدمةٍ دفاعية.
@@ -101,14 +136,31 @@ FORBIDDEN_CLAIMS = (
 #: الحماياتُ **بأسمائها** (ASLR · KASLR · canaries · heap sandbox) مسموحة: فاسمُ الدفاع
 #: معلومةٌ تنظيمية، بينما سلسلةُ الاختراق (OOB ← تسريبُ مؤشّر ← …) تفاصيلُ ناقلٍ مُحرَّمة.
 EXPLOIT_PATTERNS = (
-    r"169\.254\.169\.254", r"h5py\.File\(", r"__reduce__", r"jinja2\.Environment\(",
-    r"Template\(\s*.*\)\.render", r"subprocess\.(run|Popen|call)\(\s*[^)]*shell\s*=\s*True",
-    r"os\.system\(", r"curl\s+-[^ ]*\s+http://169\.", r"base64\s+-d\s*\|",
-    r"reverse_shell", r"bind_shell",
+    r"169\.254\.169\.254",
+    r"h5py\.File\(",
+    r"__reduce__",
+    r"jinja2\.Environment\(",
+    r"Template\(\s*.*\)\.render",
+    r"subprocess\.(run|Popen|call)\(\s*[^)]*shell\s*=\s*True",
+    r"os\.system\(",
+    r"curl\s+-[^ ]*\s+http://169\.",
+    r"base64\s+-d\s*\|",
+    r"reverse_shell",
+    r"bind_shell",
     # سلسلةُ تقنيات V8/kernel المُعلَنة في المصدر — ⛔ لا تُنسخ في أيّ نصٍّ لنا (§6.3).
-    r"SROP", r"sigreturn", r"type\s+confusion", r"out[-\s]of[-\s]bounds", r"\bOOB\b",
-    r"pointer\s+leak", r"fake\s+(?:string|object)", r"arbitrary\s+(?:read|write)",
-    r"libc\s+leak", r"heap\s+spray", r"use[-\s]after[-\s]free", r"rop\s+chain", r"shellcode",
+    r"SROP",
+    r"sigreturn",
+    r"type\s+confusion",
+    r"out[-\s]of[-\s]bounds",
+    r"\bOOB\b",
+    r"pointer\s+leak",
+    r"fake\s+(?:string|object)",
+    r"arbitrary\s+(?:read|write)",
+    r"libc\s+leak",
+    r"heap\s+spray",
+    r"use[-\s]after[-\s]free",
+    r"rop\s+chain",
+    r"shellcode",
 )
 
 ZERO_COUNTERS = ("model_runs_executed", "client_measurements", "exploits_reproduced")
@@ -136,16 +188,31 @@ DERIVED_FIGURES: tuple[tuple[str, str, str, str], ...] = (
     ("results.pin_evaluations.report_age_days", "f1", "122.0", "**122.0**"),
     ("results.pin_evaluations.max_report_age_days", "int", "90", "سقف 90"),
     ("results.pin_evaluations.fresh_days_threshold", "f1", "14.0", "`fresh_days_threshold = 14.0`"),
-    ("results.pin_evaluations.age_governs_not_missingness", "boolj", "true", "`age_governs_not_missingness = true`"),
+    (
+        "results.pin_evaluations.age_governs_not_missingness",
+        "boolj",
+        "true",
+        "`age_governs_not_missingness = true`",
+    ),
     ("results.pin_evaluations.all_stale_by_age", "boolj", "true", "`STALE` بالإجماع"),
-    ("results.pin_evaluations.h59_verdict", "str", "CONFIRMED_IN_DOMAIN", "**`CONFIRMED_IN_DOMAIN`**"),
+    (
+        "results.pin_evaluations.h59_verdict",
+        "str",
+        "CONFIRMED_IN_DOMAIN",
+        "**`CONFIRMED_IN_DOMAIN`**",
+    ),
     # --- أثرُ الحمايات: «لا تكفي» صادقةٌ إجمالاً خاطئةٌ تفصيلاً
     ("results.mitigation_effect.successes_mitigations_off", "int", "369", "**369 ← 69**"),
     ("results.mitigation_effect.successes_mitigations_on", "int", "69", "**369 ← 69**"),
     ("results.mitigation_reduction_factor", "f4", "5.3478", "**5.3478×**"),
     ("results.mitigation_residual_share", "f6s", "0.186992", "**0.186992 = 18.70%**"),
     ("results.pairs_zeroed_by_mitigations", "int", "4", "**4 من 7**"),
-    ("results.mitigation_effect.residual_top_pair", "str", "claude-mythos-preview", "`claude-mythos-preview`"),
+    (
+        "results.mitigation_effect.residual_top_pair",
+        "str",
+        "claude-mythos-preview",
+        "`claude-mythos-preview`",
+    ),
     ("results.residual_top_share", "f6s", "0.652174", "**0.652174 = 65.22%**"),
     # --- CPST: أوّلُ مرساةٍ مُلتزمة بـL7
     ("results.cpst_band_usd.0", "f2", "3.75", "**[3.75، 22.99]**"),
@@ -159,19 +226,44 @@ DERIVED_FIGURES: tuple[tuple[str, str, str, str], ...] = (
     # --- التباعدُ عن الهدف: أطروحةٌ صارت مُسندةً من طرفَين أوّليين
     ("results.off_target_rate.pairs_measured", "int", "2", "**2**"),
     ("results.off_target_rate.per_pair.0.flags_captured", "int", "210", "210 أعلاماً"),
-    ("results.off_target_rate.per_pair.0.successes_on_intended", "int", "120", "← 120 على المقصودة"),
+    (
+        "results.off_target_rate.per_pair.0.successes_on_intended",
+        "int",
+        "120",
+        "← 120 على المقصودة",
+    ),
     ("results.max_off_target_share", "f6s", "0.428571", "**0.428571 = 42.86%**"),
     ("results.off_target_rate.per_pair.1.flags_captured", "int", "226", "226 ← 157"),
     ("results.off_target_rate.per_pair.1.successes_on_intended", "int", "157", "226 ← 157"),
-    ("results.off_target_rate.per_pair.1.off_target_share", "f6s", "0.30531", "**0.30531 = 30.53%**"),
+    (
+        "results.off_target_rate.per_pair.1.off_target_share",
+        "f6s",
+        "0.30531",
+        "**0.30531 = 30.53%**",
+    ),
     # --- تعارضُ الطرفَين الأوّليين: ⛔ لا متوسط
     ("results.unsolved_conflict.openai_never_solved", "int", "198", "198/898"),
-    ("results.unsolved_conflict.openai_never_solved_share", "f6s", "0.22049", "**0.22049 = 22.05%**"),
+    (
+        "results.unsolved_conflict.openai_never_solved_share",
+        "f6s",
+        "0.22049",
+        "**0.22049 = 22.05%**",
+    ),
     ("results.unsolved_conflict.berkeley_union_solved", "int", "177", "177"),
-    ("results.unsolved_conflict.berkeley_unsolved_share", "f6s", "0.802895", "**0.802895 = 80.29%**"),
+    (
+        "results.unsolved_conflict.berkeley_unsolved_share",
+        "f6s",
+        "0.802895",
+        "**0.802895 = 80.29%**",
+    ),
     ("results.unsolved_share_spread_factor", "f4", "3.6414", "**3.6414×**"),
     ("results.unsolved_reconciled", "boolj", "false", "`reconciled = false`"),
-    ("results.unsolved_conflict.reconciliation_basis", "str", "PIN_DIFFERENCE_NOT_AVERAGE", "`PIN_DIFFERENCE_NOT_AVERAGE`"),
+    (
+        "results.unsolved_conflict.reconciliation_basis",
+        "str",
+        "PIN_DIFFERENCE_NOT_AVERAGE",
+        "`PIN_DIFFERENCE_NOT_AVERAGE`",
+    ),
     ("results.unsolved_conflict.pin_axes_that_differ", "len", "4", "**4** محاور مختلفة"),
     ("results.unsolved_conflict.suite_instances", "int", "898", "**898**"),
     # --- الميزانيةُ محورٌ مُنحازٌ للأسفل بغير تناظر
@@ -179,15 +271,30 @@ DERIVED_FIGURES: tuple[tuple[str, str, str, str], ...] = (
     ("results.budget_sensitivity.successes_at_360min", "int", "204", "127 ← 204"),
     ("results.budget_growth_share", "f6s", "0.606299", "**0.606299 = +60.63%**"),
     ("results.budget_sensitivity.plateau_declared", "boolj", "false", "`plateau_declared = false`"),
-    ("results.budget_sensitivity.self_declared_undercount", "boolj", "true", "`self_declared_undercount = true`"),
+    (
+        "results.budget_sensitivity.self_declared_undercount",
+        "boolj",
+        "true",
+        "`self_declared_undercount = true`",
+    ),
     ("results.budget_sensitivity.weaker_pair.plateau_minutes", "int", "30", "**30** دقيقة"),
     ("results.budget_sensitivity.weaker_pair.plateau_value", "int", "15", "عند **15**"),
     # --- محورُ الحماية: صفرُ مقامٍ يُسجَّل زوجاً
     ("results.safeguard_pair.successes_default_filters", "int", "0", "**0 ← 120**"),
     ("results.safeguard_pair.successes_filters_disabled", "int", "120", "**0 ← 120**"),
     ("results.safeguard_ratio", "none", "None", "`ratio = None`"),
-    ("results.safeguard_pair.recorded_as", "str", "PAIR_NOT_RATIO", "`recorded_as = PAIR_NOT_RATIO`"),
-    ("results.safeguard_pair.ratio_undefined_reason", "prefix", "ZERO_DENOMINATOR", "`ZERO_DENOMINATOR`"),
+    (
+        "results.safeguard_pair.recorded_as",
+        "str",
+        "PAIR_NOT_RATIO",
+        "`recorded_as = PAIR_NOT_RATIO`",
+    ),
+    (
+        "results.safeguard_pair.ratio_undefined_reason",
+        "prefix",
+        "ZERO_DENOMINATOR",
+        "`ZERO_DENOMINATOR`",
+    ),
     # --- التناقضُ الداخلي وحدودُ الحقول
     ("results.self_contradiction_count", "int", "1", "**D1**"),
     ("results.self_contradictions.0.delta", "int", "30", "الفرقُ **30**"),
@@ -246,34 +353,75 @@ def dig(artifact: dict, dotted: str) -> object:
     return node
 
 
+def _render_bool(value: object) -> str:
+    return "True" if value is True else "False"
+
+
+def _render_boolj(value: object) -> str:
+    #: صيغةُ JSON لا صيغةُ Python: الوثيقةُ تكتب `= false` لأنّ الملفّ JSON.
+    if value is True:
+        return "true"
+    if value is False:
+        return "false"
+    return f"⛔ ليس bool: {value!r}"
+
+
+def _render_none(value: object) -> str:
+    return "None" if value is None else f"⛔ القيمة ليست None: {value!r}"
+
+
+def _render_len(value: object) -> str:
+    return str(len(value))  # type: ignore[arg-type]
+
+
+def _render_int(value: object) -> str:
+    return str(int(value))  # type: ignore[arg-type]
+
+
+def _render_f1(value: object) -> str:
+    return f"{float(value):.1f}"  # type: ignore[arg-type]
+
+
+def _render_f2(value: object) -> str:
+    return f"{float(value):.2f}"  # type: ignore[arg-type]
+
+
+def _render_f4(value: object) -> str:
+    return f"{float(value):.4f}"  # type: ignore[arg-type]
+
+
+def _render_f6s(value: object) -> str:
+    #: ستّ خاناتٍ ثمّ تجريدُ الأصفار الذيلية: 0.305310 → 0.30531، و0.186992 كما هي.
+    #: فالملفّ يحفظ `round(x, 6)` الذي يُسقط الأصفار، والمطابقةُ الحرفية تتطلب الشكل نفسه.
+    return f"{float(value):.6f}".rstrip("0").rstrip(".")  # type: ignore[arg-type]
+
+
+#: جدولُ التوزيع: الصيغةُ مفتاحٌ لا سلسلةُ فروع — فإضافةُ صيغةٍ الثانيةَ عشرةَ لا ترفع
+#: عدّادَ الفروع في `render` (PLR0911/PLR0912)، و`ValueError` على المجهولة باقٍ عقداً.
+#: بلا تعليقٍ نوعيٍّ عمداً: سطحُ استيرادِ البوّابةِ خمسُ وحداتٍ لا أكثر (يفرضه
+#: `test_gate_module_is_stdlib_only` في شقيقتها)، و`collections.abc` سادسةٌ لا يبرّرها شيء.
+_RENDERERS = {
+    "str": str,
+    "prefix": str,
+    "bool": _render_bool,
+    "boolj": _render_boolj,
+    "none": _render_none,
+    "len": _render_len,
+    "int": _render_int,
+    "f1": _render_f1,
+    "f2": _render_f2,
+    "f4": _render_f4,
+    "f6s": _render_f6s,
+}
+
+
 def render(value: object, spec: str) -> str:
     """يُصيّر قيمة JSON إلى نصّها في الوثيقة — والصيغةُ جزءٌ من العقد لا تفصيلٌ تجميلي."""
-    if spec == "str":
-        return str(value)
-    if spec == "prefix":
-        return str(value)
-    if spec == "bool":
-        return "True" if value is True else "False"
-    if spec == "boolj":
-        #: صيغةُ JSON لا صيغةُ Python: الوثيقةُ تكتب `= false` لأنّ الملفّ JSON.
-        return "true" if value is True else ("false" if value is False else f"⛔ ليس bool: {value!r}")
-    if spec == "none":
-        return "None" if value is None else f"⛔ القيمة ليست None: {value!r}"
-    if spec == "len":
-        return str(len(value))  # type: ignore[arg-type]
-    if spec == "int":
-        return str(int(value))  # type: ignore[arg-type]
-    if spec == "f1":
-        return f"{float(value):.1f}"  # type: ignore[arg-type]
-    if spec == "f2":
-        return f"{float(value):.2f}"  # type: ignore[arg-type]
-    if spec == "f4":
-        return f"{float(value):.4f}"  # type: ignore[arg-type]
-    if spec == "f6s":
-        #: ستّ خاناتٍ ثمّ تجريدُ الأصفار الذيلية: 0.305310 → 0.30531، و0.186992 كما هي.
-        #: فالملفّ يحفظ `round(x, 6)` الذي يُسقط الأصفار، والمطابقةُ الحرفية تتطلب الشكل نفسه.
-        return f"{float(value):.6f}".rstrip("0").rstrip(".")  # type: ignore[arg-type]
-    raise ValueError(f"صيغةُ تنسيقٍ غير معروفة: {spec!r}")
+    try:
+        renderer = _RENDERERS[spec]
+    except KeyError:
+        raise ValueError(f"صيغةُ تنسيقٍ غير معروفة: {spec!r}") from None
+    return renderer(value)
 
 
 def bucket_state(state: str) -> str:
@@ -295,9 +443,8 @@ def bucket_state(state: str) -> str:
     return "other"
 
 
-def check_ledger(ledger: list[dict[str, str]], failures: list[str]) -> dict[str, int]:
-    """بنيةُ السجل: صفّية، تفريد، اتصالُ الترقيم، ⛔ ولا مستوى فوق E1، وE1 واحدةٌ فقط."""
-    counts = dict.fromkeys(DECLARED_KEYS, 0)
+def _check_ledger_identity(ledger: list[dict[str, str]], failures: list[str]) -> None:
+    """صفّيةُ السجل وتفريدُ معرّفاته واتصالُها — ثلاثةُ فروعٍ لا أكثر."""
     if len(ledger) != EXPECTED_HYPOTHESES:
         failures.append(f"سجلّ الجولة 05 يحوي {len(ledger)} صفاً، والمتوقّع {EXPECTED_HYPOTHESES}")
     ids = [field(row, "id") for row in ledger]
@@ -306,6 +453,10 @@ def check_ledger(ledger: list[dict[str, str]], failures: list[str]) -> dict[str,
     want = [f"H{n}" for n in range(int(EXPECTED_H_RANGE[0][1:]), int(EXPECTED_H_RANGE[1][1:]) + 1)]
     if ids != want:
         failures.append(f"معرّفات الفرضيات {ids}، والمتوقّع اتّصالاً {want}")
+
+
+def _check_ledger_levels(ledger: list[dict[str, str]], failures: list[str]) -> None:
+    """سقوفُ الالتزام: ⛔ ولا مستوى فوق E1، وE1 واحدةٌ فقط لا تكتمل قبل القبول."""
     levels = {field(row, "max_level") for row in ledger}
     if not levels <= EXPECTED_LEVELS:
         failures.append(
@@ -328,42 +479,62 @@ def check_ledger(ledger: list[dict[str, str]], failures: list[str]) -> dict[str,
             f"{SINGLE_E1_HYPOTHESIS} عند E1 وحالتُها «مُنجَزة» — ⛔ تناقض: فما أُنجِز لا ينتظر "
             "قبولاً، وما ينتظر قبولاً لم يُنجَز"
         )
-    for row in ledger:
-        rid = field(row, "id") or "؟"
-        state = field(row, "gate_state")
-        key = bucket_state(state)
-        if key in counts:
-            counts[key] += 1
-        if not (field(row, "hypothesis_ar") and field(row, "counterparty")):
-            failures.append(f"{rid}: صفٌّ بلا فرضيةٍ أو بلا طرفٍ مقابل")
-        if not (field(row, "binding_gate") and state and field(row, "decision")):
-            failures.append(f"{rid}: صفٌّ بلا بوّابة حاكمة أو حالة أو قرار")
-        if not field(row, "shared_dependency"):
-            failures.append(f"{rid}: صفٌّ بلا اعتماد مشترك — «محفظة متنوّعة» بلا فحص العُقد")
-        if key == "other":
-            failures.append(
-                f"{rid}: حالةُ بوّابةٍ لا تُصنَّف ({state[:40]}…) — "
-                "⛔ الحالةُ المعلَنة يجب أن تبدأ بأحد التصريحات الخمسة في §6.1"
-            )
-        #: ⚠️ `name` لا `field`: فالاسمُ الأخير دالةُ الوحدة، وتظليلُه هنا يجعله متغيّراً حرّاً
-        #: في الفهمَين التاليَين ⇒ `NameError` على مدخلٍ **سليم** (سقطت عشرةُ اختباراتٍ بهذا).
-        for name in ("key_claim", "key_test"):
-            value = field(row, name)
-            if value != "-" and not re.fullmatch(r"[CT]\d\d( [CT]\d\d)*", value):
-                failures.append(f"{rid}: {name}={value!r} خارج الصيغة [CT]nn")
-    #: اتصالُ الترقيم مع الجولة 04 (C47–C56 · T45–T54): ⛔ لا إعادةُ استعمالٍ ولا قفز.
+
+
+def _check_ledger_row(row: dict[str, str], counts: dict[str, int], failures: list[str]) -> None:
+    """صفٌّ واحد: اكتمالُ الحقول وحصيلتُه وصيغةُ ترقيمه — والمنطقُ حرفيٌّ كما كان."""
+    rid = field(row, "id") or "؟"
+    state = field(row, "gate_state")
+    key = bucket_state(state)
+    if key in counts:
+        counts[key] += 1
+    if not (field(row, "hypothesis_ar") and field(row, "counterparty")):
+        failures.append(f"{rid}: صفٌّ بلا فرضيةٍ أو بلا طرفٍ مقابل")
+    if not (field(row, "binding_gate") and state and field(row, "decision")):
+        failures.append(f"{rid}: صفٌّ بلا بوّابة حاكمة أو حالة أو قرار")
+    if not field(row, "shared_dependency"):
+        failures.append(f"{rid}: صفٌّ بلا اعتماد مشترك — «محفظة متنوّعة» بلا فحص العُقد")
+    if key == "other":
+        failures.append(
+            f"{rid}: حالةُ بوّابةٍ لا تُصنَّف ({state[:40]}…) — "
+            "⛔ الحالةُ المعلَنة يجب أن تبدأ بأحد التصريحات الخمسة في §6.1"
+        )
+    #: ⚠️ `name` لا `field`: فالاسمُ الأخير دالةُ الوحدة، وتظليلُه هنا يجعله متغيّراً حرّاً
+    #: في الفهمَين التاليَين ⇒ `NameError` على مدخلٍ **سليم** (سقطت عشرةُ اختباراتٍ بهذا).
+    for name in ("key_claim", "key_test"):
+        value = field(row, name)
+        if value != "-" and not re.fullmatch(r"[CT]\d\d( [CT]\d\d)*", value):
+            failures.append(f"{rid}: {name}={value!r} خارج الصيغة [CT]nn")
+
+
+def _check_ledger_numbering(ledger: list[dict[str, str]], failures: list[str]) -> None:
+    """اتصالُ الترقيم مع الجولة 04 (C47–C56 · T45–T54): ⛔ لا إعادةُ استعمالٍ ولا قفز."""
     claims = {int(m) for row in ledger for m in re.findall(r"C(\d+)", field(row, "key_claim"))}
     tests = {int(m) for row in ledger for m in re.findall(r"T(\d+)", field(row, "key_test"))}
     if claims:
         if min(claims) <= 56:
-            failures.append(f"أرقامُ ادّعاءاتٍ معادٌ استعمالها من الجولة 04: {sorted(c for c in claims if c <= 56)}")
+            failures.append(
+                f"أرقامُ ادّعاءاتٍ معادٌ استعمالها من الجولة 04: {sorted(c for c in claims if c <= 56)}"
+            )
         if sorted(claims) != list(range(min(claims), max(claims) + 1)):
             failures.append(f"أرقامُ الادّعاءات غيرُ متّصلة: {sorted(claims)}")
     if tests:
         if min(tests) <= 54:
-            failures.append(f"أرقامُ بطاقاتٍ معادٌ استعمالها من الجولة 04: {sorted(t for t in tests if t <= 54)}")
+            failures.append(
+                f"أرقامُ بطاقاتٍ معادٌ استعمالها من الجولة 04: {sorted(t for t in tests if t <= 54)}"
+            )
         if sorted(tests) != list(range(min(tests), max(tests) + 1)):
             failures.append(f"أرقامُ البطاقات غيرُ متّصلة: {sorted(tests)}")
+
+
+def check_ledger(ledger: list[dict[str, str]], failures: list[str]) -> dict[str, int]:
+    """بنيةُ السجل: صفّية، تفريد، اتصالُ الترقيم، ⛔ ولا مستوى فوق E1، وE1 واحدةٌ فقط."""
+    counts = dict.fromkeys(DECLARED_KEYS, 0)
+    _check_ledger_identity(ledger, failures)
+    _check_ledger_levels(ledger, failures)
+    for row in ledger:
+        _check_ledger_row(row, counts, failures)
+    _check_ledger_numbering(ledger, failures)
     return counts
 
 
@@ -379,7 +550,8 @@ def check_declared_counts(round_text: str, counts: dict[str, int], failures: lis
             )
         else:
             row = re.search(
-                rf"\|\s*(?:\*\*)?{re.escape(label)}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text
+                rf"\|\s*(?:\*\*)?{re.escape(label)}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|",
+                round_text,
             )
         if not row:
             failures.append(f"§6.1: لا صفَّ معلن لـ«{label}» في جدول المسح")
@@ -394,21 +566,36 @@ def check_declared_counts(round_text: str, counts: dict[str, int], failures: lis
         failures.append(f"§6.1: مجموعُ حصائل المسح {total}، والمتوقّع {EXPECTED_HYPOTHESES}")
 
 
-def check_levels_declared(round_text: str, ledger: list[dict[str, str]], failures: list[str]) -> None:
+def check_levels_declared(
+    round_text: str, ledger: list[dict[str, str]], failures: list[str]
+) -> None:
     """عددا E1 وE0 في §6.1 يجب أن يطابقا السجلّ."""
     n_e1 = sum(1 for row in ledger if field(row, "max_level") == "E1")
     n_e0 = sum(1 for row in ledger if field(row, "max_level") == "E0")
     for label, want in (("E1", n_e1), ("E0", n_e0)):
-        row = re.search(rf"\|\s*(?:\*\*)?سقفٌ أقصى مسموح = {label}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text)
+        row = re.search(
+            rf"\|\s*(?:\*\*)?سقفٌ أقصى مسموح = {label}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|",
+            round_text,
+        )
         if not row:
-            row = re.search(rf"\|\s*(?:\*\*)?الباقي عند {label}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text)
+            row = re.search(
+                rf"\|\s*(?:\*\*)?الباقي عند {label}[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|",
+                round_text,
+            )
         if not row:
             failures.append(f"§6.1: لا صفَّ معلن لعدد {label}")
             continue
         if int(row.group(1)) != want:
             failures.append(f"§6.1: عددُ {label} معلَن {row.group(1)} بينما السجلّ يشتقّ {want}")
-    if re.search(r"\|\s*(?:\*\*)?مؤهَّلة نظرياً لـE2[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text):
-        n_e2 = int(re.search(r"\|\s*(?:\*\*)?مؤهَّلة نظرياً لـE2[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text).group(1))  # type: ignore[union-attr]
+    if re.search(
+        r"\|\s*(?:\*\*)?مؤهَّلة نظرياً لـE2[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|", round_text
+    ):
+        n_e2 = int(
+            re.search(
+                r"\|\s*(?:\*\*)?مؤهَّلة نظرياً لـE2[^\n|]*\|\s*(?:\*\*)?(\d+)(?:\*\*)?\s*\|",
+                round_text,
+            ).group(1)
+        )  # type: ignore[union-attr]
         if n_e2 != 0:
             failures.append(
                 f"§6.1: {n_e2} فرضيةً معلَنةً مؤهَّلةً لـE2، والمتوقّع 0 — "
@@ -419,14 +606,27 @@ def check_levels_declared(round_text: str, ledger: list[dict[str, str]], failure
 def check_evidence(evidence: list[dict[str, str]], failures: list[str]) -> None:
     """سجلّ الأدلة: عدٌّ، اتصالُ نطاق S96–S103، تاريخٌ لكلّ صفّ، ودرجةُ مصدرٍ صالحة."""
     if len(evidence) != EXPECTED_EVIDENCE:
-        failures.append(f"سجلّ أدلّة الجولة 05 يحوي {len(evidence)} سنداً، والمتوقّع {EXPECTED_EVIDENCE}")
+        failures.append(
+            f"سجلّ أدلّة الجولة 05 يحوي {len(evidence)} سنداً، والمتوقّع {EXPECTED_EVIDENCE}"
+        )
     ids = [field(row, "id") for row in evidence]
-    want = [f"S{n}" for n in range(int(EXPECTED_EVIDENCE_RANGE[0][1:]), int(EXPECTED_EVIDENCE_RANGE[1][1:]) + 1)]
+    want = [
+        f"S{n}"
+        for n in range(int(EXPECTED_EVIDENCE_RANGE[0][1:]), int(EXPECTED_EVIDENCE_RANGE[1][1:]) + 1)
+    ]
     if ids != want:
         failures.append(f"معرّفات الأدلّة {ids}, والمتوقّع اتّصالاً {want[0]}–{want[-1]}")
     #: عُرفُ الأعمدة موروثٌ من الجولتين 02/04 — ⛔ لا اختراعَ مخطّطٍ جديد في الجولة 05.
-    want_cols = ["id", "claim_summary_ar", "source", "url", "as_of", "status",
-                 "independence_note", "reverification_trigger"]
+    want_cols = [
+        "id",
+        "claim_summary_ar",
+        "source",
+        "url",
+        "as_of",
+        "status",
+        "independence_note",
+        "reverification_trigger",
+    ]
     if evidence and list(evidence[0].keys()) != want_cols:
         failures.append(
             f"أعمدةُ سجلّ الأدلّة {list(evidence[0].keys())}، والمتوقّع عُرفَ الجولتين 02/04: {want_cols}"
@@ -439,7 +639,9 @@ def check_evidence(evidence: list[dict[str, str]], failures: list[str]) -> None:
             failures.append(f"{sid}: `as_of` غائبٌ أو غير صالح ({as_of!r}) — T43 يلزم تاريخاً لكلّ صفّ")
         status = field(row, "status")
         if not (grade.match(status) or status.startswith("UNSTATED")):
-            failures.append(f"{sid}: درجةُ مصدرٍ خارج العُرف (P/M/L ± H/M أو UNSTATED): {status[:30]!r}")
+            failures.append(
+                f"{sid}: درجةُ مصدرٍ خارج العُرف (P/M/L ± H/M أو UNSTATED): {status[:30]!r}"
+            )
         url = field(row, "url")
         if not url and not status.startswith("UNSTATED"):
             failures.append(f"{sid}: سندٌ بلا رابطٍ ولا وسم UNSTATED")
@@ -456,8 +658,9 @@ def check_evidence(evidence: list[dict[str, str]], failures: list[str]) -> None:
             failures.append(f"{sid}: سندٌ بلا محفّزِ إعادة تحقّق — فالدليلُ بلا تاريخِ انتهاء")
 
 
-def check_demand_signal(evidence: list[dict[str, str]], ledger: list[dict[str, str]],
-                        failures: list[str]) -> None:
+def check_demand_signal(
+    evidence: list[dict[str, str]], ledger: list[dict[str, str]], failures: list[str]
+) -> None:
     """`H69`: إشارةُ الطلب من ممارس **ليست** تحقّقَ سوق — تُفرض في السند وفي السجلّ معاً.
 
     ⛔ هذا أخطرُ إغراءٍ في الجولة: تعليقٌ واحد يبدو «إثباتَ طلب»، ولو قُبل كذلك لصار أساسَ
@@ -488,9 +691,7 @@ def check_demand_signal(evidence: list[dict[str, str]], ledger: list[dict[str, s
             f"H69 عند {field(h69, 'max_level')!r} والمتوقّع E0 — ⛔ إشارةُ طلبٍ واحدة لا ترفع التزاماً"
         )
     if bucket_state(field(h69, "gate_state")) != "completed":
-        failures.append(
-            "H69: حالتُها يجب أن تكون «مُنجَزة» (فالمنعُ نفسه هو المُنجَز، لا قبولُ السوق)"
-        )
+        failures.append("H69: حالتُها يجب أن تكون «مُنجَزة» (فالمنعُ نفسه هو المُنجَز، لا قبولُ السوق)")
     decision = squash(field(h69, "decision"))
     if "لا تُحتسب" not in decision and "لا يُحتسب" not in decision:
         failures.append(
@@ -534,6 +735,42 @@ def check_measurements(round_text: str, failures: list[str]) -> dict:
     return {"artifact": artifact, "matched": matched}
 
 
+def _check_h59_pin(pin: dict, failures: list[str]) -> None:
+    """دبوسٌ واحد: اكتمالُ الحقول واتساقُ حُكمِ AHW مع العدّ — والمنطقُ حرفيٌّ كما كان."""
+    label = str(pin.get("model_id", "?"))
+    missing = [f for f in PIN_FIELDS if pin.get(f) in (None, "")]
+    if missing:
+        failures.append(f"الدبوس {label}: حقولٌ ناقصة {missing} — ⛔ `UNPINNED` هنا عادلٌ لا كاذب")
+    if pin.get("missing_fields"):
+        failures.append(
+            f"الدبوس {label}: AHW تُعلن حقولاً ناقصة {pin['missing_fields']} — "
+            "⛔ تناقضٌ مع `unpinned_count = 0`"
+        )
+    if pin.get("pin_state") not in ("FRESH", "THROTTLED", "STALE"):
+        failures.append(
+            f"الدبوس {label}: حالةٌ {pin.get('pin_state')!r} خارج المُدرَّج (FRESH/THROTTLED/STALE)"
+        )
+    #: ⛔ STALE ⇒ غيرُ قابلٍ للاقتباس دليلاً على قدرةٍ قائمة. فلو صار `quotable = True`
+    #: لدبوسٍ منتهي الصلاحية لكان الحارسُ مُزيَّناً لا حارساً.
+    if pin.get("pin_state") == "STALE" and pin.get("quotable") is not False:
+        failures.append(
+            f"الدبوس {label}: `quotable` = {pin.get('quotable')!r} مع حالةٍ STALE — "
+            "⛔ منتهيُ الصلاحية لا يُقتبس دليلاً على قدرةٍ قائمة"
+        )
+
+
+def _check_h59_suite_axes(artifact: dict, failures: list[str]) -> None:
+    """محورا الدبوس على مستوى الحزمة: الإصدارُ وتاريخُ الإصدار — يُفحصان مرّةً واحدة."""
+    for dotted, label in SUITE_PIN_FIELDS:
+        try:
+            value = dig(artifact, dotted)
+        except KeyError:
+            failures.append(f"محورُ الدبوس على مستوى الحزمة غائب: {dotted} ({label})")
+            continue
+        if value in (None, ""):
+            failures.append(f"محورُ الدبوس {label} = {value!r} — ⛔ دبوسٌ بلا إصدارٍ أو تاريخٍ ناقص")
+
+
 def check_h59_domain_guard(artifact: dict, round_text: str, failures: list[str]) -> None:
     """حارسُ المجال: صفرُ `UNPINNED` على دبابيسَ كاملةِ الحقول، والعمرُ هو الحاكم.
 
@@ -554,35 +791,9 @@ def check_h59_domain_guard(artifact: dict, round_text: str, failures: list[str])
     #: كلّ دبوسٍ يجب أن تكون حقولُه حاضرةً غيرَ فارغة — وإلا فـ`UNPINNED` عادلٌ لا كاذب.
     #: و`missing_fields` هو **حُكمُ AHW نفسه** لا إعادةُ حسابٍ منّا: فالبوّابة لا تُصدّر منطقاً ثانياً.
     for pin in per_pin:
-        label = str(pin.get("model_id", "?"))
-        missing = [f for f in PIN_FIELDS if pin.get(f) in (None, "")]
-        if missing:
-            failures.append(f"الدبوس {label}: حقولٌ ناقصة {missing} — ⛔ `UNPINNED` هنا عادلٌ لا كاذب")
-        if pin.get("missing_fields"):
-            failures.append(
-                f"الدبوس {label}: AHW تُعلن حقولاً ناقصة {pin['missing_fields']} — "
-                "⛔ تناقضٌ مع `unpinned_count = 0`"
-            )
-        if pin.get("pin_state") not in ("FRESH", "THROTTLED", "STALE"):
-            failures.append(
-                f"الدبوس {label}: حالةٌ {pin.get('pin_state')!r} خارج المُدرَّج (FRESH/THROTTLED/STALE)"
-            )
-        #: ⛔ STALE ⇒ غيرُ قابلٍ للاقتباس دليلاً على قدرةٍ قائمة. فلو صار `quotable = True`
-        #: لدبوسٍ منتهي الصلاحية لكان الحارسُ مُزيَّناً لا حارساً.
-        if pin.get("pin_state") == "STALE" and pin.get("quotable") is not False:
-            failures.append(
-                f"الدبوس {label}: `quotable` = {pin.get('quotable')!r} مع حالةٍ STALE — "
-                "⛔ منتهيُ الصلاحية لا يُقتبس دليلاً على قدرةٍ قائمة"
-            )
+        _check_h59_pin(pin, failures)
     #: ومحورا الحزمة يُفحصان مرّةً واحدة (المخطّطُ مسطّح، فلا تكرارَ لفحصٍ مشترك).
-    for dotted, label in SUITE_PIN_FIELDS:
-        try:
-            value = dig(artifact, dotted)
-        except KeyError:
-            failures.append(f"محورُ الدبوس على مستوى الحزمة غائب: {dotted} ({label})")
-            continue
-        if value in (None, ""):
-            failures.append(f"محورُ الدبوس {label} = {value!r} — ⛔ دبوسٌ بلا إصدارٍ أو تاريخٍ ناقص")
+    _check_h59_suite_axes(artifact, failures)
     if pe.get("age_governs_not_missingness") is not True:
         failures.append(
             "`age_governs_not_missingness` ليس True — ⛔ إن حكم النقصُ لا العمرُ فالحكمُ عن "
@@ -597,7 +808,9 @@ def check_h59_domain_guard(artifact: dict, round_text: str, failures: list[str])
         )
     #: والحكمُ المُنجَز لا يجوز أن يُقرأ إذناً باقتباس الأرقام دليلاً على القدرة الحالية.
     if not pe.get("purpose_qualifier"):
-        failures.append("`purpose_qualifier` غائب — ⛔ STALE قد يُقرأ تكذيباً للرقم لا انتهاءً لصلاحية اقتباسه")
+        failures.append(
+            "`purpose_qualifier` غائب — ⛔ STALE قد يُقرأ تكذيباً للرقم لا انتهاءً لصلاحية اقتباسه"
+        )
     flat = squash(round_text)
     if "لا يُقتبس أيُّ رقمٍ هنا دليلاً على القدرة الحالية" not in flat:
         failures.append(
@@ -676,12 +889,11 @@ def check_no_averaging(artifact: dict, round_text: str, failures: list[str]) -> 
     spread = uc.get("share_spread_factor")
     if None in (share_a, share_b, spread):
         failures.append("نسبُ التعارض أو انتشارُه غائبة من الملفّ")
-    else:
-        #: إعادةُ حساب الانتشار من النسبتَين — فالبوّابة لا تثق بالملفّ ثقةً عمياء.
-        if abs(share_b / share_a - spread) > 5e-5:
-            failures.append(
-                f"`share_spread_factor` = {spread} بينما {share_b}/{share_a} = {share_b / share_a:.6f}"
-            )
+    #: إعادةُ حساب الانتشار من النسبتَين — فالبوّابة لا تثق بالملفّ ثقةً عمياء.
+    elif abs(share_b / share_a - spread) > 5e-5:
+        failures.append(
+            f"`share_spread_factor` = {spread} بينما {share_b}/{share_a} = {share_b / share_a:.6f}"
+        )
     flat = squash(round_text)
     for needle in ("متوسطُ طرفَين أوّليين بدبوسَين مختلفَين", "رقمٌ **بلا مرجع**"):
         if needle not in flat and needle.replace("**", "") not in flat:
@@ -716,11 +928,14 @@ def check_cpst_doctrine(artifact: dict, failures: list[str]) -> None:
         #: ⛔ وصولٌ خامّ إلى مفتاحٍ غائب يُسقط البوّابة `KeyError`؛ فغيابُ المفتاح انتهاكٌ
         #: يُبلَّغ في `check_measurements`، وهنا تُجرى المصالحةُ فقط إن حضر الطرفان.
         declared = artifact.get("results", {}).get("cpst_spread_factor")
-        if cb.get("n_disclosed") and isinstance(declared, (int, float)):
-            if abs(band[1] / band[0] - float(declared)) > 5e-5:
-                failures.append(
-                    f"`cpst_spread_factor` = {declared} بينما max/min = {band[1] / band[0]:.6f}"
-                )
+        if (
+            cb.get("n_disclosed")
+            and isinstance(declared, (int, float))
+            and abs(band[1] / band[0] - float(declared)) > 5e-5
+        ):
+            failures.append(
+                f"`cpst_spread_factor` = {declared} بينما max/min = {band[1] / band[0]:.6f}"
+            )
     #: ⛔ الانتشارُ هنا بين بدائل (كلٌّ كلفتُه الحقيقية)، لا تشتّتٌ في تقدير بديلٍ واحد.
     #: والإبرةُ هي **النفيُ** الحاملُ للمعنى: فقولُ «بين بدائل» وحده لا يمنع الخلط، بينما
     #: «لا بين تقديراتٍ للكمية نفسها» يستبعد القراءةَ الخاطئة صراحةً.
@@ -746,9 +961,7 @@ def check_attribution_correction(artifact: dict, round_text: str, failures: list
             "⛔ H67: مالكُ الحزمة أكاديميٌّ مستقلّ، والشركاءُ الصناعيون وفّروا الوصول فقط"
         )
     if owner.startswith("OpenAI"):
-        failures.append(
-            "`suite.owner` يبدأ بـOpenAI — ⛔ هذا هو خطأُ الجولة 04 بعينه (C1)"
-        )
+        failures.append("`suite.owner` يبدأ بـOpenAI — ⛔ هذا هو خطأُ الجولة 04 بعينه (C1)")
     note = str(suite.get("attribution_note", ""))
     if not note or "ليست" not in note:
         failures.append(
@@ -830,8 +1043,13 @@ def check_no_exploit_code(failures: list[str]) -> None:
                 )
     #: والحقلُّ نفسه يجب أن يبقى صادقاً: صفرُ استغلالٍ مُستنسخ.
     artifact = json.loads(ARTIFACT.read_text(encoding="utf-8"))
-    if artifact.get("exploits_reproduced") != 0 or artifact.get("exploit_code_present") is not False:
-        failures.append("⛔ الحقلّان (exploits_reproduced / exploit_code_present) يناقضان الفحصَ النصّي")
+    if (
+        artifact.get("exploits_reproduced") != 0
+        or artifact.get("exploit_code_present") is not False
+    ):
+        failures.append(
+            "⛔ الحقلّان (exploits_reproduced / exploit_code_present) يناقضان الفحصَ النصّي"
+        )
 
 
 def check_forbidden_claims(failures: list[str]) -> None:
@@ -869,7 +1087,9 @@ def check_reproducibility(failures: list[str]) -> None:
         module = __import__(MEASURE.stem)
         rebuilt = module.build()
         rebuilt["inputs_digest_sha256"] = module._canonical_digest(rebuilt)
-    except Exception as exc:  # noqa: BLE001 — الفشلُ صريحٌ لا تجاوز
+    #: `BLE001` غيرُ مفعَّلةٍ في هذا المستودع — والتعليقُ يبقى توثيقاً لا توجيهاً:
+    #: التقاطُ `Exception` هنا فشلٌ صريحٌ يُبلَّغ، لا تجاوزٌ صامت.
+    except Exception as exc:
         failures.append(f"تعذّرت إعادةُ بناء ملفّ القياس: {type(exc).__name__}: {exc}")
         return
     on_disk = json.loads(ARTIFACT.read_text(encoding="utf-8"))
@@ -883,7 +1103,8 @@ def check_reproducibility(failures: list[str]) -> None:
         disk_keys = set(on_disk.get("results", {}))
         new_keys = set(rebuilt.get("results", {}))
         diff = sorted(disk_keys ^ new_keys) or [
-            k for k in sorted(disk_keys & new_keys)
+            k
+            for k in sorted(disk_keys & new_keys)
             if on_disk["results"][k] != rebuilt["results"][k]
         ]
         failures.append(
@@ -902,27 +1123,54 @@ def check_measure_is_stdlib_only(failures: list[str]) -> None:
     tree = ast.parse(source)
     allowed = {
         "__future__",  # جزءٌ من اللغة (تأجيلُ تقييم الإشارات)، ⛔ ليس حزمةً خارجية
-        "json", "math", "statistics", "datetime", "dataclasses", "typing", "argparse",
-        "sys", "pathlib", "hashlib", "collections", "itertools", "functools", "re",
-        "textwrap", "unicodedata", "decimal", "fractions", "csv",
-        "shared",      # وحدةُ المستودع نفسها — وإعادةُ استعمال `evaluate_pin` هي **جوهرُ H60**
+        "json",
+        "math",
+        "statistics",
+        "datetime",
+        "dataclasses",
+        "typing",
+        "argparse",
+        "sys",
+        "pathlib",
+        "hashlib",
+        "collections",
+        "itertools",
+        "functools",
+        "re",
+        "textwrap",
+        "unicodedata",
+        "decimal",
+        "fractions",
+        "csv",
+        "shared",  # وحدةُ المستودع نفسها — وإعادةُ استعمال `evaluate_pin` هي **جوهرُ H60**
     }
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
                 root_name = alias.name.split(".")[0]
                 if root_name not in allowed:
-                    failures.append(f"measure_benchmark_pin.py: استيرادٌ خارج المكتبة القياسية: {alias.name}")
+                    failures.append(
+                        f"measure_benchmark_pin.py: استيرادٌ خارج المكتبة القياسية: {alias.name}"
+                    )
         elif isinstance(node, ast.ImportFrom):
             root_name = (node.module or "").split(".")[0]
             if root_name and root_name not in allowed:
-                failures.append(f"measure_benchmark_pin.py: استيرادٌ خارج المكتبة القياسية: {node.module}")
-        elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
-            if node.func.id in {"eval", "exec", "compile", "__import__"}:
-                failures.append(f"measure_benchmark_pin.py:{node.lineno}: نداءُ {node.func.id} — ⛔ تنفيذٌ ديناميكي")
+                failures.append(
+                    f"measure_benchmark_pin.py: استيرادٌ خارج المكتبة القياسية: {node.module}"
+                )
+        elif (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id in {"eval", "exec", "compile", "__import__"}
+        ):
+            failures.append(
+                f"measure_benchmark_pin.py:{node.lineno}: نداءُ {node.func.id} — ⛔ تنفيذٌ ديناميكي"
+            )
     for banned in ("urllib", "requests", "socket", "http.client", "subprocess"):
         if banned in source:
-            failures.append(f"measure_benchmark_pin.py: ذكرُ {banned!r} — ⛔ القياسُ لا يقرأ شبكةً ولا يُنفّذ")
+            failures.append(
+                f"measure_benchmark_pin.py: ذكرُ {banned!r} — ⛔ القياسُ لا يقرأ شبكةً ولا يُنفّذ"
+            )
 
 
 def check_doc_structure(round_text: str, failures: list[str]) -> None:

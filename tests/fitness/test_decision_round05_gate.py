@@ -160,7 +160,10 @@ def test_real_repository_tree_passes() -> None:
     """الشجرة الحقيقية — بالعملية الفرعية كما في CI، لا بإبدال ثوابت."""
     result = subprocess.run(
         [sys.executable, str(GATE_SCRIPT)],
-        capture_output=True, text=True, cwd=REPO_ROOT, check=False,
+        capture_output=True,
+        text=True,
+        cwd=REPO_ROOT,
+        check=False,
     )
     assert result.returncode == 0, result.stdout + result.stderr
     assert "جولة القرار 05 متّسقة" in result.stdout
@@ -201,9 +204,16 @@ def test_every_render_spec_named_in_the_table_is_implemented() -> None:
     specs = {spec for _d, spec, _w, _t in gate.DERIVED_FIGURES}
     for spec in specs:
         try:
-            gate.render(1.0 if spec.startswith(("f",)) else "x" if spec in ("str", "prefix") else
-                        (None if spec == "none" else ([1, 2] if spec == "len" else True)), spec)
-        except ValueError as exc:  # noqa: PERF203 — الصيغةُ المجهولة هي الفشل
+            gate.render(
+                1.0
+                if spec.startswith(("f",))
+                else "x"
+                if spec in ("str", "prefix")
+                else (None if spec == "none" else ([1, 2] if spec == "len" else True)),
+                spec,
+            )
+        #: `PERF203` غيرُ مفعَّلةٍ في هذا المستودع — والتعليقُ يبقى توثيقاً لا توجيهاً.
+        except ValueError as exc:
             raise AssertionError(f"صيغةٌ غير مُنفَّذة: {spec!r} ({exc})") from exc
 
 
@@ -222,8 +232,10 @@ def test_hand_written_number_drifting_from_artifact_is_blocked(tmp_path: Path) -
 def test_artifact_number_drifting_from_document_is_blocked(tmp_path: Path) -> None:
     """الاتجاهُ الآخر: الملفّ يُعدَّل والوثيقةُ تبقى ⇒ أحمر (لا يكفي أن يكون أحدهما صحيحاً)."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"].__setitem__("mitigation_reduction_factor", 4.0))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"].__setitem__("mitigation_reduction_factor", 4.0),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "mitigation_reduction_factor" in output
@@ -241,9 +253,12 @@ def test_missing_artifact_path_is_an_explicit_failure_not_a_silent_skip(tmp_path
 def test_list_indexed_path_is_supported_and_validated(tmp_path: Path) -> None:
     """مسارٌ مُفهرَس في قائمة (`per_pair.1.off_target_share`) محروسٌ كغيره."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["off_target_rate"]["per_pair"][1].__setitem__(
-                        "off_target_share", 0.5))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["off_target_rate"]["per_pair"][1].__setitem__(
+            "off_target_share", 0.5
+        ),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "per_pair.1.off_target_share" in output
@@ -311,8 +326,9 @@ def test_prefix_spec_checks_a_prefix_not_equality(tmp_path: Path) -> None:
 def test_artifact_results_must_rebuild_byte_identically(tmp_path: Path) -> None:
     """`results` على القرص يجب أن تُعاد بناؤها حرفياً من `build()`."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"].__setitem__("h59_verdict", "REFUTED"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]), lambda p: p["results"].__setitem__("h59_verdict", "REFUTED")
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "لا تُعاد بناؤها حرفياً" in output
@@ -321,8 +337,10 @@ def test_artifact_results_must_rebuild_byte_identically(tmp_path: Path) -> None:
 def test_volatile_timestamp_does_not_fail_the_rebuild_check(tmp_path: Path) -> None:
     """⛔ `generated_at` طابعُ وقتٍ لا مدخل — مقارنتُه تُحمِّر البوّابة كلّ ثانية."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p.__setitem__("generated_at", "1999-01-01T00:00:00+00:00"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p.__setitem__("generated_at", "1999-01-01T00:00:00+00:00"),
+    )
     code, output = _run(**paths)
     assert code == 0, output
 
@@ -342,8 +360,10 @@ def test_suite_block_must_also_rebuild(tmp_path: Path) -> None:
 def test_an_unpinned_pin_in_the_correct_domain_is_blocked(tmp_path: Path) -> None:
     """⛔ جوهرُ الجولة: `UNPINNED` في المجال الصحيح يعني أنّ **القياس** مُعيب لا الأداة."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"].__setitem__("unpinned_count", 1))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"].__setitem__("unpinned_count", 1),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "unpinned_count" in output and "H60 فاشلة" in output
@@ -352,8 +372,10 @@ def test_an_unpinned_pin_in_the_correct_domain_is_blocked(tmp_path: Path) -> Non
 def test_a_pin_with_a_missing_field_is_blocked(tmp_path: Path) -> None:
     """حقلُّ دبوسٍ ناقص ⇒ `UNPINNED` **عادل** لا كاذب، فالبوّابة ترفض اكتمالاً مُدَّعى."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"]["per_pin"][0].__setitem__("harness", None))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"]["per_pin"][0].__setitem__("harness", None),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "حقولٌ ناقصة" in output and "harness" in output
@@ -362,9 +384,12 @@ def test_a_pin_with_a_missing_field_is_blocked(tmp_path: Path) -> None:
 def test_ahws_own_missing_fields_verdict_is_trusted_over_our_recomputation(tmp_path: Path) -> None:
     """⚠️ `missing_fields` هو **حُكمُ AHW نفسه**: فلو خالفه فحصُنا لصار عندنا منطقٌ ثانٍ."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"]["per_pin"][2].__setitem__(
-                        "missing_fields", ["suite_version"]))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"]["per_pin"][2].__setitem__(
+            "missing_fields", ["suite_version"]
+        ),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "AHW تُعلن حقولاً ناقصة" in output
@@ -373,8 +398,12 @@ def test_ahws_own_missing_fields_verdict_is_trusted_over_our_recomputation(tmp_p
 def test_a_pin_state_outside_the_graded_scale_is_blocked(tmp_path: Path) -> None:
     """الحالةُ يجب أن تكون من المُدرَّج — ⛔ لا `UNPINNED` ولا `None` ولا اختراعُ حالة."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"]["per_pin"][1].__setitem__("pin_state", "FRESHISH"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"]["per_pin"][1].__setitem__(
+            "pin_state", "FRESHISH"
+        ),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "خارج المُدرَّج" in output
@@ -383,8 +412,10 @@ def test_a_pin_state_outside_the_graded_scale_is_blocked(tmp_path: Path) -> None
 def test_a_stale_pin_marked_quotable_is_blocked(tmp_path: Path) -> None:
     """⛔ منتهيُ الصلاحية لا يُقتبس دليلاً على قدرةٍ قائمة — وإلا فالحارسُ زينة."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"]["per_pin"][0].__setitem__("quotable", True))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"]["per_pin"][0].__setitem__("quotable", True),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "quotable" in output
@@ -393,8 +424,10 @@ def test_a_stale_pin_marked_quotable_is_blocked(tmp_path: Path) -> None:
 def test_dropping_age_governs_not_missingness_is_blocked(tmp_path: Path) -> None:
     """إن حكم النقصُ لا العمرُ فالحكمُ عن اكتمال الدبوس لا عن صلاحية الاقتباس."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"].__setitem__("age_governs_not_missingness", False))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"].__setitem__("age_governs_not_missingness", False),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "age_governs_not_missingness" in output
@@ -402,8 +435,10 @@ def test_dropping_age_governs_not_missingness_is_blocked(tmp_path: Path) -> None
 
 def test_dropping_all_stale_by_age_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"].__setitem__("all_stale_by_age", False))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"].__setitem__("all_stale_by_age", False),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "all_stale_by_age" in output
@@ -412,8 +447,10 @@ def test_dropping_all_stale_by_age_is_blocked(tmp_path: Path) -> None:
 def test_changing_the_h59_verdict_is_blocked(tmp_path: Path) -> None:
     """⛔ الحسمُ قياسٌ لا رأي: فـ`CONFIRMED_IN_DOMAIN` نتيجةٌ لا تسمية."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"].__setitem__("h59_verdict", "REFUTED"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"].__setitem__("h59_verdict", "REFUTED"),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "H59 لا تُحسم بالحجّة" in output
@@ -422,8 +459,10 @@ def test_changing_the_h59_verdict_is_blocked(tmp_path: Path) -> None:
 def test_dropping_the_purpose_qualifier_is_blocked(tmp_path: Path) -> None:
     """بلا `purpose_qualifier` يُقرأ `STALE` تكذيباً للرقم لا انتهاءً لصلاحية اقتباسه."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"].__setitem__("purpose_qualifier", ""))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"].__setitem__("purpose_qualifier", ""),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "purpose_qualifier" in output
@@ -432,8 +471,10 @@ def test_dropping_the_purpose_qualifier_is_blocked(tmp_path: Path) -> None:
 def test_dropping_all_pins_is_an_explicit_failure(tmp_path: Path) -> None:
     """⛔ قائمةٌ فارغة تُقرأ «لا انحراف» في بوّابةٍ أقلّ صرامة — هنا تُسمّى."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"].__setitem__("per_pin", []))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"].__setitem__("per_pin", []),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "لا حكمَ بلا دبابيس" in output
@@ -451,8 +492,10 @@ def test_a_missing_suite_level_pin_axis_is_blocked(tmp_path: Path) -> None:
 def test_a_blank_suite_issue_date_is_blocked(tmp_path: Path) -> None:
     """تاريخٌ فارغ ⇒ لا عمرَ محسوباً ⇒ الدبوسُ ناقصٌ ولو امتلأت حقولُ الزوج."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["pin_evaluations"].__setitem__("suite_issued_on", ""))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["pin_evaluations"].__setitem__("suite_issued_on", ""),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "report_date" in output
@@ -474,8 +517,10 @@ def test_removing_the_stale_constraint_from_the_prose_is_blocked(tmp_path: Path)
 def test_infinity_in_the_artifact_is_blocked_by_a_text_scan(tmp_path: Path) -> None:
     """⚠️ `json.dumps(inf)` يكتب `Infinity` و`json.loads` يقبله — فالمسحُ النصّي هو الحارس."""
     paths = _tree(tmp_path)
-    _write_raw_artifact(Path(paths["ARTIFACT"]),
-                        lambda p: p["results"]["safeguard_pair"].__setitem__("ratio", float("inf")))
+    _write_raw_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["safeguard_pair"].__setitem__("ratio", float("inf")),
+    )
     raw = Path(paths["ARTIFACT"]).read_text(encoding="utf-8")
     assert "Infinity" in raw, "المقدّمةُ نفسها: بايثون تكتب ما ترفضه المواصفة"
     code, output = _run(**paths)
@@ -485,8 +530,10 @@ def test_infinity_in_the_artifact_is_blocked_by_a_text_scan(tmp_path: Path) -> N
 
 def test_nan_in_the_artifact_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _write_raw_artifact(Path(paths["ARTIFACT"]),
-                        lambda p: p["results"]["safeguard_pair"].__setitem__("ratio", float("nan")))
+    _write_raw_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["safeguard_pair"].__setitem__("ratio", float("nan")),
+    )
     assert "NaN" in Path(paths["ARTIFACT"]).read_text(encoding="utf-8")
     code, output = _run(**paths)
     assert code == 1
@@ -496,8 +543,10 @@ def test_nan_in_the_artifact_is_blocked(tmp_path: Path) -> None:
 def test_a_computed_ratio_where_the_denominator_is_zero_is_blocked(tmp_path: Path) -> None:
     """⛔ 0 ← 120: أيُّ رقمٍ هنا اختلاقٌ (inf؟ 0؟ 120؟) — فالصحيحُ `None`."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["safeguard_pair"].__setitem__("ratio", 120.0))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["safeguard_pair"].__setitem__("ratio", 120.0),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "المقامُ صفر" in output
@@ -506,8 +555,10 @@ def test_a_computed_ratio_where_the_denominator_is_zero_is_blocked(tmp_path: Pat
 def test_a_none_ratio_without_a_spoken_reason_is_blocked(tmp_path: Path) -> None:
     """`None` بلا سببٍ منطوق يُقرأ خطأً برمجياً لا غيابَ معلومات."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["safeguard_pair"].__setitem__("ratio_undefined_reason", ""))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["safeguard_pair"].__setitem__("ratio_undefined_reason", ""),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "ZERO_DENOMINATOR" in output
@@ -515,8 +566,10 @@ def test_a_none_ratio_without_a_spoken_reason_is_blocked(tmp_path: Path) -> None
 
 def test_recording_the_zero_denominator_as_a_number_not_a_pair_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["safeguard_pair"].__setitem__("recorded_as", "RATIO"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["safeguard_pair"].__setitem__("recorded_as", "RATIO"),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "PAIR_NOT_RATIO" in output
@@ -525,8 +578,10 @@ def test_recording_the_zero_denominator_as_a_number_not_a_pair_is_blocked(tmp_pa
 def test_a_nonzero_denominator_must_be_recomputed_not_kept_as_a_pair(tmp_path: Path) -> None:
     """⚠️ الحارسُ يعمل في الاتّجاهَين: لو صار المقامُ 1 فـ`None` **خطأ** لا انضباط."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["safeguard_pair"].__setitem__("successes_default_filters", 3))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["safeguard_pair"].__setitem__("successes_default_filters", 3),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "فالمقامُ لم يعد صفراً" in output
@@ -537,8 +592,10 @@ def test_a_nonzero_denominator_must_be_recomputed_not_kept_as_a_pair(tmp_path: P
 # --------------------------------------------------------------------------- #
 def test_declaring_the_conflict_reconciled_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["unsolved_conflict"].__setitem__("reconciled", True))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["unsolved_conflict"].__setitem__("reconciled", True),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "لا يُحسم بجمع" in output
@@ -547,9 +604,12 @@ def test_declaring_the_conflict_reconciled_is_blocked(tmp_path: Path) -> None:
 def test_a_reconciliation_basis_other_than_pin_difference_is_blocked(tmp_path: Path) -> None:
     """⛔ «AVERAGE» أساسٌ يبدو معقولاً وينتج رقماً بلا مرجع."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["unsolved_conflict"].__setitem__(
-                        "reconciliation_basis", "ARITHMETIC_MEAN"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["unsolved_conflict"].__setitem__(
+            "reconciliation_basis", "ARITHMETIC_MEAN"
+        ),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "PIN_DIFFERENCE_NOT_AVERAGE" in output
@@ -558,8 +618,12 @@ def test_a_reconciliation_basis_other_than_pin_difference_is_blocked(tmp_path: P
 def test_dropping_pin_axes_below_four_is_blocked(tmp_path: Path) -> None:
     """تعارضٌ بلا تسميةِ محاوره يُقرأ غموضاً لا فرقَ دبوس."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["unsolved_conflict"].__setitem__("pin_axes_that_differ", ["model_id"]))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["unsolved_conflict"].__setitem__(
+            "pin_axes_that_differ", ["model_id"]
+        ),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "محاورَ مختلفة" in output
@@ -568,8 +632,12 @@ def test_dropping_pin_axes_below_four_is_blocked(tmp_path: Path) -> None:
 def test_a_domain_sum_that_does_not_match_the_suite_total_is_blocked(tmp_path: Path) -> None:
     """⛔ 520+185+193 ≠ 898 ⇒ النسبتان مقسومتان على مقامَين مختلفَين فالتعارضُ وهمي."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["unsolved_conflict"].__setitem__("domain_sum_matches_instances", False))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["unsolved_conflict"].__setitem__(
+            "domain_sum_matches_instances", False
+        ),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "domain_sum_matches_instances" in output
@@ -578,8 +646,10 @@ def test_a_domain_sum_that_does_not_match_the_suite_total_is_blocked(tmp_path: P
 def test_a_corrupted_spread_factor_is_recomputed_and_blocked(tmp_path: Path) -> None:
     """البوّابة تُعيد حسابَ الانتشار من النسبتَين — ⛔ لا ثقةَ عمياء بالملفّ."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["unsolved_conflict"].__setitem__("share_spread_factor", 2.0))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["unsolved_conflict"].__setitem__("share_spread_factor", 2.0),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "share_spread_factor" in output
@@ -609,8 +679,10 @@ def test_removing_the_no_reference_argument_is_blocked(tmp_path: Path) -> None:
 def test_changing_the_cpst_unit_is_blocked(tmp_path: Path) -> None:
     """⛔ L7: المقارنةُ بـCPST لا بأجرٍ ساعيّ — والوحدةُ شرطُ المقارنة لا تفصيل."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["cpst_band"].__setitem__("unit", "USD_PER_HOUR"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["cpst_band"].__setitem__("unit", "USD_PER_HOUR"),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "USD_PER_SUCCESSFUL_TASK" in output
@@ -619,8 +691,10 @@ def test_changing_the_cpst_unit_is_blocked(tmp_path: Path) -> None:
 def test_dropping_the_doctrine_citation_is_blocked(tmp_path: Path) -> None:
     """رقمٌ بلا حكمٍ مذهبي يُقرأ ملاحظةً لا التزاماً."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["cpst_band"].__setitem__("doctrine_compliance", "بلا إسناد"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["cpst_band"].__setitem__("doctrine_compliance", "بلا إسناد"),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "D-290 L7" in output
@@ -629,8 +703,10 @@ def test_dropping_the_doctrine_citation_is_blocked(tmp_path: Path) -> None:
 def test_imputing_the_undisclosed_cpst_is_blocked(tmp_path: Path) -> None:
     """⛔ استكمالُ الغائبة بمتوسط الباقي يُزيح النطاقَ للأسفل — والأقوى أداءً هو الغائب."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["cpst_band"].__setitem__("undisclosed_imputed", True))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["cpst_band"].__setitem__("undisclosed_imputed", True),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "undisclosed_imputed" in output
@@ -638,17 +714,22 @@ def test_imputing_the_undisclosed_cpst_is_blocked(tmp_path: Path) -> None:
 
 def test_an_inverted_cpst_band_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["cpst_band"].__setitem__("band_usd", [22.99, 3.75]))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["cpst_band"].__setitem__("band_usd", [22.99, 3.75]),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "band_usd" in output
 
 
-def test_a_spread_factor_inconsistent_with_the_band_is_recomputed_and_blocked(tmp_path: Path) -> None:
+def test_a_spread_factor_inconsistent_with_the_band_is_recomputed_and_blocked(
+    tmp_path: Path,
+) -> None:
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"].__setitem__("cpst_spread_factor", 3.0))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]), lambda p: p["results"].__setitem__("cpst_spread_factor", 3.0)
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "cpst_spread_factor" in output
@@ -662,9 +743,12 @@ def test_dropping_the_between_alternatives_distinction_is_blocked(tmp_path: Path
     ترتيباً من ضجيج.
     """
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["cpst_band"].__setitem__(
-                        "reading", "نطاقُ CPST المُفصَح عنه بانتشارٍ كبير."))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["cpst_band"].__setitem__(
+            "reading", "نطاقُ CPST المُفصَح عنه بانتشارٍ كبير."
+        ),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "لا يميّز الانتشارَ" in output
@@ -676,8 +760,7 @@ def test_dropping_the_between_alternatives_distinction_is_blocked(tmp_path: Path
 def test_attributing_the_suite_to_openai_is_blocked(tmp_path: Path) -> None:
     """⛔ هذا هو خطأُ الجولة 04 بعينه (C1) — والحارسُ يمنع عودتَه في أيّ قياسٍ لاحق."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["suite"].__setitem__("owner", "OpenAI"))
+    _patch_artifact(Path(paths["ARTIFACT"]), lambda p: p["suite"].__setitem__("owner", "OpenAI"))
     code, output = _run(**paths)
     assert code == 1
     assert "هذا هو خطأُ الجولة 04 بعينه" in output
@@ -685,8 +768,9 @@ def test_attributing_the_suite_to_openai_is_blocked(tmp_path: Path) -> None:
 
 def test_a_suite_owner_that_is_not_berkeley_rdi_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["suite"].__setitem__("owner", "جهةٌ مجهولة"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]), lambda p: p["suite"].__setitem__("owner", "جهةٌ مجهولة")
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "Berkeley RDI" in output
@@ -695,7 +779,9 @@ def test_a_suite_owner_that_is_not_berkeley_rdi_is_blocked(tmp_path: Path) -> No
 def test_dropping_the_attribution_note_is_blocked(tmp_path: Path) -> None:
     """تصحيحٌ بلا نفيٍ صريح يُقرأ إضافةً لا تصحيحاً."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]), lambda p: p["suite"].__setitem__("attribution_note", ""))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]), lambda p: p["suite"].__setitem__("attribution_note", "")
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "attribution_note" in output
@@ -734,8 +820,10 @@ def test_omitting_that_the_correction_raises_evidence_value_is_blocked(tmp_path:
 def test_resolving_d1_without_reading_the_paper_is_blocked(tmp_path: Path) -> None:
     """⛔ الحسمُ بلا نصٍّ اختلاق: فالفرقُ قد يكون تعريفَ «نجاح» أو عيّنةً فرعية."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["self_contradictions"][0].__setitem__("resolved", True))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["self_contradictions"][0].__setitem__("resolved", True),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "اختلاقٌ لا استنتاج" in output
@@ -744,8 +832,10 @@ def test_resolving_d1_without_reading_the_paper_is_blocked(tmp_path: Path) -> No
 def test_a_contradiction_without_a_spoken_reason_is_blocked(tmp_path: Path) -> None:
     """تعليقٌ بلا سببٍ منطوق يُقرأ إهمالاً لا انضباطاً."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["self_contradictions"][0].__setitem__("why_unresolved", ""))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["self_contradictions"][0].__setitem__("why_unresolved", ""),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "why_unresolved" in output
@@ -754,8 +844,10 @@ def test_a_contradiction_without_a_spoken_reason_is_blocked(tmp_path: Path) -> N
 def test_a_contradiction_without_declared_handling_is_blocked(tmp_path: Path) -> None:
     """⛔ التناقضُ المسجَّل بلا معالجةٍ معلَنة **يُقتبس** — فالمعالجةُ جزءٌ من السجلّ."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["self_contradictions"][0].__setitem__("handling", ""))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["self_contradictions"][0].__setitem__("handling", ""),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "handling" in output
@@ -764,8 +856,9 @@ def test_a_contradiction_without_declared_handling_is_blocked(tmp_path: Path) ->
 def test_deleting_the_contradiction_record_entirely_is_blocked(tmp_path: Path) -> None:
     """حذفُ السجلّ أسوأُ من تركه معلّقاً: فيصير الجدولُ 1 والشكلُ 5 غيرَ متعارضَين صمتاً."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"].__setitem__("self_contradictions", []))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]), lambda p: p["results"].__setitem__("self_contradictions", [])
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "فارغة" in output
@@ -774,8 +867,10 @@ def test_deleting_the_contradiction_record_entirely_is_blocked(tmp_path: Path) -
 def test_a_single_valued_contradiction_is_blocked(tmp_path: Path) -> None:
     """تناقضٌ بقيمةٍ واحدة ليس تناقضاً."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["results"]["self_contradictions"][0].__setitem__("values", {"table1": 157}))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p["results"]["self_contradictions"][0].__setitem__("values", {"table1": 157}),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "قيمتَين" in output
@@ -787,8 +882,7 @@ def test_a_single_valued_contradiction_is_blocked(tmp_path: Path) -> None:
 def test_upgrading_the_practitioner_comment_to_a_primary_source_is_blocked(tmp_path: Path) -> None:
     """⛔ أخطرُ إغراءٍ في الجولة: تعليقٌ واحد يبدو «إثباتَ طلب» فيصير أساسَ رفع التزام."""
     paths = _tree(tmp_path)
-    _set_evidence(Path(paths["EVIDENCE"]), "S102", "status",
-                  "P — طرفٌ أوّل يُثبت الطلب")
+    _set_evidence(Path(paths["EVIDENCE"]), "S102", "status", "P — طرفٌ أوّل يُثبت الطلب")
     code, output = _run(**paths)
     assert code == 1
     assert "S102" in output and "comment" not in output and "المتوقّع L" in output
@@ -797,8 +891,9 @@ def test_upgrading_the_practitioner_comment_to_a_primary_source_is_blocked(tmp_p
 def test_a_demand_signal_without_an_explicit_negation_is_blocked(tmp_path: Path) -> None:
     """إشارةُ طلبٍ بلا نفيٍ تُقرأ دليلاً — فالنفيُ هو ما يمنع الانزلاق."""
     paths = _tree(tmp_path)
-    _set_evidence(Path(paths["EVIDENCE"]), "S102", "independence_note",
-                  "ممارسٌ مهتمٌّ ببناء أدواتٍ ضدّ هذا الأثر.")
+    _set_evidence(
+        Path(paths["EVIDENCE"]), "S102", "independence_note", "ممارسٌ مهتمٌّ ببناء أدواتٍ ضدّ هذا الأثر."
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "نفياً صريحاً" in output
@@ -816,10 +911,16 @@ def test_marking_h69_as_held_is_blocked(tmp_path: Path) -> None:
     """⚠️ الحالةُ الصحيحة «مُنجَزة»: فالمنعُ نفسه هو المُنجَز، لا قبولُ السوق."""
     paths = _tree(tmp_path)
     _set_ledger(Path(paths["LEDGER"]), "H69", "gate_state", "معلّقة على مقابلةٍ واحدة")
-    _replace_once(Path(paths["ROUND"]), "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **8** |",
-                  "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **7** |")
-    _replace_once(Path(paths["ROUND"]), "| **معلّقة على دليل لازم** | **1** |",
-                  "| **معلّقة على دليل لازم** | **2** |")
+    _replace_once(
+        Path(paths["ROUND"]),
+        "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **8** |",
+        "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **7** |",
+    )
+    _replace_once(
+        Path(paths["ROUND"]),
+        "| **معلّقة على دليل لازم** | **1** |",
+        "| **معلّقة على دليل لازم** | **2** |",
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "المنعُ نفسه هو المُنجَز" in output
@@ -828,8 +929,9 @@ def test_marking_h69_as_held_is_blocked(tmp_path: Path) -> None:
 def test_h69_silently_counted_into_the_interview_card_is_blocked(tmp_path: Path) -> None:
     """⛔ الصمتُ هنا يُقرأ ضمّاً: فيجب أن تعلن H69 أنّها لا تُحتسب في `T47`."""
     paths = _tree(tmp_path)
-    _set_ledger(Path(paths["LEDGER"]), "H69", "decision",
-                "تُذكر الإشارةُ في أيّ عرضٍ بوصفها تعليقاً عاماً.")
+    _set_ledger(
+        Path(paths["LEDGER"]), "H69", "decision", "تُذكر الإشارةُ في أيّ عرضٍ بوصفها تعليقاً عاماً."
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "T47" in output
@@ -973,12 +1075,15 @@ def test_the_partial_bucket_is_derived_from_the_ledger_not_the_prose(tmp_path: P
     لكان الفحصُ يقرأ الوثيقة لا السجلّ. ونجاحُ هذا وحده يثبت أنّ المصدر هو السجلّ.
     """
     paths = _tree(tmp_path)
-    _set_ledger(Path(paths["LEDGER"]), "H62", "gate_state",
-                "مُنجَزة: مرساةُ CPST على القرص")
-    _replace_once(Path(paths["ROUND"]), "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **8** |",
-                  "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **9** |")
-    _replace_once(Path(paths["ROUND"]), "| **مُنجَزة جزئياً** | **1** |",
-                  "| **مُنجَزة جزئياً** | **0** |")
+    _set_ledger(Path(paths["LEDGER"]), "H62", "gate_state", "مُنجَزة: مرساةُ CPST على القرص")
+    _replace_once(
+        Path(paths["ROUND"]),
+        "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **8** |",
+        "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **9** |",
+    )
+    _replace_once(
+        Path(paths["ROUND"]), "| **مُنجَزة جزئياً** | **1** |", "| **مُنجَزة جزئياً** | **0** |"
+    )
     code, output = _run(**paths)
     assert code == 0, output
 
@@ -988,8 +1093,11 @@ def test_the_partial_bucket_is_derived_from_the_ledger_not_the_prose(tmp_path: P
 # --------------------------------------------------------------------------- #
 def test_a_hand_written_completed_count_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _replace_once(Path(paths["ROUND"]), "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **8** |",
-                  "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **10** |")
+    _replace_once(
+        Path(paths["ROUND"]),
+        "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **8** |",
+        "| **مُنجَزة** (قياسٌ على القرص يحسمها) | **10** |",
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "ليس اشتقاقاً" in output
@@ -997,8 +1105,11 @@ def test_a_hand_written_completed_count_is_blocked(tmp_path: Path) -> None:
 
 def test_a_hand_written_held_count_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _replace_once(Path(paths["ROUND"]), "| **معلّقة على دليل لازم** | **1** |",
-                  "| **معلّقة على دليل لازم** | **0** |")
+    _replace_once(
+        Path(paths["ROUND"]),
+        "| **معلّقة على دليل لازم** | **1** |",
+        "| **معلّقة على دليل لازم** | **0** |",
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "معلّقة على دليل لازم" in output
@@ -1006,8 +1117,11 @@ def test_a_hand_written_held_count_is_blocked(tmp_path: Path) -> None:
 
 def test_a_hand_written_e1_count_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _replace_once(Path(paths["ROUND"]), "| **سقفٌ أقصى مسموح = E1** | **1** |",
-                  "| **سقفٌ أقصى مسموح = E1** | **3** |")
+    _replace_once(
+        Path(paths["ROUND"]),
+        "| **سقفٌ أقصى مسموح = E1** | **1** |",
+        "| **سقفٌ أقصى مسموح = E1** | **3** |",
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "عددُ E1" in output
@@ -1016,8 +1130,11 @@ def test_a_hand_written_e1_count_is_blocked(tmp_path: Path) -> None:
 def test_declaring_any_hypothesis_e2_eligible_is_blocked(tmp_path: Path) -> None:
     """⛔ لا سقف خسارة معتمداً ولا مرساةَ فاتورة ⇒ ولا واحدةَ تبلغ E2."""
     paths = _tree(tmp_path)
-    _replace_once(Path(paths["ROUND"]), "| **مؤهَّلة نظرياً لـE2 عند تفويض** | **0** |",
-                  "| **مؤهَّلة نظرياً لـE2 عند تفويض** | **1** |")
+    _replace_once(
+        Path(paths["ROUND"]),
+        "| **مؤهَّلة نظرياً لـE2 عند تفويض** | **0** |",
+        "| **مؤهَّلة نظرياً لـE2 عند تفويض** | **1** |",
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "E2" in output
@@ -1026,7 +1143,10 @@ def test_declaring_any_hypothesis_e2_eligible_is_blocked(tmp_path: Path) -> None
 def test_deleting_a_survey_row_is_blocked(tmp_path: Path) -> None:
     """صفٌّ محذوفٌ من §6.1 إخفاءٌ لا اختصار — فالبوّابة تُسمّيه."""
     paths = _tree(tmp_path)
-    _drop(Path(paths["ROUND"]), "| **مُنجَزة جزئياً** | **1** | `H62` (مرساةٌ موجودة، ومرساةُ الفاتورة غائبة) |")
+    _drop(
+        Path(paths["ROUND"]),
+        "| **مُنجَزة جزئياً** | **1** | `H62` (مرساةٌ موجودة، ومرساةُ الفاتورة غائبة) |",
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "لا صفَّ معلن" in output
@@ -1177,8 +1297,10 @@ def test_zero_counters_must_also_be_declared_in_the_prose(tmp_path: Path) -> Non
 
 def test_claiming_revenue_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p.__setitem__("revenue_claim", "USD 12,000 متوقّعة في الربع الثالث"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p.__setitem__("revenue_claim", "USD 12,000 متوقّعة في الربع الثالث"),
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "revenue_claim" in output
@@ -1187,8 +1309,10 @@ def test_claiming_revenue_is_blocked(tmp_path: Path) -> None:
 def test_revenue_claim_may_carry_an_arabic_explanation(tmp_path: Path) -> None:
     """العقدُ بادئةُ `NONE` لا مساواة — فشرحٌ عربيٌّ بعد NONE مقبول."""
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p.__setitem__("revenue_claim", "NONE — صفرُ عميل وصفرُ فاتورة"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]),
+        lambda p: p.__setitem__("revenue_claim", "NONE — صفرُ عميل وصفرُ فاتورة"),
+    )
     code, output = _run(**paths)
     assert code == 0, output
 
@@ -1224,7 +1348,9 @@ def test_an_eighth_offer_line_is_blocked(tmp_path: Path) -> None:
     catalog = json.loads(Path(paths["CATALOG"]).read_text(encoding="utf-8"))
     key = "offer_lines" if "offer_lines" in catalog else "offers"
     catalog[key].append({"id": "OFFER-8", "status": "PROPOSED"})
-    Path(paths["CATALOG"]).write_text(json.dumps(catalog, ensure_ascii=False, indent=2), encoding="utf-8")
+    Path(paths["CATALOG"]).write_text(
+        json.dumps(catalog, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "8 خطّاً" in output
@@ -1235,8 +1361,9 @@ def test_an_eighth_offer_line_is_blocked(tmp_path: Path) -> None:
 # --------------------------------------------------------------------------- #
 def test_exploit_primitive_in_the_artifact_is_blocked(tmp_path: Path) -> None:
     paths = _tree(tmp_path)
-    _patch_artifact(Path(paths["ARTIFACT"]),
-                    lambda p: p["boundaries"].append("نُسخ `__reduce__` للاستعمال"))
+    _patch_artifact(
+        Path(paths["ARTIFACT"]), lambda p: p["boundaries"].append("نُسخ `__reduce__` للاستعمال")
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "__reduce__" in output
@@ -1362,8 +1489,9 @@ def test_the_ledger_csv_is_scanned_for_refuted_claims_too(tmp_path: Path) -> Non
     المدحوضة تُختبر في صفٍّ نظيف.
     """
     paths = _tree(tmp_path)
-    _set_ledger(Path(paths["LEDGER"]), "H60", "hypothesis_ar",
-                "الحماياتُ القياسية لا تكفي لأيّ مؤسسة")
+    _set_ledger(
+        Path(paths["LEDGER"]), "H60", "hypothesis_ar", "الحماياتُ القياسية لا تكفي لأيّ مؤسسة"
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "decision_ledger_round05.csv" in output
@@ -1396,8 +1524,9 @@ def test_a_third_party_import_in_the_measure_script_is_blocked(tmp_path: Path) -
 
 def test_a_network_call_in_the_measure_script_is_blocked(tmp_path: Path) -> None:
     copy = tmp_path / "measure_benchmark_pin.py"
-    copy.write_text(MEASURE.read_text(encoding="utf-8") + "\n# urllib.request.urlopen(url)\n",
-                    encoding="utf-8")
+    copy.write_text(
+        MEASURE.read_text(encoding="utf-8") + "\n# urllib.request.urlopen(url)\n", encoding="utf-8"
+    )
     failures: list[str] = []
     saved, gate.MEASURE = gate.MEASURE, copy
     try:
@@ -1468,8 +1597,11 @@ def test_every_card_in_the_declared_range_is_required(tmp_path: Path) -> None:
 def test_an_overlong_decision_page_is_blocked(tmp_path: Path) -> None:
     """محرك §3: صفحةُ القرار ≤250 كلمة — فالقرارُ الذي لا يُقرأ لا يُتَّخذ."""
     paths = _tree(tmp_path)
-    _replace_once(Path(paths["ROUND"]), "## 1. صفحة القرار (≤250 كلمة)\n",
-                  "## 1. صفحة القرار (≤250 كلمة)\n" + "كلمةٌ حشوٌ " * 40 + "\n")
+    _replace_once(
+        Path(paths["ROUND"]),
+        "## 1. صفحة القرار (≤250 كلمة)\n",
+        "## 1. صفحة القرار (≤250 كلمة)\n" + "كلمةٌ حشوٌ " * 40 + "\n",
+    )
     code, output = _run(**paths)
     assert code == 1
     assert "صفحةُ القرار" in output
@@ -1543,6 +1675,9 @@ def test_the_measure_script_check_mode_still_passes() -> None:
     """⛔ البوّابةُ وملفُّ القياس يجب أن يتّفقا — فـ`--check` هو الحارسُ الأسرع."""
     result = subprocess.run(
         [sys.executable, str(MEASURE), "--check"],
-        capture_output=True, text=True, cwd=REPO_ROOT, check=False,
+        capture_output=True,
+        text=True,
+        cwd=REPO_ROOT,
+        check=False,
     )
     assert result.returncode == 0, result.stdout + result.stderr

@@ -16,13 +16,15 @@
 > them. All seven are wired now and `check_governance_registry.py` makes an
 > eighth impossible. Total gates on disk (derived, verified in CI):
 >
-> <!-- derived:gates_total=95 -->
-> **95** on disk in `scripts/fitness/` + `tools/ci/` — 94 executed, 1 declared debt
+> <!-- derived:gates_total=97 -->
+> **97** on disk in `scripts/fitness/` + `tools/ci/` — 96 executed, 1 declared debt
 > (`check_pocock_gates.py`, see `unenforced_debt` in `CONSTITUTION_REGISTRY.json`).
 > **D-291 honesty note:** the prose number used to read **92** while the derived marker
 > read **94** — a hand-typed count drifting from the very marker meant to stop it
 > (D-192/D-266). It now equals the marker, and `check_decision_round02.py` is the gate
-> added by D-291 (94 → 95).
+> added by D-291 (94 → 95). Round 04/05 added `check_decision_round04.py` and
+> `check_decision_round05.py` (95 → 97), both wired in `ci.yml` and both carrying a
+> negative-proof test — so the marker, the prose, and the executed count move together.
 
 ## Required jobs (must be green)
 
