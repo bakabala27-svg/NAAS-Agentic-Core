@@ -1,8 +1,9 @@
 {
   "$schema_version": "1",
-  "packet_id": "CAP-2026-09-11-algeria-hard-currency-strategic-study",
+  "packet_id": "CAP-2026-09-11-cnd-null-invariance-research-batch-3",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
+  "decision_of_change": "D-291",
   "standards": [
     "system-design-primer",
     "coding-interview-university",
@@ -21,117 +22,121 @@
     {
       "standard": "system-design-primer",
       "paths": [
-        "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md",
-        "studies/algeria-hard-currency/hypotheses_scores.csv"
+        "shared/research/null_invariance.py",
+        "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_CND.md"
       ],
-      "gate": "python3 -c \"import csv,json; rows=list(csv.DictReader(open('studies/algeria-hard-currency/hypotheses_scores.csv'))); w={'market(20%)':.2,'advantage(15%)':.15,'speed(15%)':.15,'scalability(15%)':.15,'net_FX(15%)':.15,'capital_eff(10%)':.10,'sustainability(5%)':.05,'sovereignty(5%)':.05}; assert all(abs(sum(int(r[k])*v for k,v in w.items())*10-float(r['weighted_score/50']))<0.05 for r in rows) and len(rows)==32; print('scores OK')\"",
-      "application_ar": "دراسة أنظمة لا مقال: تفكيك «توليد العملة الصعبة» إلى تسع قنوات قيمة ثم إلى آلات (ميزة→منتج→عميل→إيراد)، نماذج طاقة وسعة صريحة (ميجاواط→ساعات حوسبة، PUE، هامش وحدة اقتصادية 37%)، وTAM/SAM/SOM بفصل الافتراضات ⚙️ عن الحقائق ✅ — نفس انضباط تقدير الحمل والاختناقات في primer."
+      "gate": "python3 scripts/research/measure_cnd_instrument.py --check",
+      "application_ar": "فصلُ الطبقات بلا حالة مشتركة: شهادةُ بطلان محسوبة ← أحكامُ أزواج ← خلايا بهويّة محاسبة (عائلة×درجة×نوع) ← مؤشّر CND/LID ← كلفة تعرّض ونقطة تعادل بوحدات المشتري ← قدرة إحصائية. لا طبقةَ تعرف ما فوقها، وكلّ طبقة تُرجع `None` عند عدم النضج بدل صفرٍ مُخترع، والفشلُ صريحٌ (أسبابٌ منطوقة من مجموعة مغلقة) لا استثناءً صامتاً."
     },
     {
       "standard": "coding-interview-university",
       "paths": [
-        "studies/algeria-hard-currency/hypotheses_scores.csv",
-        "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md"
+        "tests/shared/test_cnd_null_invariance.py"
       ],
-      "gate": "python3 -c \"import csv,json; rows=list(csv.DictReader(open('studies/algeria-hard-currency/hypotheses_scores.csv'))); w={'market(20%)':.2,'advantage(15%)':.15,'speed(15%)':.15,'scalability(15%)':.15,'net_FX(15%)':.15,'capital_eff(10%)':.10,'sustainability(5%)':.05,'sovereignty(5%)':.05}; assert all(abs(sum(int(r[k])*v for k,v in w.items())*10-float(r['weighted_score/50']))<0.05 for r in rows) and len(rows)==32; print('scores OK')\"",
-      "application_ar": "أساسيات حسابية صريحة: مصفوفة تقييم 32 فرضية × 8 معايير بأوزان معلنة (مجموع مرجّح خطي قابل لإعادة الحساب آلياً)، وجداول إيراد بخطوات تعادل وفواصل زمنية قابلة للتتبع — كل رقم مشتق لا مُعلن."
+      "gate": "python3 -m pytest tests/shared/test_cnd_null_invariance.py -q",
+      "application_ar": "هياكلُ بياناتٍ وخوارزميات مُختبَرة حدّياً: شجرةُ ميركل بجذرٍ ثابت الترتيب (يتغيّر بتغيّر مسبار واحد)، وفهرسةُ مسبارٍ بمفتاحٍ مركّب، وويلسون عند n=0 (⇒ `None` لا قسمة على صفر)، ونيوكومب عند تباينٍ صفري، وتعميمُ محاذاةٍ بلا خوارزمية ثنائية، و74 اختباراً تمرّ كلها."
     },
     {
       "standard": "the-algorithms-python",
       "paths": [
-        "studies/algeria-hard-currency/hypotheses_scores.csv"
+        "shared/research/null_invariance.py",
+        "tests/shared/test_cnd_null_invariance.py"
       ],
-      "gate": "python3 -c \"import csv,json; rows=list(csv.DictReader(open('studies/algeria-hard-currency/hypotheses_scores.csv'))); w={'market(20%)':.2,'advantage(15%)':.15,'speed(15%)':.15,'scalability(15%)':.15,'net_FX(15%)':.15,'capital_eff(10%)':.10,'sustainability(5%)':.05,'sovereignty(5%)':.05}; assert all(abs(sum(int(r[k])*v for k,v in w.items())*10-float(r['weighted_score/50']))<0.05 for r in rows) and len(rows)==32; print('scores OK')\" && python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
-      "application_ar": "بيانات الدراسة الآلية مادة مفتوحة قابلة للتحقق: hypotheses_scores.csv صيغة قياسية تُعيد إنتاج الأعمدة المرجّحة بأمر واحد بلا تبعيات، مع ثبات ترتيب الصفوف وقيم صريحة لكل معيار (لا أرقام دفتريّة خفية)."
+      "gate": "python3 -m pytest tests/shared/test_cnd_null_invariance.py -q -k \"receipt or interval or minimum_pairs or accounts_for_every_pair\"",
+      "application_ar": "الخوارزمياتُ تُختبر بخصائصها لا بأمثلتها: حتميةُ الإيصال (نفس المدخلات ⇒ نفس الجذر)، وحساسيةُ الإيصال (تغييرُ مسبارٍ واحد ⇒ جذرٌ مختلف)، وحدودُ الفترة (خلية ناضجة ⇒ فترة محدودة · غير ناضجة ⇒ فترة `None` ومعدّلٌ مُبلَغ)، ومحاسبةُ الأزواج (مجموعُ الخلايا = عددُ الأزواج، لا زوجَ ساقطاً بصمت)."
     },
     {
       "standard": "build-your-own-x",
       "paths": [
-        "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md"
+        "shared/research/corpus/cnd_canary_v1.json",
+        "docs/research/AR_FR_SAFETY_BENCHMARK_INVENTORY.md"
       ],
-      "gate": "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
-      "application_ar": "فلسفة «ابنِه من الصفر»: القسم 11 (خطة 90 يوماً) هو أصغر برهان قابل للتشغيل لرهان DesertGrid — pod بحجم 2–5 ميجاواط وبوابة قتل معلنة عند اليوم 90، قبل أي رأس مال كبير — البناء التجريبي أولاً ثم التوسع."
+      "gate": "python3 scripts/fitness/check_decision_round02.py",
+      "application_ar": "ابنِ الشيءَ بعد أن تفحص ما بُني: جردُ 18 مصدراً (S28–S45) بتاريخٍ وحالةِ استقلالٍ ومحفّزِ إعادة تحقّق **قبل** تثبيت أيّ ادّعاء جدّة — وهو ما دحض أطروحتنا الأولى (ندرةُ المعايير العربية/الفرنسية) فضيّق المطالبة إلى خمسة محاور قابلة للدفاع. والذخيرةُ مؤلَّفةٌ بمنشأٍ لكلّ مسبار ورخصة CC-BY-4.0 وبلا محتوى ضارّ (حارسٌ آلي + اختبار)."
     },
     {
       "standard": "openhands-agent-canvas",
       "paths": [
-        "studies/algeria-hard-currency/DECISION-ROUND-01.md",
-        "studies/algeria-hard-currency/decision_ledger_round01.csv",
-        "studies/algeria-hard-currency/evidence_round01.csv",
-        "docs/commercial/DECISION_COMMITMENT_ENGINE.md"
+        "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
+        ".memory/cnd_null_invariance_truth.md"
       ],
-      "gate": "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية && python3 scripts/fitness/check_decision_round01.py  # PASS — جولة القرار متسقة مع سجلها الآلي",
-      "application_ar": "هيكل كانفس مستقل الأقسام لكل جولة قرار: DECISION-ROUND-01.md يفصل صفحة القرار عن عقد الموارد والسجل (decision_ledger_round01.csv) وسجل الأدلة (evidence_round01.csv) والبطاقات، فكل وحدة تُقرأ وتُدحض بمعزل؛ ولا يُقبل استشهاد بمعرّف S/C خارج السجل — يتحقق ذلك بـ check_decision_round01.py."
+      "gate": "python3 scripts/fitness/check_agent_reliability_constitution.py",
+      "application_ar": "مسارُ الوكيل التجاري مُقيَّد بالدستور القائم (D-290): حالةُ العرض `PROPOSED` بلا ترقية، والأسعارُ `PRICING HYPOTHESIS` داخل نطاقات D-273 §03 فقط، و⛔ لا خطَّ إيرادٍ ثامن (الأداة تخدم الخطوط 1·2·6 الموجودة)، و⛔ لا ادّعاء إيراد قبل إثباتٍ مستقرّ، وكلّ ادّعاء موسوم 🟢/🟡/🔴/🟢⟨ح⟩."
     },
     {
       "standard": "developer-roadmap",
       "paths": [
-        "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md"
+        "studies/algeria-hard-currency/DECISION-ROUND-02.md",
+        "studies/algeria-hard-currency/decision_ledger_round02.csv"
       ],
-      "gate": "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
-      "application_ar": "خارطة طريق متدرجة الملكية (1–3–7–15 سنة) بقسم لكل فاعل (الدولة/الخاص/رواد الأعمال/الذكاء الاصطناعي) ومؤشرات نجاح قابلة للقياس لكل محطة — منهجية خارطة الطريق التعليمية مطبّقة على اقتصاد وطني."
-    },
-    {
-      "standard": "build-your-own-x",
-      "paths": [
-        "studies/algeria-hard-currency/DECISION-ROUND-01.md",
-        "studies/algeria-hard-currency/decision_ledger_round01.csv",
-        "studies/algeria-hard-currency/evidence_round01.csv",
-        "scripts/fitness/check_decision_round01.py",
-        "docs/commercial/DECISION_COMMITMENT_ENGINE.md"
-      ],
-      "gate": "python3 scripts/fitness/check_decision_round01.py  # PASS — جولة القرار متسقة مع سجلها الآلي && python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية",
-      "application_ar": "بناء تجريبي من الأسفل: جولة القرار ترفض القفز إلى الالتزام وتُبقي السقف عند E1 (وصول وتأهيل بلا إنفاق) لغياب سقف خسارة معتمد، وتُرفق كل فرضية ببوابتها الحاكمة والاختبار الرخيص القادر على إسقاطها — وهو «ابنِه واثبُته صغيراً» مطبَّقاً على القرار لا على الكود. البرهان آلي: 32 صفاً، صفر E2 بلا تفويض، صفر استشهاد معلّق."
+      "gate": "python3 scripts/fitness/check_gate_negative_proof.py",
+      "application_ar": "خارطةُ طريقٍ بمراحل وبواباتٍ لا تُعوِّض بعضها: PROPOSED→REPEATABLE→PAID، وسلّمُ التزام E0–E4 مقفولٌ عند E1 ما دام **لا سقف خسارة معتمداً**، وسبعُ بطاقات اختبار (T30–T35) بلا إنفاق. وكلّ بوّابةٍ جديدة تُسجَّل ببرهانها السلبي في `NEGATIVE_PROOFS.json` (26 فحصاً تكسر القاعدة على شجرةٍ مؤقتة) فلا تُضاف بوّابةٌ تُخرج صفراً دائماً."
     }
   ],
   "production": {
     "owner": "research-independent-hard-currency",
-    "status": "DOCUMENTATION_ONLY_NO_RUNTIME_EFFECT",
+    "status": "RESEARCH_LIBRARY_AND_STUDY_NO_PRODUCTION_PATH",
     "interfaces": [
-      "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md — دراسة استراتيجية (20 قسماً + ملاحق A/B) بالعربية",
-      "studies/algeria-hard-currency/hypotheses_scores.csv — مصفوفة تقييم 32 فرضية قابلة لإعادة الحساب آلياً",
-      "studies/algeria-hard-currency/DECISION-ROUND-01.md — جولة قرار v2 تحت المحرك (بوابات غير تعويضية + E0..E2 فقط)",
-      "docs/commercial/DECISION_COMMITMENT_ENGINE.md — الوثيقة الحاكمة: البرومبت المعياري لمحرك اكتشاف المعاملات وهندسة الالتزام",
-      "scripts/fitness/check_decision_round01.py — فاصلة تحقق آلية تربط الجولة بسجلها (لا أرقام يدوية)"
+      "shared/research/null_invariance.py — مكتبة بحثية stdlib فقط (84 اسماً مُصدَّراً · mypy/ruff/flake8 نظيفة) — لا يستوردها أيّ مسار إنتاجي",
+      "shared/research/corpus/cnd_canary_v1.json — ذخيرةٌ كنارية: 8 نيّات · 93 مسباراً · سياساتٌ كنارية معلنة · منشأ لكلّ مسبار · فجواتُ تغطية مُعلَنة",
+      "scripts/research/measure_cnd_instrument.py — مولِّد قياس حتمي بوضع `--check` يفشل عند أيّ انحراف بين المودَع والمحسوب",
+      "docs/research/CND_MEASUREMENTS.json — ملفّ القياس المودَع (تغطية · شهادات · فجوة نضج · منحنى قدرة · نقاط تعادل بوحدات كلفة · empty_run_cells)",
+      "scripts/fitness/check_decision_round02.py — فارضٌ يشتقّ أرقام الجولة من السجلّ ويطابق كلّ رقمٍ عن الأداة بمسارٍ مُسمّى مع ملفّ القياس",
+      "tests/shared/test_cnd_null_invariance.py + tests/fitness/test_decision_round02_gate.py — 74 + 26 اختباراً"
     ],
     "runtime_evidence_paths": [
-      "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md",
-      "studies/algeria-hard-currency/hypotheses_scores.csv",
-      "studies/algeria-hard-currency/DECISION-ROUND-01.md",
-      "studies/algeria-hard-currency/decision_ledger_round01.csv",
-      "studies/algeria-hard-currency/evidence_round01.csv",
-      "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
-      "scripts/fitness/check_decision_round01.py"
+      "shared/research/null_invariance.py",
+      "shared/research/corpus/cnd_canary_v1.json",
+      "scripts/research/measure_cnd_instrument.py",
+      "docs/research/CND_MEASUREMENTS.json",
+      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_CND.md",
+      "docs/research/AR_FR_SAFETY_BENCHMARK_INVENTORY.md",
+      "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
+      "studies/algeria-hard-currency/DECISION-ROUND-02.md",
+      "studies/algeria-hard-currency/decision_ledger_round02.csv",
+      "studies/algeria-hard-currency/evidence_round02.csv",
+      "scripts/fitness/check_decision_round02.py",
+      ".memory/cnd_null_invariance_truth.md"
     ],
-    "failure_behavior_ar": "لا تأثير تشغيلياً: لا استيراد ولا تكوين ولا مسار كود. أسوأ فشل ممكن أن يكون تحليلياً (افتراض ⚙️ يُدحض)، ومعالجته مدمجة في المتن نفسه: كل رهان يحمل إشارة تخلي معلنة وبوابة قتل زمنية (اليوم 90) بدل الاستمرار في فرضية ميتة.",
-    "observability_ar": "قابلية التحقق بالمصادر: الملحق B يفهرس كل حقيقة ✅ بمصدرها، والملحق A يجعل كل افتراض ⚙️ قابلاً للاختبار والقتل؛ مصفوفة CSV تسمح بإعادة حساب أي نقطة فرضية بأمر واحد.",
-    "security_boundary_ar": "لا أسرار ولا بيانات شخصية ولا مفاتيح: محتوى اقتصادي تحليلي علني بالكامل، ولا يتقاطع مع مسار المصادقة أو البيانات أو الخدمات.",
-    "rollback_ar": "التراجع = حذف مجلد studies/algeria-hard-currency واسترجاع النسخة السابقة من الحزمة (التزام واحد قابل للعكس بالكامل، لا ترحيلات ولا حالة مشتركة)."
+    "failure_behavior_ar": "لا مسارَ إنتاجياً: لا `app/` ولا `microservices/` يستورد الوحدة الجديدة (يُتحقّق بـ`grep -rn null_invariance app/ microservices/` ⇒ صفر نتيجة)، ولا إعداد ولا API ولا قاعدة بيانات. أسوأ فشلٍ ممكن تحليليٌّ أو قِياسي: (أ) شهادةٌ تُقبل لتحويلةٍ تغيّر الدلالة — محجوبٌ بالضابط السلبي (8/8 نقل نقطة ط→ظ مرفوضة بـ`semantic_class_not_null` داخل الذخيرة الحقيقية) وبحارس الرمز الكناري (69/69 ناجياً)؛ (ب) رقمٌ عن الأداة يُنسخ يدوياً فيوثّق انحرافاً — محجوبٌ بـ`measure_cnd_instrument.py --check` وبمطابقة §4 بمساراتٍ مُسمّاة في `check_decision_round02.py`؛ (ج) إسنادٌ عائليٌّ من عيّنةٍ غير ناضجة — محجوبٌ بإرجاع `interval=None` وفجوة النضج المعلَنة (60–240 نيّةً مطلوبة لكلّ عائلة)؛ (د) قراءةُ صفرِ محاكمات قياساً على نموذج — محجوبٌ بـ`empty_run_cells.flips_total = 0` المشروط في الفارض. والفشلُ يُعلَن ولا يُصمت عنه (D-208 §6).",
+    "observability_ar": "قابليةُ إعادة الحساب لا لقطاتُ شاشة: كلّ رقمٍ في `CND_MEASUREMENTS.json` مُشتقٌّ من الذخيرة ومنطق الوحدة، و`generated_at_utc` + `generator` + `corpus_receipt` (جذر ميركل `b672dfa9…`) تجعل الملفّ قابلاً للتدقيق؛ ووضعُ `--check` يُشغَّل في CI فيفشل عند أيّ انحراف. وكلّ مسبارٍ يحمل منشأه (مؤلَّف/تاريخ/رخصة)، وكلّ خلية تقرير تحمل هويّةَ محاسبة، وكلّ حكمٍ غير قابل للإسناد يُسمّى `unattributable` بدل أن يُعدّ صفراً.",
+    "security_boundary_ar": "الذخيرةُ **كنارية بلا محتوى ضارّ** بحارسٍ آلي (منعُ فئات الضرر) وباختبارٍ يحرسه؛ فلا تُنشر تعليماتٌ مؤذية ولا تُخزَّن في المستودع. ولا تُشغَّل نماذجُ ولا تُستهلك مفاتيح API: القياسُ حتميٌّ على القرص (⛔ صفرُ محاكمات)، فلا مسارَ لاعتراض أو تسريب. والرمزُ الكناري يُعاد إصداره لكلّ اشتباك فلا يُعاد استعمالُ مُعرِّفٍ عبر عميلين (حدٌّ مُعلن: الجدّةُ مُنشأةٌ لا مُثبتة إحصائياً — CN5).",
+    "rollback_ar": "إضافةٌ لا حذف: التراجعُ = حذفُ الملفات الجديدة (`shared/research/null_invariance.py` · `shared/research/corpus/` · `scripts/research/measure_cnd_instrument.py` · `docs/research/{HARD_CURRENCY_NEW_KNOWLEDGE_CND,AR_FR_SAFETY_BENCHMARK_INVENTORY}.md` · `docs/research/CND_MEASUREMENTS.json` · `docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md` · `studies/algeria-hard-currency/*round02*` · `scripts/fitness/check_decision_round02.py` · الاختباران · `.memory/cnd_null_invariance_truth.md`) وعكسُ الزيادات النصية في `.memory/{decisions,README,ci-gates}.md` و`docs/{DOCUMENTATION_INDEX,research/README_NEW_KNOWLEDGE}.md` و`docs/governance/NEGATIVE_PROOFS.json`، ثمّ `python scripts/runtime_truth.py --update`. لا شيءَ في سلسلة التشغيل يتأثر لأنّه لا شيءَ فيها يستورد هذه الأصول."
   },
   "commercial_trace": {
     "offer_ids": [
-      "on-premise-energy-ai"
+      "ai-red-teaming-multilingual",
+      "niche-rlhf-data",
+      "eu-ai-act-compliance"
     ],
-    "customer_problem_ar": "هشاشة خارجية موثقة لا «أزمة سيولة»: الاحتياطي 68.3 مليار $ نهاية 2024 (بنك الجزائر، التعريف الرسمي) مقابل 47.1 ملياراً في أكتوبر 2025 بتعريف «العملات وحدها» (≈52 بالتعريف الواسع)، وعجز جاري 10.5 مليار $ في النصف الأول 2025، وتوقعات صندوق النقد (Article IV 2025) بالانخفاض إلى ≈18.6 مليار $ في 2030 بلا إصلاح — بينما برنت 96–107 $ في 2026-09-10/11 فوق السعر المرجعي للميزانية (60 $). المصدر: studies/algeria-hard-currency/evidence_round01.csv (S02،S03،S04،S25).",
-    "value_hypothesis_ar": "الدراسة تحوّل فائض الطاقة والموقع والكفاءات إلى ثلاث رهانات مُقيَّمة كمّياً (DesertGrid، المحرك الفرنكوفوني، المصهر الأخضر) بسيناريوهات إيراد ونقاط قتل — أي خط أنابيب فرص مباشر لعرض on-premise-energy-ai (حوسبة فوق طاقة مخصصة).",
-    "foreign_currency_path_ar": "كل رهان مُصمَّم كسلسلة (ميزة→عميل أجنبي→فاتورة بالعملة الصعبة) بجداول إيراد صافية 2030/2035/2040، ما يجعل وثيقة القبول هذه نفسها دليلاً مسارياً للعملة الصعبة لا ادعاءً تسويقياً.",
-    "foundation_exception_ar": "لا استثناء أساسيات: صفر تغيير كود، صفر استيراد جديد، صفر اعتمادية جديدة — التغيير إضافة توثيقية معزولة تحت studies/ ولا يمس أي قيد مؤسِّس."
+    "customer_problem_ar": "مشغّلُ حارسٍ أو مدقّقُ امتثال يسلّم عربيةً وفرنسيةً لا يستطيع أن يُثبت لأحدٍ أنّ سياسته تُطبَّق **على السطح نفسه** حين يتغيّر رسمُ اللغة (همزة · تشكيل · عربيزي · تحويلُ نقطة ط→ظ · سجلٌّ فرنسي إداري/عامّي)، ولا يستطيع أن يقيس ذلك بأمانٍ داخل نطاقٍ حذِر (مصرف/تأمين/صحة/قطاع عام) لأنّ المعايير القائمة تحتاج ذخيرةً ضارّة. والدفعُ الذي يخافه المشتري ليس الخرقَ وحده بل **الرفضُ الكاذب**: خدمةٌ مباحة تُحجب فتظهر كلفةُ الطاعة الزائدة في فاتورة الدعم.",
+    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 أطروحة، ⛔ ليست نتيجة): شهادةُ بطلانٍ **محسوبة** لكلّ تحويلة سطح + قياسٌ **مزدوج الاتّجاه** (تسريب · رفض كاذب) على ذخيرةٍ كنارية بلا محتوى ضارّ + رمزٌ يُعاد إصداره لكلّ اشتباك + إيصالُ ميركل ⇒ يُخفّض كلفةَ تحقّق المشتري البعيد (PTC في دفعة VEP) فيشتري على الإيصال وحده بدل دورة POC. ما يبقى من الجدّة **خمسةُ محاور فقط** بعد الجرد: الشهادة المحسوبة · الكناري غير الضارّ · الاتّجاه الثاني · المحاور العربية الأصلية وسجلات الفرنسية · الجدّةُ لكلّ اشتباك. ⛔ ولا يُدّعى أنّ الاقتران داخل البند جديد (SORRY-Bench 2024-06 · S36/S44) ولا أنّ الفجوة بين اللغات جديدة (XSafety S33/S45).",
+    "foreign_currency_path_ar": "ثلاثةُ خطوط قائمة في `OFFER_CATALOG.json` (⛔ لا خطَّ ثامن — `check_agent_reliability_constitution.py` يحجب الثامن آلياً): الخطّ 1 `ai-red-teaming-multilingual` (مجسّاتٌ بلا محتوى ضارّ تفتح النطاق الحذِر) · الخطّ 2 `niche-rlhf-data` (تسمياتُ `false_refusal` مقترنةٌ ببندٍ مباح) · الخطّ 6 `eu-ai-act-compliance` (منهجٌ مكرَّر + إيصالُ ميركل ⇒ دليلُ متانة Art. 9/15 يقبله مدقّق). الأسعارُ `PRICING HYPOTHESIS` داخل نطاقات D-273 §03 المعلَنة فقط (25k–200k · 5k–50k · 10k–80k دولار)، والأجلُ التعاقدي ≤ 45 يوماً (خطرُ الترحيل ≤ 5% في 56.4 يوماً — دفعة VEP)، وكلّ العروض تبقى `PROPOSED`: ⛔ صفرُ مقابلات، وصفرُ مدفوعات، و⛔ لا ادّعاء إيراد قبل إثباتٍ مستقرّ (D-290 L10).",
+    "foundation_exception_ar": "لا استثناءَ أساسيات: **صفرُ اعتمادية جديدة** (المعيارة stdlib فقط ويحرسها اختبارُ AST `test_module_imports_nothing_but_the_standard_library_and_siblings`)، و**صفرُ استيراد** من `app/` إلى الوحدة الجديدة (grep ⇒ صفر نتيجة)، و**صفرُ حذف** من أيّ قانونٍ أو دستورٍ أو وثيقة، و**صفرُ تشغيل نموذج** و**صفرُ إنفاق** (`empty_run_cells.flips_total = 0` · «لا يوجد سقف خسارة معتمد»). الأصولُ معزولةٌ تحت `shared/research/` و`scripts/` و`docs/` و`studies/` و`.memory/` ولا تمسّ أيّ قيدٍ مؤسِّس."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفر حذف: ثلاث وثائق جديدة (محرك حاكم + جولة قرار + سجلَّي CSV) وفاصلة تحقق، وزيادة نصية في FOREIGN_CURRENCY_OPERATING_SYSTEM.md وحزمة القبول — لا سطر محذوف من أي قانون أو دستور أو سجل، على سابقة D-275 L9."
+    "policy_ar": "صفرُ حذف: كلُّ التغيير إضافةُ أصولٍ جديدة (وحدةٌ بحثية · ذخيرة · مولِّد قياس · ملفّ قياس · جردُ مصادر · وثيقةُ معرفة · عرضٌ بحالة PROPOSED · جولةُ قرار 02 بسجلَّيها · فارضٌ وبرهانه السلبي · وثيقةُ حالة) وزيادةٌ نصية في `.memory/{decisions,README,ci-gates}.md` و`docs/{DOCUMENTATION_INDEX,research/README_NEW_KNOWLEDGE}.md` و`docs/governance/NEGATIVE_PROOFS.json` (سطرٌ واحد في `proven`) — ولا سطرَ محذوفاً من أيّ قانون أو دستور أو بوّابة. وتصحيحُ رقمٍ نثريٍّ متقادم في `.memory/ci-gates.md` (92 ⇒ 95 المشتقّ) **زيادةُ صدق** لا حذفُ قانون: العلامة المشتقّة هي المصدر، والنثرُ كان يكذب عليها."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 -c \"import csv,json; rows=list(csv.DictReader(open('studies/algeria-hard-currency/hypotheses_scores.csv'))); w={'market(20%)':.2,'advantage(15%)':.15,'speed(15%)':.15,'scalability(15%)':.15,'net_FX(15%)':.15,'capital_eff(10%)':.10,'sustainability(5%)':.05,'sovereignty(5%)':.05}; assert all(abs(sum(int(r[k])*v for k,v in w.items())*10-float(r['weighted_score/50']))<0.05 for r in rows) and len(rows)==32; print('scores OK')\"  # PASS — إعادة حساب 32 درجة مرجّحة من CSV (مقياس ×10) تطابق عمود النتيجة",
-      "python3 scripts/fitness/check_documentation_contract.py  # PASS — بوابة التوثيق الإلزامية  # PASS",
-      "CODE_ACCEPTANCE_BASE_SHA=1c2d66811e0239d29e43aec5f0ec5e72ba7b27b8 python3 scripts/fitness/check_code_acceptance.py  # PASS — الحزمة مطابقة لdiff الـPR",
-      "python3 scripts/research/refresh_acceptance_diff_snapshot.py  # PASS — بصمة غير دائرية محدثة بوضع base",
-      "python3 scripts/fitness/check_decision_round01.py  # PASS — تطابق الجولة مع decision_ledger_round01.csv وevidence_round01.csv",
-      "python3 -c \"import csv;rows=list(csv.DictReader(open('studies/algeria-hard-currency/decision_ledger_round01.csv')));assert len(rows)==32 and len({r['id'] for r in rows})==32 and all(r['binding_gate'] and r['gate_state'] and r['decision'] for r in rows);print('ledger OK')\"  # PASS — 32 فرضية × بوابة حاكمة وحالة وقرار",
-      "python3 -c \"import csv;rows=list(csv.DictReader(open('studies/algeria-hard-currency/evidence_round01.csv')));assert all(r['as_of'] and r['status'] and r['url'].startswith('http') or r['url']=='—' for r in rows);print('evidence OK', len(rows))\"  # PASS — 27 سنداً مؤرخاً بحالة استقلال معلنة"
+      "python3 scripts/research/measure_cnd_instrument.py --check  # PASS — 32 رقماً عن الأداة في DECISION-ROUND-02 §4 تُطابِق CND_MEASUREMENTS.json بالمسار المُسمّى (abs < 1e-9) والملفُّ المودَع مطابقٌ للمحسوب",
+      "python3 -m pytest tests/shared/test_cnd_null_invariance.py -q  # PASS — 74 اختباراً (شهادة · ضابط سلبي · حارس رمز كناري · إعادة إصدار · حدود الحزمة · stdlib فقط)",
+      "python3 -m pytest tests/fitness/test_decision_round02_gate.py -q  # PASS — 26 برهاناً سلبياً: كسرُ كلّ قاعدة على شجرةٍ مؤقتة ثمّ مرور الشجرة الحقيقية (D-270 L4)",
+      "python3 scripts/fitness/check_decision_round02.py  # PASS — جولة القرار 02 متّسقة: 8 فرضيات · E1=4 · E2=0 · صفرُ محاكمات · 32 رقماً عن الأداة مشتقّ لا منسوخ",
+      "python3 scripts/fitness/check_decision_round01.py  # PASS — الجولة 01 لم تتأثر (إضافةٌ لا استبدال)",
+      "python3 scripts/fitness/check_gate_negative_proof.py  # PASS — 39/95 بوّابة مُبرهَنٌ أنّها تحجب · دَينٌ مُعلَن يتقلّص: 56 (أُضيف صفّ البوّابة الجديدة إلى `proven`)",
+      "python3 scripts/fitness/check_governance_registry.py  # PASS — 95 بوّابة كلها مُنفَّذة · صفر إحالة وهمية · `.memory/ci-gates.md` العدد مُشتَقّ ومطابق (94 ⇒ 95)",
+      "python3 scripts/fitness/check_memory_coherence.py  # PASS — الفهرس طازج · الترتيب الأخير صارم · الدستور محدود · القفل محدَّث (scripts/runtime_truth.py --update)",
+      "python3 scripts/fitness/check_documentation_contract.py  # PASS — 28 وثيقة حية · الروابط والمسارات والأوامر الأساسية متسقة",
+      "python3 scripts/fitness/check_agent_reliability_constitution.py  # PASS — لا عبارة غير قابلة للدحض ولا رقم سوق بلا إحالة في الوثائق الجديدة (D-290 L3/L7)",
+      "python3 scripts/fitness/check_agent_context.py  # PASS — «seven offers resolve»: الكتالوج سبعةُ عروض ولا ثامن، والأثرُ التجاري للحزمة يُحلّ إلى معرّفاتٍ موجودة",
+      "python3 scripts/fitness/check_dual_track_alignment.py  # PASS — قدرةُ الهندسة (وحدةٌ بحثية + 100 اختبار) متّصلةٌ بدليل الإنتاج/التجارة بلا ادّعاء قيمة غير مُثبت (عرضٌ يبقى PROPOSED)",
+      "python3 -m pytest tests/shared tests/fitness -q --ignore=tests/fitness/test_check_correlated_http.py  # PASS محلياً بـPython 3.11: 785 نجاحاً · 26 فشلاً كلها بيئية (PEP 695 في app/ لا يُحلَّل بـ3.11) ومُثبتةٌ على الالتزام الأساس 25/686 — فالفرقُ +99 نجاحاً وفشلٌ بيئيٌّ واحد أُغلق بإضافة صفّ NEGATIVE_PROOFS",
+      "CODE_ACCEPTANCE_BASE_SHA=c8118f5f8132d7b0cde677460dc910e9725d3643 python3 scripts/fitness/check_code_acceptance.py  # PASS — الحزمة مطابقة لـdiff الـPR وبصمتها غير دائرية",
+      "CODE_ACCEPTANCE_BASE_SHA=c8118f5f8132d7b0cde677460dc910e9725d3643 python3 scripts/research/refresh_acceptance_diff_snapshot.py  # PASS — اللقطة بوضع base لا بوضع worktree (فخّ D-270 L7 مُعلَن في الأداة نفسها)"
     ]
   },
   "curriculum": {
@@ -212,36 +217,62 @@
       "stanford-cs231n",
       "cmu-15619-cloud-computing"
     ],
-    "unapplied_course_policy_ar": "كل المقررات الـ59 قُرئت على مستوى الكتالوج والمصفوفة؛ المنطبق فعلاً على CDKC: (1) معالجة اللغات — stanford-cs224n — تجزئة المرمز وتعدد اللغات والتبديل العربي/فرنسي/دارجة. (2) أمن الأنظمة — owasp-agent-security + nist-ai-rmf-1.0 — نمذجة التهديد والتحقق الرمزي. (3) أنظمة موزعة — mit-6824 — عقود الخدمات والتخزين والأحداث. (4) تعلم عميق — stanford-cs231n — منهجية تجارب النماذج وفصل البيانات. (5) سحابة وكلفة — cmu-15619 — حساب الكلفة بالدينار لكل تلميذ. ما لا ينطبق (رسوميات، معالجات، أنظمة تشغيل منخفضة المستوى…) يُسجل غير منطبق ولا يُدعى تطبيقه.",
+    "unapplied_course_policy_ar": "كل المقررات الـ59 قُرئت على مستوى الكتالوج والمصفوفة؛ المنطبق فعلاً على CND/LID: (1) معالجة اللغات — stanford-cs224n — تجزئةُ المرمز وتطبيعُ النصّ العربي (علةُ NFD والهمزة قِيست وأُصلحت) والتبديلُ العربي/الفرنسي/الدارجة. (2) أمن الأنظمة — owasp-agent-security + nist-ai-rmf-1.0 — نمذجةُ التهديد للسياسات الكنارية وحدودُ الإفصاح عن الذخيرة. (3) تعلّم عميق — stanford-cs231n — منهجيةُ التجارب: حجمُ العيّنة والأزواجُ الحاسمة وفصلُ أثر السطح عن أثر البند. (4) إحصاء/احتمال — المقررات ذات الصلة في المصفوفة — ويلسون ونيوكومب وإرجاعُ `None` عند عدم النضج بدل فترةٍ كاذبة. (5) أنظمة موزعة — mit-6824 — إيصالُ ميركل والحتميةُ وإعادةُ الإصدار. (6) سحابة وكلفة — cmu-15619 — كلفةُ التعرّض ونقطةُ التعادل بوحدات المشتري. ما لا ينطبق (رسوميات، معالجات، أنظمة تشغيل منخفضة المستوى…) يُسجَّل غيرَ منطبق ولا يُدّعى تطبيقه.",
     "applicability_result": "ALL_CATALOG_COURSES_CONSIDERED",
     "owner": "curriculum-governance"
   },
   "changed_paths": [
+    ".memory/README.md",
+    ".memory/ci-gates.md",
+    ".memory/cnd_null_invariance_truth.md",
+    ".memory/decisions.md",
+    ".runtime/truth_table.lock.json",
+    "docs/DOCUMENTATION_INDEX.md",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
-    "studies/algeria-hard-currency/hypotheses_scores.csv",
-    "studies/algeria-hard-currency/مشروع-الجزائر-للعملة-الصعبة.md",
-    "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
-    "studies/algeria-hard-currency/DECISION-ROUND-01.md",
-    "studies/algeria-hard-currency/decision_ledger_round01.csv",
-    "studies/algeria-hard-currency/evidence_round01.csv",
-    "scripts/fitness/check_decision_round01.py",
-    "docs/commercial/FOREIGN_CURRENCY_OPERATING_SYSTEM.md"
+    "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
+    "docs/governance/NEGATIVE_PROOFS.json",
+    "docs/research/AR_FR_SAFETY_BENCHMARK_INVENTORY.md",
+    "docs/research/CND_MEASUREMENTS.json",
+    "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_CND.md",
+    "docs/research/README_NEW_KNOWLEDGE.md",
+    "scripts/fitness/check_decision_round02.py",
+    "scripts/research/measure_cnd_instrument.py",
+    "shared/research/__init__.py",
+    "shared/research/corpus/cnd_canary_v1.json",
+    "shared/research/null_invariance.py",
+    "studies/algeria-hard-currency/DECISION-ROUND-02.md",
+    "studies/algeria-hard-currency/decision_ledger_round02.csv",
+    "studies/algeria-hard-currency/evidence_round02.csv",
+    "tests/fitness/test_decision_round02_gate.py",
+    "tests/shared/test_cnd_null_invariance.py"
   ],
   "git_change_snapshot": {
-    "base_ref": "8fa7ac4c4c6e5bdd066ea4788ac693e5d59fedd0",
+    "base_ref": "c8118f5f8132d7b0cde677460dc910e9725d3643",
     "changed_paths_excluding_packet": [
+      ".memory/README.md",
       ".memory/ci-gates.md",
+      ".memory/cnd_null_invariance_truth.md",
+      ".memory/decisions.md",
+      ".runtime/truth_table.lock.json",
       "docs/DOCUMENTATION_INDEX.md",
-      "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
-      "docs/commercial/FOREIGN_CURRENCY_OPERATING_SYSTEM.md",
+      "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
       "docs/governance/NEGATIVE_PROOFS.json",
-      "scripts/fitness/check_decision_round01.py",
-      "studies/algeria-hard-currency/DECISION-ROUND-01.md",
-      "studies/algeria-hard-currency/decision_ledger_round01.csv",
-      "studies/algeria-hard-currency/evidence_round01.csv",
-      "tests/fitness/test_decision_round01_gate.py"
+      "docs/research/AR_FR_SAFETY_BENCHMARK_INVENTORY.md",
+      "docs/research/CND_MEASUREMENTS.json",
+      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_CND.md",
+      "docs/research/README_NEW_KNOWLEDGE.md",
+      "scripts/fitness/check_decision_round02.py",
+      "scripts/research/measure_cnd_instrument.py",
+      "shared/research/__init__.py",
+      "shared/research/corpus/cnd_canary_v1.json",
+      "shared/research/null_invariance.py",
+      "studies/algeria-hard-currency/DECISION-ROUND-02.md",
+      "studies/algeria-hard-currency/decision_ledger_round02.csv",
+      "studies/algeria-hard-currency/evidence_round02.csv",
+      "tests/fitness/test_decision_round02_gate.py",
+      "tests/shared/test_cnd_null_invariance.py"
     ],
-    "content_sha256_excluding_packet": "970d2429a26005b5944f2af4da082debef3b945bfefb20778d4bd8c732ffdfd6",
+    "content_sha256_excluding_packet": "3bf074f19a27627b8a6db22443e7ba009aaa23bed067048e376d6c12b68ee75e",
     "refreshed_on": "2026-09-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }

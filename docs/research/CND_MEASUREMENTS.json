@@ -1,0 +1,694 @@
+{
+  "artifact": "CND_MEASUREMENTS",
+  "break_even_unit_costs": [
+    {
+      "break_even_cost_ratio": 1.0,
+      "exposure_per_million_unit_costs": {
+        "dominant_direction": "balanced",
+        "high": 151927.27,
+        "low": 65194.86,
+        "point": 100000.0
+      },
+      "leak_rate_assumed": 0.05,
+      "refusal_rate_assumed": 0.05,
+      "status": "🟡 مُدخلُ تحليلٍ معلن — ⛔ ليس قياساً على عميل ولا سعراً"
+    },
+    {
+      "break_even_cost_ratio": 4.0,
+      "exposure_per_million_unit_costs": {
+        "dominant_direction": "false_refusal",
+        "high": 317933.95,
+        "low": 196334.49,
+        "point": 250000.0
+      },
+      "leak_rate_assumed": 0.05,
+      "refusal_rate_assumed": 0.2,
+      "status": "🟡 مُدخلُ تحليلٍ معلن — ⛔ ليس قياساً على عميل ولا سعراً"
+    },
+    {
+      "break_even_cost_ratio": 0.25,
+      "exposure_per_million_unit_costs": {
+        "dominant_direction": "leak",
+        "high": 317933.95,
+        "low": 196334.49,
+        "point": 250000.0
+      },
+      "leak_rate_assumed": 0.2,
+      "refusal_rate_assumed": 0.05,
+      "status": "🟡 مُدخلُ تحليلٍ معلن — ⛔ ليس قياساً على عميل ولا سعراً"
+    },
+    {
+      "break_even_cost_ratio": 0.28571428571428575,
+      "exposure_per_million_unit_costs": {
+        "dominant_direction": "leak",
+        "high": 531278.62,
+        "low": 379184.91,
+        "point": 450000.0
+      },
+      "leak_rate_assumed": 0.35,
+      "refusal_rate_assumed": 0.1,
+      "status": "🟡 مُدخلُ تحليلٍ معلن — ⛔ ليس قياساً على عميل ولا سعراً"
+    }
+  ],
+  "canary_survival": {
+    "canary_state_broken": [],
+    "canary_state_preserved": 69,
+    "rule_ar": "الرمزُ حاضرٌ في مسابير الخرق وغائبٌ في المباحة، بالتساوي على الطرفين.",
+    "usable_pairs": 69
+  },
+  "certification_audit": {
+    "ar_arabizi_digits": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.0,
+      "length_ratio_min": 0.6901,
+      "probes": 8,
+      "rejection_reasons": {},
+      "requires_human_review": false,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 0
+    },
+    "ar_arabizi_plain": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.082,
+      "length_ratio_min": 0.7465,
+      "probes": 8,
+      "rejection_reasons": {},
+      "requires_human_review": false,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 0
+    },
+    "ar_code_switch_fr": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 0.9571,
+      "length_ratio_min": 0.8333,
+      "probes": 2,
+      "rejection_reasons": {},
+      "requires_human_review": true,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 2
+    },
+    "ar_darija": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.0328,
+      "length_ratio_min": 0.662,
+      "probes": 6,
+      "rejection_reasons": {},
+      "requires_human_review": true,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 1
+    },
+    "ar_diacritic_added": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.569,
+      "length_ratio_min": 1.4754,
+      "probes": 3,
+      "rejection_reasons": {},
+      "requires_human_review": false,
+      "role": "surface",
+      "tiers": [
+        "certified"
+      ],
+      "token_drift_max": 0
+    },
+    "ar_diacritic_stripped": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 0.7179,
+      "length_ratio_min": 0.6761,
+      "probes": 4,
+      "rejection_reasons": {},
+      "requires_human_review": false,
+      "role": "surface",
+      "tiers": [
+        "certified"
+      ],
+      "token_drift_max": 0
+    },
+    "ar_dot_shift_control": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.0,
+      "length_ratio_min": 1.0,
+      "probes": 8,
+      "rejection_reasons": {
+        "semantic_class_not_null": 8
+      },
+      "requires_human_review": false,
+      "role": "control",
+      "tiers": [
+        "rejected"
+      ],
+      "token_drift_max": 0
+    },
+    "ar_homoglyph": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.0,
+      "length_ratio_min": 1.0,
+      "probes": 8,
+      "rejection_reasons": {},
+      "requires_human_review": false,
+      "role": "surface",
+      "tiers": [
+        "certified"
+      ],
+      "token_drift_max": 0
+    },
+    "ar_latin_translit": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.0175,
+      "length_ratio_min": 0.7,
+      "probes": 8,
+      "rejection_reasons": {},
+      "requires_human_review": false,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 0
+    },
+    "fr_accent_stripped": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.0,
+      "length_ratio_min": 1.0,
+      "probes": 8,
+      "rejection_reasons": {},
+      "requires_human_review": false,
+      "role": "surface",
+      "tiers": [
+        "certified"
+      ],
+      "token_drift_max": 0
+    },
+    "fr_code_switch_ar": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 0.88,
+      "length_ratio_min": 0.88,
+      "probes": 1,
+      "rejection_reasons": {},
+      "requires_human_review": true,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 2
+    },
+    "fr_familier": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 0.987,
+      "length_ratio_min": 0.84,
+      "probes": 5,
+      "rejection_reasons": {},
+      "requires_human_review": true,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 1
+    },
+    "fr_neutral": {
+      "note_ar": "أساسُ القياس — لا تحويلَ ليُشهَد عليه.",
+      "probes": 8,
+      "role": "baseline"
+    },
+    "fr_sms": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 0.9875,
+      "length_ratio_min": 0.9733,
+      "probes": 6,
+      "rejection_reasons": {},
+      "requires_human_review": false,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 0
+    },
+    "fr_soutenu": {
+      "length_ratio_band": [
+        0.55,
+        1.9
+      ],
+      "length_ratio_max": 1.1447,
+      "length_ratio_min": 1.0533,
+      "probes": 2,
+      "rejection_reasons": {},
+      "requires_human_review": true,
+      "role": "surface",
+      "tiers": [
+        "partial"
+      ],
+      "token_drift_max": 0
+    },
+    "msa": {
+      "note_ar": "أساسُ القياس — لا تحويلَ ليُشهَد عليه.",
+      "probes": 8,
+      "role": "baseline"
+    }
+  },
+  "cnd_version": "1.0.0",
+  "corpus_path": "shared/research/corpus/cnd_canary_v1.json",
+  "corpus_receipt": {
+    "chain_head": "0db7e6bf6b44b7868a4ce0bfac4b5593eee64a17e64b589f83eed0a4f5ab459e",
+    "limit_ar": "البصمةُ تثبت أنّ الذخيرةَ المُشغَّلة هي المعلَنة (مطابقة)، ولا تثبت صحّةَ الحكم على المخرَج (صحّة).",
+    "merkle_root": "b672dfa9c81af89d4a71c89a9c9e6b49d2266f96ff858fdc607a7182b769c6c8",
+    "probe_count": 93
+  },
+  "coverage": {
+    "benign_pairs": 35,
+    "by_family": {
+      "ar_arabizi_digits": 8,
+      "ar_arabizi_plain": 8,
+      "ar_code_switch_fr": 2,
+      "ar_darija": 6,
+      "ar_diacritic_added": 3,
+      "ar_diacritic_stripped": 4,
+      "ar_dot_shift_control": 8,
+      "ar_homoglyph": 8,
+      "ar_latin_translit": 8,
+      "fr_accent_stripped": 8,
+      "fr_code_switch_ar": 1,
+      "fr_familier": 5,
+      "fr_neutral": 8,
+      "fr_sms": 6,
+      "fr_soutenu": 2,
+      "msa": 8
+    },
+    "by_kind": {
+      "benign": 43,
+      "violation": 50
+    },
+    "by_tier": {
+      "certified": 39,
+      "partial": 46,
+      "rejected": 8
+    },
+    "corpus_id": "cnd-canary-v1",
+    "corpus_version": "1.0.0",
+    "intents": 8,
+    "probes": 93,
+    "rejected": 8,
+    "rejection_reasons": {
+      "semantic_class_not_null": 8
+    },
+    "violation_pairs": 42
+  },
+  "determinism": "حتمي: لا عشوائية ولا شبكة ولا نموذج — الساعة في التقرير فقط.",
+  "empty_run_cells": {
+    "cells": 25,
+    "flips_total": 0,
+    "note_ar": "بلا محاكمات: الأزواجُ موجودة والانقلاباتُ صفر — proof of plumbing.",
+    "pairs_total": 77
+  },
+  "generated_at_utc": "2026-09-11T23:15:51Z",
+  "generator": "scripts/research/measure_cnd_instrument.py",
+  "maturity_gap": [
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "ar_arabizi_digits"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "ar_arabizi_plain"
+    },
+    {
+      "intents_required_for_maturity": 120,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 2,
+      "pairs_per_intent": 0.25,
+      "scope": "ar_code_switch_fr"
+    },
+    {
+      "intents_required_for_maturity": 80,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 3,
+      "pairs_per_intent": 0.375,
+      "scope": "ar_darija"
+    },
+    {
+      "intents_required_for_maturity": 120,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 2,
+      "pairs_per_intent": 0.25,
+      "scope": "ar_diacritic_added"
+    },
+    {
+      "intents_required_for_maturity": 120,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 2,
+      "pairs_per_intent": 0.25,
+      "scope": "ar_diacritic_stripped"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "ar_homoglyph"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "ar_latin_translit"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "fr_accent_stripped"
+    },
+    {
+      "intents_required_for_maturity": 240,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 1,
+      "pairs_per_intent": 0.125,
+      "scope": "fr_code_switch_ar"
+    },
+    {
+      "intents_required_for_maturity": 80,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 3,
+      "pairs_per_intent": 0.375,
+      "scope": "fr_familier"
+    },
+    {
+      "intents_required_for_maturity": 80,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 3,
+      "pairs_per_intent": 0.375,
+      "scope": "fr_sms"
+    },
+    {
+      "intents_required_for_maturity": 120,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 2,
+      "pairs_per_intent": 0.25,
+      "scope": "fr_soutenu"
+    },
+    {
+      "intents_required_for_maturity": 10,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 25,
+      "pairs_per_intent": 3.125,
+      "scope": "pooled_language:ar"
+    },
+    {
+      "intents_required_for_maturity": 19,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 13,
+      "pairs_per_intent": 1.625,
+      "scope": "pooled_language:fr"
+    },
+    {
+      "intents_required_for_maturity": 7,
+      "intents_today": 8,
+      "kind": "violation",
+      "mature": true,
+      "min_pairs_for_index": 30,
+      "pairs": 38,
+      "pairs_per_intent": 4.75,
+      "scope": "pooled_all_families"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "ar_arabizi_digits"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "ar_arabizi_plain"
+    },
+    {
+      "intents_required_for_maturity": 80,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 3,
+      "pairs_per_intent": 0.375,
+      "scope": "ar_darija"
+    },
+    {
+      "intents_required_for_maturity": 240,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 1,
+      "pairs_per_intent": 0.125,
+      "scope": "ar_diacritic_added"
+    },
+    {
+      "intents_required_for_maturity": 120,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 2,
+      "pairs_per_intent": 0.25,
+      "scope": "ar_diacritic_stripped"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "ar_homoglyph"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "ar_latin_translit"
+    },
+    {
+      "intents_required_for_maturity": 60,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 4,
+      "pairs_per_intent": 0.5,
+      "scope": "fr_accent_stripped"
+    },
+    {
+      "intents_required_for_maturity": 120,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 2,
+      "pairs_per_intent": 0.25,
+      "scope": "fr_familier"
+    },
+    {
+      "intents_required_for_maturity": 80,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 3,
+      "pairs_per_intent": 0.375,
+      "scope": "fr_sms"
+    },
+    {
+      "intents_required_for_maturity": 11,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 22,
+      "pairs_per_intent": 2.75,
+      "scope": "pooled_language:ar"
+    },
+    {
+      "intents_required_for_maturity": 27,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": false,
+      "min_pairs_for_index": 30,
+      "pairs": 9,
+      "pairs_per_intent": 1.125,
+      "scope": "pooled_language:fr"
+    },
+    {
+      "intents_required_for_maturity": 8,
+      "intents_today": 8,
+      "kind": "benign",
+      "mature": true,
+      "min_pairs_for_index": 30,
+      "pairs": 31,
+      "pairs_per_intent": 3.875,
+      "scope": "pooled_all_families"
+    }
+  ],
+  "power_curve": [
+    {
+      "baseline_flip_rate": 0.02,
+      "effect_pp": 5.0,
+      "reported_as": "🟢⟨ح⟩ حتمي على فاصل نيوكومب — لا قياسَ نموذج",
+      "smallest_decisive_pairs": 150,
+      "target_flip_rate": 0.07
+    },
+    {
+      "baseline_flip_rate": 0.02,
+      "effect_pp": 8.0,
+      "reported_as": "🟢⟨ح⟩ حتمي على فاصل نيوكومب — لا قياسَ نموذج",
+      "smallest_decisive_pairs": 100,
+      "target_flip_rate": 0.1
+    },
+    {
+      "baseline_flip_rate": 0.05,
+      "effect_pp": 10.0,
+      "reported_as": "🟢⟨ح⟩ حتمي على فاصل نيوكومب — لا قياسَ نموذج",
+      "smallest_decisive_pairs": 100,
+      "target_flip_rate": 0.15
+    },
+    {
+      "baseline_flip_rate": 0.1,
+      "effect_pp": 10.0,
+      "reported_as": "🟢⟨ح⟩ حتمي على فاصل نيوكومب — لا قياسَ نموذج",
+      "smallest_decisive_pairs": 100,
+      "target_flip_rate": 0.2
+    },
+    {
+      "baseline_flip_rate": 0.1,
+      "effect_pp": 20.0,
+      "reported_as": "🟢⟨ح⟩ حتمي على فاصل نيوكومب — لا قياسَ نموذج",
+      "smallest_decisive_pairs": 50,
+      "target_flip_rate": 0.3
+    }
+  ],
+  "reissue_stability": {
+    "example_fresh_token": "ZQ-ED36CF",
+    "limit_ar": "الجدّةُ مُنشأة لا مُثبتة: لا وسيلة لإثبات أنّ نموذجاً لم يرَ نمطَ الرمز قبلاً، لذلك يبقى القياسُ مزدوجاً داخل الاشتباك (أساس/سطح).",
+    "probes": 93,
+    "rejected_after": 8,
+    "rejected_before": 8,
+    "tier_map_identical": true,
+    "tokens_refreshed": 93
+  },
+  "verdict_ar": "ثلاثُ نتائج عن الأداة وحدها: (1) ترفض ما يجب رفضه — الضابطُ السلبي مرفوضٌ كله بسبب `semantic_class_not_null`؛ (2) الرمزُ الكناري ينجو من كلِّ تحويلٍ صالح، فلا يُقاس مُحفِّزٌ بدل اللغة؛ (3) إعادةُ الإصدار برموزٍ جديدة تُعيد حساب الشهادات ولا تُغيّر درجةً واحدة. أمّا القدرةُ على الحكم فتقرأ من `maturity_gap`: التجميعُ عبر العائلات يبلغ حدّ النضج لكلّ اتجاه، أمّا **الإسنادُ إلى عائلةٍ بعينها فلا** — دون 30 زوجاً لكلّ عائلة، والنيّاتُ المطلوبة مكتوبةٌ في الصفوف. وهذا تصريحٌ بالحدّ لا إخفاءٌ للفشل.",
+  "what_this_is_ar": "قياسٌ على **الأداة وذخيرتها**: الشهادات، والتغطية، والقدرة الإحصائية، وحارس الرمز الكناري، واستقرار إعادة الإصدار.",
+  "what_this_is_not_ar": "⛔ ليس قياساً على نموذجٍ ولا على عميل: لم يُشغَّل أيّ نموذج في هذا السكربت، فكلّ خلايا التباعد هنا صفرُ محاكمات، وأيُّ رقمٍ عن «معدّل تسريب» في وثيقةٍ تستشهد بهذا الملفّ هو كذبٌ مكشوف."
+}

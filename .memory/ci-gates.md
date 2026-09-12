@@ -16,8 +16,13 @@
 > them. All seven are wired now and `check_governance_registry.py` makes an
 > eighth impossible. Total gates on disk (derived, verified in CI):
 >
-> <!-- derived:gates_total=94 -->
-> **92** — in `scripts/fitness/` and `tools/ci/`, every one of them executed.
+> <!-- derived:gates_total=95 -->
+> **95** on disk in `scripts/fitness/` + `tools/ci/` — 94 executed, 1 declared debt
+> (`check_pocock_gates.py`, see `unenforced_debt` in `CONSTITUTION_REGISTRY.json`).
+> **D-291 honesty note:** the prose number used to read **92** while the derived marker
+> read **94** — a hand-typed count drifting from the very marker meant to stop it
+> (D-192/D-266). It now equals the marker, and `check_decision_round02.py` is the gate
+> added by D-291 (94 → 95).
 
 ## Required jobs (must be green)
 
@@ -188,6 +193,7 @@ proves the block is bounded: R&D work stays green while the legal gate is `ABSEN
 | `check_documentation_contract.py` | Live-document manifest, local links, executable command truth, stale operational references, CI wiring, and mandatory agent/contributor references. | يمنع رجوع الأوامر القديمة والروابط المكسورة ويجعل التوثيق جزءًا من required-ci. |
 | `check_dual_track_alignment.py` | Engineering capability and production/commercial evidence remain aligned. | يمنع تحويل التصميم أو البحث إلى ادعاء قيمة أو إيراد بلا دليل. |
 | `check_decision_round01.py` | Decision-round counts are derived from the machine-readable ledger: a binding gate per hypothesis, no E2 without a written authorization, and no citation pointing outside the evidence catalogue. | يمنع أن يُقرأ «عددٌ مكتوبٌ يدوياً في جدول» دليلاً، وأن تُرقَّى فرضيةٌ إلى التزامٍ لم تُجتَز بوابته — وهو سور التعويض الذي أسقطت جولةُ القرار 01 دراسته تحته (محرك الالتزام §1). |
+| `check_decision_round02.py` | Round-02 numbers are derived, not copied: ledger counts (§5.1) come from `decision_ledger_round02.csv`, **every instrument number in §4 is resolved by named path against `docs/research/CND_MEASUREMENTS.json`**, no commitment level above E1 while no loss ceiling exists, `empty_run_cells.flips_total` stays 0 (no model was run), the no-spend statement is present, no evidence id is dangling or unreferenced, no `C##` claim lacks a row, refuted claims appear only inside an explicit prohibition line, and no phantom/eighth offer line is named. | يمنع أخطرَ انزلاقٍ في جولةٍ بحثية: رقمٌ عن **أداة قياس** يُقرأ قياساً على نموذج (وصفرُ محاكماتٍ جرى فعلاً)، وعبارةٌ دحضتها أدلّةُ الجولة نفسها تعود إلى النصّ لأنها أسهل من الرقم. البرهان السلبي في `tests/fitness/test_decision_round02_gate.py` (26 فحصاً: كسرُ كلّ قاعدة على شجرةٍ مؤقتة + مرور الشجرة الحقيقية). |
 | `check_reference_backbone.py` | Pinned reference backbone remains additive, non-runtime, and represented by the declared source files. | يمنع استبدال مصدر مرجعي أو إدخاله إلى runtime بصمت. |
 | `check_source_adoption_matrix.py` | Every discovered source has status, purpose, local application, enforcer, and owner. | يمنع استخدام مصدر خارجي كسلطة غير معلنة أو تبعية غير مراجعة. |
 

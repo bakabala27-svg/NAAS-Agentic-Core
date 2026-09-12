@@ -14,6 +14,9 @@
   "debt": 51
  },
  "proven": {
+  "check_agent_reliability_constitution.py": [
+   "tests/fitness/test_agent_reliability_constitution_gate.py"
+  ],
   "check_agent_skills_spec.py": [
    "tests/fitness/test_agent_standards_gates.py"
   ],
@@ -37,6 +40,9 @@
   ],
   "check_decision_round01.py": [
    "tests/fitness/test_decision_round01_gate.py"
+  ],
+  "check_decision_round02.py": [
+   "tests/fitness/test_decision_round02_gate.py"
   ],
   "check_design_tokens.py": [
    "tests/fitness/test_check_design_tokens.py"
@@ -125,9 +131,6 @@
   ],
   "check_ui_component_parity.py": [
    "tests/fitness/test_ui_component_parity_gate.py"
-  ],
-  "check_agent_reliability_constitution.py": [
-   "tests/fitness/test_agent_reliability_constitution_gate.py"
   ]
  },
  "frozen_debt": {

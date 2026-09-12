@@ -4,6 +4,92 @@
 > The chat interface is merely an assistive channel. The true core consists of the Interactive Canvas (Object UI), Cognitive Modeling, Error Memory, Adaptive Generation, and Simulation Engine.
 > See `cognitive_lab_philosophy.md` for the foundational doctrine.# Architectural Decisions
 
+## D-291 (2026-09-11) — الدفعة الثالثة من البحث المستقل: CND أداةٌ لا معيار، وجولةُ قرار 02 بحدٍّ أقصى E1
+
+**السياق (قرار المالك):** «واصل العمل كباحث مستقل من أجل توليد معارف جديدة تدر عملة صعبة
+حقيقية» — بلا تفويض إنفاق، وبلا سقف خسارة معتمد، وضمن حدود D-290 (L1 وسم الأدلّة · L3 حدّ
+المصداقية · L6 لغة CPST · L7 عباراتٌ قابلة للدحض · L8 ⛔ لا خطَّ إيرادٍ ثامن · L10 ⛔ لا ادّعاء
+إيراد قبل إثباتٍ مستقرّ).
+
+**القرار:** إضافةٌ لا استبدال — خمسة أصولٍ جديدة وفارضٌ واحد:
+
+1. **الأداة:** [`shared/research/null_invariance.py`](../shared/research/null_invariance.py) —
+   التباعدُ عند البطلان المُصدَّق (CND) ومؤشّرُ الطاعة المزدوج (LID): شهادةُ بطلانٍ **محسوبة**
+   بثلاث درجات وأحد عشر سبباً منطوقاً، وأحكامُ أزواج من تسعة، وخلايا تقرير بهويّة محاسبة،
+   وكلفةُ تعرّض ونقطةُ تعادل **بوحدات المشتري**، وقدرةٌ إحصائية (أزواجٌ حاسمة)، وجدّةُ رمزٍ
+   كناري لكلّ اشتباك، وإيصالُ ميركل، وإعادةُ إصدار **تُعيد حساب الشهادات**. stdlib فقط
+   (اختبارُ AST يحرس)، ومypy/ruff/flake8 نظيفة.
+2. **الذخيرة:** [`shared/research/corpus/cnd_canary_v1.json`](../shared/research/corpus/cnd_canary_v1.json)
+   — 8 نيّات · 93 مسباراً · 42 زوجَ خرق + 35 زوجاً مباحاً · سياساتٌ كنارية معلنة · منشأ
+   (مؤلّف/تاريخ/رخصة CC-BY-4.0) لكلّ مسبار · فجواتُ تغطية مُعلَنة في الملفّ نفسه ·
+   **بلا محتوى ضارّ** بحارسٍ آلي واختبار.
+3. **القياس الحتمي:** [`scripts/research/measure_cnd_instrument.py`](../scripts/research/measure_cnd_instrument.py)
+   ⇒ [`docs/research/CND_MEASUREMENTS.json`](../docs/research/CND_MEASUREMENTS.json) — تغطية،
+   وتدقيقُ شهادات، و**فجوةُ نضج** (نيّاتٌ مطلوبة بكلّ نطاق)، ومنحنى قدرة، ونقاط تعادل بوحدات
+   كلفة، ونجاةُ الرمز الكناري، واستقرارُ إعادة الإصدار، و`empty_run_cells` (⛔ صفرُ محاكمات:
+   لم يُشغَّل نموذج)، وإيصالُ الذخيرة. ووضعُ `--check` يفشل عند أيّ انحراف بين المودَع والمحسوب.
+4. **الجرد الذي يدحض أطروحتنا:** [`docs/research/AR_FR_SAFETY_BENCHMARK_INVENTORY.md`](../docs/research/AR_FR_SAFETY_BENCHMARK_INVENTORY.md)
+   — 18 سنداً (S28–S45) بتاريخٍ وحالة استقلال ومحفّز إعادة تحقق. **الحكم: ندرةُ المعايير
+   العربية/الفرنسية ميتة** (AraSafe ≈12K طبيعياً مفتوح · ArabicDialectSafety بلهجات ستّ ·
+   XSafety/SORRY-Bench/ML-Bench&Guard للفرنسية)، والظاهرةُ مقيسةٌ علناً (22.9% على الـArabizi
+   مقابل ≈90% على الفصحى · 2.50%→12.12% عند النسخ)، و**الاقترانُ داخل البند موجود منذ
+   2024-06** (SORRY-Bench: 450 بنداً × 20 طفرة). فما يبقى أضيقُ وأصدق: شهادةُ بطلان التحويلة
+   + الاتّجاه الثاني (الرفض الكاذب) + ذخيرةٌ كنارية غير ضارّة + عربيةٌ أصلية بمحاور سطحها
+   + جدّةُ الرمز لكلّ اشتباك.
+5. **جولة القرار 02:** [`studies/algeria-hard-currency/DECISION-ROUND-02.md`](../studies/algeria-hard-currency/DECISION-ROUND-02.md)
+   + [`decision_ledger_round02.csv`](../studies/algeria-hard-currency/decision_ledger_round02.csv)
+   + [`evidence_round02.csv`](../studies/algeria-hard-currency/evidence_round02.csv) — 8 فرضيات
+   (H33–H40): 3 فاشلة في التكوين الحالي، 3 معلّقة على دليل لازم، 2 مجهولة الأساس، **4 عند E1
+   وصفرٌ مؤهَّل لـE2**، وسبعُ بطاقات اختبار (T30–T35) بلا إنفاق، وثمانيةُ ادّعاءات (C30–C37)
+   اثنان منها **منقوضان** بأدلّة الجولة نفسها.
+6. **الفارض:** [`scripts/fitness/check_decision_round02.py`](../scripts/fitness/check_decision_round02.py)
+   — يشتقّ أعداد §5.1 من السجلّ، و**يطابق كلّ رقمٍ عن الأداة في §4 بمسارٍ مُسمّى مع ملفّ
+   القياس**، ويمنع مستوىً فوق E1 ما دام لا سقف خسارة، ويشترط بقاء `flips_total = 0` (أو إذناً
+   مكتوباً)، ويمنع استشهاداً معلّقاً أو دليلاً غير مستعمل أو ادّعاءً بلا سطر، ويمنع عبارةً
+   مدحوضةً خارج سياق منعٍ صريح، ويمنع خطَّ عرضٍ وهميّاً أو ثامناً. **البرهان السلبي:**
+   [`tests/fitness/test_decision_round02_gate.py`](../tests/fitness/test_decision_round02_gate.py)
+   — 26 فحصاً تكسر كلّ قاعدة على شجرةٍ مؤقتة ثمّ تُثبت مرور الشجرة الحقيقية (D-266 L4).
+7. **الوثائق والحالة:** المعرفة في
+   [`docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_CND.md`](../docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_CND.md)،
+   والعرض بحالة `PROPOSED` في
+   [`docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md`](../docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md)
+   (أسعارٌ `PRICING HYPOTHESIS` داخل نطاقات D-273 §03 فقط)، والحالة الحيّة في
+   [`.memory/cnd_null_invariance_truth.md`](cnd_null_invariance_truth.md) (CN1–CN7 بمجموعة حالات
+   مغلقة)، والاختبارات 74 في
+   [`tests/shared/test_cnd_null_invariance.py`](../tests/shared/test_cnd_null_invariance.py).
+
+**ما قِيـس (🟢⟨ح⟩ — حتميٌّ بلا نموذج ولا شبكة):** 39 شهادة `certified` و46 `partial` و8
+`rejected` **كلّها الضابطُ السلبي** (نقلُ نقطة ط→ظ يُرفض بـ`semantic_class_not_null` داخل
+الذخيرة الحقيقية) · الرمزُ الكناري ناجٍ في 69/69 زوجاً صالحاً · إعادةُ الإصدار تُنعش 93 رمزاً
+بلا تغيّر درجة · **النضج:** مجمَّعاً 38 زوجَ خرق و31 مباحاً (≥30 ⇒ ناضج) مقابل 1–4 أزواج لكلّ
+عائلة (60–240 نيّةً مطلوبة) ⇒ **⛔ لا إسنادَ عائلياً في v1** · أزواجٌ حاسمة 50/100/150 بحسب
+الأثر · جذر ميركل `b672dfa9…`.
+
+**حدود القرار (تُقال قبل المزايا):** لم يُشغَّل أيُّ نموذج (K1 غير مقيس: هل يتنبّأ الوكيل بضررٍ
+حقيقي؟) · صفرُ مقابلات (K4) · صفرُ تحكيم بشري (K5) · جدّةُ الرمز **مُنشأة لا مُثبتة** ·
+الذخيرةُ كنارية فلا تُغني عن أرضٍ تنظيمية حقيقية (ML-Bench&Guard أقربُ فنٍّ سابق ويُقال ذلك في
+كلّ عرض) · **لا يوجد سقف خسارة معتمد** ⇒ ⛔ لا E2 ولا إنفاق.
+
+**ما لا يفعله هذا القرار:** ⛔ لا يفتح خطَّ إيرادٍ ثامناً (الأداة تخدم الخطوط 1·2·6 القائمة،
+و`check_agent_reliability_constitution.py` يمنع الثامن آلياً) · ⛔ لا يدّعي إيراداً أو طلباً أو
+أثراً على نموذج · ⛔ لا يُرقّي أيَّ عرضٍ فوق `PROPOSED` · ⛔ لا يستعير أدلّة D-267 · ⛔ لا
+يُلغي أيَّ قانونٍ سابق.
+
+**التسجيل:** الفهرس السيادي (`.memory/README.md`) · كتالوج البوّابات
+([`.memory/ci-gates.md`](ci-gates.md): `gates_total` 94 → **95** المشتقّ، مع تصحيح رقمٍ نثريٍّ
+متقادم كان يقول 92) · فهرس الوثائق (`docs/DOCUMENTATION_INDEX.md`) · سجلّ المعرفة الجديدة
+(الدفعة 3 في `docs/research/README_NEW_KNOWLEDGE.md`). ⛔ **لا قسمَ جديداً في `CLAUDE.md` ولا
+رفعَ لمِسنَن الدستور**: الأداةُ بحثٌ وحالة، والقانونُ القائم (D-290) يكفيها — فالرفعُ يحتاج
+قانوناً دائماً جديداً لا أصلاً بحثياً (D-209).
+
+**فجوةُ فهرسةٍ مُعلَنة (لا تُصلَح بصمت):** 10 ملفات في `.memory/` غير مفهرَسة بالاسم في
+`.memory/README.md` (`agent_standards_truth.md` · `agentic_design_principles_{constitution,truth}.md` ·
+`auth_runtime_truth.md` · `delivery_standards_truth.md` · `harness_truth.md` ·
+`memory_architecture_truth.md` · `pedagogy_engine_truth.md` · `pocock_skills_truth.md` ·
+`refactor_chat_stream_ws_constraints.md`) — من صنف ما أصلحه D-209 لملفّين. أُضيف في هذا القرار
+صفّا `cnd_null_invariance_truth.md` و`vera_remote_acceptance_truth.md` (دُفعتا البحث 2 و3)،
+وتُترك العشرة لدفعةِ فهرسةٍ واحدة مقصودة بدل خلطها بقرارٍ بحثي.
+
 ## D-290 (2026-09-09) — دستور اعتمادية الوكلاء والعملة الصعبة: البرمجيات فوق العتاد، والدليل قبل السرد
 
 **السياق (قرار المالك):** «اجعلها قوانين أساسية يجب العمل عليها داخل المشروع لا يمكن
