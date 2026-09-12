@@ -274,7 +274,7 @@
       "studies/algeria-hard-currency/evidence_round03.csv",
       "tests/shared/test_ahw_assurance_window.py"
     ],
-    "content_sha256_excluding_packet": "5571f544d5d4c212b9a2d5865dcd1f9f2f0728e290aa91fd49b72238de982b0a",
+    "content_sha256_excluding_packet": "9c65157d05efad4697413ee495431ef87bf111fced164621161bec914e393d96",
     "refreshed_on": "2026-08-21",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
