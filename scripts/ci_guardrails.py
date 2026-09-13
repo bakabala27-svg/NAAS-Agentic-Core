@@ -38,6 +38,16 @@ FORBIDDEN_PATTERNS = [
             "cli.py",
             "tests/*",
             "examples/*",
+            # `studies/` is a research-artifact tree, not application code: the
+            # scripts under it are standalone CLI analyses (e.g.
+            # `studies/claim-scope-audit-001/v05/analyze_v05.py`, whose `print`
+            # calls are the deliverable — they write the derived-metrics file the
+            # audit cites). It is excluded from `pytest.ini` `testpaths` for the
+            # same reason, and this rule's own message scopes the ban to
+            # *application* code. Added 2026-09-13: the tree was committed at
+            # `eb2d798` with these prints and turned `guardrails` red on `main`
+            # before any PR touched it.
+            "studies/*",
             "dev_setup.py",
             "live_db_restructure.py",
             "test_visual_pedagogy_ui.py",

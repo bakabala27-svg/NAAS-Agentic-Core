@@ -29,6 +29,12 @@
    النضج ⇒ الإسنادُ إلى عائلةٍ بعينها `None` لا صفراً (K1/K2 في وثيقة القتل).
    المعرفةُ تخدم الخطوطَ التجارية القائمة (1 · 2 · 6) — ⛔ لا خطَّ ثامناً (D-290 L8).
 
+5. **FXR** (`fx_rail.py`) — سكّةُ العملة الصعبة: أيُّ كيانٍ يستلم، وكم يسمح له
+   القانون أن يستلم، ومتى يجب أن يُرحِّل — سقفُ الكيان (ANAE = 5م دج ≈ 37,5 ألف$)،
+   وسُلَّمُ الانتقال، وقاعدةُ الكلفة بالعملة الصعبة، وآجالُ الترحيل تحت النظام
+   26-02 (120/180/ممنوع)، وترتيبُ السكك بما فيها المسارُ المحظور (م126 الأمر 03-11).
+   ⛔ ليست رأياً قانونياً، ولا قياسَ عميل.
+
 القانون: stdlib فقط، لا استيراد من app/ ولا microservices/ — قابلة للتوريّد والتدقيق،
 وتُشحن إلى عميلٍ لا يملك تبعياتنا.
 """
@@ -91,6 +97,22 @@ from .exportable_eval import (
     EvalTaskKind,
     ExportableEvalBundle,
     build_eval_bundle,
+)
+from .fx_rail import (
+    CeilingResult,
+    FxSnapshot,
+    RailAssessment,
+    ae_ceiling,
+    ceiling_headroom,
+    entity_ladder,
+    fx_cost_base_rule,
+    fx_retention,
+    measure_all,
+    purchasing_power_multiple,
+    repatriation_compliance,
+    repatriation_feasible_terms,
+    score_rails,
+    spread_penalty,
 )
 from .null_invariance import (
     CanaryCorpus,
@@ -189,6 +211,7 @@ __all__ = [
     "CdkcError",
     "CdkcInput",
     "CdkcResult",
+    "CeilingResult",
     "CertificationTier",
     "ChurnRates",
     "CndEstimate",
@@ -201,6 +224,7 @@ __all__ = [
     "ExportableEvalBundle",
     "ExposureCost",
     "FailureClass",
+    "FxSnapshot",
     "HorizonAnchor",
     "Interval",
     "LanguageSwitchCost",
@@ -215,6 +239,7 @@ __all__ = [
     "PinStatus",
     "ProbeKind",
     "PrvResult",
+    "RailAssessment",
     "ReceiptVerification",
     "RepatriationRef",
     "RepatriationRisk",
@@ -230,6 +255,7 @@ __all__ = [
     "acceptance_corridor",
     "acceptance_decision",
     "adjudicate",
+    "ae_ceiling",
     "aggregate_trials",
     "break_even_cost_ratio",
     "budget_is_stated",
@@ -240,6 +266,7 @@ __all__ = [
     "build_operator_registry",
     "build_receipt",
     "canonical_json",
+    "ceiling_headroom",
     "certify_null_transformation",
     "commit_failure_classes",
     "commit_value",
@@ -259,6 +286,7 @@ __all__ = [
     "drift_before_detection",
     "drift_sample_note",
     "drift_velocity",
+    "entity_ladder",
     "env_fingerprint",
     "estimate_escape_delta",
     "evaluate_pin",
@@ -267,12 +295,15 @@ __all__ = [
     "fit_assurance_curve",
     "freeze_corpus",
     "fresh_canary_token",
+    "fx_cost_base_rule",
+    "fx_retention",
     "horizon_band_flags",
     "horizon_exposure_multiplier",
     "horizon_risk_exponent",
     "horizon_sensitivity",
     "legal_term_ceiling",
     "load_canary_corpus",
+    "measure_all",
     "merkle_proof",
     "merkle_root",
     "minimum_pairs_for_effect",
@@ -281,15 +312,20 @@ __all__ = [
     "pin_is_quotable",
     "presence_substitution_index",
     "public_summary",
+    "purchasing_power_multiple",
     "reissue_corpus",
     "release_beat_probability",
     "repatriation_breach_risk",
+    "repatriation_compliance",
+    "repatriation_feasible_terms",
     "replace_probe_text",
     "replay_digest",
     "require_horizon_band",
     "robust_terms",
     "robust_warranty_days",
+    "score_rails",
     "sha256_hex",
+    "spread_penalty",
     "summarize",
     "survival_probability",
     "term_survives",

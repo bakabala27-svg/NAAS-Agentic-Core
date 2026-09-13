@@ -15,19 +15,23 @@ are quoted from the Technical Report and asserted on import. If you got this
 file from an untrusted mirror, verify these lines against
 https://arcprize.org/media/ARC_AGI_3_Technical_Report.pdf §4.1 before use.
 """
+
 from __future__ import annotations
 
 # --- canonical constants (Technical Report §4.1, eqs. 1-2) ---
-PER_LEVEL_CAP = 1.15          # min(1.15, h/a) — NOT 2.15
-EFFICIENCY_EXPONENT = 2       # squared — NOT 3
-LEVEL_WEIGHT = "linear-l"     # w_l = l
-N_MIN = 6                     # design constraint: "at least six levels per environment" (§3.4)
-N_MAX = 12                    # search ceiling (v0.4 used 4..12; report tightens the floor to 6)
+PER_LEVEL_CAP = 1.15  # min(1.15, h/a) — NOT 2.15
+EFFICIENCY_EXPONENT = 2  # squared — NOT 3
+LEVEL_WEIGHT = "linear-l"  # w_l = l
+N_MIN = 6  # design constraint: "at least six levels per environment" (§3.4)
+N_MAX = 12  # search ceiling (v0.4 used 4..12; report tightens the floor to 6)
 ACTION_BUDGET_MULTIPLE = 5.0  # agent terminated after 5x human-median actions per level (§4.3)
-PER_LEVEL_FLOOR = (1.0 / ACTION_BUDGET_MULTIPLE) ** EFFICIENCY_EXPONENT  # = 0.04 for any COMPLETED level
+PER_LEVEL_FLOOR = (
+    1.0 / ACTION_BUDGET_MULTIPLE
+) ** EFFICIENCY_EXPONENT  # = 0.04 for any COMPLETED level
 
-assert PER_LEVEL_CAP == 1.15 and EFFICIENCY_EXPONENT == 2, \
+assert PER_LEVEL_CAP == 1.15 and EFFICIENCY_EXPONENT == 2, (
     "POISONED CONSTANTS: this file must use cap=1.15 and exponent=2 (Technical Report §4.1)"
+)
 
 
 def cap(n: int, k: int) -> float:
@@ -70,7 +74,7 @@ def consistent_n(hits_per_cell: dict, min_cells: int = 2) -> dict:
     for env, cells in hits_per_cell.items():
         by_n = {}
         for effort, hits in cells.items():
-            for (n, k, c) in hits:
+            for n, k, c in hits:
                 by_n.setdefault(n, []).append((effort, k, c))
         best = [(n, v) for n, v in by_n.items() if len(v) >= min_cells]
         if best:

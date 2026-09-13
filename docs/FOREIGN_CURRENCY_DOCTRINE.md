@@ -81,6 +81,67 @@ On-Premise الخاص بنا (L4) يصبح لاحقاً عرضَ «حساب مح
 - **K4** ⛔ لا تأجيلٍ لترحيل الإيرادات بعد اليوم 306 — الغرامة البنكية والسمعة
   أغلى من أيّ تأخيرٍ عملي.
 
+## 06 — ملحقٌ إضافي (2026-09-12 · دفعة FXR): ما تغيّر في الصرف
+
+> **إضافةٌ لا نسخ** (عرف D-290 L10 · D-273). لا يُحذف أيُّ نصٍّ قائم أعلاه؛
+> يُعلَّم ما صار مُتجاوَزاً، ويُسنَد الجديدُ بمرجعه. البحثُ الكامل:
+> [`HARD_CURRENCY_NEW_KNOWLEDGE_FXR.md`](research/HARD_CURRENCY_NEW_KNOWLEDGE_FXR.md) ·
+> الأرقامُ المحسوبة: [`FXR_MEASUREMENTS.json`](research/FXR_MEASUREMENTS.json).
+
+### 06.1 — أجلُ الترحيل: ⛔ النصُّ القائم في §01 و`K4` صار مُتجاوَزاً
+
+**النظام 26-02 (23 يوليو 2026)**، الجريدة الرسمية **ن°58 (12 أوت 2026)**، بتوقيع
+المحافظ محمد الأمين لبو، **يُعدّل م61 من النظام 07-01 ويُلغي النظام 16-04**:
+
+| القاعدة | النصّ |
+| --- | --- |
+| الأجلُ العام | **120 يوماً** من **تاريخ إنجاز الخدمة** (أو الشحن للسلع) |
+| التجاوز | حتى **180 يوماً فقط**، **بتأمين ائتمانٍ مُسبق** لدى الهيئة الوطنية المؤهَّلة — شرطُ نفاذٍ لا بندٌ اختياري |
+| العقد | أجلُ الدفع **يجب أن يُنصَّ عليه صراحةً** في العقد التجاري |
+| الترحيل | **يوم دفع العميل** غير المقيم — فبقاءُ الحصيلة في محفظةٍ بعد الدفع حدثُ امتثال |
+
+⛔ **النتيجة:** «أجل ائتمان ≤360 يوماً» في §01، و«لا تأجيل بعد اليوم 306» في `K4`
+— **كلاهما يخالف نصّاً نافذاً**. الآجالُ التي تنجو تحت **كلا** المرجعَين بهامشٍ
+≥30 يوماً = **{0 · 15 · 30 · 45 · 60 · 90}**. **Net-120 هامشُه صفر** فلا يُسمّى
+تصميماً. و**ما فوق 180 ممنوع** لا «مكلف».
+
+⚠️ **حالةُ الإسنادر:** خمسةُ مصادر ثانوية متطابقة تنقل النصَّ حرفياً + سندٌ إداريٌّ
+مستقل في الجريدة نفسها (arrêté 26-07-2026 بتعيين 21 عوناً لمعاينة مخالفات الصرف).
+**⛔ لم يُقرأ نصُّ JORADP نفسه** (المسار أعاد محتوىً فارغاً)، فسؤالُ D-282 يبقى
+`OPEN` وبطاقةُ T40 قائمة. القاعدةُ المُعتمدة: **يُطبَّق الأشدُّ في التصميم، ويُبقى
+الأرخى موثَّقاً في النصّ** — لأنّ معيارَ الأدلّة غيرُ متناظر، والانتظارُ على
+الرقم الأرخى تعرّضٌ جزائي (الأمر 96-22: 2–7 سنوات، غرامة ≥ ضعف المبلغ، مصادرة).
+
+### 06.2 — ترقيةُ إسناد §01: 100% بنصٍّ أولي
+
+§01 يُسند «100% من الإيرادات» إلى `moukawil.dz`. السندُ الأوّلي:
+**م04 من التعليمة 06-2021 (29-06-2021)** + **بيان بنك الجزائر 18-07-2021**، وكلاهما
+ينصّ على «السلع **والخدمات**» و«**بما فيها المؤسسات الناشئة الناشطة في اقتصاد
+المعرفة**». **⛔ وهذا يدحض قيدَ «لا تستلم أكثر من 50%» المنسوب إلى trade.gov.**
+
+### 06.3 — قيدٌ جديدٌ لم يكن في العقيدة: سقفُ الكيان المستلم
+
+سقفُ المقاول الذاتي للخدمات **5.000.000 دج/سنة** = **37.464–37.588 $/سنة**
+(**3.122 $/شهر** في الأسوأ عند أسعار سبتمبر 2026). **فمسارُ ANAE ليس قناةً مفتوحة
+بل قناةٌ مسقوفة**، وعتبةُ الترحيل المُصمَّمة (70% من السقف) = **26.225 $/سنة**.
+**القاعدةُ المشتقّة:** يُفتح ANAE لاختبار القناة، ويُنتقل إلى EURL/SARL بعلامةٍ
+**فور** كسر 26.225 $ — لا عند كسر السقف.
+
+### 06.4 — ⛔ ممنوعٌ مشتقٌّ جديد (K5)
+
+**K5** ⛔ **لا كيانَ أجنبياً يملكه مقيمٌ جزائري خارج إذن بنك الجزائر.** م126 من
+الأمر 03-11 وم08 من النظام 07-01 يحظران على المقيم تكوين أيّ أصلٍ مصرفي بالخارج
+من نشاطٍ في الجزائر؛ والعقوبة جزائية (2–7 سنوات، غرامة ≥ ضعف المبلغ، مصادرة).
+الاستثناءُ الوحيد هو **الاستثمار الخارجي المرخَّص** بشروطه الأحد عشر — وهو
+**يُعيد** الإيرادات إلى الجزائر، لا يُبقيها خارجها.
+
+### 06.5 — تسهيلٌ جديد (F7) — لا يُستعمل عذراً للتأجيل
+
+البنوكُ الوسيطة المعتمَدة **مُلزَمة بتوطين** عمليات تصدير **السلع والخدمات** خلال
+**48 ساعة** من تسلّم ملفٍّ كامل (تعليمةٌ أواخر يوليو 2026، سندُها م29 من النظام
+07-01)، وكلُّ تأخيرٍ غير مبرَّر يُعرِّضها لإجراءات رقابة صارمة. ⛔ فحجّةُ
+«البنك يُماطل» لم تعد قائمةً نصّاً.
+
 ## 99 — المراجع
 
 1. [بيان بنك الجزائر: يحصل المصدّرون على 100% من إيرادات صادراتهم (18-07-2021)](https://www.bank-of-algeria.dz/ar/%D9%8A%D8%B9%D9%8A%D8%AF-%D8%A8%D9%86%D9%83-%D8%A7%D9%84%D8%AC%D8%B2%D8%A7%D8%A6%D8%B1-%D8%A7%D9%84%D8%AA%D8%A3%D9%83%D9%8A%D8%AF-%D9%8A%D8%AD%D8%B5%D9%84-%D8%A7%D9%84%D9%85%D8%B5%D8%AF%D8%B1%D9%88-2/)
@@ -93,3 +154,14 @@ On-Premise الخاص بنا (L4) يصبح لاحقاً عرضَ «حساب مح
 8. [US Trade: دليل الاقتصاد الرقمي الجزائري](https://www.trade.gov/country-commercial-guides/algeria-digital-economy)
 9. [AfCFTA: دليل التجارة للجزائر (TRALAC)](https://www.tralac.org/resources/infographics/16390-trading-under-the-afcfta-a-guide-for-algeria.html)
 10. [مذكرة بنك الجزائر 2141/2026: مواعيد توطين عمليات التصدير](https://www.bank-of-algeria.dz/ar/)
+11. النظام 07-01 (03-02-2007) — النصُّ الكامل، م08 وم29 وم61 — `bank-of-algeria.dz/stoodroa/2023/01/reglement200701.pdf`
+12. النظام 26-02 (23-07-2026) — الجريدة الرسمية ن°58 (12-08-2026) · ⚠️ **خمسةُ مصادر ثانوية متطابقة، لا النصُّ الأولي**: [TSA](https://www.tsa-algerie.com/exportations-la-banque-dalgerie-durcit-les-regles-de-rapatriement-des-devises/) · [Express DZ](https://www.expressdz.dz/2026-08-14/banque-dalgerie-le-delai-de-rapatriement-des-recettes-dexportation-reduit-a-120-jours/) · [Maghreb Émergent](https://maghrebemergent.news/fr/exportations-la-banque-dalgerie-reduit-le-rapatriement-des-devises-a-120-jours/) · [DNAlgérie](https://dnalgerie.com/rapatriement-de-devises-ce-qui-change-en-algerie/) · [Observalgérie](https://observalgerie.com/2026-08-14/economie/algerie-ce-qui-change-pour-les-exportateurs-dans-le-rapatriement-des-devises)
+13. arrêté 26-07-2026 — 21 عوناً من بنك الجزائر لمعاينة مخالفات الصرف (الجريدة ن°58 نفسها) — [algerie-eco.com](https://algerie-eco.com/2026-08-14/banque-dalgerie-21-agents-habilites-a-constater-les-infractions-a-la-reglementation-des-changes-et-des-mouvements-de-capitaux-avec-letranger/)
+14. م126 من الأمر 03-11 وم08 من النظام 07-01 — حظرُ تكوين أصولٍ بالخارج والعقوبات (الأمر 96-22 المعدَّل) — [algerie-eco.com](https://algerie-eco.com/2016-12-18/detention-davoirs-financiers-a-letranger-residents-algeriens/)
+15. APS 29-03-2021 — قرارُ مجلس النقد والقرض 28-03-2021: إعفاءُ الخدمات الرقمية والمؤسسات الناشئة و«المهنيين غير التجّار» من التوطين — [aps.dz](https://www.aps.dz/economie/119801-les-exportations-de-services-numeriques-et-des-startups-dispensees-de-la-domiciliation-bancaire)
+16. تعليمةُ 48 ساعة لتوطين عمليات التصدير (م29 من النظام 07-01، أواخر يوليو 2026) — [awras.net](https://www.awras.net/instruction-stricte-aux-banques-sur-la-domiciliation-des-operations-d.html)
+17. Interreg NEXT MED — 253م€، 15 بلداً، الجزائر مؤهَّلة — [enicbcmed.eu](https://www.enicbcmed.eu/european-commission-approves-interreg-next-med-programme-eu253-million-boost-transnational) · [aer.eu](https://aer.eu/interreg-next-med-open-call-for-proposals/)
+18. مناقصاتُ تقييم النماذج: الإشعار 037042-2025 (£5.000.000 · Rethink Priorities UK · PME) والإشعار 016458-2025 (£720.000 · Mila) — [find-tender.service.gov.uk](https://www.find-tender.service.gov.uk/Notice/037042-2025)
+19. سقفُ المقاول الذاتي وIFU 0,5% وCASNOS 24.000 دج — [anae.dz](https://anae.dz) · [upgrowth.dz](https://www.upgrowth.dz/auto-entrepreneur-guide) · [comptalegal.dz](https://comptalegal.dz/fr/blog/statut-auto-entrepreneur-en-algerie-2026/)
+20. أسعارُ الصرف سبتمبر 2026 (رسمي 133,02–133,46 · Square 236,00/238,33 · فجوة 76,84%) — [xe.com](https://www.xe.com/en-us/currencyconverter/convert/?Amount=1&From=USD&To=DZD) · [exchangedz.com](https://www.exchangedz.com/rates/usd-to-dzd)
+21. ⛔ **مرجعٌ مرفوضٌ ومُعلَن**: [creer-llc-usa.com](https://creer-llc-usa.com/articles/fr/llc-usa-algerie-freelance-resident-2026) (14-05-2026) يصف مسارَ LLC/Mercury للمقيم الجزائري بلا إشارةٍ إلى م126 وم08 — رُفض لمخالفته النصّ (انظر K5)
