@@ -197,24 +197,8 @@
   ],
   "git_change_snapshot": {
     "base_ref": "origin/main",
-    "changed_paths_excluding_packet": [
-      ".memory/fx_doctrine_truth.md",
-      "docs/FOREIGN_CURRENCY_DOCTRINE.md",
-      "docs/research/EVIDENCE_CATALOG.json",
-      "docs/research/FXR_MEASUREMENTS.json",
-      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FXR.md",
-      "docs/research/README_NEW_KNOWLEDGE.md",
-      "scripts/ci_guardrails.py",
-      "scripts/research/measure_fx_rail.py",
-      "scripts/research/refresh_acceptance_diff_snapshot.py",
-      "shared/research/__init__.py",
-      "shared/research/fx_rail.py",
-      "studies/algeria-hard-currency/evidence_fxr.csv",
-      "studies/claim-scope-audit-001/v05/analyze_v05.py",
-      "studies/claim-scope-audit-001/v05/cap_decoder.py",
-      "tests/shared/test_fxr_fx_rail.py"
-    ],
-    "content_sha256_excluding_packet": "95dd92260b8e1998a7363da720d578b631ed5a50fa070e1714ea4b8b2f7675b6",
+    "changed_paths_excluding_packet": [],
+    "content_sha256_excluding_packet": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "refreshed_on": "2026-09-13",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
