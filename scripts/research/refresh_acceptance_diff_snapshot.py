@@ -22,6 +22,7 @@ import json
 import os
 import subprocess
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -125,7 +126,10 @@ def main() -> None:
         "base_ref": os.environ.get("CODE_ACCEPTANCE_BASE_SHA", "WORKTREE"),
         "changed_paths_excluding_packet": snapshot_paths,
         "content_sha256_excluding_packet": content_fingerprint(snapshot_paths),
-        "refreshed_on": "2026-08-21",
+        # The date is computed, never hand-written: a snapshot that claims to have
+        # been refreshed on a stale literal is a recorded fact that is simply
+        # false, which is the exact class of defect this packet exists to catch.
+        "refreshed_on": date.today().isoformat(),
         "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py",
     }
     PACKET.write_text(json.dumps(packet, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

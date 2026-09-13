@@ -143,6 +143,36 @@
       "local_application_ar": "بوابة الأساس لكل تغيير: correctness/design/style مع فحوص الذاكرة والبيانات والواجهات عند اللزوم.",
       "required_for": ["all_code", "algorithm", "data", "api", "database", "frontend"],
       "verified_on": "2026-08-21"
+    },
+    {
+      "id": "ba-instruction-06-2021-retention",
+      "title_en": "Bank of Algeria — Instruction 06-2021 art. 4 + communiqué 18/07/2021 (100% export retention)",
+      "kind": "official_regulation",
+      "url": "https://www.bank-of-algeria.dz/les-exportateurs-disposent-100-recettes-leurs-exportations/",
+      "scope_ar": "المادة 4: صاحبُ حساب العملة الصعبة — تاجراً كان أو غير تاجر — يستحقّ **كامل** حصيلة صادراته من **السلع والخدمات معاً**، ومنها مؤسساتُ الاقتصاد المعرفي الناشئة. يُدحض هذا قيدَ «50% من عوائد التصدير» المنسوبَ إلى trade.gov في لوحتنا (ك-03/S13).",
+      "local_application_ar": "مصدرٌ أولي من بنك الجزائر نفسه (لا صحافة). مُطبَّق في `shared/research/fx_rail.py` (قاعدةُ الكلفة بالعملة الصعبة: شريحةُ 80% تدفع سلعاً **وخدمات** مستوردة، فالفرقُ كلفةٌ عند التحويل فقط) وفي `docs/research/FXR_MEASUREMENTS.json`، ومُسجَّل في `studies/algeria-hard-currency/evidence_fxr.csv` (S104·S106).",
+      "required_for": ["currency", "contract", "commercial_claim", "entity"],
+      "verified_on": "2026-09-12"
+    },
+    {
+      "id": "ba-reglement-26-02-repatriation",
+      "title_en": "Règlement n° 26-02 du 23/07/2026 (JO n° 58 du 12/08/2026) — 120-day repatriation",
+      "kind": "official_regulation",
+      "url": "https://www.tsa-algerie.com/exportations-la-banque-dalgerie-durcit-les-regles-de-rapatriement-des-devises/",
+      "scope_ar": "يُعدّل م61 من النظام 07-01 ويُلغي النظام 16-04: أجلُ الترحيل **120 يوماً** من تاريخ الشحن (سلع) أو الإنجاز (خدمات)، و180 يوماً كحدٍّ أقصى مطلق بشرط تأمين ائتمانٍ مُسبق، والترحيلُ واجبٌ **يومَ دفع العميل**. ⚠️ **حدٌّ مُعلَن:** النصُّ الأولي `joradp.dz/FTP/2026/058.pdf` أعاد محتوىً فارغاً **ولم يُقرأ** — السندُ هنا خمسةُ مصادر ثانوية متطابقة تنقل نصاً حرفيّاً (S107–S113).",
+      "local_application_ar": "مُطبَّق في `shared/research/fx_rail.py` (`REPATRIATION_CAP_DAYS = 120`، و`REPATRIATION_LEGACY_CAP_DAYS = 360` يبقى موثَّقاً لا مُستخدَماً — صُمِّم للأضيق) وفي `docs/FOREIGN_CURRENCY_DOCTRINE.md` §06، ويُقيسه `scripts/research/measure_fx_rail.py --check`.",
+      "required_for": ["currency", "contract", "commercial_claim", "compliance"],
+      "verified_on": "2026-09-12"
+    },
+    {
+      "id": "ord-03-11-art126-foreign-assets",
+      "title_en": "Ordonnance 03-11 art. 126 + Règlement 07-01 art. 8 — foreign-asset prohibition for residents",
+      "kind": "official_regulation",
+      "url": "https://algerie-eco.com/2016-12-18/detention-davoirs-financiers-a-letranger-residents-algeriens/",
+      "scope_ar": "يُحظَر على المقيمين تكوينُ أيّ أصلٍ في الخارج — عقاري أو منقول أو ائتماني أو **مصرفي** — من أموالٍ مصدرها نشاطٌ جزائري إلا بإذنٍ صريح من بنك الجزائر؛ العقوبةُ سجنُ 2–7 سنوات وغرامةٌ لا تقلّ عن ضعف المبلغ ومصادرة (الأمر 96-22 المعدَّل). ⚠️ م8 من النظام 07-01 مُتحقَّق من PDF البنك؛ التحليلُ القانوني المنشور ثانوي. **مرجعٌ مرفوضٌ ومُعلَن:** من يروّج LLC أمريكية + Mercury للمقيم الجزائري ويُسقِط م126 (S126).",
+      "local_application_ar": "مُطبَّق في `shared/research/fx_rail.py`: السكةُ X1 مُرتَّبة أخيرة بـ`legally_sourced = False` ومعرَّضة جنائياً (`criminal_exposure`)، فلا تُقترح مساراً. ويُسجَّل الرفضُ المُعلَن في `studies/algeria-hard-currency/evidence_fxr.csv` (S114–S116·S126).",
+      "required_for": ["currency", "entity", "legal_risk", "commercial_claim"],
+      "verified_on": "2026-09-12"
     }
   ]
 }
