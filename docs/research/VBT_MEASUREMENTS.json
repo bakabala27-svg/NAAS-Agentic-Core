@@ -1,0 +1,158 @@
+{
+  "$schema_version": "1",
+  "batch": "VBT-7",
+  "as_of": "2026-09-13",
+  "declared_zeros": {
+    "model_runs_executed": 0,
+    "client_measurements": 0,
+    "revenue_claim": "NONE"
+  },
+  "inputs": {
+    "generation_hours_ns": {
+      "value": 88,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08",
+      "note_ar": "زمن وصول الوكلاء إلى البرهان من إطلاق أول وكيل"
+    },
+    "formalization_hours_ns": {
+      "value": 17,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08",
+      "note_ar": "زمن الصياغة الصورية والتحقق في Lean عبر GPT-6 Astra"
+    },
+    "messages_ns": {
+      "value": 2700000,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08"
+    },
+    "output_tokens_ns": {
+      "value": 130000000000,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08",
+      "note_ar": "تقريبي حسب نص المصدر"
+    },
+    "messages_all_problems": {
+      "value": 4900000,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08",
+      "note_ar": "تقريبي حسب نص المصدر"
+    },
+    "output_tokens_all_problems": {
+      "value": 300000000000,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08",
+      "note_ar": "تقريبي حسب نص المصدر"
+    },
+    "euler_side_quest_agents": {
+      "value": 100,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08",
+      "note_ar": "تقريبي حسب نص المصدر"
+    },
+    "euler_side_quest_hours": {
+      "value": 50,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08",
+      "note_ar": "تقريبي حسب نص المصدر"
+    },
+    "ns_swarm_size": {
+      "value": 10000,
+      "source": "S104",
+      "source_url": "https://openai.com/index/navier-stokes-solution",
+      "source_date": "2026-09-08",
+      "note_ar": "بصيغة order-of في نص المصدر"
+    },
+    "formalization_output_tokens": {
+      "value": null,
+      "state": "UNSTATED",
+      "note_ar": "غير معلنة من المصدر؛ لم تُخمَّن"
+    }
+  },
+  "results": {
+    "vgr_cycle_time": {
+      "value": 0.1619047619,
+      "formula": "formalization_hours_ns / (generation_hours_ns + formalization_hours_ns)",
+      "path": "17 / 105",
+      "tag": "🟢⟨ح⟩"
+    },
+    "vgr_vs_generation_time": {
+      "value": 0.1931818182,
+      "formula": "formalization_hours_ns / generation_hours_ns",
+      "path": "17 / 88",
+      "tag": "🟢⟨ح⟩"
+    },
+    "ns_messages_per_hour": {
+      "value": 30681.8181818182,
+      "formula": "messages_ns / generation_hours_ns",
+      "path": "2700000 / 88",
+      "tag": "🟢⟨ح⟩"
+    },
+    "ns_output_tokens_per_hour": {
+      "value": 1477272727.2727273,
+      "formula": "output_tokens_ns / generation_hours_ns",
+      "path": "130000000000 / 88",
+      "tag": "🟢⟨ح⟩"
+    },
+    "ns_share_of_messages": {
+      "value": 0.5510204082,
+      "formula": "messages_ns / messages_all_problems",
+      "path": "2700000 / 4900000",
+      "tag": "🟢⟨ح⟩"
+    },
+    "ns_share_of_output_tokens": {
+      "value": 0.4333333333,
+      "formula": "output_tokens_ns / output_tokens_all_problems",
+      "path": "130000000000 / 300000000000",
+      "tag": "🟢⟨ح⟩"
+    },
+    "tokens_per_message_ns": {
+      "value": 48148.1481481481,
+      "formula": "output_tokens_ns / messages_ns",
+      "path": "130000000000 / 2700000",
+      "tag": "🟢⟨ح⟩"
+    },
+    "tokens_per_message_all": {
+      "value": 61224.4897959184,
+      "formula": "output_tokens_all_problems / messages_all_problems",
+      "path": "300000000000 / 4900000",
+      "tag": "🟢⟨ح⟩"
+    },
+    "euler_agents_share": {
+      "value": 0.01,
+      "formula": "euler_side_quest_agents / ns_swarm_size",
+      "path": "100 / 10000",
+      "tag": "🟢⟨ح⟩"
+    },
+    "euler_hours_vs_ns": {
+      "value": 0.5681818182,
+      "formula": "euler_side_quest_hours / generation_hours_ns",
+      "path": "50 / 88",
+      "tag": "🟢⟨ح⟩"
+    }
+  },
+  "hypotheses": {
+    "H9": {
+      "statement_ar": "عتبة VGR (ميزانية تحقق ≥ 15–20% من ميزانية التوليد) تفصل النشر المغطى عن المكشوف بنيوياً",
+      "status": "OPEN",
+      "note_ar": "الرقم الأول من حدث خارجي بمتحقق صوري، لا من قياس عميل؛ التعميم على نشر الوكلاء هو موضوع الفرضية لا دليلها"
+    },
+    "H10": {
+      "statement_ar": "نسبة مخرجات الوكلاء الموصولة بمتحقق حتمي أو بشري صارم تتنبأ بسلامة النشر أفضل من وتيرة القدرة وحدها",
+      "status": "OPEN",
+      "note_ar": "موقف سياساتي قابل للدحض (§3.3 من وثيقة الدفعة)؛ لا يُقدَّم كإجماع"
+    }
+  },
+  "limits_ar": [
+    "زمن الجدار ليس ميزانية دولار؛ لا رقم كلفة للحدث لأن المصدر الأول لم ينشره",
+    "الحدث نطاقه رياضيات بمتحقق صوري؛ التعميم فرضية H9",
+    "توكنات الصياغة الصورية غير معلنة ⇒ النسبة بالزمن لا بالتوكنات"
+  ]
+}
