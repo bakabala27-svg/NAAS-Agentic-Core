@@ -196,21 +196,26 @@
     "tests/shared/test_fxr_fx_rail.py"
   ],
   "git_change_snapshot": {
-    "base_ref": "c3699642e5bfb7294be253b267601cac9828c4bc",
+    "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
-      ".memory/ci-gates.md",
-      "scripts/fitness/check_decision_round04.py",
-      "scripts/fitness/check_decision_round05.py",
-      "scripts/research/measure_benchmark_pin.py",
-      "scripts/research/measure_decision_latency.py",
-      "shared/research/decision_latency.py",
-      "tests/fitness/test_decision_round04_gate.py",
-      "tests/fitness/test_decision_round05_gate.py",
-      "tests/shared/test_benchmark_pin.py",
-      "tests/shared/test_decision_latency.py"
+      ".memory/fx_doctrine_truth.md",
+      "docs/FOREIGN_CURRENCY_DOCTRINE.md",
+      "docs/research/EVIDENCE_CATALOG.json",
+      "docs/research/FXR_MEASUREMENTS.json",
+      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FXR.md",
+      "docs/research/README_NEW_KNOWLEDGE.md",
+      "scripts/ci_guardrails.py",
+      "scripts/research/measure_fx_rail.py",
+      "scripts/research/refresh_acceptance_diff_snapshot.py",
+      "shared/research/__init__.py",
+      "shared/research/fx_rail.py",
+      "studies/algeria-hard-currency/evidence_fxr.csv",
+      "studies/claim-scope-audit-001/v05/analyze_v05.py",
+      "studies/claim-scope-audit-001/v05/cap_decoder.py",
+      "tests/shared/test_fxr_fx_rail.py"
     ],
-    "content_sha256_excluding_packet": "bfdec7b74f51088295fcd7ed57cc427ae90de0922e14036292021696ce661327",
-    "refreshed_on": "2026-08-21",
+    "content_sha256_excluding_packet": "95dd92260b8e1998a7363da720d578b631ed5a50fa070e1714ea4b8b2f7675b6",
+    "refreshed_on": "2026-09-13",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
 }
