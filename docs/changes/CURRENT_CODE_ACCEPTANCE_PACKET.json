@@ -1,15 +1,20 @@
 {
   "$schema_version": "1",
-  "packet_id": "CAP-2026-09-13-fxr-rail-measurement",
+  "packet_id": "CAP-2026-09-14-wod-buyer-layer",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "FXR-RAIL-PR-2435",
+  "decision_of_change": "WOD-BUYER-LAYER-2026-09-14",
   "standards": [
     "system-design-primer",
     "coding-interview-university"
   ],
   "evidence": [
-    "ba-instruction-06-2021-retention",
+    "us-irs-pub-515-service-sourcing",
+    "algeria-dtt-rate-table",
+    "fr-cgi-182b-boifp-services",
+    "de-50a-estg-royalty-wht",
+    "ca-regulation-105-nonresident-fees",
+    "eu-gdpr-art-28-processor-terms",
     "ba-reglement-26-02-repatriation",
     "ord-03-11-art126-foreign-assets"
   ],
@@ -17,80 +22,85 @@
     {
       "standard": "system-design-primer",
       "paths": [
-        "shared/research/fx_rail.py",
-        "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FXR.md",
-        "docs/FOREIGN_CURRENCY_DOCTRINE.md"
+        "shared/research/withholding_onboarding.py",
+        "scripts/research/measure_withholding_onboarding.py",
+        "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md",
+        "docs/commercial/WOD_BUYER_LAYER_OFFER.md",
+        "shared/research/__init__.py"
       ],
-      "gate": "python3 scripts/research/measure_fx_rail.py --check",
-      "application_ar": "فصلُ الطبقات داخل أصلٍ متقادم: سقفُ الكيان (ANAE 5.000.000 دج) ← عتبةُ الترحيل عند 70% ← فجوةُ الصرف الرسمية/الموازية ← قاعدةُ الكلفة بالعملة الصعبة ← الساعةُ التنظيمية (120/180/360) ← ترتيبُ السكك R1–R4 ثمّ X1. لا طبقةَ تعرف ما فوقها؛ وكلُّ حكمٍ يُرجِع رمزاً من مجموعةٍ مغلقة (`COMPLIANT` · `INSURED_ONLY` · `PROHIBITED`) بدل صفرٍ مُخترع، وكلُّ سكةٍ تحمل `legally_sourced` و`criminal_exposure` صريحَين. والمبدأُ الحاكم (D-282 مُضيَّقاً): البحثُ الشبكي لا يُعدِّل عقيدةً مُسنَدة إن كان التغييرُ **ترخيصيّاً**، ويُعدِّلها إن كان **تقييدياً** — صُمِّم للأضيق (120) وبقي الأوسع (360) موثَّقاً لا مُستخدَماً."
+      "gate": "python3 scripts/research/measure_withholding_onboarding.py --check",
+      "application_ar": "فصلُ الطبقات: طبقةُ الاستقطاع (وصفُ العقد في نظام الدافع) ← طبقةُ التأهيل (ما يشترطه المشتري قبل الدفع) ← طبقةُ الالتقاط (1 × (1 − الاستقطاع) إن عبَرت الفئة) ← شروطُ القتل. ولا طبقةَ تعرف ما فوقها: `effective_rate` لا تعرف أدلاء المشترين، و`minimum_unlock_set` لا تعرف المعدّلات إلّا عبر `net_capture`. وكلُّ حكمٍ يُرجِع رمزاً من مجموعةٍ مغلقة (`RateBasis` · `InversionState` · `AbStatus` · `KillSwitch`) بدل صفرٍ مُخترع: الغائبُ `None` بسببٍ منطوق، والوسيطُ بين مصدرَين ممنوعٌ — فالقاعدةُ الحاكمة أنّه لا تُقتبس خليةٌ معدّلُها الداخليّ موجب ونصُّ المعاهدة عليها غائب."
     },
     {
       "standard": "coding-interview-university",
       "paths": [
-        "tests/shared/test_fxr_fx_rail.py"
+        "tests/shared/test_wod_withholding_onboarding.py"
       ],
-      "gate": "python3 -m pytest tests/shared/test_fxr_fx_rail.py -q",
-      "application_ar": "حتميةٌ وحدودٌ لا أمثلةٌ مُريحة: 28 اختباراً تُطابق كلّ رقمٍ في `docs/research/FXR_MEASUREMENTS.json` لحسابٍ يدوي مستقل، وتَفحص **الحدود** لا النقاط الوسطى فقط: 70% تُطلق عتبةَ الترحيل عند 26.225,09 $ (فـ30.000 $ تكسر العتبة **دون** كسر السقف — وهو التمييز الذي يسقط لو قيس الحدّ بنقطةٍ واحدة)، ويومُ الاستحقاق نفسه **مُمتثَل** فاختبارُ الانتهاك يستعمل اليوم 151 لا 121، و`INSURED_ONLY` يبدأ عند 150 لا عند 121. وكلُّ اختبارٍ يمرّ؛ وصفرُ انكسارٍ رجعي في 339 اختباراً سابقاً."
+      "gate": "python3 -m pytest tests/shared/test_wod_withholding_onboarding.py -q",
+      "application_ar": "54 اختباراً تفحص الحدودَ لا الأمثلةَ المُريحة: 22 خليةً تُطابَق نسبةً ونطاقاً، وأربعُ خلايا مُمنوعة تبقى `None` (اختبارُ ابقاء المجهول مجهولاً)، وقاعدةُ الصفر الداخليّ تُثبَت على هولندا ذات المعاهدة غير المُسندة. وفيها براهينُ سلبية لشروط القتل الخمسة: يُفسَد المُدخَل عمداً (تسطيحُ المعدّلات ⇒ K1 · إعفاءُ الخدمة في كل سوق ⇒ K2 · فئاتٌ لا تطلب شيئاً ⇒ K3 · ميزانيةٌ صفرية ⇒ K4 · إفراغُ كلّ الأسعار ⇒ K5) ويُتوقَّع أن تُصرخ البوّابة. والخطةُ المثلى يُتحقَّق منها بحسابٍ مستقلّ داخل الاختبار (بحثٌ شامل 2^n) لا بالثقة في الدالة."
     }
   ],
   "production": {
     "owner": "research-independent-hard-currency",
     "status": "RESEARCH_LIBRARY_AND_STUDY_NO_PRODUCTION_PATH",
     "interfaces": [
-      "shared/research/fx_rail.py — مكتبةٌ بحثية stdlib فقط (سقفُ الكيان · عتبةُ الترحيل · فجوةُ الصرف · قاعدةُ الكلفة · الآجال · ترتيبُ السكك)؛ لا يستوردها أيّ مسارٍ إنتاجي",
-      "scripts/research/measure_fx_rail.py — مولِّدُ قياسٍ حتمي بوضع `--check` يفشل عند أيّ انحرافٍ بين المودَع والمحسوب",
-      "docs/research/FXR_MEASUREMENTS.json — ملفُّ القياس المودَع (بصمةُ مُدخلات · `model_runs_executed = 0` · `client_measurements = 0`)",
-      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FXR.md — ستُّ قطعِ معرفةٍ محسوبة + سبعُ حزمِ حلٍّ بمعيارِ إقفالٍ ثنائي لكلٍّ منها + §5 حدودُ المعرفة قبل المزايا",
-      "docs/FOREIGN_CURRENCY_DOCTRINE.md — §06 **مُلحَق** لا مُعادَ الكتابة: المنعُ K5 والمراجع 11–21 ومنها مرجعٌ **مرفوضٌ ومُعلَن**",
-      ".memory/fx_doctrine_truth.md — المحاولةُ الثالثة، والحالة `OPEN` **باقية** (T40) لأنّ نصَّ JORADP لم يُقرأ",
-      "studies/algeria-hard-currency/evidence_fxr.csv — 23 صفاً S104–S126 باستقلالِ كلّ مصدرٍ ومُحفِّزِ إعادةِ تحقّقه",
-      "tests/shared/test_fxr_fx_rail.py — 28 اختباراً"
+      "shared/research/withholding_onboarding.py — مكتبةٌ بحثية stdlib فقط (طبقةُ الاستقطاع · طبقةُ التأهيل · الالتقاط · شروطُ القتل)؛ لا يستوردها أيّ مسارٍ إنتاجي",
+      "shared/research/__init__.py — تصديرُ الوحدة تحت المِعرَّف `wod` (مُسمّى لتجنّب تصادمِ الأسماء: `summarize` و`measure_all` موجودان من دفعاتٍ سابقة)",
+      "scripts/research/measure_withholding_onboarding.py — مولِّدُ قياسٍ حتمي بوضع `--check` يفشل عند أيّ انحرافٍ بين المودَع والمحسوب",
+      "docs/research/WOD_MEASUREMENTS.json — ملفُّ القياس المودَع (بصمةُ مُدخلات + `model_runs_executed = 0` · `client_measurements = 0` · `invoices_issued = 0` · `revenue_claim = NONE`)",
+      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md — المصوفتان (22 خليةً · 12 فئة) + الوجوهُ الثلاثة + شروطُ القتل + حدودُ المعرفة + بطاقات T65–T70",
+      "docs/commercial/WOD_BUYER_LAYER_OFFER.md — عرضُ تصديرٍ يخدم الخطوط 1 · 2 · 5 · 6، ⛔ بلا خطٍّ ثامن وبلا سعر",
+      ".memory/withholding_onboarding_truth.md — حالةٌ حيّة ومحفّزاتُ إعادة التحقّق"
     ],
-    "failure_behavior_ar": "لا مسارَ إنتاجيّاً: لا `app/` ولا `microservices/` يستورد الوحدةَ الجديدة (`grep -rn fx_rail app/ microservices/` ⇒ **صفرُ نتيجة**، مُتحقَّق). أسوأُ فشلٍ ممكن: (أ) رقمٌ في وثيقةٍ بيعية لا يطابق الكود — محجوبٌ باختبارِ المطابقة وبـ`--check`؛ (ب) رقمٌ مودَعٌ عُدِّل يدوياً — يُعيد `--check` بناءَه فيفشل؛ (ج) ادّعاءُ أجلٍ أوسع من 120 يوماً — محجوبٌ لأنّ المجموعة مغلقة والاختبارُ يفحص اليوم 121؛ (د) اقتراحُ السكة X1 (LLC أجنبية) مساراً — محجوبٌ بـ`legally_sourced = False` وبـ`criminal_exposure` (2–7 سنوات + غرامةٌ ≥ ضعفي المبلغ + مصادرة).",
-    "observability_ar": "كلُّ رقمٍ في الوثيقة مُشتقٌّ من `docs/research/FXR_MEASUREMENTS.json` بمسارٍ مُسمّى؛ وبوّابةُ الانحراف `measure_fx_rail.py --check` تُنفَّذ في CI، فأيُّ تحريرٍ يدوي يُحمِّر البناء بدل أن يبقى فرقاً يقرؤه باحثٌ لاحق. ومطابقةُ الوثيقة↔JSON فُحصت على 13/13 قيمة.",
-    "security_boundary_ar": "صفرُ اعتماديةٍ جديدة (stdlib فقط)، وصفرُ استيرادٍ من `app/`، وصفرُ سرٍّ في الكود أو في الملفّات المودَعة، وصفرُ وصولٍ شبكي في الاختبارات أو في المولِّد (الأمر §7 يُعاد إنتاجه **بلا شبكة**). والأدلّة الشبكية مسجَّلة بروابطها وتواريخها في CSV مستقلّ، فلا يختلط المُدخَل بالمُخرَج.",
-    "rollback_ar": "التغييرُ إضافةٌ صافية على مستوى الملفّات (صفرُ ملفٍّ محذوف — `git diff --diff-filter=D` ⇒ فارغ)، فالارتدادُ = `git revert` للالتزام الواحد. ولا ارتدادَ مطلوباً على مستوى الأرقام: العقيدةُ **أُلحِقَ** بها ولم تُعَد كتابتُها، والرقمان المتعارضان (120 و360) كلاهما في المستودع، فإلغاءُ الدفعة لا يَمحو أيَّ قانونٍ سابق.",
+    "failure_behavior_ar": "لا مسارَ إنتاجيّاً: لا `app/` ولا `microservices/` يستورد الوحدةَ الجديدة. وأسوأُ فشلٍ ممكن محجوبٌ هكذا: (أ) رقمٌ في وثيقةٍ بيعية لا يطابق الكود — يمنعه اختبارُ المطابقة (إعادةُ الحساب تُقارَن بحقول البصمة والنتائج) و`--check`؛ (ب) رقمٌ مودَعٌ عُدِّل يدوياً — يُعيد `--check` بناءَه فيفشل البناء؛ (ج) خليةٌ مجهولة تُخمَّن بمتوسط — محجوبةٌ ببناء `None` مع سببٍ منطوق، وباختباراتٍ تُثبِت بقاءها `None`؛ (د) ادّعاءُ عبورٍ أو سعرٍ بلا دليل — محجوبٌ بأنّ `NetCapture` تُرجِع صفراً أو `None` قبل أيّ رقم، وبأنّ الرافعة المالية الوحيدة في الملفّ هي نسبةُ استقطاعٍ مُسندة لا مبلغ. (هـ) إدخالُ طريقٍ محظورٍ دستورياً (وسيطُ تسجيلٍ بكيانٍ أجنبيّ) — محجوبٌ بحالة `BLOCKED_DOCTRINE` مع قدرةٍ محظورةٍ واحدةٍ صريحة، وباختبارٍ يُثبِت أنّ البحث الشامل لا ينتقيها أبداً عند أيّ ميزانية.",
+    "observability_ar": "كلُّ رقمٍ في الوثيقة مُشتقٌّ من `docs/research/WOD_MEASUREMENTS.json` بمسارٍ مُسمّى، وأيّهما تحرَّر يدوياً يُحمِّر `--check` في CI بدل أن يبقى فرقاً يقرؤه باحثٌ لاحق. والملفّ يحمل بصمةَ مُدخلاتٍ (`17cf39bbd2ac…`) فأيّ تغييرٍ في جدول الأسواق أو الفئات يجعل البصمةَ القديمة مكشوفةً — أي أنّ «الرقم يُعرف من أين جاء» مفروضٌ بالبناء لا بالانضباط. وحقولُ الصفرِ الأربعة مكتوبةٌ في رأس الملفّ ليقرأها أيّ مراجعٍ قبل أن يقرأ النتائج.",
+    "security_boundary_ar": "صفرُ اعتماديةٍ جديدة (stdlib فقط، ومسموحُ الاستيراد مُعلَنٌ في `STDLIB_ONLY` ويُفحَص بـAST في الاختبارات)، وصفرُ استيرادٍ من `app/` أو `microservices/`، وصفرُ سرٍّ، وصفرُ وصولٍ شبكي في الكود أو الاختبارات أو المولِّد. والبياناتُ الحسّاسة الوحيدة المحتملة هي أسماءُ فئات مشترين وأسواق — وهي فئاتٌ مجرّدة لا أسماءُ جهات، ولا تحتوي أيّ بياناتِ شخصٍ أو عميل. والأسسُ الفقهية المودَعة في `EVIDENCE_CATALOG.json` نصوصٌ منشورةٌ بروابطها وتواريخها.",
+    "rollback_ar": "التغييرُ إضافةٌ صافية على مستوى الملفّات (صفرُ ملفٍّ محذوف — `git diff --diff-filter=D` ⇒ فارغ)، فالارتدادُ = `git revert` للالتزام الواحد. ولا نصَّ عقيدةٍ تعدَّل، ولا خطَّ عرضٍ أُضيف أو أُعيد ترتيبه، ولا يُوجد رقمٌ ماليٌّ يُلزِم أحداً: الرقمُ الوحيد «+42.86%» نسبةُ تعويضٍ مشتقّةٌ حتمياً من 30% ومطبوعةٌ في الكود وفي الوثيقة معاً.",
     "runtime_evidence_paths": [
-      "shared/research/fx_rail.py",
+      "shared/research/withholding_onboarding.py",
       "shared/research/__init__.py",
-      "scripts/research/measure_fx_rail.py",
-      "docs/research/FXR_MEASUREMENTS.json",
-      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FXR.md",
-      "docs/FOREIGN_CURRENCY_DOCTRINE.md",
-      ".memory/fx_doctrine_truth.md",
-      "studies/algeria-hard-currency/evidence_fxr.csv",
-      "tests/shared/test_fxr_fx_rail.py"
+      "scripts/research/measure_withholding_onboarding.py",
+      "docs/research/WOD_MEASUREMENTS.json",
+      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md",
+      "docs/commercial/WOD_BUYER_LAYER_OFFER.md",
+      ".memory/withholding_onboarding_truth.md",
+      "tests/shared/test_wod_withholding_onboarding.py"
     ]
   },
   "commercial_trace": {
     "offer_ids": [
-      "ai-red-teaming-multilingual"
+      "ai-red-teaming-multilingual",
+      "niche-rlhf-data",
+      "formal-verification-ai",
+      "eu-ai-act-compliance"
     ],
-    "customer_problem_ar": "المشكلةُ التي تقيسها هذه الدفعة ليست تقنيةً بل **قانونيةٌ في طرف الاستلام**: أيُّ عرضٍ في `OFFER_CATALOG.json` يفشل اليوم عند آخر خطوة — لا في التسليم. فاللوحةُ تفترض سعراً (750 → 2500 → 7500 $) وكياناً، وكلاهما غير مُسند: السقفُ القانوني لكيان ANAE **37.464,41–37.588,33 $/سنة**، أي إنّ هدف اللوحة 3.000 $/شهر يسعُه بهامش **3,9%** بينما 8.000 $/شهر **يكسره بـ2,562 مرة**. وأجلُ الترحيل **120 يوماً** لا 306/360، والفارق الرسمي/الموازي **76,84%** منشوراً (وحسابُنا للزوج نفسه 76,83%)، والخسارةُ ذهاباً وإياباً **0,56 $ لكلّ دولار** ⇒ مضاعفُ الدفع المباشر **1,786×**.",
-    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 أطروحة، ⛔ ليست نتيجةً ولا إيراداً): معرفةُ **أيّ كيانٍ يستلم وكم يسمح له القانون ومتى يُرحِّل** تُحوّل التسعيرَ من تخمينٍ إلى قيدٍ محسوب، فتُصحَّح أرقامُ اللوحة **قبل** أن يقرأها مشترٍ (حزمة ح-7). ⛔ ولا يُدّعى أنّ شيئاً من هذا إيراد: `model_runs_executed = 0` و`client_measurements = 0` مكتوبان في رأسِ ملفّ القياس، وكلُّ خطوط العروض السبعة `PROPOSED`، وصفرُ عقدٍ أو فاتورةٍ أو مقابلةِ مشترٍ مُسجَّلة. المسارُ الحرِج يبقى **ك-03**: بطاقة ANAE ← حسابٌ مهني ← إيصالُ **50 $** واحدٌ مستلمٌ قانوناً؛ وقبل إقفاله كلّ تسعيرٍ خيالي.",
-    "foreign_currency_path_ar": "السكةُ المُسندة (R1): ANAE ← CASNOS (جزافية 24.000 دج/سنة) ← حسابٌ مهني ← إيصالُ 50 $، بـIFU 0,5% من المحصَّل وحدٍّ أدنى 10.000 دج، وسقفٍ 5.000.000 دج للخدمات. الخطُّ المُسمّى هنا واحد: `ai-red-teaming-multilingual` — لأنّ قناةَ الطلب المُسنَدة (ح-5) هي **من الباطن لدى prime** في UK/EU على تقييم النماذج، حيث أُسند إشعارُ 037042-2025 (UK AISI) إلى Rethink Priorities UK بـ**£5.000.000** مُؤشَّراً **SME** — فالذخيرةُ العربية/الفرنسية والبراهينُ السلبية القابلةُ للنسخ هي ما يُباع، لا «تدقيقُ ادعاءات». ⛔ ولا خطَّ ثامناً: `check_agent_reliability_constitution.py` يحجب الثامن آلياً.",
-    "foundation_exception_ar": "**استثناءُ أساسيات مُعلَن:** هذا التغييرُ **سكّةُ استلام**، لا سمةٌ في عرضٍ واحد؛ فهو لا يُعدِّل تعريفَ أيٍّ من الخطوط السبعة ولا يُضيف ثامناً، ويُسعِّر المسارَ المشتركَ بينها كلّها. ولهذا سُمِّي خطٌّ واحدٌ فقط — الخطُّ الذي تُسعِّره قاعدةُ الكلفة بالعملة الصعبة مباشرةً عبر قناةٍ مُسنَدة — بدل تسمية السبعة بلا دليل. وقناةُ **Interreg NEXT MED** (253م€، الجزائر مؤهَّلة في 14 ولاية) **لم تُربط بأيّ عرضٍ عن قصد**: المنحةُ ليست بيعاً، وربطُها بخطٍّ تجاري كان يصنع أثراً تجارياً مُختلَقاً. وهي مع ذلك جوهرية: بوّابةُ القتل «ب» في اللوحة (≤1 «نعم» ⇒ اقتل المنتج) تُنتج **برهاناً سلبياً كاذباً** لأنّ المنح لا تُجيب عن «هل استخدمتم رقم لوحة صدارة في قرار شراء»."
+    "customer_problem_ar": "المشكلةُ الأولى في أيّ صفقةٍ مع مشترٍ أجنبيّ لا تُحَلّ بتقنية: نصفُ بطاقة العقد يحدّد «خدمةً» أو «ترخيصاً»، والفارقُ بين الوصفَين في نفس الدفعة يبلغ 30% في الولايات المتحدة (+42.86% تعويضاً مطلوباً)، و24%–33⅓% في فرنسا وإسبانيا على الخدمة نفسها، و0% مقابل 15.83% في ألمانيا. والعميلُ يرى الرقم على فاتورته لا في أدبياتنا، والحاجزُ الثاني حزمةُ التأهيل: مرجعٌ تجاريٌّ يُطلب في أول صفقة، وشهادةُ SOC 2، وتأمينُ مسؤوليةٍ مهنية — وكلُّها تبدو «شرطَ دخولٍ بالسوق» بينما المحسوبُ أنّ قدرتين أوراقيتين بجهد 5 وحدات تفتحان ثلاثَ فئات مشترين.",
+    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 أطروحة، ⛔ ليست نتيجةً ولا إيراداً): معرفةُ **ما يقتطعُه نظامُ المشتري وما يشترطُه قبل الدفع** تُعيد ترتيبَ الأولويات قبل أيّ إنفاق — مَن تُخاطَب أولاً (فئةٌ بعقدٍ قصير لا تطلب مرجعاً)، وبأيّ وصفِ عقد يُصاغ SOW، وما الأوراقُ الأرخصُ للفتح. ⛔ ولا يُدّعى أنّ شيئاً من هذا إيراد: صفرُ مقابلة، صفرُ عقد، صفرُ فاتورة، وصفرُ خطٍّ ثامن؛ والخطوطُ الأربعةُ المسمّاة كلُّها `PROPOSED` و`evidence_paths: []`.",
+    "foreign_currency_path_ar": "المسارُ الحرِج يبقى واحداً كما في FXR: بطاقة ANAE ← حسابٌ مهني ← إيصالٌ واحد مستلمٌ قانوناً. وما تُضيفه WOD أنّه قبل الوصول إليه يُعرَف أيُّ عميلٍ وأيُّ وصفِ عقدٍ يُصدر الفاتورةَ الأولى: فئةُ A0 (US) بخدمةٍ مُوصفةٍ وصفاً صحيحاً ⇒ صافٍ 100%، بينما الوصفُ الخاطئ (ترخيص) ⇒ 70% بلا معاهدة. ⛔ وطريقُ الوسيط (MoR) والكيانِ الأجنبيّ مستبعَدٌ بنصّ (المادة 126 الأمر 03-11 + المادة 08 النظام 07-01) لا بتحفّظ: `BLOCKED_DOCTRINE` في القياس.",
+    "foundation_exception_ar": "**استثناءُ أساسيات مُعلَن:** هذا التغييرُ لا يُضيف خطّاً تجارياً ولا يُعدّل تعريفَ واحدٍ من السبعة؛ هو **عدسةُ ترتيبٍ** تخدم الخطوط 1 · 2 · 5 · 6، ولذلك سُمِّيت أربعةُ خطوطٍ قائمة بدل اختراع ثامن. ولا سعرَ ولا نطاقَ سعرٍ في أيّ سطرٍ منه: الكلفةُ بوحدة جهدٍ (⚙️ = يوم) والسعرُ `PRICING HYPOTHESIS` حتى أول دفعة. والقيدُ الذي يفرضه على بقية الخطوط قيدٌ واحدٌ قابلٌ للفحص: أيُّ عرضٍ لا يُكتب فيه وصفُ العقد وأجلُ السداد ضمن {30 · 45 · 60 · 90} يوماً يبقى ناقصاً — والتسليمُ يُحاسَب عليه في `WOD_BUYER_LAYER_OFFER.md` §2."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفرُ حذفٍ على مستوى الملفّات: `git diff --diff-filter=D eb2d798…HEAD` ⇒ **فارغ**، و`git diff --numstat` يُظهر 11 ملفاً إضافةً صافية (0 سطرٍ محذوف). الحذفُ الوحيد على مستوى الأسطر (79) محصورٌ في ملفَّين من `studies/claim-scope-audit-001/v05/` وهو **إصلاحُ lint** لا محوُ قانون: (أ) `analyze_v05.py` (214+/71−) و`cap_decoder.py` (12+/8−) أُعيدت صياغةُ طباعاتهما لتلبية `ci_guardrails.py`؛ والبرهانُ أنّ `derived_v05.txt` و`derived_v05.csv` المودَعَين **لم يدخلا الـdiff إطلاقاً** — أي إنّ المُخرَج مطابقٌ بايت-ببايت قبل الإصلاح وبعده (مقارنةٌ ضدّ خطٍّ ذهبي في `/tmp/golden/`). (ب) **ولا سطرُ عقيدةٍ واحدٍ حُذف**: `docs/FOREIGN_CURRENCY_DOCTRINE.md` (+72/−0) و`.memory/fx_doctrine_truth.md` (+55/−0) إلحاقٌ محض، والرقمان المتعارضان 120 و360 **كلاهما باقٍ**، والحالة `OPEN` باقية (T40). (ج) القيدُ «50%» **دُحِض ولم يُمحَ**: بقي نصُّه في السجلّ وأُضيف داخله التصحيحُ المؤرَّخ، لأنّ المحوَ كان يَمحو الدليلَ المنهجيَّ الوحيد. (د) `per-file-ignores` في `pyproject.toml` **لم تُمسَّ** (تتقلّص ولا تتّسع)، وبدل توسيعها أُضيف `studies/*` إلى `allowed_in` لتعليمة `print` بتعليلٍ مؤرَّخ — لأنّ ملفات الدراسة نصوصٌ قابلةٌ للتشغيل لا وحدةَ مستوردة."
+    "policy_ar": "صفرُ حذفٍ على مستوى الملفّات: التغييرُ إضافةٌ صافية (ملفّان جديدان للبحث والعرض، ووحدةٌ ومولِّدٌ واختباراتٌ، وأربعةُ ملفّاتٍ أُضيف إليها سطرٌ أو سطور). ولا سطرُ عقيدةٍ حُذف، ولا خطُّ عرضٍ أُزيل، ولا رقمٌ سابقٌ مُحي: التصحيحُ يكون بالإضافة والتأريخ لا بالمحو (D-290 L10)."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 -m pytest tests/shared/test_fxr_fx_rail.py -q --noconftest -p no:cacheprovider  # PASS — 28 اختباراً",
-      "python3 -m pytest tests/shared/ tests/fitness/ -q --noconftest -p no:cacheprovider  # PASS — 367 اختباراً (28 FXR + 339 سابقاً): صفرُ انكسارٍ رجعي",
-      "python3 scripts/research/measure_fx_rail.py --check  # PASS — الملفُّ المودَع يُعاد بناؤه حرفياً (بوّابةُ الانحراف)",
-      "ruff check --no-cache .  # PASS — ruff==0.14.0 بقيد CI نفسه: أُصلحت 14 ملاحظةً سابقة بلا توسيع per-file-ignores",
-      "ruff format --check .  # PASS — 2181 ملفاً منسّقاً",
-      "mypy --config-file mypy.ini --follow-imports=silent shared/ app/integration/  # PASS — mypy==1.8.0: no issues in 66 files",
-      "python3 scripts/ci_guardrails.py · check_reference_backbone.py · check_agent_context.py · check_source_adoption_matrix.py · check_documentation_contract.py  # PASS ×5 — مع إخفاء .venv لأنّ scan_globs يشمل **/*.md وexclude_globs لا يستثنيها",
-      "python3 scripts/fitness/check_constitution_reality.py · check_memory_coherence.py · check_authority_links.py · check_gateway_contracts.py  # PASS ×4",
-      "diff <(python3 studies/claim-scope-audit-001/v05/analyze_v05.py) /tmp/golden/derived_v05.txt  # PASS — مطابقٌ بايت-ببايت: إصلاحُ الـlint لم يُغيّر سلوكاً",
-      "grep -rn fx_rail app/ microservices/  # PASS — صفرُ نتيجة: لا مسارَ إنتاجياً يستورد المكتبة البحثية"
+      "python3 scripts/research/measure_withholding_onboarding.py --check  # PASS — الملفُّ المودَع يُعاد بناؤه (18/22 خليةً · بصمة 17cf39bbd2ac…)",
+      "python3 -m pytest tests/shared/test_wod_withholding_onboarding.py -q --noconftest -p no:cacheprovider  # PASS — 54 اختباراً (pytest 9.1.1؛ CI على 3.12)",
+      "ruff check --no-cache shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py tests/shared/test_wod_withholding_onboarding.py  # PASS — ruff 0.14.0",
+      "ruff format --check shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py tests/shared/test_wod_withholding_onboarding.py  # PASS",
+      "mypy --config-file mypy.ini --follow-imports=silent shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py  # PASS — no issues in 2 source files",
+      "python3 scripts/fitness/check_documentation_contract.py  # PASS — 28 وثيقة حيّة، والروابط تُحلّ",
+      "python3 scripts/fitness/check_authority_links.py  # PASS — كل روابط ملفّات السلطة الخمسة تصل",
+      "python3 scripts/fitness/check_dual_track_alignment.py  # PASS",
+      "python3 scripts/fitness/check_revenue_doctrine.py  # PASS",
+      "python3 scripts/fitness/check_research_doctrines.py  # PASS",
+      "python3 scripts/fitness/check_agent_reliability_constitution.py  # PASS",
+      "python3 -m py_compile shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py tests/shared/test_wod_withholding_onboarding.py  # PASS"
     ],
-    "note_ar": "⚠️ **حدُّ التحقّق مُعلَن:** الصندوق يعمل على Python 3.11 فقط والمستودع يستعمل صيغة PEP 695 (3.12)، و`uv python install 3.12` يفشل (TLS handshake EOF إلى أصول GitHub) ولا صلاحية root لـapt. فـ`check_naas_verifier_boundary.py` يرفض الشهادة صراحةً على 3.11، و17 بوابةً أخرى تُبلّغ أخطاءَ تحليلٍ على ملفاتٍ **لم تُمسَّ في هذا التغيير**. ما شُغِّل هنا فعلاً هو البواباتُ stdlib-only والاختبارات؛ والحكمُ النهائي على سلسلة `guardrails` الكاملة يبقى لـCI على 3.12."
+    "environment_ar": "منفَّذٌ في بيئة التحقق ببايثون 3.11.2 (لا 3.12 متاحةٌ في العزل)، ولذلك شُغِّل pytest بـ`--noconftest` — وهو نفسُ ما سُجِّل في حزمة FXR. الوحدةُ والمولِّد والاختبارات تُحلَّل جميعاً على 3.11 (py_compile + AST) وتعمل؛ وCI يشغّلها على 3.12 مع conftest الكامل."
   },
   "curriculum": {
     "catalog_path": "docs/research/UNIVERSITY_CURRICULUM_CATALOG.json",
@@ -178,28 +188,38 @@
     "owner": "curriculum-governance"
   },
   "changed_paths": [
-    ".memory/fx_doctrine_truth.md",
-    "docs/FOREIGN_CURRENCY_DOCTRINE.md",
+    ".memory/withholding_onboarding_truth.md",
+    "docs/DOCUMENTATION_INDEX.md",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
+    "docs/changes/current_changed_paths.txt",
+    "docs/commercial/WOD_BUYER_LAYER_OFFER.md",
     "docs/research/EVIDENCE_CATALOG.json",
-    "docs/research/FXR_MEASUREMENTS.json",
-    "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FXR.md",
+    "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md",
     "docs/research/README_NEW_KNOWLEDGE.md",
-    "scripts/ci_guardrails.py",
-    "scripts/research/measure_fx_rail.py",
-    "scripts/research/refresh_acceptance_diff_snapshot.py",
+    "docs/research/WOD_MEASUREMENTS.json",
+    "scripts/research/measure_withholding_onboarding.py",
     "shared/research/__init__.py",
-    "shared/research/fx_rail.py",
-    "studies/algeria-hard-currency/evidence_fxr.csv",
-    "studies/claim-scope-audit-001/v05/analyze_v05.py",
-    "studies/claim-scope-audit-001/v05/cap_decoder.py",
-    "tests/shared/test_fxr_fx_rail.py"
+    "shared/research/withholding_onboarding.py",
+    "tests/shared/test_wod_withholding_onboarding.py"
   ],
   "git_change_snapshot": {
-    "base_ref": "origin/main",
-    "changed_paths_excluding_packet": [],
-    "content_sha256_excluding_packet": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "refreshed_on": "2026-09-13",
+    "base_ref": "4f3bdb24d4198e3f8db3526450001319595188d9",
+    "changed_paths_excluding_packet": [
+      ".memory/withholding_onboarding_truth.md",
+      "docs/DOCUMENTATION_INDEX.md",
+      "docs/changes/current_changed_paths.txt",
+      "docs/commercial/WOD_BUYER_LAYER_OFFER.md",
+      "docs/research/EVIDENCE_CATALOG.json",
+      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md",
+      "docs/research/README_NEW_KNOWLEDGE.md",
+      "docs/research/WOD_MEASUREMENTS.json",
+      "scripts/research/measure_withholding_onboarding.py",
+      "shared/research/__init__.py",
+      "shared/research/withholding_onboarding.py",
+      "tests/shared/test_wod_withholding_onboarding.py"
+    ],
+    "content_sha256_excluding_packet": "2032e129d0f399c54e8248d6949a001a5783ceb8b9ac346e597d670764a3f8f5",
+    "refreshed_on": "2026-09-14",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
 }

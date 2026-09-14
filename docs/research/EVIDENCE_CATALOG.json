@@ -11,7 +11,12 @@
       "url": "https://www.nist.gov/itl/ai-risk-management-framework",
       "scope_ar": "حوكمة ومخاطر وثقة الذكاء الاصطناعي عبر دورة الحياة.",
       "local_application_ar": "سجل المخاطر، التقييم، الأدلة، المراقبة، والحوكمة البشرية.",
-      "required_for": ["agent", "model", "data", "commercial_claim"],
+      "required_for": [
+        "agent",
+        "model",
+        "data",
+        "commercial_claim"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -21,7 +26,12 @@
       "url": "https://www.nist.gov/artificial-intelligence/ai-agent-standards-initiative",
       "scope_ar": "هوية الوكلاء وتفويضهم وبروتوكولاتهم وتقييم أمنهم وقابليتهم للتشغيل البيني.",
       "local_application_ar": "هوية الوكيل، أقل صلاحية، تفويض حساس، سجل أثر، وتقييمات أمنية.",
-      "required_for": ["agent", "tool", "protocol", "identity"],
+      "required_for": [
+        "agent",
+        "tool",
+        "protocol",
+        "identity"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -31,7 +41,12 @@
       "url": "https://csrc.nist.gov/projects/ssdf",
       "scope_ar": "الاستعداد، حماية البرمجيات، إنتاج برمجيات آمنة، والاستجابة للثغرات.",
       "local_application_ar": "حماية سلسلة التوريد، بوابات البناء، اختبار الأمن، وإدارة الثغرات.",
-      "required_for": ["code", "dependency", "release", "security"],
+      "required_for": [
+        "code",
+        "dependency",
+        "release",
+        "security"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -41,7 +56,13 @@
       "url": "https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html",
       "scope_ar": "حقن الأوامر، إساءة الأدوات، تصعيد الصلاحيات، تسميم الذاكرة، الاستقلالية الزائدة، وتسرب البيانات.",
       "local_application_ar": "قوائم أدوات محدودة، تفويض حساس، عزل، ميزانيات، سجلات، واختبارات عدائية.",
-      "required_for": ["agent", "tool", "memory", "browser", "external_action"],
+      "required_for": [
+        "agent",
+        "tool",
+        "memory",
+        "browser",
+        "external_action"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -51,7 +72,12 @@
       "url": "https://scorecard.dev/",
       "scope_ar": "مخاطر المصدر والبناء والتبعيات والاختبار والصيانة.",
       "local_application_ar": "مراجعة الكود، الفروع، التبعيات المثبتة، صلاحيات CI، SAST، والتوقيع.",
-      "required_for": ["dependency", "workflow", "release", "repository"],
+      "required_for": [
+        "dependency",
+        "workflow",
+        "release",
+        "repository"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -61,7 +87,12 @@
       "url": "https://slsa.dev/spec/v1.2/",
       "scope_ar": "أصل المصدر، نزاهة البناء، provenance، والـattestations.",
       "local_application_ar": "تتبع مصدر المصنوعات، إثبات البناء، والتحقق من الإصدارات.",
-      "required_for": ["build", "release", "artifact", "provenance"],
+      "required_for": [
+        "build",
+        "release",
+        "artifact",
+        "provenance"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -71,7 +102,11 @@
       "url": "https://dora.dev/",
       "scope_ar": "قدرات تحسين تسليم البرمجيات والتشغيل والنتائج التنظيمية.",
       "local_application_ar": "مؤشرات متوازنة للتسليم والموثوقية والجودة والتعلم والنتيجة التجارية.",
-      "required_for": ["delivery", "operations", "commercial"],
+      "required_for": [
+        "delivery",
+        "operations",
+        "commercial"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -81,7 +116,12 @@
       "url": "https://pdos.csail.mit.edu/6.824/",
       "scope_ar": "الأنظمة الموزعة، التكرار، الاتساق، التسامح مع الفشل، والتصميم التجريبي.",
       "local_application_ar": "عقود الخدمات، التخزين، الأحداث، الاختبارات الحية، وتحليل حالات الفشل.",
-      "required_for": ["distributed_system", "service", "storage", "event"],
+      "required_for": [
+        "distributed_system",
+        "service",
+        "storage",
+        "event"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -91,7 +131,11 @@
       "url": "https://cs231n.stanford.edu/",
       "scope_ar": "أسس التعلم العميق والتقييم والتعميم والتشخيص التجريبي.",
       "local_application_ar": "منهجية تجارب النماذج، فصل البيانات، قياس الأداء، وحدود الادعاء.",
-      "required_for": ["model", "evaluation", "data"],
+      "required_for": [
+        "model",
+        "evaluation",
+        "data"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -101,7 +145,13 @@
       "url": "https://web.stanford.edu/class/cs224n/",
       "scope_ar": "معالجة اللغة، التمثيلات، التقييم، والحدود العلمية للنماذج اللغوية.",
       "local_application_ar": "اختبارات لغوية عربية/فرنسية، تقييم الانحياز، وحدود التعميم.",
-      "required_for": ["language", "model", "evaluation", "arabic", "french"],
+      "required_for": [
+        "language",
+        "model",
+        "evaluation",
+        "arabic",
+        "french"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -111,7 +161,12 @@
       "url": "https://www.cs.cmu.edu/~15719/",
       "scope_ar": "الحوسبة السحابية، التوسع، النظم الموزعة، والكلفة التشغيلية.",
       "local_application_ar": "حساب الكلفة، تصميم النشر، المراقبة، العزل، واختبارات التحمل.",
-      "required_for": ["cloud", "scale", "cost", "operations"],
+      "required_for": [
+        "cloud",
+        "scale",
+        "cost",
+        "operations"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -121,7 +176,12 @@
       "url": "https://cs162.org/",
       "scope_ar": "الأنظمة، التزامن، الذاكرة، العمليات، والبرمجة منخفضة المستوى.",
       "local_application_ar": "فهم حدود التشغيل، العزل، الموارد، والتصحيح العميق.",
-      "required_for": ["runtime", "container", "concurrency", "performance"],
+      "required_for": [
+        "runtime",
+        "container",
+        "concurrency",
+        "performance"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -131,7 +191,14 @@
       "url": "https://csadvising.seas.harvard.edu/concentration/requirements/",
       "scope_ar": "البرمجة، الاستدلال الرسمي، الرياضيات المتقطعة، الحدود الحسابية، الخوارزميات، الأنظمة، الحوسبة والعالم، الذكاء الاصطناعي، والعلوم المتقدمة.",
       "local_application_ar": "مصفوفة متطلبات حسب نوع التغيير؛ لا ادعاء بتحميل كل المقررات بلا تحقق.",
-      "required_for": ["all_code", "curriculum", "architecture", "algorithm", "system", "model"],
+      "required_for": [
+        "all_code",
+        "curriculum",
+        "architecture",
+        "algorithm",
+        "system",
+        "model"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -141,7 +208,14 @@
       "url": "https://cs50.harvard.edu/x/",
       "scope_ar": "التفكير الحاسوبي، التجريد، الخوارزميات، هياكل البيانات، الصحة، التصميم، الأسلوب، الذاكرة، C، Python، SQL، والويب.",
       "local_application_ar": "بوابة الأساس لكل تغيير: correctness/design/style مع فحوص الذاكرة والبيانات والواجهات عند اللزوم.",
-      "required_for": ["all_code", "algorithm", "data", "api", "database", "frontend"],
+      "required_for": [
+        "all_code",
+        "algorithm",
+        "data",
+        "api",
+        "database",
+        "frontend"
+      ],
       "verified_on": "2026-08-21"
     },
     {
@@ -151,7 +225,12 @@
       "url": "https://www.bank-of-algeria.dz/les-exportateurs-disposent-100-recettes-leurs-exportations/",
       "scope_ar": "المادة 4: صاحبُ حساب العملة الصعبة — تاجراً كان أو غير تاجر — يستحقّ **كامل** حصيلة صادراته من **السلع والخدمات معاً**، ومنها مؤسساتُ الاقتصاد المعرفي الناشئة. يُدحض هذا قيدَ «50% من عوائد التصدير» المنسوبَ إلى trade.gov في لوحتنا (ك-03/S13).",
       "local_application_ar": "مصدرٌ أولي من بنك الجزائر نفسه (لا صحافة). مُطبَّق في `shared/research/fx_rail.py` (قاعدةُ الكلفة بالعملة الصعبة: شريحةُ 80% تدفع سلعاً **وخدمات** مستوردة، فالفرقُ كلفةٌ عند التحويل فقط) وفي `docs/research/FXR_MEASUREMENTS.json`، ومُسجَّل في `studies/algeria-hard-currency/evidence_fxr.csv` (S104·S106).",
-      "required_for": ["currency", "contract", "commercial_claim", "entity"],
+      "required_for": [
+        "currency",
+        "contract",
+        "commercial_claim",
+        "entity"
+      ],
       "verified_on": "2026-09-12"
     },
     {
@@ -161,7 +240,12 @@
       "url": "https://www.tsa-algerie.com/exportations-la-banque-dalgerie-durcit-les-regles-de-rapatriement-des-devises/",
       "scope_ar": "يُعدّل م61 من النظام 07-01 ويُلغي النظام 16-04: أجلُ الترحيل **120 يوماً** من تاريخ الشحن (سلع) أو الإنجاز (خدمات)، و180 يوماً كحدٍّ أقصى مطلق بشرط تأمين ائتمانٍ مُسبق، والترحيلُ واجبٌ **يومَ دفع العميل**. ⚠️ **حدٌّ مُعلَن:** النصُّ الأولي `joradp.dz/FTP/2026/058.pdf` أعاد محتوىً فارغاً **ولم يُقرأ** — السندُ هنا خمسةُ مصادر ثانوية متطابقة تنقل نصاً حرفيّاً (S107–S113).",
       "local_application_ar": "مُطبَّق في `shared/research/fx_rail.py` (`REPATRIATION_CAP_DAYS = 120`، و`REPATRIATION_LEGACY_CAP_DAYS = 360` يبقى موثَّقاً لا مُستخدَماً — صُمِّم للأضيق) وفي `docs/FOREIGN_CURRENCY_DOCTRINE.md` §06، ويُقيسه `scripts/research/measure_fx_rail.py --check`.",
-      "required_for": ["currency", "contract", "commercial_claim", "compliance"],
+      "required_for": [
+        "currency",
+        "contract",
+        "commercial_claim",
+        "compliance"
+      ],
       "verified_on": "2026-09-12"
     },
     {
@@ -171,8 +255,99 @@
       "url": "https://algerie-eco.com/2016-12-18/detention-davoirs-financiers-a-letranger-residents-algeriens/",
       "scope_ar": "يُحظَر على المقيمين تكوينُ أيّ أصلٍ في الخارج — عقاري أو منقول أو ائتماني أو **مصرفي** — من أموالٍ مصدرها نشاطٌ جزائري إلا بإذنٍ صريح من بنك الجزائر؛ العقوبةُ سجنُ 2–7 سنوات وغرامةٌ لا تقلّ عن ضعف المبلغ ومصادرة (الأمر 96-22 المعدَّل). ⚠️ م8 من النظام 07-01 مُتحقَّق من PDF البنك؛ التحليلُ القانوني المنشور ثانوي. **مرجعٌ مرفوضٌ ومُعلَن:** من يروّج LLC أمريكية + Mercury للمقيم الجزائري ويُسقِط م126 (S126).",
       "local_application_ar": "مُطبَّق في `shared/research/fx_rail.py`: السكةُ X1 مُرتَّبة أخيرة بـ`legally_sourced = False` ومعرَّضة جنائياً (`criminal_exposure`)، فلا تُقترح مساراً. ويُسجَّل الرفضُ المُعلَن في `studies/algeria-hard-currency/evidence_fxr.csv` (S114–S116·S126).",
-      "required_for": ["currency", "entity", "legal_risk", "commercial_claim"],
+      "required_for": [
+        "currency",
+        "entity",
+        "legal_risk",
+        "commercial_claim"
+      ],
       "verified_on": "2026-09-12"
+    },
+    {
+      "id": "us-irs-pub-515-service-sourcing",
+      "title_en": "IRS Publication 515 — withholding on services sourced by place of performance",
+      "kind": "official_guidance",
+      "url": "https://www.irs.gov/publications/p515",
+      "scope_ar": "الخدماتُ الشخصية تُنسب إلى مكان أدائها: عملٌ يُؤدّى كليّاً خارج الولايات المتحدة ⇒ دخلٌ أجنبيُّ المصدر، لا استقطاعَ الفصل الثالث؛ والإتاوةُ (FDAP) أمريكيةُ المصدر ⇒ 30% نظامياً بلا معاهدة.",
+      "local_application_ar": "خليةُ الوصفَين لسوق US في `docs/research/WOD_MEASUREMENTS.json` وفي `shared/research/withholding_onboarding.py` (0% خدمة · 30% إتاوة ⇒ تعويضٌ مطلوب +42.86%).",
+      "required_for": [
+        "currency",
+        "contract",
+        "commercial_claim"
+      ],
+      "verified_on": "2026-09-14"
+    },
+    {
+      "id": "algeria-dtt-rate-table",
+      "title_en": "Algeria tax-treaty withholding rate table (secondary cross-index)",
+      "kind": "secondary_cross_index",
+      "url": "https://taxsummaries.pwc.com/algeria/corporate/withholding-taxes",
+      "scope_ar": "جدولٌ ثانويٌّ لسقوف الاستقطاع في شبكة معاهدات الجزائر (≈28 معاهدة): إتاوات FR 5/10/12 · DE/UK/CH/UAE 10 · ES 7/14 · CA 15 · SA 7 · CN/TR 10 — و30% بلا معاهدة. ⚠️ الصفحةُ رجعت 404 عند الجلب المباشر مرّتين، والجدولُ مُستعادٌ من فهرس البحث ومن قوائمَ وطنيةٍ متقاطعة ⇒ **ثانويّ حتى يُقرأ النصُّ الأوّليّ** (بطاقة T65 في البحث). ولا تُستخدم سقوفه لتسعيرٍ نهائي.",
+      "local_application_ar": "`TreatyState` وأعمدةُ السقوف في `WOD_MEASUREMENTS.json`؛ وقاعدةُ الاقتباس: صفرٌ داخليّ لا يحتاج معاهدةً، وسقفٌ ثانويٌّ لا يُخمَّن به نصٌّ غائب.",
+      "required_for": [
+        "currency",
+        "contract",
+        "commercial_claim"
+      ],
+      "verified_on": "2026-09-14"
+    },
+    {
+      "id": "fr-cgi-182b-boifp-services",
+      "title_en": "France — CGI art. 182 B and BOFiP BOI-INT-DG-20-20-30 (services withholding)",
+      "kind": "official_regulation",
+      "url": "https://bofip.impots.gouv.fr/bofip/3044-PGP.html",
+      "scope_ar": "استقطاعٌ بنسبة 33⅓% (15% للأنشطة الفنية/الرياضية) على مقابل prestations خدماتٍ تُؤدّى أو تُستعمل في فرنسا لصالح غير مقيم؛ وحيث لا تُحدّد المعاهدةُ سقفاً يُطبَّق المعدّلُ الداخليّ. الرقمُ «en-dedans» يعني 25% من الأساس الإجماليّ.",
+      "local_application_ar": "خليةُ FR/خدمة تبقى `None` (`TREATY_COVERAGE_UNSTATED`) في `WOD_MEASUREMENTS.json` رغم معرفة المعدّل الداخليّ — لأنّ عبءَ المعاهدة على وصف «الخدمة» غير مُسند بعد (T65).",
+      "required_for": [
+        "currency",
+        "contract",
+        "legal_risk",
+        "commercial_claim"
+      ],
+      "verified_on": "2026-09-14"
+    },
+    {
+      "id": "de-50a-estg-royalty-wht",
+      "title_en": "Germany — §50a EStG withholding on royalties (not on genuine services)",
+      "kind": "official_regulation",
+      "url": "https://www.gesetze-im-internet.de/estg/__50a.html",
+      "scope_ar": "15% على الإتاوات (مع ضريبة التضامن 5.5% ⇒ 15.825% داخلياً) لغير المقيمين، وبرامجُ الحاسوب داخلٌ في النطاق؛ ومقابلُ الخدمات الحقيقية خارجُ نطاق المادة.",
+      "local_application_ar": "خليةُ DE/إتاوة في `WOD_MEASUREMENTS.json` (15.83% داخلياً ⇒ 10% بسقف المعاهدة) وسقوطُ `ROYALTY_WORSE` على ألمانيا.",
+      "required_for": [
+        "currency",
+        "contract",
+        "commercial_claim"
+      ],
+      "verified_on": "2026-09-14"
+    },
+    {
+      "id": "ca-regulation-105-nonresident-fees",
+      "title_en": "Canada — Regulation 105 withholding on fees for services rendered in Canada",
+      "kind": "official_regulation",
+      "url": "https://laws-lois.justice.gc.ca/eng/regulations/C.R.C.,_c._945/section-105.html",
+      "scope_ar": "15% استقطاعاً على الأتعاب والعمولات المدفوعة لغير المقيمين مقابل خدماتٍ تُؤدّى **على الأراضي الكندية**؛ وخدمةٌ تُؤدّى خارجها لا تقع في النطاق، مع مسارِ إعفاءٍ/تنازلٍ إداريّ.",
+      "local_application_ar": "خليةُ CA/خدمة (0% بشرط الأداء خارج كندا) في `WOD_MEASUREMENTS.json`، وشرطُ الأداء مكتوبٌ في `service_note_ar` لا في الحاشية.",
+      "required_for": [
+        "currency",
+        "contract",
+        "commercial_claim"
+      ],
+      "verified_on": "2026-09-14"
+    },
+    {
+      "id": "eu-gdpr-art-28-processor-terms",
+      "title_en": "EU GDPR Article 28 — mandatory processor terms before any transfer",
+      "kind": "official_regulation",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "scope_ar": "عقدُ معالجةٍ مكتوبٌ إلزاميٌّ بثمانية بنودٍ دنيا قبل أن يلمس المعالجُ البيانات، ويُقيَّد النقلُ خارج الاتحاد بضماناتٍ مناسبة (بنودٌ تعاقديةٌ معيارية · قرارُ كفاية) — أي أنّ الأوراقَ شرطٌ سابقٌ للفاتورة لا لاحقٌ لها.",
+      "local_application_ar": "جهدُ `dpa_sccs_pack` (3 وحدات) داخل خطة الفتح المثلى في `WOD_MEASUREMENTS.json` — القدرةُ التي تفتح UK وDE وCA مع `msa_nda_review`.",
+      "required_for": [
+        "currency",
+        "contract",
+        "compliance",
+        "commercial_claim"
+      ],
+      "verified_on": "2026-09-14"
     }
   ]
 }

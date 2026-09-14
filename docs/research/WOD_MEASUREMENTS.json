@@ -1,0 +1,1196 @@
+{
+  "$schema_version": "1",
+  "as_of": "2026-09-14",
+  "batch": "WOD-8",
+  "declared_zeros": {
+    "client_measurements": 0,
+    "invoices_issued": 0,
+    "model_runs_executed": 0,
+    "revenue_claim": "NONE"
+  },
+  "inputs": {
+    "archetypes": [
+      {
+        "id": "A0_us_startup_pilot",
+        "label_ar": "شركةٌ ناشئةٌ أمريكية تشتري دفعةً تجريبية صغيرة بعقدٍ قصير",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "supplier_tax_form",
+          "sanctions_screen",
+          "payment_rail"
+        ],
+        "market": "US",
+        "rail_note_ar": "تحويلٌ بنكيٌّ مباشر إلى الحساب بالعملة الصعبة — بلا وسيط."
+      },
+      {
+        "id": "A1_us_lab_eval",
+        "label_ar": "مختبرُ نماذج/فريقُ تقييمٍ أمريكي (حزمةُ تقييمٍ أو بيانات)",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "supplier_tax_form",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "security_review"
+        ],
+        "market": "US",
+        "rail_note_ar": ""
+      },
+      {
+        "id": "A2_us_enterprise_sec",
+        "label_ar": "شركةٌ أمريكية متوسطة/كبيرة: فريقُ أمنٍ ومشترياتٌ منظَّمة",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "supplier_tax_form",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "security_review",
+          "indemnity_insurance",
+          "commercial_reference"
+        ],
+        "market": "US",
+        "rail_note_ar": ""
+      },
+      {
+        "id": "A3_uk_private",
+        "label_ar": "جهةٌ بريطانية خاصة (حاكميةُ ذكاءٍ اصطناعي أو تقييم)",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "data_protection"
+        ],
+        "market": "UK",
+        "rail_note_ar": ""
+      },
+      {
+        "id": "A4_de_private",
+        "label_ar": "شركةٌ ألمانية خاصة (مشترياتٌ منظَّمة، مشهدٌ أوروبي)",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "data_protection"
+        ],
+        "market": "DE",
+        "rail_note_ar": ""
+      },
+      {
+        "id": "A5_fr_enterprise",
+        "label_ar": "شركةٌ فرنسية: خدمةٌ تُستعمل في فرنسا ⇒ خليةُ استقطاعٍ غيرِ مُسندة",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "data_protection",
+          "tax_clearance"
+        ],
+        "market": "FR",
+        "rail_note_ar": "الدافعُ الفرنسي هو من يقتطع عند المصدر — لا المصدِّر."
+      },
+      {
+        "id": "A6_eu_public_body",
+        "label_ar": "جهةٌ عامّةٌ أوروبية (مناقصة): أهليةٌ ومراجعُ وتأمين",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "public_eligibility",
+          "indemnity_insurance",
+          "commercial_reference"
+        ],
+        "market": "DE",
+        "rail_note_ar": ""
+      },
+      {
+        "id": "A7_ae_enterprise",
+        "label_ar": "مؤسسةٌ خليجية (الإمارات): وكيلٌ محلّيٌّ مسجَّل",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "local_agent"
+        ],
+        "market": "AE",
+        "rail_note_ar": ""
+      },
+      {
+        "id": "A8_us_soc2_enterprise",
+        "label_ar": "مؤسسةٌ أمريكية تشترط شهادة تدقيقٍ تقني (SOC 2)",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "supplier_tax_form",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "security_review",
+          "certification_soc2"
+        ],
+        "market": "US",
+        "rail_note_ar": ""
+      },
+      {
+        "id": "A9_marketplace_mor",
+        "label_ar": "منصّةُ وسيطِ تسجيل (MoR) تبيع بالنيابة",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "supplier_tax_form",
+          "payment_rail",
+          "psp_jurisdiction_support"
+        ],
+        "market": "US",
+        "rail_note_ar": "⚠️ القناةُ نفسها موضعُ الخرق: احتياطيُّ الوسيط المتدحرج يتجاوز سقف 120 يوماً (دفعة RSM) ⇒ العبورُ لا يُنتج نقداً سليماً."
+      },
+      {
+        "id": "A10_ca_private",
+        "label_ar": "جهةٌ كندية خاصة (تقييمٌ أو حاكمية)",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork"
+        ],
+        "market": "CA",
+        "rail_note_ar": ""
+      },
+      {
+        "id": "A11_nl_reference_buyer",
+        "label_ar": "جهةٌ هولندية تشترط مرجعاً تجارياً قبل التوقيع",
+        "mandatory": [
+          "legal_capacity",
+          "export_declaration",
+          "sanctions_screen",
+          "payment_rail",
+          "contract_paperwork",
+          "commercial_reference"
+        ],
+        "market": "NL",
+        "rail_note_ar": ""
+      }
+    ],
+    "as_of": "2026-09-14",
+    "budget_units": 8,
+    "catalog": {
+      "capabilities": {
+        "an_ae_registration": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 0,
+          "label_ar": "سجلُّ المقاول الذاتي (ANAE)",
+          "note_ar": "",
+          "satisfies": [
+            "legal_capacity"
+          ]
+        },
+        "bank_export_declaration": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 0,
+          "label_ar": "تصريحُ التصدير المُودَع (شرطُ الإعفاء من التوطين)",
+          "note_ar": "K2: لا عقدَ قبل إيداع التصريح — شرطٌ لا بندٌ اختياري.",
+          "satisfies": [
+            "export_declaration"
+          ]
+        },
+        "contract_capacity": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 0,
+          "label_ar": "قدرةُ التعاقد باسم ANAE",
+          "note_ar": "",
+          "satisfies": [
+            "legal_capacity"
+          ]
+        },
+        "crypto_settlement": {
+          "after_first_invoice": false,
+          "doctrine": "FORBIDDEN_K1",
+          "effort_units": 1,
+          "label_ar": "تسويةٌ بعملاتٍ مشفّرة",
+          "note_ar": "K1: تداولُ العملات المشفّرة محظورٌ في الجزائر ⇒ ⛔ لا يُستعمل ولو سهُل.",
+          "satisfies": [
+            "payment_rail"
+          ]
+        },
+        "dpa_sccs_pack": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 3,
+          "label_ar": "حزمةُ م28 + م46 (DPA وشروطٌ نموذجية)",
+          "note_ar": "م28(3) يفرض عقداً مكتوباً مع أيّ معالج، وم46 يفرض آليةً للتحويل خارج EEA.",
+          "satisfies": [
+            "data_protection"
+          ]
+        },
+        "form_filling": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 0,
+          "label_ar": "تعبئةُ النماذج (W-8BEN، فحصُ العقوبات، الإقرارات)",
+          "note_ar": "",
+          "satisfies": [
+            "supplier_tax_form",
+            "sanctions_screen"
+          ]
+        },
+        "insurance_pi_1m": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 8,
+          "label_ar": "تأمينُ مسؤوليةٍ مهنية",
+          "note_ar": "⛔ الكلفةُ المالية غيرُ منمذَجة: رفضُ اختراعِ رقمٍ ماليٍّ شرطٌ منهجيّ (L9).",
+          "satisfies": [
+            "indemnity_insurance"
+          ]
+        },
+        "local_agent_agreement": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 6,
+          "label_ar": "اتفاقُ وكيلٍ محلّي مسجَّل",
+          "note_ar": "",
+          "satisfies": [
+            "local_agent"
+          ]
+        },
+        "marketplace_mor_rail": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 1,
+          "label_ar": "قناةُ وسيطِ التسجيل (MoR)",
+          "note_ar": "⚠️ تُفتح سريعاً لكنّ احتياطيَّ الوسيط المتدحرج يضع الحصيلة في خرق النظام 26-02 (نتيجةُ دفعة RSM) ⇒ تُوسَم خرقاً في القياس.",
+          "satisfies": [
+            "payment_rail"
+          ]
+        },
+        "msa_nda_review": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 2,
+          "label_ar": "مراجعةُ MSA/NDA/SOW بنموذجٍ جاهز",
+          "note_ar": "",
+          "satisfies": [
+            "contract_paperwork"
+          ]
+        },
+        "psp_supported_entity": {
+          "after_first_invoice": false,
+          "doctrine": "FORBIDDEN_K5",
+          "effort_units": 6,
+          "label_ar": "كيانٌ في ولايةٍ تدعمها المنصّة",
+          "note_ar": "الوصفةُ الشائعة (LLC/Mercury/Stripe) محظورةٌ نصّاً على المقيم ⇒ الفئةُ تُترك.",
+          "satisfies": [
+            "psp_jurisdiction_support"
+          ]
+        },
+        "public_procurement_dossier": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 6,
+          "label_ar": "ملفُّ أهليةِ المناقصات (ESPD/إقرارات)",
+          "note_ar": "",
+          "satisfies": [
+            "public_eligibility"
+          ]
+        },
+        "reference_1": {
+          "after_first_invoice": true,
+          "doctrine": "ALLOWED",
+          "effort_units": 0,
+          "label_ar": "مرجعٌ تجاريّ أوّل",
+          "note_ar": "",
+          "satisfies": [
+            "commercial_reference"
+          ]
+        },
+        "reference_2": {
+          "after_first_invoice": true,
+          "doctrine": "ALLOWED",
+          "effort_units": 0,
+          "label_ar": "مرجعٌ تجاريّ ثانٍ",
+          "note_ar": "",
+          "satisfies": [
+            "commercial_reference"
+          ]
+        },
+        "security_questionnaire_pack": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 4,
+          "label_ar": "حزمةُ أجوبةِ استبيان أمنِ المورّد",
+          "note_ar": "",
+          "satisfies": [
+            "security_review"
+          ]
+        },
+        "soc2_type1": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 20,
+          "label_ar": "شهادةُ SOC 2 Type I",
+          "note_ar": "⛔ الكلفةُ المالية والجهةُ المدقّقة خارج النموذج: تُقاس الأيامُ لا الدولارات.",
+          "satisfies": [
+            "certification_soc2"
+          ]
+        },
+        "tax_residence_certificate": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 2,
+          "label_ar": "شهادةُ إقامةٍ جبائية جزائرية",
+          "note_ar": "⚠️ لا تُفتح بها فئةٌ اليوم: لا فئةَ تطلبها في هذه النسخة — تُسجَّل لأن سقفَ المعاهدة لا يُمنح بلا شهادة.",
+          "satisfies": [
+            "treaty_certificate"
+          ]
+        },
+        "tax_ruling_clearance": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 6,
+          "label_ar": "تحقّقٌ كتابيٌّ مسبقٌ من المعاملة الضريبية",
+          "note_ar": "يُطلَب حيث تكون الخلية `TREATY_COVERAGE_UNSTATED` — والتحقّق قبل الفاتورة أرخصُ من تصحيحها بعدها.",
+          "satisfies": [
+            "tax_clearance"
+          ]
+        },
+        "us_local_bank_account": {
+          "after_first_invoice": false,
+          "doctrine": "FORBIDDEN_K5",
+          "effort_units": 4,
+          "label_ar": "حسابٌ مصرفيٌّ أمريكي/كيانٌ أجنبي",
+          "note_ar": "K5: م126 الأمر 03-11 وم08 النظام 07-01 ⇒ ⛔ محظورٌ بنصّ، لا «مكلف».",
+          "satisfies": [
+            "payment_rail"
+          ]
+        },
+        "wire_details_swift": {
+          "after_first_invoice": false,
+          "doctrine": "ALLOWED",
+          "effort_units": 0,
+          "label_ar": "حسابٌ بالعملة الصعبة + SWIFT",
+          "note_ar": "",
+          "satisfies": [
+            "payment_rail"
+          ]
+        }
+      },
+      "requirements": {
+        "certification_soc2": {
+          "kind": "COMMERCIAL",
+          "label_ar": "شهادةُ تدقيقٍ تقني (SOC 2/ISO 27001)",
+          "note_ar": "",
+          "satisfied_by": [
+            "soc2_type1"
+          ]
+        },
+        "commercial_reference": {
+          "kind": "COMMERCIAL",
+          "label_ar": "مرجعٌ تجاريٌّ قابلٌ للتحقّق",
+          "note_ar": "",
+          "satisfied_by": [
+            "reference_1",
+            "reference_2"
+          ]
+        },
+        "contract_paperwork": {
+          "kind": "COMMERCIAL",
+          "label_ar": "مراجعةُ اتفاقية الخدمة/السرّية (MSA/NDA/SOW)",
+          "note_ar": "",
+          "satisfied_by": [
+            "msa_nda_review"
+          ]
+        },
+        "data_protection": {
+          "kind": "LEGAL",
+          "label_ar": "اتفاقيةُ معالجة بيانات (م28 GDPR) + شروطٌ نموذجيةٌ للتحويل (م46)",
+          "note_ar": "",
+          "satisfied_by": [
+            "dpa_sccs_pack"
+          ]
+        },
+        "export_declaration": {
+          "kind": "DOCTRINE",
+          "label_ar": "تصريحُ المشروع المصدَّر مودَعٌ لدى المصرف قبل التوقيع (K2)",
+          "note_ar": "",
+          "satisfied_by": [
+            "bank_export_declaration"
+          ]
+        },
+        "indemnity_insurance": {
+          "kind": "COMMERCIAL",
+          "label_ar": "تأمينُ مسؤوليةٍ مهنية (سقفٌ تعاقدي) — كلفتُه المالية خارج نطاق هذه الوحدة",
+          "note_ar": "",
+          "satisfied_by": [
+            "insurance_pi_1m"
+          ]
+        },
+        "legal_capacity": {
+          "kind": "LEGAL",
+          "label_ar": "أهليةُ التعاقد (شخصٌ طبيعي/ANAE)",
+          "note_ar": "",
+          "satisfied_by": [
+            "contract_capacity",
+            "an_ae_registration"
+          ]
+        },
+        "local_agent": {
+          "kind": "COMMERCIAL",
+          "label_ar": "وكيلٌ محلّيٌّ أو شريكٌ مسجَّلٌ عند المشتري الخليجي",
+          "note_ar": "",
+          "satisfied_by": [
+            "local_agent_agreement"
+          ]
+        },
+        "payment_rail": {
+          "kind": "COMMERCIAL",
+          "label_ar": "سكّةُ الدفع المقبولةُ عند المشتري",
+          "note_ar": "",
+          "satisfied_by": [
+            "wire_details_swift",
+            "marketplace_mor_rail",
+            "us_local_bank_account",
+            "crypto_settlement"
+          ]
+        },
+        "psp_jurisdiction_support": {
+          "kind": "COMMERCIAL",
+          "label_ar": "ولايةٌ تدعمها منصّةُ الدفع (شرطُ وسيطِ التسجيل)",
+          "note_ar": "",
+          "satisfied_by": [
+            "psp_supported_entity"
+          ]
+        },
+        "public_eligibility": {
+          "kind": "COMMERCIAL",
+          "label_ar": "ملفُّ أهليةٍ لمناقصةٍ عامّة (إقرارُ المشغّل الاقتصادي وتأهيلُه)",
+          "note_ar": "",
+          "satisfied_by": [
+            "public_procurement_dossier"
+          ]
+        },
+        "sanctions_screen": {
+          "kind": "LEGAL",
+          "label_ar": "فحصُ العقوبات وقوائمُ PEP",
+          "note_ar": "",
+          "satisfied_by": [
+            "form_filling"
+          ]
+        },
+        "security_review": {
+          "kind": "COMMERCIAL",
+          "label_ar": "استبيانُ أمنِ المورّد (بنودُ التشفير والوصول والحوادث)",
+          "note_ar": "",
+          "satisfied_by": [
+            "security_questionnaire_pack"
+          ]
+        },
+        "supplier_tax_form": {
+          "kind": "LEGAL",
+          "label_ar": "استمارةُ المورّد الضريبية (W-8BEN/W-8BEN-E وإقرارُ الإقامة)",
+          "note_ar": "",
+          "satisfied_by": [
+            "form_filling"
+          ]
+        },
+        "tax_clearance": {
+          "kind": "LEGAL",
+          "label_ar": "تحقّقٌ كتابيٌّ من معاملةٍ ضريبية قبل الفاتورة (حيث الخلية غيرُ مُسندة)",
+          "note_ar": "",
+          "satisfied_by": [
+            "tax_ruling_clearance"
+          ]
+        },
+        "treaty_certificate": {
+          "kind": "LEGAL",
+          "label_ar": "شهادةُ الإقامة الجبائية لمنح سقف المعاهدة",
+          "note_ar": "",
+          "satisfied_by": [
+            "tax_residence_certificate"
+          ]
+        }
+      }
+    },
+    "held_stack": [
+      "an_ae_registration",
+      "bank_export_declaration",
+      "contract_capacity",
+      "form_filling",
+      "wire_details_swift"
+    ],
+    "jurisdictions": [
+      {
+        "code": "US",
+        "label_ar": "الولايات المتحدة",
+        "royalty_domestic_bp": 3000,
+        "royalty_note_ar": "🟢 الإتاوةُ دخلٌ أمريكيُّ المصدر ⇒ 30% نظامياً وبلا معاهدة ⇒ لا تخفيف. الزيادةُ المطلوبةُ على الفاتورة لبلوغ الصافي نفسه: +42.86%.",
+        "royalty_treaty_alt_bp": null,
+        "royalty_treaty_bp": null,
+        "service_domestic_bp": 0,
+        "service_note_ar": "🟢 الخدمةُ المؤدّاة كليّاً خارج الولايات المتحدة دخلٌ أجنبيّ المصدر ⇒ لا استقطاعَ الفصل الثالث. القيد الحاسم: ألّا يُوصَف العملُ بأنّه إتاوةُ ترخيص.",
+        "service_treaty_bp": null,
+        "source_ar": "PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية) · IRS Publication 515 (2026) — Withholding of Tax on Nonresident Aliens: مبدأُ المصدر «مكان أداء الخدمة» + معدّل 30% النظامي على FDAP",
+        "treaty": "NONE",
+        "treaty_note_ar": "لا معاهدة جبائية بين الجزائر والولايات المتحدة: جدولُ الجزائر لا يُدرجها، وقائمةُ المعاهدات الأمريكية لا تضمّها (FATCA اتفاقيةُ تبادلِ معلوماتٍ لا معاهدةُ ضرائب)."
+      },
+      {
+        "code": "FR",
+        "label_ar": "فرنسا",
+        "royalty_domestic_bp": 3333,
+        "royalty_note_ar": "🟢 سقفُ المعاهدة: 5% لحقوق المؤلف الأدبي/الفني/العلمي، و10% في غيرها حين يكون المصدرُ فرنسا (م5 من الملاحظات). ⚙️ وشمولُ البرمجيات لعبارة «مؤلف علمي» مسألةُ وصفٍ تُحسم بكتابٍ لا بافتراض.",
+        "royalty_treaty_alt_bp": 1000,
+        "royalty_treaty_bp": 500,
+        "service_domestic_bp": 3333,
+        "service_note_ar": "🟢 م182 CGI: استقطاعُ 33⅓% على «prestations fournies ou utilisées en France». ⚠️ وخلافاً للولايات المتحدة، الخدمةُ **ليست** معفاةً داخلياً. وهل تُحصّنها المعاهدة؟ ⛔ غيرُ مُسند في هذه الوحدة ⇒ الخليةُ تُمنع ولا تُقتبس.",
+        "service_treaty_bp": null,
+        "source_ar": "PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية) · CGI art. 182 B + BOFiP BOI-INT-DG-20-20-30 (استقطاع 33⅓% على prestations)",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةُ 1974 المعدَّلة سارية (BOFiP BOI-INT-CVB-DZA). ملاحظةُ عدمِ تناظر: المعدّلاتُ تختلف بحسب اتجاه المصدر."
+      },
+      {
+        "code": "ES",
+        "label_ar": "إسبانيا",
+        "royalty_domestic_bp": 2400,
+        "royalty_note_ar": "⚠️ 24% داخلياً، وسقفُ المعاهدة 7%–14% بحسب الوصف والمالك المنتفع ⇒ نطاقٌ لا رقم.",
+        "royalty_treaty_alt_bp": 1400,
+        "royalty_treaty_bp": 700,
+        "service_domestic_bp": 2400,
+        "service_note_ar": "⚠️ سندٌ ثانويّ متقاطع: 24% على «الخدمات التقنية» لغير المقيمين. السعودُ الأوّليةُ لصياغة الخدمة غيرُ مقروءةٍ هنا ⇒ الخليةُ تُمنع.",
+        "service_treaty_bp": null,
+        "source_ar": "PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية) · IRNR art. 25 (24% على الإتاوات والخدمات التقنية) — سندٌ ثانويّ متقاطع",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةٌ سارية (جدول الجزائر: 7/14% على الإتاوات)"
+      },
+      {
+        "code": "IT",
+        "label_ar": "إيطاليا",
+        "royalty_domestic_bp": 3000,
+        "royalty_note_ar": "⚠️ 30% داخلياً (سندٌ ثانويّ) وسقفُ المعاهدة 5%–15% ⇒ نطاق.",
+        "royalty_treaty_alt_bp": 1500,
+        "royalty_treaty_bp": 500,
+        "service_domestic_bp": null,
+        "service_note_ar": "⛔ المعدّلُ الداخلي على مقابل الخدمات لم يُقرأ نصُّه ⇒ `None`: لا صفرٌ مفترضٌ ولا استنتاجٌ من معاملة الإتاوات.",
+        "service_treaty_bp": null,
+        "source_ar": "PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية)",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةٌ سارية (جدول الجزائر: 5/15% على الإتاوات)"
+      },
+      {
+        "code": "DE",
+        "label_ar": "ألمانيا",
+        "royalty_domestic_bp": 1583,
+        "royalty_note_ar": "🟢 15% + 5.5% تضامن = 15.825%؛ سقفُ المعاهدة مع الجزائر 10%.",
+        "royalty_treaty_alt_bp": null,
+        "royalty_treaty_bp": 1000,
+        "service_domestic_bp": 0,
+        "service_note_ar": "🟢 §50a EStG لا يشمل «مقابلَ خدمةٍ حقيقيّ»؛ رسومُ الإدارة والخدمات مُستبعَدةٌ من الاستقطاع ⇒ صفرٌ مُسند.",
+        "service_treaty_bp": null,
+        "source_ar": "PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية) · §50a EStG (15% + 5.5% تضامن = 15.825% على الإتاوات؛ الخدمات الحقيقية خارجُ نطاقه)",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةٌ سارية (جدول الجزائر: 10% على الإتاوات)"
+      },
+      {
+        "code": "UK",
+        "label_ar": "المملكة المتحدة",
+        "royalty_domestic_bp": 2000,
+        "royalty_note_ar": "⚠️ 20% داخلياً، وسقفُ المعاهدة 10% (جدول الجزائر).",
+        "royalty_treaty_alt_bp": null,
+        "royalty_treaty_bp": 1000,
+        "service_domestic_bp": 0,
+        "service_note_ar": "⚙️ لا نظامَ استقطاعٍ بريطانيٌّ على مقابل الخدمات المدفوع لغير مقيم (الاستقطاعُ يقع على الإتاوات والفوائد والمدفوعات السنوية) ⇒ صفرٌ بنيويّ يُطلب له تأكيدٌ كتابيّ قبل أول فاتورة.",
+        "service_treaty_bp": null,
+        "source_ar": "PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية) · UK: استقطاع 20% على الإتاوات — جدولٌ ثانويّ متقاطع؛ لا استقطاع بريطاني على مقابل الخدمات",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةٌ دخلت حيّز النفاذ في الجزائر 2017-01-01 (حاشية 6 في جدول الجزائر)"
+      },
+      {
+        "code": "NL",
+        "label_ar": "هولندا",
+        "royalty_domestic_bp": 0,
+        "royalty_note_ar": "🟢 لا استقطاعَ هولندياً على الإتاوات ⇒ الخليةُ قابلةٌ للاقتباس رغم تعارض حالة المعاهدة — وهذا هو حدُّ «الصفرِ لا يحتاج معاهدة».",
+        "royalty_treaty_alt_bp": null,
+        "royalty_treaty_bp": null,
+        "service_domestic_bp": 0,
+        "service_note_ar": "⚙️ لا استقطاعَ هولندياً على مقابل الخدمات ⇒ صفرٌ مستقلٌّ عن المعاهدة.",
+        "service_treaty_bp": null,
+        "source_ar": "هولندا: لا استقطاع على الإتاوات ولا على الخدمات — جدولٌ ثانويّ متقاطع · PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية)",
+        "treaty": "UNSTATED",
+        "treaty_note_ar": "⚠️ تعارضٌ مُعلن: جدولُ الجزائر (PwC) لا يُدرج هولندا، ومصادرُ عامّة تتحدث عن معاهدة ⇒ يُسجَّل التعارض ولا يُحسم بمتوسط. والأثرُ منعدمٌ هنا لأن المعدّلَ الداخلي صفر."
+      },
+      {
+        "code": "CH",
+        "label_ar": "سويسرا",
+        "royalty_domestic_bp": 0,
+        "royalty_note_ar": "🟢 لا استقطاعَ سويسرياً على الإتاوات (الاستقطاعُ على التوزيعات/الفوائد).",
+        "royalty_treaty_alt_bp": null,
+        "royalty_treaty_bp": null,
+        "service_domestic_bp": 0,
+        "service_note_ar": "⚙️ لا استقطاعَ سويسرياً على مقابل الخدمات.",
+        "service_treaty_bp": null,
+        "source_ar": "سويسرا: لا استقطاع على الإتاوات/الخدمات لغير المقيمين — جدولٌ ثانويّ متقاطع · PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية)",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةٌ سارية (جدول الجزائر: 10% على الإتاوات)"
+      },
+      {
+        "code": "CA",
+        "label_ar": "كندا",
+        "royalty_domestic_bp": 2500,
+        "royalty_note_ar": "🟢 25% داخلياً وسقفُ المعاهدة 15%.",
+        "royalty_treaty_alt_bp": null,
+        "royalty_treaty_bp": 1500,
+        "service_domestic_bp": 0,
+        "service_note_ar": "🟢 النظام 105 يقع على مقابل خدماتٍ **مؤدّاةٍ في كندا**؛ وما يُؤدّى خارجها لا استقطاعَ عليه ⇒ صفرٌ مُسند بشرطِ ألّا يُؤدّى العملُ على الأرض الكندية.",
+        "service_treaty_bp": null,
+        "source_ar": "PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية) · Canada Regulation 105: استقطاع 15% على مقابل خدماتٍ **مؤدّاةٍ في كندا** فقط؛ وما يُؤدّى خارجها لا استقطاعَ عليه",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةٌ سارية (جدول الجزائر: 15% على الإتاوات)"
+      },
+      {
+        "code": "AE",
+        "label_ar": "الإمارات",
+        "royalty_domestic_bp": 0,
+        "royalty_note_ar": "🟢 لا استقطاعَ إماراتياً على الإتاوات.",
+        "royalty_treaty_alt_bp": null,
+        "royalty_treaty_bp": null,
+        "service_domestic_bp": 0,
+        "service_note_ar": "⚙️ لا استقطاعَ إماراتياً على مقابل الخدمات.",
+        "service_treaty_bp": null,
+        "source_ar": "الإمارات: لا استقطاع على الإتاوات ولا على الخدمات · PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية)",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةٌ سارية (جدول الجزائر: 10% على الإتاوات — أي سقفُ ما تستقطعه الجزائر)"
+      },
+      {
+        "code": "SA",
+        "label_ar": "السعودية",
+        "royalty_domestic_bp": 1500,
+        "royalty_note_ar": "⚠️ 15% داخلياً وسقفُ المعاهدة 7%.",
+        "royalty_treaty_alt_bp": null,
+        "royalty_treaty_bp": 700,
+        "service_domestic_bp": null,
+        "service_note_ar": "⛔ المعدّلُ الداخلي على مقابل الخدمات لم يُقرأ نصُّه ⇒ `None` ولا افتراض.",
+        "service_treaty_bp": null,
+        "source_ar": "PwC Tax Summaries — Algeria: Corporate — Withholding taxes (جدول معدّلات المعاهدات، قراءة 2026-09-14) + BOFiP BOI-INT-CVB-DZA (نصّ المعاهدة الفرنسية) · السعودية: 15% على الإتاوات داخلياً؛ سقفُ المعاهدة 7% (جدول الجزائر)",
+        "treaty": "IN_FORCE",
+        "treaty_note_ar": "معاهدةٌ سارية (جدول الجزائر: 7% على الإتاوات)"
+      }
+    ],
+    "rail_conflicts": {
+      "A9_marketplace_mor": "احتياطيٌّ متدحرج 10%–25% بنافذة 90–180 يوماً يتجاوز سقف 120 يوماً في النظام 26-02 (نموذج RSM: 11 من 24 تركيبة في خرق) ⇒ ⛔ لا يُبنى رقمٌ على هذه القناة قبل حسم النافذة."
+    }
+  },
+  "inputs_fingerprint": "17cf39bbd2acc8aafea39afb83bdfb9a0d40267ff516793d9ee7e0ed4bfeba52",
+  "limits_ar": [
+    "⛔ ليست رأياً ضريبياً ولا قانونياً: المعاملةُ الفعلية تُحسم بكتابٍ من الجهة المختصة.",
+    "⛔ لا يُنمذَج أثرُ الاستقطاع على الإقرار الجزائري (الخصمُ/الائتمانُ الضريبي): خارج النطاق.",
+    "⛔ لا أرقامَ ماليةٍ مُخترعة: كلُّ كلفةٍ بوحدة جهدٍ معلنة (أيام ⚙️)، والحاصلُ نسبتٌ لا مبلغ.",
+    "⚠️ السوقُ الإسبانية والإيطالية والسعودية على جانب الخدمات غيرُ مُسندةٍ نصّاً ⇒ `None`.",
+    "⚠️ تعارضُ حالة هولندا التعاهدية مُعلنٌ لا محسوم؛ والخليةُ قابلةٌ للاقتباس لأن صفرَها داخليّ."
+  ],
+  "results": {
+    "archetypes": {
+      "entry_frontier": [
+        "A0_us_startup_pilot"
+      ],
+      "status_counts": {
+        "AFTER_FIRST_INVOICE": 3,
+        "BLOCKED_DOCTRINE": 1,
+        "PASS": 1,
+        "UNLOCKABLE": 7
+      },
+      "total": 12,
+      "verdicts": [
+        {
+          "archetype": "A0_us_startup_pilot",
+          "effort_units": 0,
+          "missing": [],
+          "reason_ar": "كلُّ المتطلَّبات الإلزامية مُرضاةٌ بالخطّ الأساسيّ ⇒ فئةُ الفاتورة الأولى.",
+          "status": "PASS"
+        },
+        {
+          "archetype": "A10_ca_private",
+          "effort_units": 2,
+          "missing": [
+            "contract_paperwork"
+          ],
+          "reason_ar": "تُفتَح بجهدٍ مُعلن ≈ 2 وحدة: contract_paperwork",
+          "status": "UNLOCKABLE"
+        },
+        {
+          "archetype": "A11_nl_reference_buyer",
+          "effort_units": 2,
+          "missing": [
+            "commercial_reference",
+            "contract_paperwork"
+          ],
+          "reason_ar": "الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 2 وحدة: commercial_reference",
+          "status": "AFTER_FIRST_INVOICE"
+        },
+        {
+          "archetype": "A1_us_lab_eval",
+          "effort_units": 6,
+          "missing": [
+            "contract_paperwork",
+            "security_review"
+          ],
+          "reason_ar": "تُفتَح بجهدٍ مُعلن ≈ 6 وحدة: contract_paperwork, security_review",
+          "status": "UNLOCKABLE"
+        },
+        {
+          "archetype": "A2_us_enterprise_sec",
+          "effort_units": 14,
+          "missing": [
+            "commercial_reference",
+            "contract_paperwork",
+            "indemnity_insurance",
+            "security_review"
+          ],
+          "reason_ar": "الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 14 وحدة: commercial_reference",
+          "status": "AFTER_FIRST_INVOICE"
+        },
+        {
+          "archetype": "A3_uk_private",
+          "effort_units": 5,
+          "missing": [
+            "contract_paperwork",
+            "data_protection"
+          ],
+          "reason_ar": "تُفتَح بجهدٍ مُعلن ≈ 5 وحدة: contract_paperwork, data_protection",
+          "status": "UNLOCKABLE"
+        },
+        {
+          "archetype": "A4_de_private",
+          "effort_units": 5,
+          "missing": [
+            "contract_paperwork",
+            "data_protection"
+          ],
+          "reason_ar": "تُفتَح بجهدٍ مُعلن ≈ 5 وحدة: contract_paperwork, data_protection",
+          "status": "UNLOCKABLE"
+        },
+        {
+          "archetype": "A5_fr_enterprise",
+          "effort_units": 11,
+          "missing": [
+            "contract_paperwork",
+            "data_protection",
+            "tax_clearance"
+          ],
+          "reason_ar": "تُفتَح بجهدٍ مُعلن ≈ 11 وحدة: contract_paperwork, data_protection, tax_clearance",
+          "status": "UNLOCKABLE"
+        },
+        {
+          "archetype": "A6_eu_public_body",
+          "effort_units": 16,
+          "missing": [
+            "commercial_reference",
+            "contract_paperwork",
+            "indemnity_insurance",
+            "public_eligibility"
+          ],
+          "reason_ar": "الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 16 وحدة: commercial_reference",
+          "status": "AFTER_FIRST_INVOICE"
+        },
+        {
+          "archetype": "A7_ae_enterprise",
+          "effort_units": 8,
+          "missing": [
+            "contract_paperwork",
+            "local_agent"
+          ],
+          "reason_ar": "تُفتَح بجهدٍ مُعلن ≈ 8 وحدة: contract_paperwork, local_agent",
+          "status": "UNLOCKABLE"
+        },
+        {
+          "archetype": "A8_us_soc2_enterprise",
+          "effort_units": 26,
+          "missing": [
+            "certification_soc2",
+            "contract_paperwork",
+            "security_review"
+          ],
+          "reason_ar": "تُفتَح بجهدٍ مُعلن ≈ 26 وحدة: certification_soc2, contract_paperwork, security_review",
+          "status": "UNLOCKABLE"
+        },
+        {
+          "archetype": "A9_marketplace_mor",
+          "effort_units": null,
+          "missing": [
+            "psp_jurisdiction_support"
+          ],
+          "reason_ar": "الفئةُ تُرضي متطلَّباتها بوسائل محظورةٍ نصّاً (K1/K5) ⇒ ⛔ تُترك ولا يُنفق عليها وقت: psp_jurisdiction_support",
+          "status": "BLOCKED_DOCTRINE"
+        }
+      ]
+    },
+    "captures": [
+      {
+        "archetype": "A0_us_startup_pilot",
+        "characterization": "SERVICE",
+        "market": "US",
+        "net_capture": 1.0,
+        "net_if_passable": 1.0,
+        "passable": true,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "US: لا استقطاع داخلي على SERVICE ⇒ صفرٌ مُسند، والمعاهدةُ غيرُ حاملة هنا. 🟢 الخدمةُ المؤدّاة كليّاً خارج الولايات المتحدة دخلٌ أجنبيّ المصدر ⇒ لا استقطاعَ الفصل الثالث. القيد الحاسم: ألّا يُوصَف العملُ بأنّه إتاوةُ ترخيص."
+      },
+      {
+        "archetype": "A0_us_startup_pilot",
+        "characterization": "ROYALTY",
+        "market": "US",
+        "net_capture": 0.7,
+        "net_if_passable": 0.7,
+        "passable": true,
+        "rate_bp_hi": 3000,
+        "rate_bp_lo": 3000,
+        "reason_ar": "US: لا معاهدة ⇒ المعدّل الداخلي 30.00% هو الحاكم، ولا تخفيفَ بلا سند. 🟢 الإتاوةُ دخلٌ أمريكيُّ المصدر ⇒ 30% نظامياً وبلا معاهدة ⇒ لا تخفيف. الزيادةُ المطلوبةُ على الفاتورة لبلوغ الصافي نفسه: +42.86%."
+      },
+      {
+        "archetype": "A10_ca_private",
+        "characterization": "SERVICE",
+        "market": "CA",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 2 وحدة: contract_paperwork"
+      },
+      {
+        "archetype": "A10_ca_private",
+        "characterization": "ROYALTY",
+        "market": "CA",
+        "net_capture": 0.0,
+        "net_if_passable": 0.85,
+        "passable": false,
+        "rate_bp_hi": 1500,
+        "rate_bp_lo": 1500,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 2 وحدة: contract_paperwork"
+      },
+      {
+        "archetype": "A11_nl_reference_buyer",
+        "characterization": "SERVICE",
+        "market": "NL",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (AFTER_FIRST_INVOICE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 2 وحدة: commercial_reference"
+      },
+      {
+        "archetype": "A11_nl_reference_buyer",
+        "characterization": "ROYALTY",
+        "market": "NL",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (AFTER_FIRST_INVOICE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 2 وحدة: commercial_reference"
+      },
+      {
+        "archetype": "A1_us_lab_eval",
+        "characterization": "SERVICE",
+        "market": "US",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 6 وحدة: contract_paperwork, security_review"
+      },
+      {
+        "archetype": "A1_us_lab_eval",
+        "characterization": "ROYALTY",
+        "market": "US",
+        "net_capture": 0.0,
+        "net_if_passable": 0.7,
+        "passable": false,
+        "rate_bp_hi": 3000,
+        "rate_bp_lo": 3000,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 6 وحدة: contract_paperwork, security_review"
+      },
+      {
+        "archetype": "A2_us_enterprise_sec",
+        "characterization": "SERVICE",
+        "market": "US",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (AFTER_FIRST_INVOICE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 14 وحدة: commercial_reference"
+      },
+      {
+        "archetype": "A2_us_enterprise_sec",
+        "characterization": "ROYALTY",
+        "market": "US",
+        "net_capture": 0.0,
+        "net_if_passable": 0.7,
+        "passable": false,
+        "rate_bp_hi": 3000,
+        "rate_bp_lo": 3000,
+        "reason_ar": "غيرُ عابرةٍ الآن (AFTER_FIRST_INVOICE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 14 وحدة: commercial_reference"
+      },
+      {
+        "archetype": "A3_uk_private",
+        "characterization": "SERVICE",
+        "market": "UK",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 5 وحدة: contract_paperwork, data_protection"
+      },
+      {
+        "archetype": "A3_uk_private",
+        "characterization": "ROYALTY",
+        "market": "UK",
+        "net_capture": 0.0,
+        "net_if_passable": 0.9,
+        "passable": false,
+        "rate_bp_hi": 1000,
+        "rate_bp_lo": 1000,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 5 وحدة: contract_paperwork, data_protection"
+      },
+      {
+        "archetype": "A4_de_private",
+        "characterization": "SERVICE",
+        "market": "DE",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 5 وحدة: contract_paperwork, data_protection"
+      },
+      {
+        "archetype": "A4_de_private",
+        "characterization": "ROYALTY",
+        "market": "DE",
+        "net_capture": 0.0,
+        "net_if_passable": 0.9,
+        "passable": false,
+        "rate_bp_hi": 1000,
+        "rate_bp_lo": 1000,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 5 وحدة: contract_paperwork, data_protection"
+      },
+      {
+        "archetype": "A5_fr_enterprise",
+        "characterization": "SERVICE",
+        "market": "FR",
+        "net_capture": 0.0,
+        "net_if_passable": null,
+        "passable": false,
+        "rate_bp_hi": null,
+        "rate_bp_lo": null,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 11 وحدة: contract_paperwork, data_protection, tax_clearance"
+      },
+      {
+        "archetype": "A5_fr_enterprise",
+        "characterization": "ROYALTY",
+        "market": "FR",
+        "net_capture": 0.0,
+        "net_if_passable": 0.9,
+        "passable": false,
+        "rate_bp_hi": 1000,
+        "rate_bp_lo": 500,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 11 وحدة: contract_paperwork, data_protection, tax_clearance"
+      },
+      {
+        "archetype": "A6_eu_public_body",
+        "characterization": "SERVICE",
+        "market": "DE",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (AFTER_FIRST_INVOICE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 16 وحدة: commercial_reference"
+      },
+      {
+        "archetype": "A6_eu_public_body",
+        "characterization": "ROYALTY",
+        "market": "DE",
+        "net_capture": 0.0,
+        "net_if_passable": 0.9,
+        "passable": false,
+        "rate_bp_hi": 1000,
+        "rate_bp_lo": 1000,
+        "reason_ar": "غيرُ عابرةٍ الآن (AFTER_FIRST_INVOICE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. الفئةُ تطلب مرجعاً تجارياً، والمرجعُ لا يُملَك إلّا بعد أول فاتورة ⇒ ⛔ لا تصلح للفاتورة الأولى. وما تبقّى قابلاً للفتح الآن يكلّف ≈ 16 وحدة: commercial_reference"
+      },
+      {
+        "archetype": "A7_ae_enterprise",
+        "characterization": "SERVICE",
+        "market": "AE",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 8 وحدة: contract_paperwork, local_agent"
+      },
+      {
+        "archetype": "A7_ae_enterprise",
+        "characterization": "ROYALTY",
+        "market": "AE",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 8 وحدة: contract_paperwork, local_agent"
+      },
+      {
+        "archetype": "A8_us_soc2_enterprise",
+        "characterization": "SERVICE",
+        "market": "US",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 26 وحدة: certification_soc2, contract_paperwork, security_review"
+      },
+      {
+        "archetype": "A8_us_soc2_enterprise",
+        "characterization": "ROYALTY",
+        "market": "US",
+        "net_capture": 0.0,
+        "net_if_passable": 0.7,
+        "passable": false,
+        "rate_bp_hi": 3000,
+        "rate_bp_lo": 3000,
+        "reason_ar": "غيرُ عابرةٍ الآن (UNLOCKABLE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. تُفتَح بجهدٍ مُعلن ≈ 26 وحدة: certification_soc2, contract_paperwork, security_review"
+      },
+      {
+        "archetype": "A9_marketplace_mor",
+        "characterization": "SERVICE",
+        "market": "US",
+        "net_capture": 0.0,
+        "net_if_passable": 1.0,
+        "passable": false,
+        "rate_bp_hi": 0,
+        "rate_bp_lo": 0,
+        "reason_ar": "غيرُ عابرةٍ الآن (BLOCKED_DOCTRINE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. الفئةُ تُرضي متطلَّباتها بوسائل محظورةٍ نصّاً (K1/K5) ⇒ ⛔ تُترك ولا يُنفق عليها وقت: psp_jurisdiction_support"
+      },
+      {
+        "archetype": "A9_marketplace_mor",
+        "characterization": "ROYALTY",
+        "market": "US",
+        "net_capture": 0.0,
+        "net_if_passable": 0.7,
+        "passable": false,
+        "rate_bp_hi": 3000,
+        "rate_bp_lo": 3000,
+        "reason_ar": "غيرُ عابرةٍ الآن (BLOCKED_DOCTRINE) ⇒ الالتقاطُ صفرٌ بالعبور لا بالسعر. الفئةُ تُرضي متطلَّباتها بوسائل محظورةٍ نصّاً (K1/K5) ⇒ ⛔ تُترك ولا يُنفق عليها وقت: psp_jurisdiction_support"
+      }
+    ],
+    "cells": {
+      "basis_counts": {
+        "DOMESTIC_NO_TREATY": 1,
+        "DOMESTIC_UNSTATED": 2,
+        "DOMESTIC_ZERO": 10,
+        "TREATY_CAP": 7,
+        "TREATY_COVERAGE_UNSTATED": 2
+      },
+      "blocked": 4,
+      "quotable": 18,
+      "total": 22
+    },
+    "inversions": {
+      "domestic": {
+        "AE": "BOTH_ZERO",
+        "CA": "ROYALTY_WORSE",
+        "CH": "BOTH_ZERO",
+        "DE": "ROYALTY_WORSE",
+        "ES": "BOTH_EXPOSED",
+        "FR": "BOTH_EXPOSED",
+        "IT": "UNSTATED",
+        "NL": "BOTH_ZERO",
+        "SA": "UNSTATED",
+        "UK": "ROYALTY_WORSE",
+        "US": "ROYALTY_WORSE"
+      },
+      "effective": {
+        "AE": "BOTH_ZERO",
+        "CA": "ROYALTY_WORSE",
+        "CH": "BOTH_ZERO",
+        "DE": "ROYALTY_WORSE",
+        "ES": "UNSTATED",
+        "FR": "UNSTATED",
+        "IT": "UNSTATED",
+        "NL": "BOTH_ZERO",
+        "SA": "UNSTATED",
+        "UK": "ROYALTY_WORSE",
+        "US": "ROYALTY_WORSE"
+      }
+    },
+    "kill_switches": [],
+    "ladder": {
+      "first_round": [
+        "A0_us_startup_pilot",
+        "A10_ca_private",
+        "A3_uk_private",
+        "A4_de_private"
+      ],
+      "newly_opened_by_reference": [
+        "A11_nl_reference_buyer"
+      ],
+      "second_round_pass": [
+        "A0_us_startup_pilot",
+        "A10_ca_private",
+        "A11_nl_reference_buyer",
+        "A3_uk_private",
+        "A4_de_private"
+      ],
+      "stack": [
+        "an_ae_registration",
+        "bank_export_declaration",
+        "contract_capacity",
+        "dpa_sccs_pack",
+        "form_filling",
+        "msa_nda_review",
+        "wire_details_swift"
+      ]
+    },
+    "plan": {
+      "budget_units": 8,
+      "chosen": [
+        "dpa_sccs_pack",
+        "msa_nda_review"
+      ],
+      "effort_units": 5,
+      "opened": [
+        "A10_ca_private",
+        "A3_uk_private",
+        "A4_de_private"
+      ],
+      "passed_after": [
+        "A0_us_startup_pilot",
+        "A10_ca_private",
+        "A3_uk_private",
+        "A4_de_private"
+      ],
+      "reason_ar": "حزمةٌ بجهد 5 تفتح 3 فئةً: A10_ca_private, A3_uk_private, A4_de_private"
+    }
+  }
+}
