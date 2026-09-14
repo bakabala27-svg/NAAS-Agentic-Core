@@ -96,7 +96,7 @@ wrapt==1.17.3
 Deprecated==1.2.18
 filelock==3.20.3
 platformdirs==4.11.3
-typing_extensions==4.15.0
+typing_extensions==4.16.0
 # sentence-transformers removed 2026-08-01 (D-205): nothing under `app/` or
 # `shared/` imports it — the monolith delegates reranking to research-agent over
 # HTTP (app/integration/gateways/research.py:66). It survives in the root
