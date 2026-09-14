@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حاسبة فجوة الاسترجاع — النظام 26-02</title>
+<style>
+:root{--ink:#14161a;--mut:#5f6672;--line:#e3e6ea;--bg:#fbfcfd;--safe:#0f7b3d;--tight:#8a6100;--frag:#a8521a;--brk:#b3261e;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;padding:24px 16px;background:var(--bg);color:var(--ink);
+ font-family:"Noto Naskh Arabic","Amiri","Segoe UI",Tahoma,sans-serif;line-height:1.75;font-size:16px}
+.wrap{max-width:960px;margin:0 auto}
+h1{font-size:1.6rem;margin:0 0 6px;line-height:1.4}
+.sub{color:var(--mut);margin:0 0 20px;font-size:.95rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:16px 0}
+h2{font-size:1.15rem;margin:0 0 12px}
+label{display:block;font-size:.85rem;color:var(--mut);margin-bottom:5px}
+select,input{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;
+ font:inherit;font-size:.95rem;background:#fff;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.out{margin-top:18px;padding:16px;border-radius:10px;border:1px solid var(--line);background:#f7f9fb}
+.big{font-size:2rem;font-weight:700;unicode-bidi:isolate;display:block;line-height:1.2}
+.tag{display:inline-block;padding:3px 11px;border-radius:999px;color:#fff;font-size:.8rem;font-weight:700}
+.t-safe{background:var(--safe)}.t-tight{background:var(--tight)}.t-frag{background:var(--frag)}.t-brk{background:var(--brk)}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:10px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:right}
+th{background:#f2f4f7;font-weight:600}
+td.n{unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+.bar{height:9px;border-radius:5px;background:#e8ebef;overflow:hidden;margin-top:10px}
+.bar>i{display:block;height:100%}
+.note{font-size:.85rem;color:var(--mut)}
+ol,ul{padding-right:20px}
+.brk{color:var(--brk);font-weight:700}
+@media print{body{background:#fff;padding:0}.card{break-inside:avoid}}
+@media (prefers-reduced-motion:no-preference){.bar>i{transition:width .3s ease}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>حاسبة فجوة الاسترجاع (RSM v0.1)</h1>
+<p class="sub">النظام رقم 26-02 المؤرخ في 23 جويلية 2026 (ج.ر. عدد 58 بتاريخ 12 أوت 2026) — مهلة 120 يومًا لاسترجاع حصيلة التصدير خارج المحروقات، قابلة للتمديد إلى 180 يومًا بشرط تأمين ائتمان تصدير مسبق. هذه الأداة تقيس ما إذا كانت قناة التحصيل التي تستعملها قادرة أصلًا على احترام المهلة.</p>
+
+<div class="card">
+<h2>١. احسب فجوتك</h2>
+<div class="grid">
+ <div><label>قناة التحصيل</label><select id="rail"></select></div>
+ <div><label>الاحتياطي المتدحرج للمنصة</label><select id="res"></select></div>
+ <div><label>إيراد سنوي بالدولار</label><input id="arr" type="number" value="120000" min="0" step="1000"></div>
+</div>
+<div class="out" id="out" aria-live="polite"></div>
+</div>
+
+<div class="card">
+<h2>٢. مصفوفة القنوات الكاملة</h2>
+<p class="note">الفجوة = 120 − عدد الأيام حتى قيد المبلغ في الحساب بالعملة الصعبة. القيمة السالبة تعني خرقًا بنيويًا لا علاقة له باجتهاد المصدِّر.</p>
+<div id="matrix"></div>
+</div>
+
+<div class="card">
+<h2>٣. النتيجة الجوهرية</h2>
+<p>الاحتياطي المتدحرج (rolling reserve) الذي تفرضه منصات الدفع هو <span class="brk">خرق تنظيمي غير قابل للتأمين وغير قابل للتمديد</span>:</p>
+<ul>
+<li>نافذة 180 يومًا تتجاوز سقف 120 يومًا بـ <b>79 يومًا</b> على الأقل حتى في أسرع قناة.</li>
+<li>التمديد إلى 180 يومًا مشروط بتأمين ائتمان تصدير، وهذا التأمين يغطي <b>تخلّف العميل عن الدفع</b> — والعميل هنا دفع فعلًا. الاحتجاز من طرف الوسيط ليس واقعة مؤمَّنة.</li>
+<li>النتيجة: الشريحة المحتجزة تقع خارج الحماية القانونية بالكامل، مهما فعل المصدِّر.</li>
+</ul>
+<p class="note">ملاحظة مضادة للحدس ثبتت بالحساب: غموض تحديد «تاريخ إنجاز الخدمة» في الاشتراكات السنوية المدفوعة مسبقًا <b>ليس</b> القيد المُلزِم — القراءتان تعطيان فجوة موجبة (88 يومًا و453 يومًا). القيد المُلزِم الوحيد هو الاحتجاز لدى الوسيط.</p>
+</div>
+
+<div class="card">
+<h2>٤. قواعد القرار</h2>
+<ol>
+<li>قبل توقيع أي عقد مع منصة دفع، اطلب كتابيًا: «هل يوجد احتياطي متدحرج؟ ما نسبته؟ ما نافذته بالأيام؟» — ارفض أي نافذة تتجاوز 90 يومًا.</li>
+<li>مهلة net-90 مع أي احتياطي = خرق. اسقف شروط الدفع عند net-60.</li>
+<li>وثّق تاريخ إنجاز الخدمة في العقد نصًّا، ولا تتركه للتأويل.</li>
+<li>التوطين البنكي للعملية مطلوب خلال 48 ساعة؛ أخّرْه ولن ينفعك احترام الـ120 يومًا.</li>
+</ol>
+</div>
+<p class="note">أداة تقدير مبنية على مصادر منشورة وأنماط تسوية معلنة. ليست استشارة قانونية ولا مالية. النسخة 0.1 — 14 سبتمبر 2026.</p>
+</div>
+<script>
+const CEIL=120;
+const RAILS=[
+ {n:"تحويل SWIFT مباشر — net-30",terms:30,hold:0,cad:1,tr:7},
+ {n:"تحويل SWIFT مباشر — net-60",terms:60,hold:0,cad:1,tr:7},
+ {n:"تحويل SWIFT مباشر — net-90",terms:90,hold:0,cad:1,tr:10},
+ {n:"وسيط تاجر سجل — دفعتان شهريًا",terms:0,hold:13,cad:15,tr:5},
+ {n:"وسيط تاجر سجل — شهري net-30",terms:0,hold:30,cad:30,tr:5},
+ {n:"بوابة دفع — تسوية متدحرجة",terms:0,hold:2,cad:1,tr:5}
+];
+const RES=[
+ {n:"بدون احتياطي",p:0,w:0},
+ {n:"25% لمدة 30 يومًا",p:.25,w:30},
+ {n:"25% لمدة 90 يومًا",p:.25,w:90},
+ {n:"10% لمدة 180 يومًا",p:.10,w:180}
+];
+const wait=c=>c<=1?0:c-1;
+const days=(r,w)=>{const h=Math.max(r.hold,w);return r.terms+h+wait(r.cad)+r.tr};
+function verdict(s){
+ if(s<0)return["خرق بنيوي","t-brk","#b3261e"];
+ if(s<=15)return["هشّ","t-frag","#a8521a"];
+ if(s<=45)return["ضيّق","t-tight","#8a6100"];
+ return["آمن","t-safe","#0f7b3d"];
+}
+const $=i=>document.getElementById(i);
+RAILS.forEach((r,i)=>$("rail").add(new Option(r.n,i)));
+RES.forEach((r,i)=>$("res").add(new Option(r.n,i)));
+function calc(){
+ const r=RAILS[+$("rail").value],rs=RES[+$("res").value],arr=+$("arr").value||0;
+ const dm=days(r,0),sm=CEIL-dm;
+ const dr=rs.p>0?days(r,rs.w):null,sr=dr!==null?CEIL-dr:null;
+ const worst=(sr!==null&&sr<sm)?sr:sm;
+ const[lab,cls,col]=verdict(worst);
+ let exposed=0;
+ if(rs.p===0){exposed=sm<0?1:0}
+ else{exposed=(1-rs.p)*(sm<0?1:0)+rs.p*(sr<0?1:0)}
+ const money=arr*exposed;
+ const pct=Math.max(0,Math.min(100,(Math.min(dm,dr===null?dm:dr,240)/240)*100));
+ $("out").innerHTML=
+ `<span class="tag ${cls}">${lab}</span>`+
+ `<span class="big" style="color:${col}">${worst} يومًا</span>`+
+ `<div class="note">فجوة الأمان مقابل سقف 120 يومًا</div>`+
+ `<div class="bar"><i style="width:${pct}%;background:${col}"></i></div>`+
+ `<table><tr><th>الشريحة</th><th>الأيام حتى القيد</th><th>الفجوة</th><th>الحكم</th></tr>`+
+ `<tr><td>المبلغ الرئيسي${rs.p>0?` (${Math.round((1-rs.p)*100)}%)`:""}</td><td class="n">${dm}</td><td class="n">${sm}</td><td>${verdict(sm)[0]}</td></tr>`+
+ (dr!==null?`<tr><td>الشريحة المحتجزة (${Math.round(rs.p*100)}%)</td><td class="n">${dr}</td><td class="n">${sr}</td><td>${verdict(sr)[0]}</td></tr>`:"")+
+ `</table>`+
+ `<p style="margin:12px 0 0"><b>الإيراد المعرَّض للخرق:</b> <span class="n">${(exposed*100).toFixed(1)}%</span> = <span class="n">$${money.toLocaleString("en-US",{maximumFractionDigits:0})}</span> سنويًا.`+
+ (money>0?` التعرّض النظامي الأدنى يساوي مبلغ المخالفة نفسه، وقد يصل إلى ضِعفه: <span class="n">$${(money*2).toLocaleString("en-US",{maximumFractionDigits:0})}</span>.`:"")+`</p>`;
+}
+["rail","res","arr"].forEach(i=>$(i).addEventListener("input",calc));
+calc();
+let h='<table><tr><th>القناة</th><th>الاحتياطي</th><th>أيام الرئيسي</th><th>أيام المحتجز</th><th>أسوأ فجوة</th><th>الحكم</th></tr>';
+RAILS.forEach(r=>RES.forEach(rs=>{
+ const dm=days(r,0),sm=CEIL-dm,dr=rs.p>0?days(r,rs.w):null,sr=dr!==null?CEIL-dr:null;
+ const w=(sr!==null&&sr<sm)?sr:sm;const[l,c]=verdict(w);
+ h+=`<tr><td>${r.n}</td><td>${rs.n}</td><td class="n">${dm}</td><td class="n">${dr??"—"}</td><td class="n">${w}</td><td><span class="tag ${c}">${l}</span></td></tr>`;
+}));
+$("matrix").innerHTML=h+'</table>';
+</script>
+</body>
+</html>
