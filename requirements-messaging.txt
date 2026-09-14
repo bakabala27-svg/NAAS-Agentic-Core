@@ -13,4 +13,4 @@
 #     docs/adr/ADR-008-durable-workflows-temporal.md
 
 aiokafka>=0.12,<0.13
-temporalio>=1.8,<2.0
+temporalio>=1.32.0,<2.0
