@@ -82,23 +82,23 @@
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفرُ حذفٍ على مستوى الملفّات: التغييرُ إضافةٌ صافية (ملفّان جديدان للبحث والعرض، ووحدةٌ ومولِّدٌ واختباراتٌ، وأربعةُ ملفّاتٍ أُضيف إليها سطرٌ أو سطور). ولا سطرُ عقيدةٍ حُذف، ولا خطُّ عرضٍ أُزيل، ولا رقمٌ سابقٌ مُحي: التصحيحُ يكون بالإضافة والتأريخ لا بالمحو (D-290 L10)."
+    "policy_ar": "صفرُ حذفٍ على مستوى الملفّات: لا ملفَّ محذوف، ولا خطُّ عرضٍ أُزيل، ولا سطرُ عقيدةٍ مُحي. والحذفُ الوحيد على مستوى الأسطر (49 سطراً) محصورٌ في `studies/repatriation-slack-001/model.py` وهو **تطبيعُ lint** لا محوُ منطق: `ruff check --fix --unsafe-fixes` + `ruff format` حوّلا `dict(...)` إلى قواميسَ حرفيّةٍ و`%` إلى f-string وحذفا تصريح الترميز الزائد. والبرهانُ أنّ المُخرَج مطابقٌ بايت-ببايت قبل الإصلاح وبعده: `python3 studies/repatriation-slack-001/model.py` أنتج stdout متطابقاً، و`rows.json` بصمة `sha256 = b053d45ed6ff3261…` في الحالتين (مقارنةٌ ضدّ نسخةٍ قُبض عليها في `/tmp` قبل التعديل). وهذا التطبيعُ هو ما يجعل وظيفة `lint` (ruff مثبَّتٌ على 0.14.0) خضراء بدل أن تظلّ حمراء على `main` بملاحظاتٍ سابقةٍ لا علاقةَ لها بدفعة WOD."
   },
   "verification": {
     "result": "PASS",
     "commands": [
       "python3 scripts/research/measure_withholding_onboarding.py --check  # PASS — الملفُّ المودَع يُعاد بناؤه (18/22 خليةً · بصمة 17cf39bbd2ac…)",
-      "python3 -m pytest tests/shared/test_wod_withholding_onboarding.py -q --noconftest -p no:cacheprovider  # PASS — 54 اختباراً (pytest 9.1.1؛ CI على 3.12)",
-      "ruff check --no-cache shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py tests/shared/test_wod_withholding_onboarding.py  # PASS — ruff 0.14.0",
-      "ruff format --check shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py tests/shared/test_wod_withholding_onboarding.py  # PASS",
-      "mypy --config-file mypy.ini --follow-imports=silent shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py  # PASS — no issues in 2 source files",
+      "python3 -m pytest tests/shared/test_wod_withholding_onboarding.py -q --noconftest -p no:cacheprovider  # PASS — 54 اختباراً (pytest 9.1.1)",
+      "ruff check .  # PASS — ruff 0.14.0 على كامل المستودع (بعد تطبيع 15 ملاحظةً سابقة في studies/repatriation-slack-001/model.py)",
+      "ruff format --check .  # PASS — 2185 ملفاً منسّقاً",
+      "mypy --config-file mypy.ini --follow-imports=silent shared/ app/integration/  # PASS — 67 ملفاً بلا ملاحظة",
       "python3 scripts/fitness/check_documentation_contract.py  # PASS — 28 وثيقة حيّة، والروابط تُحلّ",
       "python3 scripts/fitness/check_authority_links.py  # PASS — كل روابط ملفّات السلطة الخمسة تصل",
       "python3 scripts/fitness/check_dual_track_alignment.py  # PASS",
       "python3 scripts/fitness/check_revenue_doctrine.py  # PASS",
       "python3 scripts/fitness/check_research_doctrines.py  # PASS",
       "python3 scripts/fitness/check_agent_reliability_constitution.py  # PASS",
-      "python3 -m py_compile shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py tests/shared/test_wod_withholding_onboarding.py  # PASS"
+      "python3 -m py_compile shared/research/withholding_onboarding.py scripts/research/measure_withholding_onboarding.py tests/shared/test_wod_withholding_onboarding.py studies/repatriation-slack-001/model.py  # PASS"
     ],
     "environment_ar": "منفَّذٌ في بيئة التحقق ببايثون 3.11.2 (لا 3.12 متاحةٌ في العزل)، ولذلك شُغِّل pytest بـ`--noconftest` — وهو نفسُ ما سُجِّل في حزمة FXR. الوحدةُ والمولِّد والاختبارات تُحلَّل جميعاً على 3.11 (py_compile + AST) وتعمل؛ وCI يشغّلها على 3.12 مع conftest الكامل."
   },
@@ -200,6 +200,7 @@
     "scripts/research/measure_withholding_onboarding.py",
     "shared/research/__init__.py",
     "shared/research/withholding_onboarding.py",
+    "studies/repatriation-slack-001/model.py",
     "tests/shared/test_wod_withholding_onboarding.py"
   ],
   "git_change_snapshot": {
@@ -216,9 +217,10 @@
       "scripts/research/measure_withholding_onboarding.py",
       "shared/research/__init__.py",
       "shared/research/withholding_onboarding.py",
+      "studies/repatriation-slack-001/model.py",
       "tests/shared/test_wod_withholding_onboarding.py"
     ],
-    "content_sha256_excluding_packet": "2032e129d0f399c54e8248d6949a001a5783ceb8b9ac346e597d670764a3f8f5",
+    "content_sha256_excluding_packet": "bf984fe6ed5ce24fbcbc35bbdddfe6a1d19539e3dc7fe2d553e1c9376a540655",
     "refreshed_on": "2026-09-14",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }

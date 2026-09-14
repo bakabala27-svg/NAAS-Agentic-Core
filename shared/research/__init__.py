@@ -51,6 +51,9 @@
 
 from __future__ import annotations
 
+# WOD تُستورد مُنطَّقةً (`wod`) لأنّ أسماءها تتقاطع مع أسماء دفعاتٍ سابقة
+# (`summarize` · `measure_all` · `matrix`) — فالتقاطعُ لا يُسمح له بأن يطمس دفعةً.
+from . import withholding_onboarding as wod
 from .assurance_window import (
     AcceptanceCorridor,
     Adjudication,
@@ -108,10 +111,6 @@ from .exportable_eval import (
     ExportableEvalBundle,
     build_eval_bundle,
 )
-# WOD تُستورد مُنطَّقةً (`wod`) لأنّ أسماءها تتقاطع مع أسماء دفعاتٍ سابقة
-# (`summarize` · `measure_all` · `matrix`) — فالتقاطعُ لا يُسمح له بأن يطمس دفعةً.
-from . import withholding_onboarding as wod
-
 from .fx_rail import (
     CeilingResult,
     FxSnapshot,
@@ -346,9 +345,9 @@ __all__ = [
     "verify_commitment",
     "verify_merkle_proof",
     "verify_receipt",
-    "wod",
     "warranty_days",
     "warranty_table",
     "warranty_window_days",
     "wilson_interval",
+    "wod",
 ]
