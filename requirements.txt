@@ -72,7 +72,7 @@ greenlet>=3.5.5
 h11>=0.14.0
 httpcore>=1.0.0
 httptools>=0.8.0
-anyio>=4.0.0
+anyio>=4.15.1
 sniffio>=1.3.0
 certifi>=2023.0.0
 idna>=3.0
@@ -139,7 +139,7 @@ psycopg-binary
 # ⛔ held — see the note on the first `aiosqlite` pin in this file.
 aiosqlite==0.17.0
 alembic==1.19.1
-anyio>=4.0.0
+anyio>=4.15.1
 argon2-cffi==23.1.0
 # ⛔ held — see the note on the first `bcrypt` pin in this file.
 bcrypt==4.3.0
