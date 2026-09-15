@@ -217,6 +217,7 @@
       "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md",
       "docs/research/README_NEW_KNOWLEDGE.md",
       "research/fx-hard-currency/cbam_value.py",
+      "scripts/ci_guardrails.py",
       "scripts/fitness/check_decision_round06.py",
       "scripts/research/measure_first_invoice.py",
       "shared/research/__init__.py",
@@ -227,7 +228,7 @@
       "tests/fitness/test_decision_round06_gate.py",
       "tests/shared/test_fiv_first_invoice.py"
     ],
-    "content_sha256_excluding_packet": "15fe8b7d160dc4ed729a9a93dca33feaeeccc0aa9ec541435353ae47cdb93899",
+    "content_sha256_excluding_packet": "136defc3944290c1bbdae95a95e16a270dff6aa52c528172170ac44e25693709",
     "refreshed_on": "2026-09-15",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
