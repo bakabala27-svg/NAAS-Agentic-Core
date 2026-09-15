@@ -5284,7 +5284,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(C)",
         "sector": "iron_steel"
@@ -5293,7 +5293,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(C)",
         "sector": "iron_steel"
@@ -5302,7 +5302,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(C)",
         "sector": "iron_steel"
@@ -5311,7 +5311,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(C)",
         "sector": "iron_steel"
@@ -5320,7 +5320,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(C)",
         "sector": "iron_steel"
@@ -5329,7 +5329,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(C)",
         "sector": "iron_steel"
@@ -5338,7 +5338,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": null,
         "sector": "iron_steel"
@@ -5347,7 +5347,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": null,
         "sector": "iron_steel"
@@ -5356,7 +5356,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5365,7 +5365,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5374,7 +5374,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5383,7 +5383,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5392,7 +5392,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5401,7 +5401,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5410,7 +5410,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5419,7 +5419,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5428,7 +5428,7 @@
         "absent_reason": "BENCHMARKS_NOT_EXTRACTED",
         "benchmark_candidates": [],
         "benchmark_cn": null,
-        "benchmark_resolution": "NOT_FOUND",
+        "benchmark_resolution": "BENCHMARK_NOT_FOUND",
         "rankable": false,
         "route_pinned": "(L)",
         "sector": "aluminium"
@@ -5439,7 +5439,7 @@
         "every_euro_figure (depends on CSCF, grade ب - S8)",
         "formula_operation_order (depends on S4, grade ب)"
       ],
-      "NOT_FOUND": [
+      "NOT_FOUND_IN_PRIMARY_SOURCES": [
         "aluminium_benchmarks_columns_a_and_b",
         "cn_7208_column_a_benchmark",
         "certificate_price_2026Q3_and_2026Q4",

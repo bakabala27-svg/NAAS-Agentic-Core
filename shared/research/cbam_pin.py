@@ -858,7 +858,7 @@ def benchmark_resolution(cn: str) -> dict[str, object]:
         "cn": key,
         "resolved": None,
         "candidates": [],
-        "resolution": "NOT_FOUND",
+        "resolution": "BENCHMARK_NOT_FOUND",
         "reason": "BENCHMARKS_NOT_EXTRACTED",
     }
 
@@ -1821,7 +1821,7 @@ def measure_all() -> dict[str, object]:
                     "every_euro_figure (depends on CSCF, grade ب - S8)",
                     "formula_operation_order (depends on S4, grade ب)",
                 ],
-                "NOT_FOUND": [
+                "NOT_FOUND_IN_PRIMARY_SOURCES": [
                     "aluminium_benchmarks_columns_a_and_b",
                     "cn_7208_column_a_benchmark",
                     "certificate_price_2026Q3_and_2026Q4",

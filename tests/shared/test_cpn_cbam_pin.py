@@ -342,7 +342,7 @@ def test_benchmark_prefix_resolution_is_declared_not_guessed() -> None:
     """الملحقُ I بـ 4/6 خانات والمراجعُ بـ 8 ⇒ الربطُ إجراءٌ معلَن بأربعة أصناف."""
     assert benchmark_resolution("25232900")["resolution"] == "EXACT_CN8"
     assert benchmark_resolution("7201")["resolution"] == "PREFIX_UNIQUE"
-    assert benchmark_resolution("7208")["resolution"] == "NOT_FOUND"
+    assert benchmark_resolution("7208")["resolution"] == "BENCHMARK_NOT_FOUND"
 
 
 def test_cn_7203_is_ambiguous_in_numbering_only_not_in_value() -> None:
@@ -941,7 +941,7 @@ def test_no_claim_rests_on_a_single_grade_b_source() -> None:
 def test_cscf_dependent_figures_are_marked_conditional() -> None:
     quotability = measure_all()["results"]["quotability"]
     conditional = " ".join(quotability["CONDITIONAL"]).lower()
-    not_found = " ".join(quotability["NOT_FOUND"]).lower()
+    not_found = " ".join(quotability["NOT_FOUND_IN_PRIMARY_SOURCES"]).lower()
     assert "cscf" in conditional
     assert "aluminium" in not_found
 
