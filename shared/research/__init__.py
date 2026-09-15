@@ -51,6 +51,9 @@
 
 from __future__ import annotations
 
+# FIV تُستورد مُنطَّقةً (`fiv`) للسبب نفسه — فالتقاطعُ لا يُسمَح له بأن يطمس دفعةً.
+from . import first_invoice as fiv
+
 # WOD تُستورد مُنطَّقةً (`wod`) لأنّ أسماءها تتقاطع مع أسماء دفعاتٍ سابقة
 # (`summarize` · `measure_all` · `matrix`) — فالتقاطعُ لا يُسمح له بأن يطمس دفعةً.
 from . import withholding_onboarding as wod
@@ -306,6 +309,7 @@ __all__ = [
     "events_per_year",
     "expected_exposure_cost",
     "fit_assurance_curve",
+    "fiv",
     "freeze_corpus",
     "fresh_canary_token",
     "fx_cost_base_rule",

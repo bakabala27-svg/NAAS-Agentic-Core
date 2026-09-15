@@ -50,6 +50,9 @@
     "check_decision_round05.py": [
       "tests/fitness/test_decision_round05_gate.py"
     ],
+    "check_decision_round06.py": [
+      "tests/fitness/test_decision_round06_gate.py"
+    ],
     "check_design_tokens.py": [
       "tests/fitness/test_check_design_tokens.py"
     ],

@@ -220,6 +220,16 @@ jobs:
           python scripts/fitness/check_decision_round02.py
           python scripts/fitness/check_decision_round04.py
           python scripts/fitness/check_decision_round05.py
+          # round06: first-invoice channel discipline. Guards five things no earlier
+          #   gate could, because no earlier round had a settlement-channel ledger:
+          #   (1) 21 numbers in round section 4 matched by named path and declared
+          #   display format against FIV_MEASUREMENTS.json; (2) the dead name
+          #   prime-environments outside stale-context (renamed 2026-03-29);
+          #   (3) fee-schedule transfer across asset classes — one quotable net,
+          #   four Nones with stated reasons, enforced in code and prose;
+          #   (4) dollar-citation and computed-pin discipline plus the real input
+          #   fingerprint in the knowledge doc; (5) exactly one E1 (H71).
+          python scripts/fitness/check_decision_round06.py
           # The deterministic measurement artifacts must rebuild byte-for-byte
           # (timestamp excluded explicitly). A hand-edited number in a stored
           # artifact is the exact failure these gates exist to make impossible.
@@ -889,23 +899,7 @@ jobs:
   # Why a separate job instead of a step in `test-monolith`: on `pull_request`,
   # actions/checkout gives you the MERGE commit, but the CodeScene check is registered
   # against the PR HEAD (visible in its own details URL: `...&commit-sha=<head>`).
-  # `cs-coverage` infers the commit from git HEAD and has no documented SHA flag, so
-  # uploading from the merge commit delivers data CodeScene cannot match to the pending
-  # check — the same failure with extra steps.
-  #
-  # ⛔ Deliberately absent from `required-ci`: a third-party outage must not block merges.
-  codescene-coverage:
-    name: codescene-coverage
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: test-monolith
-    if: always() && needs.test-monolith.result != 'cancelled'
-    env:
-      # `secrets` is not available in `if:`; surfacing it as env is the supported way to
-      # branch on presence, so fork PRs skip instead of failing.
-      CS_ACCESS_TOKEN: ${{ secrets.CS_ACCESS_TOKEN }}
-    steps:
-      - uses: actions/checkout@v7
+  # `cs-coverage` infers the commit from git HEeckout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0 # cs-coverage reads git to identify repo + commit
@@ -957,6 +951,21 @@ jobs:
             echo "Expected on pull requests from forks, which receive no secrets."
             echo "On a same-repo run it means the secret is missing — and the"
             echo "\`CodeScene Code Coverage\` check will sit pending until it times out."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Report a missing coverage report
+        if: steps.coverage.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "::warning title=No coverage artifact::test-monolith produced no coverage.xml — nothing to upload."
+          {
+            echo "### CodeScene coverage — no report to send"
+            echo
+            echo "The \`coverage-report\` artifact is missing, which means \`test-monolith\`"
+            echo "failed before pytest could write \`coverage.xml\` (a dependency-resolution"
+            echo "or collection error, not a test failure). Fix that job first."
+          } >> "$Gil it times out."
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Report a missing coverage report
@@ -1224,23 +1233,7 @@ jobs:
         name: "Resolve the image's context and dockerfile"
         run: python scripts/ci/image_matrix.py --resolve "${{ matrix.name }}" >> "$GITHUB_OUTPUT"
 
-      - uses: docker/setup-buildx-action@v4
-
-      - name: "Build"
-        uses: docker/build-push-action@v7
-        with:
-          context: ${{ steps.img.outputs.context }}
-          file: ${{ steps.img.outputs.dockerfile }}
-          push: false
-          load: true
-          tags: cogniforge-smoke/${{ matrix.name }}:ci
-          cache-from: type=gha,scope=${{ matrix.name }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
-
-      - name: "Smoke: the application actually imports"
-        if: steps.img.outputs.smoke != ''
-        # Building is not importing. A dependency missing from requirements.txt links
-        # fine and fails on the first import — which, without this step, would happen
+ pen
         # for the first time in front of a student. Env values come from the declared
         # matrix via --env-file, never through a shell (D-187).
         run: |
@@ -1303,6 +1296,32 @@ jobs:
         # --tail=40, not 200. The first failing run dumped ~600 lines of broker chatter
         # after the verifier's own output, so the actual diagnosis scrolled out of reach
         # and the cause had to be guessed. Keep the signal near the end of the log.
+        run: docker compose -f docker-compose.yml logs --tail=40 redpanda redpanda-topics temporal
+
+      - name: "Tear down"
+        if: always()
+        run: docker compose -f docker-compose.yml down -v --remove-orphans
+
+  live-e2e-required:
+    name: "E2E Full Stack — real external services and user journey"
+    uses: ./.github/workflows/live-e2e.yml
+    with:
+      matrix_only: false
+    secrets: inherit
+
+  runtime-truth-required:
+    name: "Runtime truth — required drift check"
+    uses: ./.github/workflows/runtime_truth.yml
+    secrets: inherit
+
+  required-ci:
+    name: required-ci
+    runs-on: ubuntu-latest
+    needs:
+      [
+        lint,
+        contracts,
+        guardraie end of the log.
         run: docker compose -f docker-compose.yml logs --tail=40 redpanda redpanda-topics temporal
 
       - name: "Tear down"

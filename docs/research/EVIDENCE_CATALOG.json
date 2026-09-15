@@ -348,6 +348,83 @@
         "commercial_claim"
       ],
       "verified_on": "2026-09-14"
+    },
+    {
+      "id": "hud-vendor-terms-2026",
+      "title_en": "HUD vendor terms: 80/20 seller split, $5k codebase baseline, wire/ACH payout",
+      "kind": "vendor_primary",
+      "url": "https://datavendor.ai/",
+      "scope_ar": "شروطُ بائع HUD للشيفرات حصراً: انقسام 80/20 للبائع، خطُّ أساس $5k للشيفرة، دفعٌ عبر حوالةٍ مصرفيةٍ/ACH، وفحصُ قبولٍ خلال 5 أيام عمل — والبيئةُ/التقييمُ بلا انقسامٍ مُعلَن (UNSTATED).",
+      "local_application_ar": "جدولُ الرسم الوحيدُ المُعلَن في FIV (codebase: 0.8) ومصدرُ قاعدة منع نقل الرسم إلى الفئات بلا جدول.",
+      "required_for": [
+        "commercial_claim",
+        "fee_math"
+      ],
+      "verified_on": "2026-09-15"
+    },
+    {
+      "id": "prime-environments-program-2026",
+      "title_en": "Prime Environments Program: $100-$500 Open Access, $1,000-$5,000+ Application-Only",
+      "kind": "vendor_primary",
+      "url": "https://www.primeintellect.ai/blog/scaling-environments-program",
+      "scope_ar": "برنامجُ بيئات Prime: مئاتُ آلاف الدولارات منحاً، 400+ بيئة / 80+ مراجَعة / 500+ طلب إقامة، ومكافآتُ وصولٍ مفتوح $100–500 وتقديمٍ خاص $1,000–5,000+ — مكافأةٌ لا عميل.",
+      "local_application_ar": "قناةُ CH2 في FIV: مكافأةٌ مُعلَنة بسقفٍ أعلى مفتوح (+) تُرتَّب بعد القنوات ذات السقف المغلق.",
+      "required_for": [
+        "bounty",
+        "commercial_claim"
+      ],
+      "verified_on": "2026-09-15"
+    },
+    {
+      "id": "prime-community-environments-repo",
+      "title_en": "PrimeIntellect-ai/community-environments: contribution scaffolding and repo scale",
+      "kind": "vendor_primary",
+      "url": "https://github.com/PrimeIntellect-ai/community-environments",
+      "scope_ar": "مستودعُ بيئات Prime (أُعيدت تسميتُه من prime-environments في مارس 2026): بنيةُ المساهمة (fork + uv + Prime CLI + LFS) ومسارُ القبول عبر مسودة PR — والرخصةُ/الاتفاقيةُ غيرُ ملتقطة (UNSTATED).",
+      "local_application_ar": "دليلُ مسار القبول التقني لقناة CH2، ومصدرُ تحذير الاسم الميّت في بوابة الجولة 06.",
+      "required_for": [
+        "bounty",
+        "market_entry"
+      ],
+      "verified_on": "2026-09-15"
+    },
+    {
+      "id": "prime-sprints-reward-hacking-2026",
+      "title_en": "Prime Sprints: free-credits channel for reward-hacking environments",
+      "kind": "vendor_primary",
+      "url": "https://www.primeintellect.ai/blog/reward-hacking",
+      "scope_ar": "سباقاتُ Prime الأولى (مكافأة القرصنة): تشغيلاتٌ برصيدٍ مجاني ($0.64 لتشغيل 30 دقيقة بمقياس 1B) — قناةُ رصيدٍ مجانيٍّ لا قناةُ دفع.",
+      "local_application_ar": "تُقيَّد CH2 بأنّ مسار السباق رصيدٌ لا إيراد، فلا يدخل صافي الفاتورة الأولى.",
+      "required_for": [
+        "bounty"
+      ],
+      "verified_on": "2026-09-15"
+    },
+    {
+      "id": "redteam-pricing-anchors-2026",
+      "title_en": "2026 red-team pricing anchors: vendor pages ($8K-$150K+ engagements)",
+      "kind": "industry_research",
+      "url": "https://security.aivyuh.com/blog/ai-red-teaming-pricing-2026/",
+      "scope_ar": "مراسي أسعار 2026 من صفحات البائعين (AI Vyuh: $8K–$150K+؛ ومرساةٌ ثانية Confident AI) — أسعارٌ مُعلَنة لا عقودَ مُبرَمة، فـ NOT FOUND (صفرُ عقد تدقيقٍ مُبرَم) يبقى قائماً بتاريخ 2026-09-15.",
+      "local_application_ar": "نطاقُ التدقيق في FIV (8000–150000) وقاعدةُ أنّ السعر المُعلَن لا يُبرم عقداً (D-267).",
+      "required_for": [
+        "commercial_claim",
+        "market_entry"
+      ],
+      "verified_on": "2026-09-15"
+    },
+    {
+      "id": "anae-service-export-fx-100",
+      "title_en": "ANAE: 100% foreign-currency retention for service-export proceeds",
+      "kind": "official_regulation",
+      "url": "https://lalgerieaujourdhui.dz/un-avantage-au-profit-des-auto-entrepreneurs-100-du-produit-dexportation-de-services-recuperes-en-devises/",
+      "scope_ar": "بلاغُ ANAE (منقولاً عبر الصحافة): احتفاظٌ بنسبة 100% بعائد تصدير الخدمات بالعملة الصعبة بموجب التعليمة 06-2021، مع IFU 0.5% — إطارُ التحويل لا إثباتُ تحويل.",
+      "local_application_ar": "مسارُ العملة الصعبة في البطاقة التجارية: الإطارُ يسمح بالاستلام الكامل، والإيرادُ المُعلَن صفرٌ حتى أولُ فاتورة.",
+      "required_for": [
+        "commercial_claim",
+        "foreign_currency"
+      ],
+      "verified_on": "2026-09-15"
     }
   ]
 }
