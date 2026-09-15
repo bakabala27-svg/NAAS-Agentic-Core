@@ -225,6 +225,13 @@
       "role": "no-bypass-control-plane",
       "authority": "primary",
       "status": "live"
+    },
+    {
+      "path": "docs/commercial/SOVEREIGN_KNOWLEDGE_REVENUE_MAP.md",
+      "audience": "maintainer",
+      "role": "sovereign-knowledge-revenue-map",
+      "authority": "supporting",
+      "status": "live"
     }
   ]
 }
