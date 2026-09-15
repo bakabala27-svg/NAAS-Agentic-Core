@@ -184,10 +184,7 @@ SOURCES: Final = {
             "CN code | CN Description | Column A BMg [tCO2e/t] | Column A Production "
             "route indicator | Column B BMg [tCO2e/t] | Column B Production route indicator"
         ),
-        "caveat_ar": (
-            "⛔ الألومنيوم لم يُستخرج من هذا الملفّ — مراجعُه A/B غائبةٌ عمداً، "
-            "لا مُصفَّرة."
-        ),
+        "caveat_ar": ("⛔ الألومنيوم لم يُستخرج من هذا الملفّ — مراجعُه A/B غائبةٌ عمداً، لا مُصفَّرة."),
     },
     "S3": {
         "id": "S3",
@@ -428,7 +425,7 @@ for _year in range(2029, 2035):
     MARKUP["fertilisers"][_year] = 0.01
 
 #: عاملُ التصحيح عبر القطاعات — درجة ب (S8)، بحساسيةٍ معلنة.
-CSCF: Final = {year: 1.000 for year in HORIZON}
+CSCF: Final = dict.fromkeys(HORIZON, 1.0)
 CSCF_SENSITIVITY: Final = (0.900, 0.950, 1.000)
 
 #: سعرُ الشهادة باليورو/طنّ CO₂e. `None` = لم يُنشر بعد (⛔ لا استمرار).
@@ -473,7 +470,7 @@ class DefaultRow:
         تُغلق، لأنّ كلّ عمودٍ مُقرَّبٌ إلى ثلاث خاناتٍ على حدة. والقانونُ (S6) يقول
         «يُختار عمود الإجمالي» ⇒ **الإجماليّ كميةٌ أولية، لا مجموع**.
         """
-        if None in (self.direct, self.indirect, self.total):
+        if self.direct is None or self.indirect is None or self.total is None:
             return None
         return round(self.total - (self.direct + self.indirect), 5)
 
@@ -504,38 +501,70 @@ ALGERIA_DEFAULTS: Final = {
     # ── الإسمنت ────────────────────────────────────────────────────────────────
     "2507008080": _row("2507008080", "cement", "Calcined clay", None, None, None, None),
     "2523100010": _row("2523100010", "cement", "White clinker", 1.290, 0.060, 1.340, "(B)"),
-    "2523100090": _row("2523100090", "cement", "Other clinker including grey clinker", 1.240, 0.040, 1.280, "(A)"),
+    "2523100090": _row(
+        "2523100090", "cement", "Other clinker including grey clinker", 1.240, 0.040, 1.280, "(A)"
+    ),
     "25232100": _row("25232100", "cement", "White Portland cement", 1.230, 0.140, 1.370, None),
     "25232900": _row("25232900", "cement", "Grey Portland cement", 1.230, 0.060, 1.300, None),
     "25233000": _row("25233000", "cement", "Aluminous cement", None, None, None, None),
-    "2523900010": _row("2523900010", "cement", "White hydraulic cement", 1.280, 0.170, 1.440, "(B)"),
-    "2523900090": _row("2523900090", "cement", "Other hydraulic cements incl. grey", 1.170, 0.070, 1.240, "(A)"),
+    "2523900010": _row(
+        "2523900010", "cement", "White hydraulic cement", 1.280, 0.170, 1.440, "(B)"
+    ),
+    "2523900090": _row(
+        "2523900090", "cement", "Other hydraulic cements incl. grey", 1.170, 0.070, 1.240, "(A)"
+    ),
     # ── الأسمدة ────────────────────────────────────────────────────────────────
-    "28080000": _row("28080000", "fertilisers", "Nitric acid; sulphonitric acids", 2.490, 0.040, 2.530, None),
+    "28080000": _row(
+        "28080000", "fertilisers", "Nitric acid; sulphonitric acids", 2.490, 0.040, 2.530, None
+    ),
     "28141000": _row("28141000", "fertilisers", "Anhydrous ammonia", 1.960, 0.120, 2.080, None),
-    "28142000": _row("28142000", "fertilisers", "Ammonia in aqueous solution", 0.590, 0.040, 0.620, None),
+    "28142000": _row(
+        "28142000", "fertilisers", "Ammonia in aqueous solution", 0.590, 0.040, 0.620, None
+    ),
     "28342100": _row("28342100", "fertilisers", "Nitrate of potassium", 2.000, 0.060, 2.060, None),
-    "31021012": _row("31021012", "fertilisers", "Urea aq. >45%N, 31.8-33.2% urea", 0.440, 0.030, 0.470, None),
-    "31021015": _row("31021015", "fertilisers", "Urea aq. >45%N, >33.2-55% urea", 0.720, 0.030, 0.760, None),
+    "31021012": _row(
+        "31021012", "fertilisers", "Urea aq. >45%N, 31.8-33.2% urea", 0.440, 0.030, 0.470, None
+    ),
+    "31021015": _row(
+        "31021015", "fertilisers", "Urea aq. >45%N, >33.2-55% urea", 0.720, 0.030, 0.760, None
+    ),
     "31021019": _row("31021019", "fertilisers", "Urea, >45%N", 1.320, 0.100, 1.410, None),
     "31021090": _row("31021090", "fertilisers", "Urea, <=45%N", 1.290, 0.090, 1.380, None),
     "31022100": _row("31022100", "fertilisers", "Ammonium sulphate", 0.560, 0.070, 0.630, None),
     "31022900": _row("31022900", "fertilisers", "Double salts AS + AN", 1.270, 0.080, 1.360, None),
-    "31023010": _row("31023010", "fertilisers", "Ammonium nitrate in aqueous solution", 1.510, 0.060, 1.570, None),
+    "31023010": _row(
+        "31023010", "fertilisers", "Ammonium nitrate in aqueous solution", 1.510, 0.060, 1.570, None
+    ),
     "31023090": _row("31023090", "fertilisers", "Ammonium nitrate", 2.330, 0.090, 2.420, None),
-    "31024010": _row("31024010", "fertilisers", "AN + calcium carbonate, <=28%N", 1.980, 0.090, 2.070, None),
-    "31024090": _row("31024090", "fertilisers", "AN + calcium carbonate, >28%N", 1.980, 0.090, 2.070, None),
+    "31024010": _row(
+        "31024010", "fertilisers", "AN + calcium carbonate, <=28%N", 1.980, 0.090, 2.070, None
+    ),
+    "31024090": _row(
+        "31024090", "fertilisers", "AN + calcium carbonate, >28%N", 1.980, 0.090, 2.070, None
+    ),
     "31025000": _row("31025000", "fertilisers", "Sodium nitrate", 3.880, 0.060, 3.940, None),
     "31026000": _row("31026000", "fertilisers", "Double salts CN + AN", 1.950, 0.080, 2.030, None),
     "31028000": _row("31028000", "fertilisers", "UAN mixtures", 1.460, 0.080, 1.530, None),
-    "31029000": _row("31029000", "fertilisers", "Other mineral/chemical N fertilisers", 1.490, 0.090, 1.580, None),
-    "31051000": _row("31051000", "fertilisers", "Animal/vegetable origin, <=10 kg", 0.730, 0.080, 0.810, None),
+    "31029000": _row(
+        "31029000", "fertilisers", "Other mineral/chemical N fertilisers", 1.490, 0.090, 1.580, None
+    ),
+    "31051000": _row(
+        "31051000", "fertilisers", "Animal/vegetable origin, <=10 kg", 0.730, 0.080, 0.810, None
+    ),
     "31052010": _row("31052010", "fertilisers", "PK with N >10%", 0.970, 0.090, 1.060, None),
     "31052090": _row("31052090", "fertilisers", "NPK with N <=10%", 0.660, 0.070, 0.720, None),
-    "31053000": _row("31053000", "fertilisers", "Diammonium phosphate (DAP)", 0.460, 0.050, 0.510, None),
-    "31054000": _row("31054000", "fertilisers", "Monoammonium phosphate (MAP)", 0.290, 0.040, 0.340, None),
-    "31055100": _row("31055100", "fertilisers", "N+P incl. nitrates and phosphates", 1.330, 0.110, 1.440, None),
-    "31055900": _row("31055900", "fertilisers", "N+P excl. nitrates and phosphates", 0.520, 0.090, 0.610, None),
+    "31053000": _row(
+        "31053000", "fertilisers", "Diammonium phosphate (DAP)", 0.460, 0.050, 0.510, None
+    ),
+    "31054000": _row(
+        "31054000", "fertilisers", "Monoammonium phosphate (MAP)", 0.290, 0.040, 0.340, None
+    ),
+    "31055100": _row(
+        "31055100", "fertilisers", "N+P incl. nitrates and phosphates", 1.330, 0.110, 1.440, None
+    ),
+    "31055900": _row(
+        "31055900", "fertilisers", "N+P excl. nitrates and phosphates", 0.520, 0.090, 0.610, None
+    ),
     "31059020": _row("31059020", "fertilisers", "N+K, >10% N", 1.310, 0.070, 1.380, None),
     "31059080": _row("31059080", "fertilisers", "N+K, <=10% N", 0.670, 0.050, 0.720, None),
     # ── الألومنيوم (المسار L = ثانويّ في كلِّ صفّ) ─────────────────────────────
@@ -547,34 +576,94 @@ ALGERIA_DEFAULTS: Final = {
     "7605": _row("7605", "aluminium", "Aluminium wire", 1.140, None, 1.140, "(L)"),
     "7606": _row("7606", "aluminium", "Plates, sheets, strip >0.2 mm", 1.600, None, 1.600, "(L)"),
     "7608": _row("7608", "aluminium", "Aluminium tubes and pipes", 1.160, None, 1.160, "(L)"),
-    "7614": _row("7614", "aluminium", "Stranded wire, cables, plaited bands", 1.140, None, 1.140, "(L)"),
+    "7614": _row(
+        "7614", "aluminium", "Stranded wire, cables, plaited bands", 1.140, None, 1.140, "(L)"
+    ),
     # ── الهيدروجين ─────────────────────────────────────────────────────────────
     "28041000": _row("28041000", "hydrogen", "Hydrogen", 10.820, None, 10.820, None),
     # ── الحديد والصلب ──────────────────────────────────────────────────────────
-    "26011200": _row("26011200", "iron_steel", "Agglomerated iron ores and concentrates", 0.180, 0.030, 0.210, None),
+    "26011200": _row(
+        "26011200",
+        "iron_steel",
+        "Agglomerated iron ores and concentrates",
+        0.180,
+        0.030,
+        0.210,
+        None,
+    ),
     "7201": _row("7201", "iron_steel", "Pig iron and spiegeleisen", 2.870, None, 2.870, None),
     "720211": _row("720211", "iron_steel", "Ferro-manganese >2% C", None, None, None, None),
     "720219": _row("720219", "iron_steel", "Ferro-manganese <=2% C", None, None, None, None),
     "720241": _row("720241", "iron_steel", "Ferro-chromium >4% C", None, None, None, None),
     "720249": _row("720249", "iron_steel", "Ferro-chromium <=4% C", None, None, None, None),
     "72026000": _row("72026000", "iron_steel", "Ferro-nickel", None, None, None, None),
-    "7203": _row("7203", "iron_steel", "DRI and other spongy ferrous products", 0.810, None, 0.810, None),
+    "7203": _row(
+        "7203", "iron_steel", "DRI and other spongy ferrous products", 0.810, None, 0.810, None
+    ),
     "7205": _row("7205", "iron_steel", "Granules and powders", 2.890, None, 2.890, "(C)/(F)"),
-    "72061000": _row("72061000", "iron_steel", "Ingots of iron and non-alloy steel", 3.000, None, 3.000, "(C)"),
-    "72069000": _row("72069000", "iron_steel", "Puddled bars / other primary forms", 3.000, None, 3.000, "(C)"),
-    "72071114": _row("72071114", "iron_steel", "Semi-finished, <0.25% C, w<2t, <=130 mm", 3.000, None, 3.000, "(C)"),
-    "72071116": _row("72071116", "iron_steel", "Semi-finished, <0.25% C, w<2t, >130 mm", 3.000, None, 3.000, "(C)"),
-    "72071190": _row("72071190", "iron_steel", "Semi-finished, <0.25% C, forged", 3.000, None, 3.000, "(C)"),
-    "72071210": _row("72071210", "iron_steel", "Semi-finished, <0.25% C, w>=2t, rolled", 3.000, None, 3.000, "(C)"),
-    "72072015": _row("72072015", "iron_steel", "Semi-finished, 0.25-0.6% C, rolled", 3.000, None, 3.000, "(C)"),
+    "72061000": _row(
+        "72061000", "iron_steel", "Ingots of iron and non-alloy steel", 3.000, None, 3.000, "(C)"
+    ),
+    "72069000": _row(
+        "72069000", "iron_steel", "Puddled bars / other primary forms", 3.000, None, 3.000, "(C)"
+    ),
+    "72071114": _row(
+        "72071114",
+        "iron_steel",
+        "Semi-finished, <0.25% C, w<2t, <=130 mm",
+        3.000,
+        None,
+        3.000,
+        "(C)",
+    ),
+    "72071116": _row(
+        "72071116",
+        "iron_steel",
+        "Semi-finished, <0.25% C, w<2t, >130 mm",
+        3.000,
+        None,
+        3.000,
+        "(C)",
+    ),
+    "72071190": _row(
+        "72071190", "iron_steel", "Semi-finished, <0.25% C, forged", 3.000, None, 3.000, "(C)"
+    ),
+    "72071210": _row(
+        "72071210",
+        "iron_steel",
+        "Semi-finished, <0.25% C, w>=2t, rolled",
+        3.000,
+        None,
+        3.000,
+        "(C)",
+    ),
+    "72072015": _row(
+        "72072015", "iron_steel", "Semi-finished, 0.25-0.6% C, rolled", 3.000, None, 3.000, "(C)"
+    ),
     "7208": _row("7208", "iron_steel", "Flat-rolled HR, width >=600 mm", 3.000, None, 3.000, "(C)"),
     "7209": _row("7209", "iron_steel", "Flat-rolled CR, width >=600 mm", 3.000, None, 3.000, "(C)"),
-    "7210": _row("7210", "iron_steel", "Flat-rolled clad/plated/coated, >=600 mm", 3.000, None, 3.000, "(C)"),
-    "7213": _row("7213", "iron_steel", "Bars and rods, hot-rolled, in coils", 3.000, None, 3.000, "(C)"),
-    "72142000": _row("72142000", "iron_steel", "Reinforcing bars and rods (rebar)", 3.000, None, 3.000, "(C)"),
+    "7210": _row(
+        "7210", "iron_steel", "Flat-rolled clad/plated/coated, >=600 mm", 3.000, None, 3.000, "(C)"
+    ),
+    "7213": _row(
+        "7213", "iron_steel", "Bars and rods, hot-rolled, in coils", 3.000, None, 3.000, "(C)"
+    ),
+    "72142000": _row(
+        "72142000", "iron_steel", "Reinforcing bars and rods (rebar)", 3.000, None, 3.000, "(C)"
+    ),
     "7216": _row("7216", "iron_steel", "Angles, shapes and sections", 3.000, None, 3.000, "(C)"),
-    "72181000": _row("72181000", "iron_steel", "Stainless ingots and primary forms", 3.300, None, 3.300, None),
-    "72191100": _row("72191100", "iron_steel", "Stainless flat-rolled HR >=600 mm >10 mm", 3.300, None, 3.300, None),
+    "72181000": _row(
+        "72181000", "iron_steel", "Stainless ingots and primary forms", 3.300, None, 3.300, None
+    ),
+    "72191100": _row(
+        "72191100",
+        "iron_steel",
+        "Stainless flat-rolled HR >=600 mm >10 mm",
+        3.300,
+        None,
+        3.300,
+        None,
+    ),
 }
 
 #: الرمزُ الوطنيّ الجزائريّ لصلب الكربون من 7206 إلى 7217 **كلُّه** 3.000 بمسار (C)
@@ -799,12 +888,17 @@ def pinned_codes() -> dict[str, dict[str, object]]:
     for cn, row in ALGERIA_DEFAULTS.items():
         resolution = benchmark_resolution(cn)
         bm_cn = resolution["resolved"]
+        #: نفسُ ما يفعله `_benchmark_cn` حرفياً (`str(resolved) if resolved is not None
+        #: else None`) — مُشتقٌّ محلّياً ليُضيِّق mypy النوعَ إلى `str | None` بلا `cast`
+        #: يُخفي الخطأ وبلا استدعاءٍ ثانٍ لـ`benchmark_resolution`. ⛔ القيمةُ المُخرَجة
+        #: في `benchmark_cn` تبقى `bm_cn` كما هي، فملفُّ القياس لا يتغيّر حرفاً.
+        bm_key = str(bm_cn) if bm_cn is not None else None
         if row.total is None:
             reason = "NO_COUNTRY_VALUE_USE_OTHER_COUNTRIES_TABLE"
-        elif bm_cn is None:
+        elif bm_key is None:
             reason = "BENCHMARKS_NOT_EXTRACTED"
         elif _resolve(cn, "B", row.route) is None or _resolve(cn, "A", row.route) is None:
-            table = BENCHMARKS[_benchmark_cn(cn)]
+            table = BENCHMARKS[bm_key]
             reason = (
                 "BENCHMARK_ROUTE_KEYS_UNPAIRED"
                 if not (set(table["A"]) & set(table["B"]))
@@ -857,7 +951,6 @@ def column_asymmetry() -> dict[str, object]:
         "share_where_switching_forfeits_credit": (
             round(len(b_larger) / total, 4) if total else None
         ),
-        "unpaired_benchmark_cns": unpaired_benchmark_cns(),
         "column_a_larger_pairs": a_larger,
         "tied_pairs": equal,
         "asymmetry_is_universal_ar": (
@@ -1165,9 +1258,7 @@ def crossover_see(cn: str, year: int, route_actual: str | None = None) -> dict[s
     _check_year(year)
     row = ALGERIA_DEFAULTS[_norm(cn)]
     if row.total is None:
-        raise UnpinnedError(
-            f"{cn}: no country value pinned - 'Other countries' table applies"
-        )
+        raise UnpinnedError(f"{cn}: no country value pinned - 'Other countries' table applies")
     route_default = row.route
     route_actual = route_default if route_actual is None else route_actual
     markup = MARKUP[row.sector][year]
@@ -1223,9 +1314,7 @@ def saving(
     }
 
 
-def unconditional_year(
-    cn: str, route_actual: str | None = None
-) -> dict[str, object]:
+def unconditional_year(cn: str, route_actual: str | None = None) -> dict[str, object]:
     """أوّلُ سنةٍ يصير فيها الانتقالُ مربحاً **ولو لم تُخفِّض المنشأةُ شيئاً**.
 
     الشرط: `required_reduction ≤ 0`، أي أنّ رسمَ المسار صار أصغرَ من إعفاء العلاوة.
@@ -1293,9 +1382,7 @@ def overstatement(
     }
 
 
-def error_identity(
-    cn: str, year: int, route_actual: str | None = None
-) -> dict[str, object]:
+def error_identity(cn: str, year: int, route_actual: str | None = None) -> dict[str, object]:
     """**برهانٌ مغلقٌ لا يحتاج انبعاثَ منشأة**: حجمُ الخطأ في الأطروحة القديمة ثابت.
 
     لتكن `SEEₘ` = القيمة البلدِيّة × (1+العلاوة)، و`SEFA_B`/`SEFA_A` اعتمادا
@@ -1320,7 +1407,7 @@ def error_identity(
 
     #: التسامحُ سنتيمان: كلّ طرفٍ في `saving()` مُقرَّبٌ على حدة، فالمقارنةُ
     #: الحرفيّة تقيس التقريبَ لا الهوية.
-    TOL = 0.02
+    tol = 0.02
     above: list[bool] = []
     below: list[bool] = []
     beyond: list[float] = []
@@ -1330,14 +1417,14 @@ def error_identity(
     while value <= marked + 1e-9:
         out = saving(cn, year, value, route_actual)
         error = _f(out, "naive_gap_eur_per_t") - _f(out, "saving_eur_per_t")
-        above.append(abs(error - toll) <= TOL)
+        above.append(abs(error - toll) <= tol)
         value = round(value + step, 5)
 
     value = 0.0
     while value < sefa_a - 1e-9:
         out = saving(cn, year, value, route_actual)
         error = _f(out, "naive_gap_eur_per_t") - _f(out, "saving_eur_per_t")
-        below.append(abs(error - (sefa_b - value) * _price()) <= TOL)
+        below.append(abs(error - (sefa_b - value) * _price()) <= tol)
         value = round(value + step, 5)
 
     value = round(marked + step, 5)
@@ -1362,7 +1449,7 @@ def error_identity(
         "saturation_point_see_t": round(sefa_a, 5),
         "max_real_saving_eur_per_t": round(max(0.0, marked - sefa_b) * _price(), 2),
         "error_at_zero_emissions_eur_per_t": round(sefa_b * _price(), 2),
-        "tolerance_eur": TOL,
+        "tolerance_eur": tol,
         "claim_ar": (
             "الخطأُ في «الفجوةُ هي الوفر» = رسمُ المسار بالضبط، ثابتٌ لكلّ انبعاثٍ بين "
             "مرجع العمود A والقيمة البلدِيّة المُعلاة — فيُحسَب **قبل** أن تُقاس أيُّ "
@@ -1412,7 +1499,10 @@ def kill_switches() -> dict[str, object]:
                 "رسمُ المسار كلّه وتعود الأطروحةُ القديمة (الفجوةُ = الوفر) صحيحة."
             ),
             "fired": len(positive_tolls) == 0,
-            "evidence": {"codes_with_positive_benchmark_gap": len(positive_tolls), "codes_examined": len(BENCHMARKS)},
+            "evidence": {
+                "codes_with_positive_benchmark_gap": len(positive_tolls),
+                "codes_examined": len(BENCHMARKS),
+            },
         },
         "K2": {
             "statement_ar": (
@@ -1448,7 +1538,10 @@ def kill_switches() -> dict[str, object]:
                 "للترتيب ويجب إعادةُ الحساب، لا توسيعُ الجدول القديم."
             ),
             "fired": any(cn.startswith("76") for cn in BENCHMARKS),
-            "evidence": {"aluminium_benchmarks_extracted": 0, "aluminium_default_rows_pinned": _aluminium_rows()},
+            "evidence": {
+                "aluminium_benchmarks_extracted": 0,
+                "aluminium_default_rows_pinned": _aluminium_rows(),
+            },
         },
     }
 
@@ -1467,9 +1560,7 @@ def _aluminium_rows() -> int:
     return sum(1 for row in ALGERIA_DEFAULTS.values() if row.sector == "aluminium")
 
 
-def cscf_sensitivity(
-    cn: str, year: int, route_actual: str | None = None
-) -> dict[str, object]:
+def cscf_sensitivity(cn: str, year: int, route_actual: str | None = None) -> dict[str, object]:
     """كم تتحرّك العتبةُ لو كان CSCF ≠ 1 — لأنّ درجته **ب** لا أ (S8 · K2).
 
     ⛔ لا تُستعمل لتبرير الثقة: تُستعمل لإعلان أنّ كلّ رقمٍ باليورو في هذه الدفعة
@@ -1534,7 +1625,8 @@ def self_check() -> None:
     """حارسٌ حتميٌّ على الدبابيس نفسها — يسقط لو حُرِّف رقمٌ منقول."""
     # القيمةُ البلدِيّة لصلب الكربون الجزائريّ موحّدةٌ على المسار (C) — وهذه نتيجة
     carbon = [
-        row for row in ALGERIA_DEFAULTS.values()
+        row
+        for row in ALGERIA_DEFAULTS.values()
         if row.sector == "iron_steel" and row.route == ALGERIA_CARBON_STEEL_ROUTE
     ]
     assert carbon and {row.total for row in carbon} == {3.000}, {row.total for row in carbon}
@@ -1571,8 +1663,9 @@ def self_check() -> None:
     audit = closure_audit()
     assert audit["rows_open"] == 10, audit["rows_open"]
     open_cns = {
-        cn for cn in ALGERIA_DEFAULTS if (gap := ALGERIA_DEFAULTS[cn].closure_gap) is not None
-        and abs(gap) >= 5e-4
+        cn
+        for cn in ALGERIA_DEFAULTS
+        if (gap := ALGERIA_DEFAULTS[cn].closure_gap) is not None and abs(gap) >= 5e-4
     }
     assert open_cns == {
         "2523100010",
@@ -1595,10 +1688,10 @@ def self_check() -> None:
 #: عليها موسومةٌ `ASSUMED_SEE`. العتباتُ (`crossover_see`) و`unconditional_year`
 #: ⛔ لا تستعملها إطلاقاً — ولهذا هي المُنتَج.
 CANDIDATE_SEE: Final = {
-    "25232900": 0.850,   # إسمنت بورتلاندي رماديّ
-    "31021019": 0.800,   # يوريا >45% N (مسار غازيّ SMR)
-    "31023090": 1.200,   # نترات الأمونيوم
-    "72071114": 2.000,   # بلاطة صلب كربونيّ، المسار المُدبَّس (C)
+    "25232900": 0.850,  # إسمنت بورتلاندي رماديّ
+    "31021019": 0.800,  # يوريا >45% N (مسار غازيّ SMR)
+    "31023090": 1.200,  # نترات الأمونيوم
+    "72071114": 2.000,  # بلاطة صلب كربونيّ، المسار المُدبَّس (C)
 }
 
 
@@ -1627,7 +1720,9 @@ def measure_all() -> dict[str, object]:
                     "default_eur_per_t": certificates_default(cn, year)["eur_per_t"],
                     "toll_eur_per_t": path_toll(cn, year)["toll_eur_per_t"],
                     "relief_eur_per_t": markup_relief(cn, year)["relief_eur_per_t"],
-                    "required_reduction_t": net_required_reduction(cn, year)["required_reduction_t"],
+                    "required_reduction_t": net_required_reduction(cn, year)[
+                        "required_reduction_t"
+                    ],
                     "crossover_see_t": crossover_see(cn, year)["crossover_see_t"],
                 }
                 for year in HORIZON
@@ -1694,9 +1789,7 @@ def measure_all() -> dict[str, object]:
         "inputs_fingerprint": inputs_fingerprint(),
         "results": {
             "mechanism": {
-                "formula_ar": (
-                    "NC = SEE × (1 + mark-up) − f × CSCF × BM — وf يهبط من 0.975 إلى 0"
-                ),
+                "formula_ar": ("NC = SEE × (1 + mark-up) − f × CSCF × BM — وf يهبط من 0.975 إلى 0"),
                 "cbam_factor_2026": CBAM_FACTOR[2026],
                 "cbam_factor_is_a_multiplier_on": "BENCHMARK",
                 "withdrawn_reading": "net = gross x (1 - free_allocation_remaining)",

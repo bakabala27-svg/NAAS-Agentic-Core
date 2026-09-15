@@ -44,9 +44,9 @@ from shared.research.cbam_pin import (
     PinError,
     UnpinnedError,
     Verdict,
+    benchmark_resolution,
     certificates_actual,
     certificates_default,
-    benchmark_resolution,
     closure_audit,
     column_asymmetry,
     crossover_see,
@@ -98,7 +98,7 @@ def test_stdlib_only() -> None:
 
 def test_horizon_stops_where_the_formula_changes() -> None:
     """2034 آخرُ الأفق: من 2034 «لا ينطبق معامل CBAM» (S3) ⇒ الاستمرارُ تخمين."""
-    assert HORIZON == tuple(range(2026, 2035))
+    assert tuple(range(2026, 2035)) == HORIZON
     assert CBAM_FACTOR[2034] == 0.0
 
 
@@ -821,7 +821,7 @@ def test_ucl_inherited_fingerprints_are_not_on_disk() -> None:
         "20ec8bd4b363d6bf",
         "9b46b6569dbaef83",
     ]
-    carriers: dict[str, int] = {fp: 0 for fp in fingerprints}
+    carriers: dict[str, int] = dict.fromkeys(fingerprints, 0)
     for path in REPO_ROOT.rglob("*"):
         if ".git" in path.parts or not path.is_file():
             continue
