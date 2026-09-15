@@ -211,6 +211,7 @@
     "changed_paths_excluding_packet": [
       ".github/workflows/ci.yml",
       ".memory/agent_reliability_hard_currency_truth.md",
+      ".memory/ci-gates.md",
       "docs/DOCUMENTATION_INDEX.md",
       "docs/changes/current_changed_paths.txt",
       "docs/governance/NEGATIVE_PROOFS.json",
@@ -230,7 +231,7 @@
       "tests/fitness/test_decision_round06_gate.py",
       "tests/shared/test_fiv_first_invoice.py"
     ],
-    "content_sha256_excluding_packet": "136defc3944290c1bbdae95a95e16a270dff6aa52c528172170ac44e25693709",
+    "content_sha256_excluding_packet": "b42005bf540f36181885e1d61fa537c665521695cc40d0a72959e9e2e34a0dad",
     "refreshed_on": "2026-09-15",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
