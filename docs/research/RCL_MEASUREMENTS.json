@@ -1,0 +1,1030 @@
+{
+  "$schema_version": "1",
+  "as_of": "2026-09-15",
+  "batch": "RCL-11",
+  "declared_zeros": {
+    "client_measurements": 0,
+    "contracts_signed": 0,
+    "invoices_issued": 0,
+    "model_runs_executed": 0,
+    "offers_sent": 0,
+    "official_texts_extracted": 0,
+    "rails_declared_ready": 0,
+    "revenue_claim": "NONE"
+  },
+  "inputs": {
+    "as_of": "2026-09-15",
+    "batch": "RCL-11",
+    "cards": [
+      {
+        "card_id": "T65",
+        "depends_on": [],
+        "executor": "RESEARCHER",
+        "path": "FX"
+      },
+      {
+        "card_id": "T66",
+        "depends_on": [],
+        "executor": "RESEARCHER",
+        "path": "A0"
+      },
+      {
+        "card_id": "T67",
+        "depends_on": [
+          "T66"
+        ],
+        "executor": "WORLD",
+        "path": "A0"
+      },
+      {
+        "card_id": "T68",
+        "depends_on": [],
+        "executor": "RESEARCHER",
+        "path": "A0"
+      },
+      {
+        "card_id": "T69",
+        "depends_on": [],
+        "executor": "WORLD",
+        "path": "FX"
+      },
+      {
+        "card_id": "T70",
+        "depends_on": [
+          "T66",
+          "T68",
+          "T78"
+        ],
+        "executor": "WORLD",
+        "path": "A0"
+      },
+      {
+        "card_id": "T71",
+        "depends_on": [],
+        "executor": "OWNER",
+        "path": "CH"
+      },
+      {
+        "card_id": "T72",
+        "depends_on": [
+          "T71"
+        ],
+        "executor": "OWNER",
+        "path": "CH"
+      },
+      {
+        "card_id": "T73",
+        "depends_on": [
+          "T71"
+        ],
+        "executor": "RESEARCHER",
+        "path": "CH"
+      },
+      {
+        "card_id": "T74",
+        "depends_on": [],
+        "executor": "RESEARCHER",
+        "path": "CH"
+      },
+      {
+        "card_id": "T75",
+        "depends_on": [],
+        "executor": "RESEARCHER",
+        "path": "CH"
+      },
+      {
+        "card_id": "T76",
+        "depends_on": [],
+        "executor": "OWNER",
+        "path": "CH"
+      },
+      {
+        "card_id": "T77",
+        "depends_on": [],
+        "executor": "RESEARCHER",
+        "path": "FX"
+      },
+      {
+        "card_id": "T78",
+        "depends_on": [
+          "T77"
+        ],
+        "executor": "RESEARCHER",
+        "path": "A0"
+      }
+    ],
+    "claims": [
+      {
+        "artifact": "docs/research/AHW_MEASUREMENTS.json → results.contract_terms.rows[*].per_ref[*].buffer_days",
+        "batch": "AHW-4",
+        "claim_id": "C1",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "docs/research/AHW_MEASUREMENTS.json → results.contract_terms.rows[*].robust_under_all_refs",
+        "batch": "AHW-4",
+        "claim_id": "C2",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [
+          "S_A"
+        ],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "shared/research/assurance_window.py:634 buffer_days()",
+        "batch": "AHW-4",
+        "claim_id": "C3",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "shared/research/fx_rail.py:375→392 margin_days_to_120",
+        "batch": "FXR-6",
+        "claim_id": "C4",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "shared/research/fx_rail.py:377-390 → status ∈ {COMPLIANT, INSURED_ONLY, PROHIBITED}",
+        "batch": "FXR-6",
+        "claim_id": "C5",
+        "depends_on": [
+          "S_A"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": true,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "shared/research/fx_rail.py:418 → deadline = service_realized_day + 120 · breach PAID_AFTER_120",
+        "batch": "FXR-6",
+        "claim_id": "C6",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "shared/research/fx_rail.py:437 breach NOT_REPATRIATED_ON_PAYMENT_DAY",
+        "batch": "FXR-6",
+        "claim_id": "C7",
+        "depends_on": [
+          "S_B"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": true,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "shared/research/portable_trust.py:383 repatriation_breach_risk()",
+        "batch": "VERA-2",
+        "claim_id": "C8",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": "مقياسُ خطرِ تدفّقٍ نقدي (متى يدفع المشتري) — ⛔ ليس مقياسَ امتثال"
+      },
+      {
+        "artifact": "shared/research/portable_trust.py:424 contract_term_ceiling()",
+        "batch": "VERA-2",
+        "claim_id": "C9",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": "سقفُ تفاوضٍ نقدي — ⛔ ليس «الرقمَ الذي يُكتب في العقد» امتثالاً"
+      },
+      {
+        "artifact": ".memory/vera_remote_acceptance_truth.md N5",
+        "batch": "VERA-2",
+        "claim_id": "C10",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [
+          "S_A"
+        ],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "docs/research/WOD_MEASUREMENTS.json:694 → A9_marketplace_mor",
+        "batch": "WOD-8",
+        "claim_id": "C11",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [
+          "K5_foreign_entity"
+        ],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "docs/research/WOD_MEASUREMENTS.json → A9 status = BLOCKED_DOCTRINE",
+        "batch": "WOD-8",
+        "claim_id": "C12",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [
+          "K5_foreign_entity"
+        ],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "docs/research/FXR_MEASUREMENTS.json → fx_retention",
+        "batch": "FXR-6",
+        "claim_id": "C13",
+        "depends_on": [
+          "S_F"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": true,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "docs/research/AHW_MEASUREMENTS.json → results.contract_terms.min_buffer_days",
+        "batch": "AHW-4",
+        "claim_id": "C14",
+        "depends_on": [
+          "RSM_DAY_BUDGET"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "docs/research/WOD_MEASUREMENTS.json → A0_us_startup_pilot · effort_units 0 · PASS",
+        "batch": "WOD-8",
+        "claim_id": "C15",
+        "depends_on": [],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": null
+      }
+    ],
+    "credit_cap_days": 120,
+    "credit_insured_cap_days": 180,
+    "replacement_constraints": [
+      {
+        "constraint_id": "S_A",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "النظام 26-02 م2 · الجريدة ن°58 (2026-08-12) — منقولٌ في FCM §1 وREADME_NEW_KNOWLEDGE:348"
+      },
+      {
+        "constraint_id": "S_B",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "النظام 26-02 م2 (يعيد صياغة م61 من النظام 07-01، الفقرة الأخيرة) — FCM §1 نتيجة 1"
+      },
+      {
+        "constraint_id": "S_C",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "النظام 07-01 م57 معدَّلاً بالنظام 21-01 — FCM §1 نتيجة 2"
+      },
+      {
+        "constraint_id": "S_D",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "النظام 07-01 م67 معدَّلاً بالنظام 21-01 — FCM §1 نتيجة 3"
+      },
+      {
+        "constraint_id": "S_E",
+        "ref_status": "press-reported-awaiting-official-text",
+        "source": "research/fx-hard-currency/FCM.md §5 (بوّابةٌ حاجبة قبل أيّ بيع)"
+      },
+      {
+        "constraint_id": "S_F",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "التعليمة 06-2021 م4 + بيانُ بنك الجزائر 2021-07-18 — README_NEW_KNOWLEDGE:350"
+      }
+    ],
+    "withdrawals": [
+      {
+        "replaced_by": "S_B",
+        "source": "research/fx-hard-currency/FCM.md §2.1",
+        "voided_model": "RSM_DAY_BUDGET",
+        "withdrawal_id": "W1",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
+        "replaced_by": "S_A",
+        "source": "research/fx-hard-currency/FCM.md §2.2",
+        "voided_model": "RSM_NET60_CEILING",
+        "withdrawal_id": "W2",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
+        "replaced_by": "S_D",
+        "source": "research/fx-hard-currency/FCM.md §2.3",
+        "voided_model": "RSM_PENALTY_MULTIPLE",
+        "withdrawal_id": "W3",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
+        "replaced_by": "S_C",
+        "source": "research/fx-hard-currency/FCM.md §2.4",
+        "voided_model": "RSM_48H_DOMICILIATION",
+        "withdrawal_id": "W4",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
+        "replaced_by": "S_F",
+        "source": "docs/research/ASSURANCE_CONVERGENCE_SPEC_v1.md C1",
+        "voided_model": "RETENTION_50_PERCENT",
+        "withdrawal_id": "W5",
+        "withdrawn_on": "2026-09-13"
+      },
+      {
+        "replaced_by": null,
+        "source": "docs/research/FRONTIER_CLAIM_LEDGER_2026-09.md A3 ⟦تصحيحٌ مؤرَّخ⟧",
+        "voided_model": "NO_MILLENNIUM_VERDICT",
+        "withdrawal_id": "W6",
+        "withdrawn_on": "2026-09-12"
+      }
+    ]
+  },
+  "inputs_fingerprint": "eabc46ee851a149897b6c9ca99438bc7d2c39af2ba7cc8a8632274800b49b98b",
+  "limits_ar": [
+    "⛔ ليس رأياً قانونياً ولا ضريبياً — أحكامُ بنيةٍ مقابل مراجعَ مُسندة.",
+    "⛔ النصُّ الحرفيُّ للجريدة الرسمية لم يُستخرج (S_E · T77) — وكلُّ قيدٍ تنظيميٍّ هنا مشروطٌ بنقلٍ ثانوي.",
+    "⛔ لا رقمَ إيرادٍ ولا تسعير؛ `revenue_claim = NONE`.",
+    "⛔ لا خطَّ عرضٍ ثامن — هذه الدفعة لا تضيف إلى `OFFER_CATALOG.json`.",
+    "⛔ سطحُ الاقتباس محصورٌ في الادّعاءات المُدرجة في `CLAIMS`؛ وK3 هو شرطُ قتله."
+  ],
+  "results": {
+    "card_ledger": {
+      "by_executor": {
+        "OWNER": 3,
+        "RESEARCHER": 8,
+        "WORLD": 3
+      },
+      "by_path": {
+        "A0": 5,
+        "CH": 6,
+        "FX": 3
+      },
+      "items": [
+        {
+          "card_id": "T65",
+          "depends_on": [],
+          "executor": "RESEARCHER",
+          "path": "FX",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:218",
+          "summary_ar": "النصُّ الأوّليّ لأربع خلايا مُمنوعة"
+        },
+        {
+          "card_id": "T66",
+          "depends_on": [],
+          "executor": "RESEARCHER",
+          "path": "A0",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:219",
+          "summary_ar": "حزمةُ الجهد-5 (`msa_nda_review` + `dpa_sccs_pack`) قبل أيّ عرض"
+        },
+        {
+          "card_id": "T67",
+          "depends_on": [
+            "T66"
+          ],
+          "executor": "WORLD",
+          "path": "A0",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:220",
+          "summary_ar": "عرضٌ بثلاث صيغِ وصف + جوابُ مشترٍ"
+        },
+        {
+          "card_id": "T68",
+          "depends_on": [],
+          "executor": "RESEARCHER",
+          "path": "A0",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:221",
+          "summary_ar": "سطرُ «تاريخ إنجاز الخدمة» في نموذج العقد"
+        },
+        {
+          "card_id": "T69",
+          "depends_on": [],
+          "executor": "WORLD",
+          "path": "FX",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:222",
+          "summary_ar": "سؤالُ مشترٍ فرنسي/إسباني عن الاستقطاع"
+        },
+        {
+          "card_id": "T70",
+          "depends_on": [
+            "T66",
+            "T68",
+            "T78"
+          ],
+          "executor": "WORLD",
+          "path": "A0",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:223",
+          "summary_ar": "اختبارُ A0 على مشترٍ حقيقيّ بعقدٍ قصير"
+        },
+        {
+          "card_id": "T71",
+          "depends_on": [],
+          "executor": "OWNER",
+          "path": "CH",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:177",
+          "summary_ar": "سؤالٌ مكتوبٌ واحد إلى Prime — «التنفيذُ بيد المالك»"
+        },
+        {
+          "card_id": "T72",
+          "depends_on": [
+            "T71"
+          ],
+          "executor": "OWNER",
+          "path": "CH",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:178",
+          "summary_ar": "سؤالُ DataVendor — بعد إغلاق T71"
+        },
+        {
+          "card_id": "T73",
+          "depends_on": [
+            "T71"
+          ],
+          "executor": "RESEARCHER",
+          "path": "CH",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:179",
+          "summary_ar": "مسودّةُ طلب مكافأة (CH2) — محجوزةٌ على ردّ T71"
+        },
+        {
+          "card_id": "T74",
+          "depends_on": [],
+          "executor": "RESEARCHER",
+          "path": "CH",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:180",
+          "summary_ar": "إعادةُ مسحٍ مصغَّرٍ لسوق التدقيق شهرياً"
+        },
+        {
+          "card_id": "T75",
+          "depends_on": [],
+          "executor": "RESEARCHER",
+          "path": "CH",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:181",
+          "summary_ar": "التقاطُ شارة التوظيف أو إسقاطُها"
+        },
+        {
+          "card_id": "T76",
+          "depends_on": [],
+          "executor": "OWNER",
+          "path": "CH",
+          "source": "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:182",
+          "summary_ar": "قرارُ مالكٍ في ترخيص codebase قبل أيّ تحرّك CH5"
+        },
+        {
+          "card_id": "T77",
+          "depends_on": [],
+          "executor": "RESEARCHER",
+          "path": "FX",
+          "source": "RCL-11 (هذه الدفعة)",
+          "summary_ar": "التقاطُ نصّ م61 + م57 + م67 من `joradp.dz` — يُغلق S_E"
+        },
+        {
+          "card_id": "T78",
+          "depends_on": [
+            "T77"
+          ],
+          "executor": "RESEARCHER",
+          "path": "A0",
+          "source": "RCL-11 (هذه الدفعة)",
+          "summary_ar": "إعلانُ جاهزية السكّة + تقديمُ تصريح م57 — بوابة T4 قبل أيّ فاتورة"
+        }
+      ],
+      "total": 14
+    },
+    "credit_term": {
+      "cap_days": 120,
+      "insured_cap_days": 180,
+      "rows": [
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "ADMISSIBLE",
+          "term_days": 0
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "ADMISSIBLE",
+          "term_days": 15
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "ADMISSIBLE",
+          "term_days": 30
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "ADMISSIBLE",
+          "term_days": 45
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "ADMISSIBLE",
+          "term_days": 60
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "ADMISSIBLE",
+          "term_days": 90
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "ADMISSIBLE",
+          "term_days": 120
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "NEEDS_CREDIT_INSURANCE",
+          "term_days": 150
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "NEEDS_CREDIT_INSURANCE",
+          "term_days": 180
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "PROHIBITED",
+          "term_days": 270
+        },
+        {
+          "applicable_cap_days": 120,
+          "basis": "S_A — النظام 26-02 م2 (نقلٌ عن الجريدة ن°58)",
+          "credit_insured": false,
+          "reported_as": "🟢⟨ح⟩ فحصُ بنيةٍ مقابل مرجعٍ مُسند — ⛔ ليس رأياً قانونياً",
+          "status": "PROHIBITED",
+          "term_days": 360
+        }
+      ]
+    },
+    "kill_switches": [
+      {
+        "condition_ar": "يُستخرج نصُّ م61 من الجريدة الرسمية فيُثبت **ميزانيةَ أيام**",
+        "consequence_ar": "W1 باطلة، ويعود `buffer_days` كميةً معرَّفة — وتُلغى البوّابة T4",
+        "id": "K1",
+        "observable_ar": "اقتباسٌ حرفيٌّ من `joradp.dz` (T77)"
+      },
+      {
+        "condition_ar": "يدفع مشترٍ واحدٌ وتصل الحصيلةُ بلا تصريح م57 وبلا خرق",
+        "consequence_ar": "S_C/S_D أضعفُ من المعلن، وتُنزَل بوابةُ T4 إلى ملاحظة",
+        "id": "K2",
+        "observable_ar": "إيصالُ تحويلٍ واحد + كشفُ حساب (T70)"
+      },
+      {
+        "condition_ar": "يظهر ادّعاءٌ على القرص يعتمد على مسحوبٍ ولم تلتقطه هذه الأداة",
+        "consequence_ar": "سطحُ الاقتباس ناقص، ولا يُقتبَس الحكمُ «x من y قابلٌ للاقتباس»",
+        "id": "K3",
+        "observable_ar": "بطاقةُ تدقيقٍ واحدة تُخفق في `tests/shared/test_rcl_retraction_cascade.py`"
+      },
+      {
+        "condition_ar": "يُثبت أنّ A0 ليست فئةَ الفاتورة الأولى (C15)",
+        "consequence_ar": "المسارُ الحرج كلُّه يُعاد حسابُه على فئةٍ أخرى",
+        "id": "K4",
+        "observable_ar": "قياسُ WOD مُعاداً بمُدخَلاتٍ محدَّثة"
+      },
+      {
+        "condition_ar": "تُغلق البطاقاتُ كلُّها ولا يُرسل عرضٌ واحد",
+        "consequence_ar": "العائقُ ليس المعرفة ولا البطاقات — بل الفاعل (F-06)",
+        "id": "K5",
+        "observable_ar": "سجلُّ إرسالٍ فارغ بعد إغلاق T66 وT68 وT78"
+      }
+    ],
+    "path_disjointness": {
+      "A0_vs_CH": {
+        "cards_disjoint": true,
+        "cards_intersection": [],
+        "closure_disjoint": true,
+        "closure_intersection": [],
+        "path_a": [
+          "T66",
+          "T67",
+          "T68",
+          "T70",
+          "T78"
+        ],
+        "path_b": [
+          "T71",
+          "T72",
+          "T73",
+          "T74",
+          "T75",
+          "T76"
+        ],
+        "reading_ar": "منفصلان تماماً — حجبُ CH لا يُعطّل A0."
+      },
+      "A0_vs_FX": {
+        "cards_disjoint": true,
+        "cards_intersection": [],
+        "closure_disjoint": false,
+        "closure_intersection": [
+          "T77"
+        ],
+        "path_a": [
+          "T66",
+          "T67",
+          "T68",
+          "T70",
+          "T78"
+        ],
+        "path_b": [
+          "T65",
+          "T69",
+          "T77"
+        ],
+        "reading_ar": "منفصلان على البطاقات **ومتشابكان على الإغلاق** عبر: T77 — فحجبُ الثاني يُعطّل الأول رغم أنّه لا يشارك في أيٍّ من بطاقاته."
+      },
+      "reading_ar": "الفاتورةُ الأولى (A0) منفصلةٌ عن قنوات FIV (CH) انفصالاً تامّاً، لكنّها **متشابكةٌ مع المسار التنظيمي (FX)** عبر T77 — أي أنّ استخراجَ نصّ الجريدة الرسمية صار على المسار الحرج لأول دولار."
+    },
+    "quotable_surface": {
+      "by_state": {
+        "BLOCKED_PENDING_TEXT": 3,
+        "QUOTABLE": 1,
+        "RECLASSIFIED": 2,
+        "SURVIVES_NARROWER_GROUND": 4,
+        "VOID_WITHDRAWN": 5
+      },
+      "items": [
+        {
+          "action_ar": "⛔ يُسحب من أيّ وثيقةِ عرض؛ ويُستبدل بالقيد البديل إن وُجد.",
+          "claim_id": "C1",
+          "reason_ar": "يعتمد على W1 ولا يملك سنداً مستقلاً — الكميةُ غيرُ معرَّفة بعد السحب، لا «صغيرة».",
+          "state": "VOID_WITHDRAWN",
+          "surviving_grounds": [],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "يُعاد إسنادُه كتابةً إلى السند الباقي قبل أيّ اقتباس، ويُسقَط الرقمُ المسحوب.",
+          "claim_id": "C2",
+          "reason_ar": "سندُه الأصلي (W1) مسحوب، لكنّه يستند كذلك إلى S_A — فينجو **مضيَّقاً** لا كما كُتب.",
+          "state": "SURVIVES_NARROWER_GROUND",
+          "surviving_grounds": [
+            "S_A"
+          ],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "⛔ يُسحب من أيّ وثيقةِ عرض؛ ويُستبدل بالقيد البديل إن وُجد.",
+          "claim_id": "C3",
+          "reason_ar": "يعتمد على W1 ولا يملك سنداً مستقلاً — الكميةُ غيرُ معرَّفة بعد السحب، لا «صغيرة».",
+          "state": "VOID_WITHDRAWN",
+          "surviving_grounds": [],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "⛔ يُسحب من أيّ وثيقةِ عرض؛ ويُستبدل بالقيد البديل إن وُجد.",
+          "claim_id": "C4",
+          "reason_ar": "يعتمد على W1 ولا يملك سنداً مستقلاً — الكميةُ غيرُ معرَّفة بعد السحب، لا «صغيرة».",
+          "state": "VOID_WITHDRAWN",
+          "surviving_grounds": [],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "⛔ لا يُقتبَس في عرضٍ قبل التقاط نصّ الجريدة الرسمية.",
+          "claim_id": "C5",
+          "reason_ar": "سالمٌ بنيوياً، لكنّ مرجعَه نقلٌ عن مصدرٍ ثانوي (بوّابة FCM §5).",
+          "state": "BLOCKED_PENDING_TEXT",
+          "surviving_grounds": [
+            "S_A"
+          ],
+          "voided_by": []
+        },
+        {
+          "action_ar": "⛔ يُسحب من أيّ وثيقةِ عرض؛ ويُستبدل بالقيد البديل إن وُجد.",
+          "claim_id": "C6",
+          "reason_ar": "يعتمد على W1 ولا يملك سنداً مستقلاً — الكميةُ غيرُ معرَّفة بعد السحب، لا «صغيرة».",
+          "state": "VOID_WITHDRAWN",
+          "surviving_grounds": [],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "⛔ لا يُقتبَس في عرضٍ قبل التقاط نصّ الجريدة الرسمية.",
+          "claim_id": "C7",
+          "reason_ar": "سالمٌ بنيوياً، لكنّ مرجعَه نقلٌ عن مصدرٍ ثانوي (بوّابة FCM §5).",
+          "state": "BLOCKED_PENDING_TEXT",
+          "surviving_grounds": [
+            "S_B"
+          ],
+          "voided_by": []
+        },
+        {
+          "action_ar": "يُعاد تصنيفُه إلى: مقياسُ خطرِ تدفّقٍ نقدي (متى يدفع المشتري) — ⛔ ليس مقياسَ امتثال",
+          "claim_id": "C8",
+          "reason_ar": "سندُه الأصلي (W1) مسحوب، لكنّ النموذجَ سليمٌ في سؤالٍ وخاطئٌ في السؤال الذي سُمّي به.",
+          "state": "RECLASSIFIED",
+          "surviving_grounds": [],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "يُعاد تصنيفُه إلى: سقفُ تفاوضٍ نقدي — ⛔ ليس «الرقمَ الذي يُكتب في العقد» امتثالاً",
+          "claim_id": "C9",
+          "reason_ar": "سندُه الأصلي (W1) مسحوب، لكنّ النموذجَ سليمٌ في سؤالٍ وخاطئٌ في السؤال الذي سُمّي به.",
+          "state": "RECLASSIFIED",
+          "surviving_grounds": [],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "يُعاد إسنادُه كتابةً إلى السند الباقي قبل أيّ اقتباس، ويُسقَط الرقمُ المسحوب.",
+          "claim_id": "C10",
+          "reason_ar": "سندُه الأصلي (W1) مسحوب، لكنّه يستند كذلك إلى S_A — فينجو **مضيَّقاً** لا كما كُتب.",
+          "state": "SURVIVES_NARROWER_GROUND",
+          "surviving_grounds": [
+            "S_A"
+          ],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "يُعاد إسنادُه كتابةً إلى السند الباقي قبل أيّ اقتباس، ويُسقَط الرقمُ المسحوب.",
+          "claim_id": "C11",
+          "reason_ar": "سندُه الأصلي (W1) مسحوب، لكنّه يستند كذلك إلى K5_foreign_entity — فينجو **مضيَّقاً** لا كما كُتب.",
+          "state": "SURVIVES_NARROWER_GROUND",
+          "surviving_grounds": [
+            "K5_foreign_entity"
+          ],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "يُعاد إسنادُه كتابةً إلى السند الباقي قبل أيّ اقتباس، ويُسقَط الرقمُ المسحوب.",
+          "claim_id": "C12",
+          "reason_ar": "سندُه الأصلي (W1) مسحوب، لكنّه يستند كذلك إلى K5_foreign_entity — فينجو **مضيَّقاً** لا كما كُتب.",
+          "state": "SURVIVES_NARROWER_GROUND",
+          "surviving_grounds": [
+            "K5_foreign_entity"
+          ],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "⛔ لا يُقتبَس في عرضٍ قبل التقاط نصّ الجريدة الرسمية.",
+          "claim_id": "C13",
+          "reason_ar": "سالمٌ بنيوياً، لكنّ مرجعَه نقلٌ عن مصدرٍ ثانوي (بوّابة FCM §5).",
+          "state": "BLOCKED_PENDING_TEXT",
+          "surviving_grounds": [
+            "S_F"
+          ],
+          "voided_by": []
+        },
+        {
+          "action_ar": "⛔ يُسحب من أيّ وثيقةِ عرض؛ ويُستبدل بالقيد البديل إن وُجد.",
+          "claim_id": "C14",
+          "reason_ar": "يعتمد على W1 ولا يملك سنداً مستقلاً — الكميةُ غيرُ معرَّفة بعد السحب، لا «صغيرة».",
+          "state": "VOID_WITHDRAWN",
+          "surviving_grounds": [],
+          "voided_by": [
+            "W1"
+          ]
+        },
+        {
+          "action_ar": "يُقتبَس كما هو.",
+          "claim_id": "C15",
+          "reason_ar": "لا يعتمد على أيّ نموذج — لا يصل إليه سحب.",
+          "state": "QUOTABLE",
+          "surviving_grounds": [],
+          "voided_by": []
+        }
+      ],
+      "quotable_share": 0.06666666666666667,
+      "reading_ar": "1 من 15 ادّعاءً قابلٌ للاقتباس كما هو؛ والباقي إمّا مسحوبٌ أو مضيَّقٌ أو معادُ التصنيف أو محجوبٌ حتى النصّ الرسمي. ⛔ النسبةُ وصفٌ لسطحٍ لا حكمٌ على جودة الدفعات.",
+      "total": 15
+    },
+    "rail_readiness_gate": {
+      "cases": [
+        {
+          "breaches": [
+            "INVOICE_BEFORE_RAIL — فاتورةٌ صدرت قبل إعلان جاهزية السكّة؛ تحت S_B يقع الخرقُ لحظةَ الدفع لا لحظةَ الإجراء."
+          ],
+          "declaration_filed": null,
+          "invoice_issued": true,
+          "ordering_ar": "جاهزيةُ السكّة ← إصدارُ الفاتورة ← دفعُ المشتري ← الترحيلُ اللحظي",
+          "passes": false,
+          "rail_declared_ready": false,
+          "reported_as": "🟢⟨ح⟩ ترتيبُ تبعيّةٍ مشتقٌّ من S_B وS_C — ⛔ ليس رأياً قانونياً"
+        },
+        {
+          "breaches": [
+            "DECLARATION_MISSING — التصريحُ المنصوص عليه في م57 (S_C) بديلُ التوطين، وغيابُه يُبقي الحصيلة غير موطَّنة ⇒ S_D (تحصيلٌ بالدينار)."
+          ],
+          "declaration_filed": false,
+          "invoice_issued": true,
+          "ordering_ar": "جاهزيةُ السكّة ← إصدارُ الفاتورة ← دفعُ المشتري ← الترحيلُ اللحظي",
+          "passes": false,
+          "rail_declared_ready": true,
+          "reported_as": "🟢⟨ح⟩ ترتيبُ تبعيّةٍ مشتقٌّ من S_B وS_C — ⛔ ليس رأياً قانونياً"
+        },
+        {
+          "breaches": [],
+          "declaration_filed": true,
+          "invoice_issued": true,
+          "ordering_ar": "جاهزيةُ السكّة ← إصدارُ الفاتورة ← دفعُ المشتري ← الترحيلُ اللحظي",
+          "passes": true,
+          "rail_declared_ready": true,
+          "reported_as": "🟢⟨ح⟩ ترتيبُ تبعيّةٍ مشتقٌّ من S_B وS_C — ⛔ ليس رأياً قانونياً"
+        },
+        {
+          "breaches": [],
+          "declaration_filed": null,
+          "invoice_issued": false,
+          "ordering_ar": "جاهزيةُ السكّة ← إصدارُ الفاتورة ← دفعُ المشتري ← الترحيلُ اللحظي",
+          "passes": true,
+          "rail_declared_ready": false,
+          "reported_as": "🟢⟨ح⟩ ترتيبُ تبعيّةٍ مشتقٌّ من S_B وS_C — ⛔ ليس رأياً قانونياً"
+        }
+      ],
+      "new_prerequisite_ar": "T4: لا تُصدر فاتورةٌ قبل إعلان جاهزية السكّة وتقديم تصريح م57 — مشتقٌّ من S_B، ⛔ لا وجودَ له في أيّ دفعةٍ سابقة على القرص."
+    },
+    "repatriation_slack": {
+      "reason": "RSM_DAY_BUDGET مسحوب (W1) — وتحت S_B ينشأ الالتزامُ لحظةَ دفع المشتري، فلا يبقى مقدارٌ يُطرح منه أجلُ السداد.",
+      "replaced_by": "rail_readiness_gate() — الجاهزيةُ قبل الإصدار، لا الهامشُ بعد الأجل",
+      "slack_days": null
+    },
+    "replacement_constraints": [
+      {
+        "constraint_id": "S_A",
+        "design_consequence_ar": "قيدٌ على **بند العقد** لا على توقيت الترحيل: الآجالُ المقبولة {t ≤ 120} ∪ {120 < t ≤ 180 ∧ مؤمَّن}. ⛔ لا يستلزم «أقصر = أفضل».",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "النظام 26-02 م2 · الجريدة ن°58 (2026-08-12) — منقولٌ في FCM §1 وREADME_NEW_KNOWLEDGE:348",
+        "statement_ar": "سقفُ أجل الائتمان للمشتري غير المقيم 120 يوماً، و180 بتأمين ائتمانٍ مُسبق"
+      },
+      {
+        "constraint_id": "S_B",
+        "design_consequence_ar": "الالتزامُ يلحق بلحظةٍ يتحكّم فيها **المشتري** لا البائع ⇒ المتغيّرُ التصميمي ليس أجل الدفع بل **جاهزيةُ السكّة قبل أن يتمكّن المشتري من الدفع**.",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "النظام 26-02 م2 (يعيد صياغة م61 من النظام 07-01، الفقرة الأخيرة) — FCM §1 نتيجة 1",
+        "statement_ar": "الترحيلُ مستحقٌّ **يوم يدفع العميلُ غير المقيم**، لا ضمن ميزانية أيام"
+      },
+      {
+        "constraint_id": "S_C",
+        "design_consequence_ar": "بوّابةُ الدخول إلى السكّة **تصريحٌ** (وصفُ المشروع + سعرُ الوحدة + تاريخُ النشر الإلكتروني) لا فتحُ حسابٍ مُسبق — وهذا يُخفّض كلفةَ الاختبار لا أجلَه.",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "النظام 07-01 م57 معدَّلاً بالنظام 21-01 — FCM §1 نتيجة 2",
+        "statement_ar": "الخدماتُ الرقمية عبر الإنترنت وخدماتُ المؤسسات الناشئة و«المهنيون غير التجّار» مُعفَون من التوطين البنكي، ويُستعاض عنه بتصريح"
+      },
+      {
+        "constraint_id": "S_D",
+        "design_consequence_ar": "الخطرُ ليس غرامةً قابلةً للتقدير، بل **فقدانُ العملة الصعبة نفسه** — أي أنّ الخرقَ يُحوِّل الإيرادَ الصَّعب إلى إيرادٍ محليّ (محرَّمٌ هدفاً، §04 D-273).",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "النظام 07-01 م67 معدَّلاً بالنظام 21-01 — FCM §1 نتيجة 3",
+        "statement_ar": "جزاءُ الحصيلة غير الموطَّنة أو المتأخّرة **تحصيلٌ بالدينار**، لا غرامةٌ نقدية"
+      },
+      {
+        "constraint_id": "S_E",
+        "design_consequence_ar": "⛔ لا يُقتبَس أيُّ رقمٍ تنظيميٍّ في وثيقةِ عرضٍ قبل استخراج نصّ م61 من `joradp.dz` — والبوّابةُ تُغلَق بالتقاطٍ لا برأي.",
+        "ref_status": "press-reported-awaiting-official-text",
+        "source": "research/fx-hard-currency/FCM.md §5 (بوّابةٌ حاجبة قبل أيّ بيع)",
+        "statement_ar": "النصُّ الحرفيُّ للجريدة الرسمية لم يُستخرج بعد — وكلُّ رقمٍ هنا مشروطٌ بنقل مصدرٍ ثانوي"
+      },
+      {
+        "constraint_id": "S_F",
+        "design_consequence_ar": "«الاحتفاظُ 100%» ليس حريةَ تصرّف: التعليمةُ تُبقيه في حسابٍ بالعملة الصعبة مقسوماً 80% استيراد / 20% ترقيةُ صادرات — قيدُ **إنفاق** لا قيدُ نسبة.",
+        "ref_status": "secondary-source-quoting-official",
+        "source": "التعليمة 06-2021 م4 + بيانُ بنك الجزائر 2021-07-18 — README_NEW_KNOWLEDGE:350",
+        "statement_ar": "نسبةُ الاحتفاظ 100% لا 50%، وتشمل الخدمات والمؤسسات الناشئة نصّاً"
+      }
+    ],
+    "sendable_path": {
+      "by_executor": {
+        "OWNER": [],
+        "RESEARCHER": [
+          "T66",
+          "T68",
+          "T77",
+          "T78"
+        ],
+        "WORLD": [
+          "T70"
+        ]
+      },
+      "length": 5,
+      "minimum_set": [
+        "T66",
+        "T68",
+        "T77",
+        "T78",
+        "T70"
+      ],
+      "owner_blocking": [],
+      "owner_free": true,
+      "reading_ar": "المسارُ لا يمرّ بالمالك إطلاقاً — كلُّ بطاقاتِه بيد الباحث.",
+      "target": "T70",
+      "target_path": "A0"
+    },
+    "withdrawal_register": [
+      {
+        "quote": "The `gap = 120 - sum(days)` model and its 24-combination table are **withdrawn**. Article 61 grants no day budget.",
+        "replaced_by": "S_B",
+        "source": "research/fx-hard-currency/FCM.md §2.1",
+        "voided_model": "RSM_DAY_BUDGET",
+        "withdrawal_id": "W1",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
+        "quote": "The \"practical net-60 ceiling\" is **withdrawn** as a quantitative inference.",
+        "replaced_by": "S_A",
+        "source": "research/fx-hard-currency/FCM.md §2.2",
+        "voided_model": "RSM_NET60_CEILING",
+        "withdrawal_id": "W2",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
+        "quote": "The speculative penalty of 1x-2x the amount is **withdrawn**, replaced by finding 3.",
+        "replaced_by": "S_D",
+        "source": "research/fx-hard-currency/FCM.md §2.3",
+        "voided_model": "RSM_PENALTY_MULTIPLE",
+        "withdrawal_id": "W3",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
+        "quote": "The 48-hour domiciliation rule **does not apply** to the exporter class in question.",
+        "replaced_by": "S_C",
+        "source": "research/fx-hard-currency/FCM.md §2.4",
+        "voided_model": "RSM_48H_DOMICILIATION",
+        "withdrawal_id": "W4",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
+        "quote": "instruction 06-2021 art. 4 + Bank of Algeria communiqué 2021-07-18 state **100%**, services and startups explicitly covered — recorded as **REFUTED**",
+        "replaced_by": "S_F",
+        "source": "docs/research/ASSURANCE_CONVERGENCE_SPEC_v1.md C1",
+        "voided_model": "RETENTION_50_PERCENT",
+        "withdrawal_id": "W5",
+        "withdrawn_on": "2026-09-13"
+      },
+      {
+        "quote": "العبارةُ «⛔ لا مسائل الألفية» في هذا الصفّ **خاطئةٌ يومَ كُتبت**",
+        "replaced_by": null,
+        "source": "docs/research/FRONTIER_CLAIM_LEDGER_2026-09.md A3 ⟦تصحيحٌ مؤرَّخ⟧",
+        "voided_model": "NO_MILLENNIUM_VERDICT",
+        "withdrawal_id": "W6",
+        "withdrawn_on": "2026-09-12"
+      }
+    ]
+  }
+}
