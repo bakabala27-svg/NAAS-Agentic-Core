@@ -93,6 +93,7 @@
       "ruff format --check .  # PASS — 2192 ملفاً منسّقاً",
       "mypy --config-file mypy.ini --follow-imports=silent shared/ app/integration/  # PASS — 68 ملفاً بلا ملاحظة",
       "python3 scripts/ci_guardrails.py  # PASS — الماسح المعماري (بعد تصنيف research/* مع studies/* بسابقةٍ موثّقة)",
+      "/tmp/tvenv/bin/python scripts/fitness/check_governance_registry.py  # PASS — 98 بوابة مُنفَّذة (97) + دَينٌ مُعلَن (1)، والعلامة المشتقة مطابقة",
       "python3 scripts/fitness/check_documentation_contract.py  # PASS — والروابط تُحلّ",
       "python3 scripts/fitness/check_authority_links.py  # PASS — كل روابط ملفّات السلطة تصل",
       "python3 scripts/fitness/check_agent_reliability_constitution.py  # PASS",
@@ -184,6 +185,7 @@
   "changed_paths": [
     ".github/workflows/ci.yml",
     ".memory/agent_reliability_hard_currency_truth.md",
+    ".memory/ci-gates.md",
     "docs/DOCUMENTATION_INDEX.md",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
     "docs/changes/current_changed_paths.txt",
