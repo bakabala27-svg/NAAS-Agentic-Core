@@ -48,6 +48,14 @@ FORBIDDEN_PATTERNS = [
             # `eb2d798` with these prints and turned `guardrails` red on `main`
             # before any PR touched it.
             "studies/*",
+            # `research/` is the same class as `studies/`: a research-artifact
+            # tree, not application code. Its scripts are standalone CLI
+            # calculators (e.g. `research/fx-hard-currency/cbam_value.py`,
+            # whose `print` calls ARE the deliverable — the recompute table
+            # the study cites). Added 2026-09-15: the tree turned `guardrails`
+            # red on `main` at `ec98ab2` before any PR touched it — the same
+            # failure `studies/` caused at `eb2d798` before its own exemption.
+            "research/*",
             "dev_setup.py",
             "live_db_restructure.py",
             "test_visual_pedagogy_ui.py",

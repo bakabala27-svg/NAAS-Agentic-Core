@@ -81,7 +81,7 @@
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفرُ حذفٍ على مستوى الملفّات: لا ملفَّ محذوف، ولا خطُّ عرضٍ أُزيل، ولا سطرُ عقيدةٍ مُحي. والتعديلُ الوحيد خارج ملفّات الدفعة محصورٌ في `research/fx-hard-currency/cbam_value.py` (14 سطراً مُضافاً و13 محذوفاً) وهو **تطبيعُ lint** لا محوُ منطق: `ruff check --fix` حوّل `{y: 0.0 for y in FACTOR}` إلى `dict.fromkeys`، وتحويلٌ يدويٌّ مكافئ `for y in FACTOR` إلى `.items()`، و`ruff format` أعاد المحاذاة. والبرهانُ أنّ المُخرَج مطابقٌ قبل الإصلاح وبعده: `python3 research/fx-hard-currency/cbam_value.py` أنتج stdout متطابقاً بايت-ببايت (مقارنةُ `diff` ضدّ نسخةٍ قُبض عليها في `/tmp/cbam_before.txt` قبل التعديل ⇒ فارغ). وهذا التطبيعُ هو ما يجعل وظيفةَ `lint` (ruff مثبَّتٌ على 0.14.0) خضراء بدل أن تظلّ حمراء على `main` بملاحظتَين سابقتَين لا علاقةَ لهما بدفعة FIV."
+    "policy_ar": "صفرُ حذفٍ على مستوى الملفّات: لا ملفَّ محذوف، ولا خطُّ عرضٍ أُزيل، ولا سطرُ عقيدةٍ مُحي. والتعديلُ الوحيد خارج ملفّات الدفعة محصورٌ في `research/fx-hard-currency/cbam_value.py` (14 سطراً مُضافاً و13 محذوفاً) وهو **تطبيعُ lint** لا محوُ منطق: `ruff check --fix` حوّل `{y: 0.0 for y in FACTOR}` إلى `dict.fromkeys`، وتحويلٌ يدويٌّ مكافئ `for y in FACTOR` إلى `.items()`، و`ruff format` أعاد المحاذاة. والبرهانُ أنّ المُخرَج مطابقٌ قبل الإصلاح وبعده: `python3 research/fx-hard-currency/cbam_value.py` أنتج stdout متطابقاً بايت-ببايت (مقارنةُ `diff` ضدّ نسخةٍ قُبض عليها في `/tmp/cbam_before.txt` قبل التعديل ⇒ فارغ). وهذا التطبيعُ هو ما يجعل وظيفةَ `lint` (ruff مثبَّتٌ على 0.14.0) خضراء بدل أن تظلّ حمراء على `main` بملاحظتَين سابقتَين لا علاقةَ لهما بدفعة FIV. وأُضيف سطرُ سماحٍ موثّق (`research/*` في قاعدة `print` داخل `scripts/ci_guardrails.py`, +8 أسطرٍ مع التعليل المؤرّخ 2026-09-15) — لا لتخفيف حماية كود التطبيق (يبقى `app/` محظوراً) بل لتصنيف شجرة الأبحاث مع شجرة الدراسات (`studies/*`, السابقة المؤرّخة 2026-09-13): نصُّ القاعدة نفسُه يحصر الحظرَ بكود التطبيق، وطابعاتُ `cbam_value.py` هي المُسلَّم (جدولُ إعادة الحساب الذي تستشهد به الدراسة) لا تشخيصاً."
   },
   "verification": {
     "result": "PASS",
@@ -92,6 +92,7 @@
       "ruff check .  # PASS — ruff 0.14.0 على كامل المستودع (بعد تطبيع ملاحظتَين سابقتَين في research/fx-hard-currency/cbam_value.py)",
       "ruff format --check .  # PASS — 2192 ملفاً منسّقاً",
       "mypy --config-file mypy.ini --follow-imports=silent shared/ app/integration/  # PASS — 68 ملفاً بلا ملاحظة",
+      "python3 scripts/ci_guardrails.py  # PASS — الماسح المعماري (بعد تصنيف research/* مع studies/* بسابقةٍ موثّقة)",
       "python3 scripts/fitness/check_documentation_contract.py  # PASS — والروابط تُحلّ",
       "python3 scripts/fitness/check_authority_links.py  # PASS — كل روابط ملفّات السلطة تصل",
       "python3 scripts/fitness/check_agent_reliability_constitution.py  # PASS",
@@ -192,6 +193,7 @@
     "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md",
     "docs/research/README_NEW_KNOWLEDGE.md",
     "research/fx-hard-currency/cbam_value.py",
+    "scripts/ci_guardrails.py",
     "scripts/fitness/check_decision_round06.py",
     "scripts/research/measure_first_invoice.py",
     "shared/research/__init__.py",

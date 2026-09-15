@@ -10,6 +10,7 @@ M	shared/research/__init__.py
 M	.memory/agent_reliability_hard_currency_truth.md
 A	docs/research/FIV_MEASUREMENTS.json
 A	docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md
+M	scripts/ci_guardrails.py
 A	scripts/fitness/check_decision_round06.py
 A	scripts/research/measure_first_invoice.py
 A	shared/research/first_invoice.py
