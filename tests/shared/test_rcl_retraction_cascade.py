@@ -175,6 +175,35 @@ def test_claim_on_a_live_constraint_is_quotable() -> None:
     assert adjudicate(_claim(depends_on=("S_A",))).state is ClaimState.QUOTABLE
 
 
+def test_wod_k2_prior_art_is_registered_and_quotable() -> None:
+    """الأسبقيةُ على القرص: WOD نصّت على البوّابة قبل هذه الدفعة بيوم."""
+    c16 = next(c for c in CLAIMS if c.claim_id == "C16")
+    assert "bank_export_declaration" in c16.artifact
+    assert adjudicate(c16).state is ClaimState.QUOTABLE
+
+
+def test_the_novelty_claim_is_void_by_our_own_withdrawal() -> None:
+    """C17 ادّعاؤنا نحن — سُحِب بسحبٍ سجّلناه على أنفسنا (W7)."""
+    c17 = next(c for c in CLAIMS if c.claim_id == "C17")
+    v = adjudicate(c17)
+    assert v.state is ClaimState.VOID_WITHDRAWN
+    assert v.voided_by == ("W7",)
+
+
+def test_w7_source_is_the_wod_note_verbatim() -> None:
+    w7 = next(w for w in WITHDRAWALS if w.withdrawal_id == "W7")
+    assert w7.voided_model == "T4_NO_PRIOR_ART"
+    assert "لا عقدَ قبل إيداع التصريح" in w7.quote
+    assert "WOD_MEASUREMENTS.json" in w7.source
+
+
+def test_k3_is_recorded_as_fired_on_this_batch() -> None:
+    """K3 ليس زينة: أُطلِق على الدفعة نفسها، والحالةُ مكتوبةٌ في القياس."""
+    k3 = next(k for k in kill_switches() if k["id"] == "K3")
+    assert k3.get("state") == "FIRED_ON_SELF"
+    assert "bank_export_declaration" in k3["fired_on_ar"]
+
+
 def test_real_c15_is_quotable_and_untouched() -> None:
     """A0 فئةُ الفاتورة الأولى (WOD) لا تعتمد على أيّ نموذج مسحوب."""
     c15 = next(c for c in CLAIMS if c.claim_id == "C15")

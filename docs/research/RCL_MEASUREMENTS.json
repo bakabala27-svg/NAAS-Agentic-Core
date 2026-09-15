@@ -284,6 +284,26 @@
         "independent_grounds": [],
         "needs_official_text": false,
         "reclassified_to": null
+      },
+      {
+        "artifact": "docs/research/WOD_MEASUREMENTS.json → catalog.capabilities.bank_export_declaration (effort_units 0) + requirement export_declaration ∈ A0.mandatory",
+        "batch": "WOD-8",
+        "claim_id": "C16",
+        "depends_on": [],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": null
+      },
+      {
+        "artifact": "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_RCL.md §0.3/§4 (المسودّة الأولى)",
+        "batch": "RCL-11",
+        "claim_id": "C17",
+        "depends_on": [
+          "T4_NO_PRIOR_ART"
+        ],
+        "independent_grounds": [],
+        "needs_official_text": false,
+        "reclassified_to": null
       }
     ],
     "credit_cap_days": 120,
@@ -357,6 +377,13 @@
         "withdrawn_on": "2026-09-13"
       },
       {
+        "replaced_by": "S_B",
+        "source": "docs/research/WOD_MEASUREMENTS.json → bank_export_declaration.note_ar (K2)",
+        "voided_model": "T4_NO_PRIOR_ART",
+        "withdrawal_id": "W7",
+        "withdrawn_on": "2026-09-15"
+      },
+      {
         "replaced_by": null,
         "source": "docs/research/FRONTIER_CLAIM_LEDGER_2026-09.md A3 ⟦تصحيحٌ مؤرَّخ⟧",
         "voided_model": "NO_MILLENNIUM_VERDICT",
@@ -365,7 +392,7 @@
       }
     ]
   },
-  "inputs_fingerprint": "eabc46ee851a149897b6c9ca99438bc7d2c39af2ba7cc8a8632274800b49b98b",
+  "inputs_fingerprint": "6c6f89bd9746c09f68df697804744f0b8b6bedbf652bb887a0fe13bd90a7e899",
   "limits_ar": [
     "⛔ ليس رأياً قانونياً ولا ضريبياً — أحكامُ بنيةٍ مقابل مراجعَ مُسندة.",
     "⛔ النصُّ الحرفيُّ للجريدة الرسمية لم يُستخرج (S_E · T77) — وكلُّ قيدٍ تنظيميٍّ هنا مشروطٌ بنقلٍ ثانوي.",
@@ -621,10 +648,12 @@
         "observable_ar": "إيصالُ تحويلٍ واحد + كشفُ حساب (T70)"
       },
       {
-        "condition_ar": "يظهر ادّعاءٌ على القرص يعتمد على مسحوبٍ ولم تلتقطه هذه الأداة",
+        "condition_ar": "يظهر ادّعاءٌ على القرص تعتمد عليه الدفعةُ ولم تلتقطه هذه الأداة",
         "consequence_ar": "سطحُ الاقتباس ناقص، ولا يُقتبَس الحكمُ «x من y قابلٌ للاقتباس»",
+        "fired_on_ar": "ادّعاءُ «T4 لا أسبقيةَ لها» دُحض بـ`bank_export_declaration` (K2) و`export_declaration` في مجموعة A0 الإلزامية — والسببُ بحثٌ نصّيٌّ سأل عن «rail readiness» ولم يسأل عن «export_declaration».",
         "id": "K3",
-        "observable_ar": "بطاقةُ تدقيقٍ واحدة تُخفق في `tests/shared/test_rcl_retraction_cascade.py`"
+        "observable_ar": "بطاقةُ تدقيقٍ واحدة تُخفق في `tests/shared/test_rcl_retraction_cascade.py`",
+        "state": "FIRED_ON_SELF"
       },
       {
         "condition_ar": "يُثبت أنّ A0 ليست فئةَ الفاتورة الأولى (C15)",
@@ -688,10 +717,10 @@
     "quotable_surface": {
       "by_state": {
         "BLOCKED_PENDING_TEXT": 3,
-        "QUOTABLE": 1,
+        "QUOTABLE": 2,
         "RECLASSIFIED": 2,
         "SURVIVES_NARROWER_GROUND": 4,
-        "VOID_WITHDRAWN": 5
+        "VOID_WITHDRAWN": 6
       },
       "items": [
         {
@@ -849,11 +878,29 @@
           "state": "QUOTABLE",
           "surviving_grounds": [],
           "voided_by": []
+        },
+        {
+          "action_ar": "يُقتبَس كما هو.",
+          "claim_id": "C16",
+          "reason_ar": "لا يعتمد على أيّ نموذج — لا يصل إليه سحب.",
+          "state": "QUOTABLE",
+          "surviving_grounds": [],
+          "voided_by": []
+        },
+        {
+          "action_ar": "⛔ يُسحب من أيّ وثيقةِ عرض؛ ويُستبدل بالقيد البديل إن وُجد.",
+          "claim_id": "C17",
+          "reason_ar": "يعتمد على W7 ولا يملك سنداً مستقلاً — الكميةُ غيرُ معرَّفة بعد السحب، لا «صغيرة».",
+          "state": "VOID_WITHDRAWN",
+          "surviving_grounds": [],
+          "voided_by": [
+            "W7"
+          ]
         }
       ],
-      "quotable_share": 0.06666666666666667,
-      "reading_ar": "1 من 15 ادّعاءً قابلٌ للاقتباس كما هو؛ والباقي إمّا مسحوبٌ أو مضيَّقٌ أو معادُ التصنيف أو محجوبٌ حتى النصّ الرسمي. ⛔ النسبةُ وصفٌ لسطحٍ لا حكمٌ على جودة الدفعات.",
-      "total": 15
+      "quotable_share": 0.11764705882352941,
+      "reading_ar": "2 من 17 ادّعاءً قابلٌ للاقتباس كما هو؛ والباقي إمّا مسحوبٌ أو مضيَّقٌ أو معادُ التصنيف أو محجوبٌ حتى النصّ الرسمي. ⛔ النسبةُ وصفٌ لسطحٍ لا حكمٌ على جودة الدفعات.",
+      "total": 17
     },
     "rail_readiness_gate": {
       "cases": [
@@ -898,7 +945,13 @@
           "reported_as": "🟢⟨ح⟩ ترتيبُ تبعيّةٍ مشتقٌّ من S_B وS_C — ⛔ ليس رأياً قانونياً"
         }
       ],
-      "new_prerequisite_ar": "T4: لا تُصدر فاتورةٌ قبل إعلان جاهزية السكّة وتقديم تصريح م57 — مشتقٌّ من S_B، ⛔ لا وجودَ له في أيّ دفعةٍ سابقة على القرص."
+      "novelty_correction_ar": "⟦تصحيحٌ مؤرَّخ 2026-09-15⟧ البوّابة ليست جديدة: WOD نصّت عليها (K2) قبل هذه الدفعة بيوم. الجديدُ **مضيَّق**: المُحفِّز (قبل إصدار الفاتورة لا قبل التوقيع) · المحتوى (تصريحُ م57 لا توطين) · الموضع (على المسار الحرج إلى T70). ⇒ K3 أُطلِق على هذه الدفعة.",
+      "prior_art": {
+        "artifact": "docs/research/WOD_MEASUREMENTS.json → catalog.capabilities.bank_export_declaration.note_ar",
+        "quote_ar": "K2: لا عقدَ قبل إيداع التصريح — شرطٌ لا بندٌ اختياري.",
+        "requirement": "export_declaration — داخل المجموعة الإلزامية لـA0"
+      },
+      "tightened_prerequisite_ar": "T4: لا تُصدر فاتورةٌ قبل إعلان جاهزية السكّة وتقديم تصريح م57 — تشديدٌ لـK2 القائمة بمقتضى S_B، لا اختراعٌ."
     },
     "repatriation_slack": {
       "reason": "RSM_DAY_BUDGET مسحوب (W1) — وتحت S_B ينشأ الالتزامُ لحظةَ دفع المشتري، فلا يبقى مقدارٌ يُطرح منه أجلُ السداد.",
@@ -1016,6 +1069,14 @@
         "voided_model": "RETENTION_50_PERCENT",
         "withdrawal_id": "W5",
         "withdrawn_on": "2026-09-13"
+      },
+      {
+        "quote": "K2: لا عقدَ قبل إيداع التصريح — شرطٌ لا بندٌ اختياري.",
+        "replaced_by": "S_B",
+        "source": "docs/research/WOD_MEASUREMENTS.json → bank_export_declaration.note_ar (K2)",
+        "voided_model": "T4_NO_PRIOR_ART",
+        "withdrawal_id": "W7",
+        "withdrawn_on": "2026-09-15"
       },
       {
         "quote": "العبارةُ «⛔ لا مسائل الألفية» في هذا الصفّ **خاطئةٌ يومَ كُتبت**",

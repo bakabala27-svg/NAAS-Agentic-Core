@@ -178,6 +178,14 @@ WITHDRAWALS: Final = (
         replaced_by="S_F",
     ),
     Withdrawal(
+        withdrawal_id="W7",
+        voided_model="T4_NO_PRIOR_ART",
+        withdrawn_on="2026-09-15",
+        source="docs/research/WOD_MEASUREMENTS.json → bank_export_declaration.note_ar (K2)",
+        quote="K2: لا عقدَ قبل إيداع التصريح — شرطٌ لا بندٌ اختياري.",
+        replaced_by="S_B",
+    ),
+    Withdrawal(
         withdrawal_id="W6",
         voided_model="NO_MILLENNIUM_VERDICT",
         withdrawn_on="2026-09-12",
@@ -439,6 +447,24 @@ CLAIMS: Final = (
         quantity="الفئةُ الوحيدةُ القابلةُ للفاتورة الأولى",
         depends_on=(),
     ),
+    Claim(
+        claim_id="C16",
+        batch="WOD-8",
+        artifact=(
+            "docs/research/WOD_MEASUREMENTS.json → catalog.capabilities."
+            "bank_export_declaration (effort_units 0) + requirement export_declaration "
+            "∈ A0.mandatory"
+        ),
+        quantity="«K2: لا عقدَ قبل إيداع التصريح — شرطٌ لا بندٌ اختياري»",
+        depends_on=(),
+    ),
+    Claim(
+        claim_id="C17",
+        batch="RCL-11",
+        artifact="docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_RCL.md §0.3/§4 (المسودّة الأولى)",
+        quantity="«بوّابةُ T4 لا وجودَ لها في أيّ دفعةٍ سابقة»",
+        depends_on=("T4_NO_PRIOR_ART",),
+    ),
 )
 
 #: الأسانيدُ المستقلّة المقبولة (خارج نماذج السحب وخارج القيود) — مجموعةٌ مغلقة.
@@ -638,15 +664,28 @@ def rail_readiness_gate(
     invoice_issued: bool,
     declaration_filed: bool | None = None,
 ) -> dict[str, object]:
-    """البوّابةُ الجديدة (T4) — لا وجودَ لها في أيّ دفعةٍ سابقة على القرص.
+    """بوّابةُ الجاهزية (T4) — ⚠️ **ليست جديدة**، وهذا تصحيحٌ على هذه الدفعة.
 
-    لماذا وُلدت؟ لأنّ S_B تجعل الالتزامَ لحظياً عند الدفع. فالفاتورةُ تُصدر **قبل**
-    أن يتمكّن المشتري من الدفع، وإذا لم تكن السكّةُ جاهزةً لحظةَ وصول الحصيلة وقع
-    الخرقُ بلا خطأٍ إجرائيٍّ من أحد. إذن الترتيبُ الإلزامي:
+    ⟦تصحيحٌ مؤرَّخ 2026-09-15 — إضافةٌ لا حذف⟧ كُتب في المسودّة الأولى أنّ هذه
+    البوّابة «لا وجودَ لها في أيّ دفعةٍ سابقة» — وهذا **خاطئ**. الأسبقيةُ على القرص:
+    `WOD_MEASUREMENTS.json → catalog.capabilities.bank_export_declaration.note_ar` =
+    «K2: لا عقدَ قبل إيداع التصريح — شرطٌ لا بندٌ اختياري»، والمتطلّبُ
+    `export_declaration` داخل **المجموعة الإلزامية لـA0 نفسها**. سببُ الخطأ أنّ
+    البحثَ النصّيَّ سأل عن «rail readiness / جاهزية السكّة / قبل الإرسال» ولم يسأل
+    عن `export_declaration` / «قبل التوقيع» ⇒ **K3 أُطلِق على هذه الدفعة**.
+
+    **ما يبقى جديداً بعد التصحيح (مضيَّقاً):**
+
+    1. **المُحفِّز**: WOD يقول «قبل التوقيع»؛ وS_B يشدُّه إلى «قبل **إصدار الفاتورة**»
+       — لأنّ الالتزامَ لحظيٌّ عند الدفع، والفاتورةُ تسبق قدرةَ المشتري على الدفع.
+    2. **المُحتوَى**: تصريحُ WOD كان شرطَ **الإعفاء من التوطين**؛ وS_C يُثبت أنّ
+       هذه الفئة مُعفَاة أصلاً ويُستعاض بتصريح م57 (وصفُ المشروع + **سعرُ الوحدة** +
+       تاريخُ النشر الإلكتروني) — فما يُودَع تغيّر.
+    3. **الموضع**: على المسار الحرج إلى T70 — وهذا لم تقله WOD.
 
         جاهزيةُ السكّة  ←  إصدارُ الفاتورة  ←  دفعُ المشتري  ←  الترحيل (لحظي)
 
-    ⛔ ليست رأياً قانونياً؛ هي ترتيبُ تبعيّةٍ مشتقٌّ من S_B وS_C.
+    ⛔ ليست رأياً قانونياً؛ ترتيبُ تبعيّةٍ مشتقٌّ من S_B وS_C فوق K2 القائمة.
     """
     breaches: list[str] = []
     if invoice_issued and not rail_declared_ready:
@@ -912,9 +951,15 @@ def kill_switches() -> list[dict[str, object]]:
         },
         {
             "id": "K3",
-            "condition_ar": "يظهر ادّعاءٌ على القرص يعتمد على مسحوبٍ ولم تلتقطه هذه الأداة",
+            "condition_ar": "يظهر ادّعاءٌ على القرص تعتمد عليه الدفعةُ ولم تلتقطه هذه الأداة",
             "consequence_ar": "سطحُ الاقتباس ناقص، ولا يُقتبَس الحكمُ «x من y قابلٌ للاقتباس»",
             "observable_ar": "بطاقةُ تدقيقٍ واحدة تُخفق في `tests/shared/test_rcl_retraction_cascade.py`",
+            "state": "FIRED_ON_SELF",
+            "fired_on_ar": (
+                "ادّعاءُ «T4 لا أسبقيةَ لها» دُحض بـ`bank_export_declaration` (K2) و"
+                "`export_declaration` في مجموعة A0 الإلزامية — والسببُ بحثٌ نصّيٌّ سأل "
+                "عن «rail readiness» ولم يسأل عن «export_declaration»."
+            ),
         },
         {
             "id": "K4",
@@ -1036,9 +1081,23 @@ def measure_all() -> dict[str, object]:
                     ),
                     rail_readiness_gate(rail_declared_ready=False, invoice_issued=False),
                 ],
-                "new_prerequisite_ar": (
+                "prior_art": {
+                    "artifact": (
+                        "docs/research/WOD_MEASUREMENTS.json → "
+                        "catalog.capabilities.bank_export_declaration.note_ar"
+                    ),
+                    "quote_ar": "K2: لا عقدَ قبل إيداع التصريح — شرطٌ لا بندٌ اختياري.",
+                    "requirement": "export_declaration — داخل المجموعة الإلزامية لـA0",
+                },
+                "novelty_correction_ar": (
+                    "⟦تصحيحٌ مؤرَّخ 2026-09-15⟧ البوّابة ليست جديدة: WOD نصّت عليها "
+                    "(K2) قبل هذه الدفعة بيوم. الجديدُ **مضيَّق**: المُحفِّز (قبل إصدار "
+                    "الفاتورة لا قبل التوقيع) · المحتوى (تصريحُ م57 لا توطين) · الموضع "
+                    "(على المسار الحرج إلى T70). ⇒ K3 أُطلِق على هذه الدفعة."
+                ),
+                "tightened_prerequisite_ar": (
                     "T4: لا تُصدر فاتورةٌ قبل إعلان جاهزية السكّة وتقديم تصريح م57 — "
-                    "مشتقٌّ من S_B، ⛔ لا وجودَ له في أيّ دفعةٍ سابقة على القرص."
+                    "تشديدٌ لـK2 القائمة بمقتضى S_B، لا اختراعٌ."
                 ),
             },
             "card_ledger": card_ledger(),
