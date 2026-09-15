@@ -225,7 +225,7 @@
       "tests/fitness/test_decision_round06_gate.py",
       "tests/shared/test_fiv_first_invoice.py"
     ],
-    "content_sha256_excluding_packet": "ded103826a3e09764f54a55d8ada0d3c10e6c482a49fb3d3f85d35a9055a9d2c",
+    "content_sha256_excluding_packet": "15fe8b7d160dc4ed729a9a93dca33feaeeccc0aa9ec541435353ae47cdb93899",
     "refreshed_on": "2026-09-15",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
