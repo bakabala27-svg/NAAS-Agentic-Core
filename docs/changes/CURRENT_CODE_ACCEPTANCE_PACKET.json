@@ -203,7 +203,7 @@
     "tests/shared/test_fiv_first_invoice.py"
   ],
   "git_change_snapshot": {
-    "base_ref": "WORKTREE",
+    "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
       ".github/workflows/ci.yml",
       ".memory/agent_reliability_hard_currency_truth.md",
