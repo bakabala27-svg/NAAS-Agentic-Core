@@ -71,11 +71,11 @@ __all__ = [
     "adjudicate",
     "buffer_days",
     "card_ledger",
+    "closure",
     "credit_term_admissibility",
     "inputs_fingerprint",
     "kill_switches",
     "ledger",
-    "closure",
     "measure_all",
     "rail_readiness_gate",
     "repatriation_slack_days",
@@ -150,8 +150,7 @@ WITHDRAWALS: Final = (
         withdrawn_on="2026-09-15",
         source="research/fx-hard-currency/FCM.md §2.3",
         quote=(
-            "The speculative penalty of 1x-2x the amount is **withdrawn**, replaced "
-            "by finding 3."
+            "The speculative penalty of 1x-2x the amount is **withdrawn**, replaced by finding 3."
         ),
         replaced_by="S_D",
     ),
@@ -161,8 +160,7 @@ WITHDRAWALS: Final = (
         withdrawn_on="2026-09-15",
         source="research/fx-hard-currency/FCM.md §2.4",
         quote=(
-            "The 48-hour domiciliation rule **does not apply** to the exporter class "
-            "in question."
+            "The 48-hour domiciliation rule **does not apply** to the exporter class in question."
         ),
         replaced_by="S_C",
     ),
@@ -324,9 +322,7 @@ class Claim:
             raise RetractionError("ادّعاءٌ بلا معرّفٍ أو بلا موضع — لا يُدقَّق.")
         unknown = set(self.depends_on) - _WITHDRAWN_MODELS - _CONSTRAINT_IDS
         if unknown:
-            raise RetractionError(
-                f"{self.claim_id}: يعتمد على معرّفاتٍ غير معلَنة: {sorted(unknown)}"
-            )
+            raise RetractionError(f"{self.claim_id}: يعتمد على معرّفاتٍ غير معلَنة: {sorted(unknown)}")
         if self.reclassified_to is not None and not self.reclassified_to.strip():
             raise RetractionError(f"{self.claim_id}: إعادةُ تصنيفٍ بلا هدفٍ مسمّى.")
 
@@ -515,9 +511,7 @@ def adjudicate(
     if claim.reclassified_to is not None and not claim.reclassified_to.strip():
         raise RetractionError(f"{claim.claim_id}: إعادةُ تصنيفٍ بلا هدف.")
 
-    voided = tuple(
-        w.withdrawal_id for w in withdrawals if w.voided_model in claim.depends_on
-    )
+    voided = tuple(w.withdrawal_id for w in withdrawals if w.voided_model in claim.depends_on)
     #: السندُ الباقي: إمّا سندٌ مستقلٌّ مسمّى، أو قيدٌ بديلٌ نافذ — من الحقلَين معاً.
     grounds = tuple(
         dict.fromkeys(
@@ -746,20 +740,118 @@ PATHS: Final = frozenset({"A0", "CH", "FX"})
 #: البطاقاتُ المفتوحة كما وردت في FIV (T71–T76) وWOD (T65–T70)، + بطاقتا هذه الدفعة.
 #: ⚠️ التبعياتُ تُعرَّف بعد البناء لأنّ `Card` مجمَّدة — يُتحقّق منها في `__post_init__`.
 _CARDS_RAW: Final = (
-    ("T65", "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:218", "النصُّ الأوّليّ لأربع خلايا مُمنوعة", Executor.RESEARCHER, (), "FX"),
-    ("T66", "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:219", "حزمةُ الجهد-5 (`msa_nda_review` + `dpa_sccs_pack`) قبل أيّ عرض", Executor.RESEARCHER, (), "A0"),
-    ("T67", "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:220", "عرضٌ بثلاث صيغِ وصف + جوابُ مشترٍ", Executor.WORLD, ("T66",), "A0"),
-    ("T68", "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:221", "سطرُ «تاريخ إنجاز الخدمة» في نموذج العقد", Executor.RESEARCHER, (), "A0"),
-    ("T69", "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:222", "سؤالُ مشترٍ فرنسي/إسباني عن الاستقطاع", Executor.WORLD, (), "FX"),
-    ("T70", "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:223", "اختبارُ A0 على مشترٍ حقيقيّ بعقدٍ قصير", Executor.WORLD, ("T66", "T68", "T78"), "A0"),
-    ("T71", "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:177", "سؤالٌ مكتوبٌ واحد إلى Prime — «التنفيذُ بيد المالك»", Executor.OWNER, (), "CH"),
-    ("T72", "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:178", "سؤالُ DataVendor — بعد إغلاق T71", Executor.OWNER, ("T71",), "CH"),
-    ("T73", "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:179", "مسودّةُ طلب مكافأة (CH2) — محجوزةٌ على ردّ T71", Executor.RESEARCHER, ("T71",), "CH"),
-    ("T74", "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:180", "إعادةُ مسحٍ مصغَّرٍ لسوق التدقيق شهرياً", Executor.RESEARCHER, (), "CH"),
-    ("T75", "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:181", "التقاطُ شارة التوظيف أو إسقاطُها", Executor.RESEARCHER, (), "CH"),
-    ("T76", "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:182", "قرارُ مالكٍ في ترخيص codebase قبل أيّ تحرّك CH5", Executor.OWNER, (), "CH"),
-    ("T77", "RCL-11 (هذه الدفعة)", "التقاطُ نصّ م61 + م57 + م67 من `joradp.dz` — يُغلق S_E", Executor.RESEARCHER, (), "FX"),
-    ("T78", "RCL-11 (هذه الدفعة)", "إعلانُ جاهزية السكّة + تقديمُ تصريح م57 — بوابة T4 قبل أيّ فاتورة", Executor.RESEARCHER, ("T77",), "A0"),
+    (
+        "T65",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:218",
+        "النصُّ الأوّليّ لأربع خلايا مُمنوعة",
+        Executor.RESEARCHER,
+        (),
+        "FX",
+    ),
+    (
+        "T66",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:219",
+        "حزمةُ الجهد-5 (`msa_nda_review` + `dpa_sccs_pack`) قبل أيّ عرض",
+        Executor.RESEARCHER,
+        (),
+        "A0",
+    ),
+    (
+        "T67",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:220",
+        "عرضٌ بثلاث صيغِ وصف + جوابُ مشترٍ",
+        Executor.WORLD,
+        ("T66",),
+        "A0",
+    ),
+    (
+        "T68",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:221",
+        "سطرُ «تاريخ إنجاز الخدمة» في نموذج العقد",
+        Executor.RESEARCHER,
+        (),
+        "A0",
+    ),
+    (
+        "T69",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:222",
+        "سؤالُ مشترٍ فرنسي/إسباني عن الاستقطاع",
+        Executor.WORLD,
+        (),
+        "FX",
+    ),
+    (
+        "T70",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md:223",
+        "اختبارُ A0 على مشترٍ حقيقيّ بعقدٍ قصير",
+        Executor.WORLD,
+        ("T66", "T68", "T78"),
+        "A0",
+    ),
+    (
+        "T71",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:177",
+        "سؤالٌ مكتوبٌ واحد إلى Prime — «التنفيذُ بيد المالك»",
+        Executor.OWNER,
+        (),
+        "CH",
+    ),
+    (
+        "T72",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:178",
+        "سؤالُ DataVendor — بعد إغلاق T71",
+        Executor.OWNER,
+        ("T71",),
+        "CH",
+    ),
+    (
+        "T73",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:179",
+        "مسودّةُ طلب مكافأة (CH2) — محجوزةٌ على ردّ T71",
+        Executor.RESEARCHER,
+        ("T71",),
+        "CH",
+    ),
+    (
+        "T74",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:180",
+        "إعادةُ مسحٍ مصغَّرٍ لسوق التدقيق شهرياً",
+        Executor.RESEARCHER,
+        (),
+        "CH",
+    ),
+    (
+        "T75",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:181",
+        "التقاطُ شارة التوظيف أو إسقاطُها",
+        Executor.RESEARCHER,
+        (),
+        "CH",
+    ),
+    (
+        "T76",
+        "HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md:182",
+        "قرارُ مالكٍ في ترخيص codebase قبل أيّ تحرّك CH5",
+        Executor.OWNER,
+        (),
+        "CH",
+    ),
+    (
+        "T77",
+        "RCL-11 (هذه الدفعة)",
+        "التقاطُ نصّ م61 + م57 + م67 من `joradp.dz` — يُغلق S_E",
+        Executor.RESEARCHER,
+        (),
+        "FX",
+    ),
+    (
+        "T78",
+        "RCL-11 (هذه الدفعة)",
+        "إعلانُ جاهزية السكّة + تقديمُ تصريح م57 — بوابة T4 قبل أيّ فاتورة",
+        Executor.RESEARCHER,
+        ("T77",),
+        "A0",
+    ),
 )
 
 _ALL_CARDS: Final = tuple(
@@ -785,9 +877,7 @@ def _validate_card_graph(cards: tuple[Card, ...]) -> None:
     for card in cards:
         unknown = set(card.depends_on) - known
         if unknown:
-            raise RetractionError(
-                f"{card.card_id}: تعتمد على بطاقاتٍ غير معلَنة {sorted(unknown)}"
-            )
+            raise RetractionError(f"{card.card_id}: تعتمد على بطاقاتٍ غير معلَنة {sorted(unknown)}")
     # كشفُ الدورة: إن لم يُغلق الترتيبُ كلَّ البطاقات فثمّة دورة.
     # ⚠️ على `local` لا على `_CARD_BY_ID` — وإلا فُحص رسمُ الوحدة لا الرسمُ المُمرَّر.
     closed: set[str] = set()
@@ -853,9 +943,7 @@ def sendable_path(target: str = "T70") -> dict[str, object]:
     ordered: list[str] = []
     while needed_set:
         ready = sorted(
-            cid
-            for cid in needed_set
-            if all(d in ordered for d in _CARD_BY_ID[cid].depends_on)
+            cid for cid in needed_set if all(d in ordered for d in _CARD_BY_ID[cid].depends_on)
         )
         if not ready:  # pragma: no cover - دورةٌ مستحيلةٌ في بياناتٍ معلَنة
             raise RetractionError("دورةٌ في تبعيات البطاقات.")
@@ -1069,13 +1157,18 @@ def measure_all() -> dict[str, object]:
             "credit_term": {
                 "cap_days": CREDIT_CAP_DAYS,
                 "insured_cap_days": CREDIT_INSURED_CAP_DAYS,
-                "rows": [credit_term_admissibility(t) for t in (0, 15, 30, 45, 60, 90, 120, 150, 180, 270, 360)],
+                "rows": [
+                    credit_term_admissibility(t)
+                    for t in (0, 15, 30, 45, 60, 90, 120, 150, 180, 270, 360)
+                ],
             },
             "repatriation_slack": repatriation_slack_days(),
             "rail_readiness_gate": {
                 "cases": [
                     rail_readiness_gate(rail_declared_ready=False, invoice_issued=True),
-                    rail_readiness_gate(rail_declared_ready=True, invoice_issued=True, declaration_filed=False),
+                    rail_readiness_gate(
+                        rail_declared_ready=True, invoice_issued=True, declaration_filed=False
+                    ),
                     rail_readiness_gate(
                         rail_declared_ready=True, invoice_issued=True, declaration_filed=True
                     ),

@@ -142,16 +142,16 @@ def test_claim_on_withdrawn_model_with_no_ground_is_void() -> None:
 
 def test_claim_with_independent_ground_survives_narrower() -> None:
     """النتيجةُ المحورية: A9 تُمنع لسببَين، يسقط أحدُهما فيبقى الحكم مضيَّقاً."""
-    v = adjudicate(_claim(depends_on=("RSM_DAY_BUDGET",), independent_grounds=("K5_foreign_entity",)))
+    v = adjudicate(
+        _claim(depends_on=("RSM_DAY_BUDGET",), independent_grounds=("K5_foreign_entity",))
+    )
     assert v.state is ClaimState.SURVIVES_NARROWER_GROUND
     assert "K5_foreign_entity" in v.surviving_grounds
 
 
 def test_reclassified_precedes_void() -> None:
     """برهانٌ سلبيٌّ على الترتيب: لو سبق `VOID` لأُتلِف مقياسٌ صالحٌ في سؤالٍ آخر."""
-    v = adjudicate(
-        _claim(depends_on=("RSM_DAY_BUDGET",), reclassified_to="مقياسُ تدفّقٍ نقدي")
-    )
+    v = adjudicate(_claim(depends_on=("RSM_DAY_BUDGET",), reclassified_to="مقياسُ تدفّقٍ نقدي"))
     assert v.state is ClaimState.RECLASSIFIED
 
 
@@ -260,7 +260,9 @@ def test_credit_cap_admits_up_to_120() -> None:
 
 def test_credit_cap_needs_insurance_between_120_and_180() -> None:
     assert credit_term_admissibility(150)["status"] == "NEEDS_CREDIT_INSURANCE"
-    assert credit_term_admissibility(150, credit_insured=True)["status"] == "ADMISSIBLE_INSURED_ONLY"
+    assert (
+        credit_term_admissibility(150, credit_insured=True)["status"] == "ADMISSIBLE_INSURED_ONLY"
+    )
 
 
 def test_credit_cap_prohibits_over_180() -> None:
@@ -335,9 +337,7 @@ def test_missing_declaration_is_a_breach() -> None:
 
 
 def test_ready_rail_with_declaration_passes() -> None:
-    out = rail_readiness_gate(
-        rail_declared_ready=True, invoice_issued=True, declaration_filed=True
-    )
+    out = rail_readiness_gate(rail_declared_ready=True, invoice_issued=True, declaration_filed=True)
     assert out["passes"] and out["breaches"] == []
 
 
@@ -359,8 +359,12 @@ def test_card_graph_is_acyclic_and_closed() -> None:
     from shared.research import retraction_cascade as rcl
 
     cyclic = (
-        Card(card_id="A", source="t", summary_ar="a", executor=Executor.RESEARCHER, depends_on=("B",)),
-        Card(card_id="B", source="t", summary_ar="b", executor=Executor.RESEARCHER, depends_on=("A",)),
+        Card(
+            card_id="A", source="t", summary_ar="a", executor=Executor.RESEARCHER, depends_on=("B",)
+        ),
+        Card(
+            card_id="B", source="t", summary_ar="b", executor=Executor.RESEARCHER, depends_on=("A",)
+        ),
     )
     with pytest.raises(RetractionError):
         rcl._validate_card_graph(cyclic)
@@ -370,7 +374,9 @@ def test_card_graph_rejects_unknown_dependency() -> None:
     from shared.research import retraction_cascade as rcl
 
     dangling = (
-        Card(card_id="A", source="t", summary_ar="a", executor=Executor.RESEARCHER, depends_on=("Z",)),
+        Card(
+            card_id="A", source="t", summary_ar="a", executor=Executor.RESEARCHER, depends_on=("Z",)
+        ),
     )
     with pytest.raises(RetractionError):
         rcl._validate_card_graph(dangling)
@@ -523,5 +529,7 @@ def test_filed_measurements_match_recomputation() -> None:
 
 def test_no_eighth_offer_line_is_opened() -> None:
     """هذه الدفعة قياسٌ لا عرض — الكتالوج يبقى سبعة."""
-    catalog = json.loads((REPO_ROOT / "docs" / "commercial" / "OFFER_CATALOG.json").read_text("utf-8"))
+    catalog = json.loads(
+        (REPO_ROOT / "docs" / "commercial" / "OFFER_CATALOG.json").read_text("utf-8")
+    )
     assert len(catalog["offers"]) == 7
