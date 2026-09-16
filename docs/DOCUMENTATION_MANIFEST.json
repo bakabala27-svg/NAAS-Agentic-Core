@@ -232,6 +232,146 @@
       "role": "sovereign-knowledge-revenue-map",
       "authority": "supporting",
       "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/README.md",
+      "audience": "all",
+      "role": "sovereign-atlas-index",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/00-EXECUTIVE-SUMMARY.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/01-METHODOLOGY-AND-AGENT-PROTOCOL.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/02-GEO-MAP-WILAYAS.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/03-SECTOR-MINING.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/04-SECTOR-HYDROCARBONS.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/05-SECTOR-ENERGY-RENEWABLES.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/06-SECTOR-AGRI-FOOD.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/07-SECTOR-BLUE-ECONOMY.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/08-SECTOR-SAHARA.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/09-SECTOR-INDUSTRY-CIRCULAR.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/10-SECTOR-DIGITAL-AI-DATACENTERS.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/11-SECTOR-TOURISM-KNOWLEDGE-SERVICES.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/12-INTERNATIONAL-MARKETS.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/13-LEGAL-FINANCIAL-PATH.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/14-SCORING-MODEL.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/15-FINANCIAL-MODELS.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/16-VERIFICATION-EXECUTION-PLAN.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/17-RANKINGS-MANDATORY-OUTPUTS.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
+      "path": "docs/sovereign-atlas/18-REGISTRIES-SOURCES.md",
+      "audience": "all",
+      "role": "sovereign-atlas-chapter",
+      "authority": "supporting",
+      "status": "live"
     }
   ]
 }
