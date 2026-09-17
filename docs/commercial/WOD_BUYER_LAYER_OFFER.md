@@ -3,6 +3,7 @@
 ## Exportable Offer — Buyer-Layer Onboarding for the First Hard-Currency Invoice
 
 > **الحالة:** `PROPOSED` — صفرُ مقابلات اكتشاف، صفرُ دفعات، ⛔ ليست `OFFER_READY`.
+> **الصلةُ بالكتالوج:** <!-- catalog-relationship: OUTSIDE_CANONICAL_SEVEN | reason: طبقةُ مُشتَرٍ تُزيل حاجزَ الفاتورة الأولى عن الأسطر القائمة؛ لا سطرٌ ثامن في الكتالوج -->
 > **الاستناد:** [`HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md`](../research/HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md) ·
 > [`WOD_MEASUREMENTS.json`](../research/WOD_MEASUREMENTS.json) — بصمةُ المُدخلات
 > `sha256(inputs) = 17cf39bbd2ac…` (كاملةٌ في الملفّ) ·

@@ -171,6 +171,20 @@ jobs:
           # repository URL must have a visible adoption status and owner.
           python scripts/fitness/check_agent_context.py
           python scripts/fitness/check_source_adoption_matrix.py
+          # ADR-017: license clearance for anything that is meant to be sold. The
+          # adoption matrix records purpose/owner/enforcer for 75 external sources but
+          # never asks whether the upstream permits commercial use — so every offer in
+          # OFFER_CATALOG.json was underwritten by repos that in fact forbid it
+          # (CC BY-NC-ND, "personal use only", CC BY-SA share-alike, or no license at
+          # all). This gate derives clearance per source, per production dependency and
+          # per tracked binary, and blocks promotion of any offer citing a source the
+          # project does not have the right to sell.
+          python scripts/fitness/check_asset_license_clearance.py
+          # W-13 (promised in the sovereign revenue map, never built until now): the
+          # five *_OFFER.md documents must declare their relation to the canonical
+          # catalog, and may not restate a readiness status the catalog does not carry.
+          # Two ladders for one commercial truth is how ISS-139 started.
+          python scripts/fitness/check_commercial_offers_parity.py
           # D-279: engineering evidence and foreign-currency production evidence
           # must meet before a capability can advance.
           python scripts/fitness/check_dual_track_alignment.py

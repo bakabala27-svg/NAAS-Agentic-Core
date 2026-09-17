@@ -3,6 +3,7 @@
 ## Exportable Offer — Release-Triggered Regression Gate with Pinned Evidence
 
 > **الحالة:** `PROPOSED` — صفرُ مقابلات اكتشاف، صفرُ دفعات، ⛔ ليست `OFFER_READY`.
+> **الصلةُ بالكتالوج:** <!-- catalog-relationship: OUTSIDE_CANONICAL_SEVEN | reason: عرضٌ بحثيٌّ مُشتَقٌّ من الدفعة الرابعة (D-292)، يبيع نافذةَ الضمان لا سطرًا من الأسطر الكنسيّة السبعة؛ لا يُرقَّم سطرٌ ثامن إلّا بقرارٍ مُسجَّل -->
 > **الاستناد:** [`HARD_CURRENCY_NEW_KNOWLEDGE_AHW.md`](../research/HARD_CURRENCY_NEW_KNOWLEDGE_AHW.md) ·
 > [`FRONTIER_CLAIM_LEDGER_2026-09.md`](../research/FRONTIER_CLAIM_LEDGER_2026-09.md) ·
 > [`AHW_MEASUREMENTS.json`](../research/AHW_MEASUREMENTS.json) — بصمةُ المُدخلات

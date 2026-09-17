@@ -1,108 +1,98 @@
 {
   "$schema_version": 1,
-  "packet_id": "CAP-2026-09-15-fiv-first-invoice",
+  "packet_id": "CAP-2026-09-16-adr017-asset-license-clearance",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "FIV-FIRST-INVOICE-2026-09-15",
+  "decision_of_change": "ADR-017 (2026-09-16) — براءةُ الحقوق أصلٌ محروس",
   "standards": [
     "system-design-primer",
-    "coding-interview-university"
+    "free-programming-books"
   ],
   "evidence": [
-    "hud-vendor-terms-2026",
-    "prime-environments-program-2026",
-    "prime-community-environments-repo",
-    "prime-sprints-reward-hacking-2026",
-    "redteam-pricing-anchors-2026",
-    "anae-service-export-fx-100"
+    "slsa-1.2",
+    "openssf-scorecard"
   ],
   "local_application": [
     {
       "standard": "system-design-primer",
       "paths": [
-        "shared/research/first_invoice.py",
-        "scripts/research/measure_first_invoice.py",
-        "docs/research/FIV_MEASUREMENTS.json",
-        "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md",
-        "shared/research/__init__.py"
+        "docs/governance/ASSET_LICENSE_CLEARANCE.json",
+        "scripts/fitness/check_asset_license_clearance.py",
+        "tests/architecture/test_asset_license_clearance_gate.py",
+        "docs/adr/ADR-017-asset-license-clearance.md"
       ],
-      "gate": "python3 scripts/research/measure_first_invoice.py --check",
-      "application_ar": "فصلُ الطبقات: القنواتُ الخمس (CH1–CH5 بمصادرَ مُسمّاة) ← جدولُ الرسم (فئةٌ واحدة مُعلَنة، والباقي Noneُ بسببٍ منطوق) ← الترتيبُ المُشتَقّ (CH1←CH2←CH3←CH5←CH4) ← الصافيُّ الواحد القابل للاقتباس ← شروطُ القتل الستة. ولا طبقةَ تعرف ما فوقها: `net_probe` لا يرى المصادر، و`rank_for_first_test` لا يرى الصافي — فأيُّ تسريبٍ بين الطبقات يُحمِّر `--check` بدل أن يبقى تخميناً صامتاً."
+      "gate": "python3 scripts/fitness/check_asset_license_clearance.py && python3 -m pytest tests/architecture/test_asset_license_clearance_gate.py -q --noconftest -p no:cacheprovider",
+      "application_ar": "منهجُ مراجعةِ المعمارية الذي يُعلِن العقودَ والحدودَ قبل الأرقام: السجلُّ كيانٌ مُنفصلٌ بمفتاحٍ واحد (`recorded_repo`) لا حقلٌ جديدٌ يُحقنُ في مصفوفةٍ يحرُسها بوّابةٌ أخرى — لأنّ تعديلَ البوّابةِ التي تُقيّمُ التغييرَ نفسَه ممنوعٌ بلا قرارٍ حوكميّ (`DOCUMENTATION_CONTRACT.md §3`). والطبقاتُ مفصولةٌ بقوّتِها: السجلُّ يصف، والبوّابةُ تَحجُب، والاختبارُ يُثبتُ أنّ الحجْبَ واقعٌ (18 حالةِ كسرٍ واحدةٌ لكلِّ بند). ولا حالةَ تشغيلٍ تُنسخُ إلى الوثيقة: الحالةُ تعيشُ في `.memory/` وحدها، والوثيقةُ الجديدة `supporting` صراحةً لتجنّبِ سُلَّمٍ ثانٍ."
     },
     {
-      "standard": "coding-interview-university",
+      "standard": "free-programming-books",
       "paths": [
-        "tests/shared/test_fiv_first_invoice.py",
-        "tests/fitness/test_decision_round06_gate.py",
-        "scripts/fitness/check_decision_round06.py"
+        "docs/commercial/ASSET_KNOWLEDGE_AND_REVENUE_MAP.md",
+        "scripts/fitness/check_commercial_offers_parity.py",
+        "tests/architecture/test_commercial_offers_parity_gate.py",
+        "docs/commercial/AHW_EXPORT_OFFER.md",
+        "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
+        "docs/commercial/CDKC_EXPORTABLE_EVAL_OFFER.md",
+        "docs/commercial/VERA_EXPORT_OFFER.md",
+        "docs/commercial/WOD_BUYER_LAYER_OFFER.md"
       ],
-      "gate": "python3 -m pytest tests/shared/test_fiv_first_invoice.py tests/fitness/test_decision_round06_gate.py -q --noconftest -p no:cacheprovider",
-      "application_ar": "هياكلُ البيانات والاختبارُ المنهجي: القنواتُ سجلاتٌ مُجمَّدة (`frozen dataclass`) تُرتَّب بمفتاحٍ مُعلَن (سقفٌ مغلق ← سقفٌ مفتوح ← UNSTATED)، والرسمُ قاموسٌ يُرفَض عند الغياب (`FeeScheduleMissingError`) لا `get` صامت، و47 اختباراً تُثبِت الحتمية (29 وحدةً + 18 بوابةً) بما فيها اختبارُ مقاومةِ الكسر لكلّ قاعدةٍ في البوابة — فالقاعدةُ التي لا يكسرها اختبارٌ ليست قاعدة."
+      "gate": "python3 scripts/fitness/check_commercial_offers_parity.py",
+      "application_ar": "نمطُ فهرسٍ مرخَّصٍ بالإسناد: قائمةُ المصادر تُبنى على **الإحالةِ لا النسخ**، وكلُّ مدخلٍ يحملُ وصفًا ورخصةً وتاريخَ قراءة. ومن هذا النموذجِ اشتُقَّ مفهوماً لم يكن في المستودع: فهرسُ أصولٍ تجاريةٍ يجب أن يُصرَّحَ عن صلتهِ بالكتالوجِ الكنسيّ لا أن يُتركَ للقارئ — لذلكَ حُمِلتْ وثائقُ العروضِ الخمسةُ علامةَ `catalog-relationship` واحدةً بسببٍ منطوق، ومُنِعَ أن تُعلِنَ حالةَ نضجٍ لا يحملُها الكتالوج."
     }
   ],
   "production": {
-    "owner": "research-independent-hard-currency",
-    "status": "RESEARCH_LIBRARY_AND_STUDY_NO_PRODUCTION_PATH",
+    "owner": "governance-commercial-clearance",
+    "status": "GOVERNANCE_REGISTERS_AND_CI_GATES_NO_RUNTIME_PATH",
     "interfaces": [
-      "shared/research/first_invoice.py — مكتبةٌ بحثية stdlib فقط (القنوات · الرسم · الترتيب · الصافي · شروطُ القتل)؛ لا يستوردها أيّ مسارٍ إنتاجي",
-      "shared/research/__init__.py — تصديرُ الوحدة تحت المِعرَّف `fiv` (مُسمّى لتجنّب تصادمِ الأسماء: `measure_all` و`matrix` موجودان من دفعاتٍ سابقة)",
-      "scripts/research/measure_first_invoice.py — مولِّدُ قياسٍ حتمي بوضع `--check` يفشل عند أيّ انحرافٍ بين المودَع والمحسوب",
-      "docs/research/FIV_MEASUREMENTS.json — ملفُّ القياس المودَع (بصمةُ مُدخلات 3cf6ee76…15fae + `model_runs_executed = 0` · `client_measurements = 0` · `invoices_issued = 0` · `settled_contracts = 0` · `revenue_claim = NONE`)",
-      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md — التعريفُ (C1–C3) + سقفُ FIV + القنواتُ الخمس + الترتيبُ + شروطُ القتل + حدودُ المعرفة + بطاقاتُ H70–H79",
-      "studies/algeria-hard-currency/DECISION-ROUND-06.md + evidence_round06.csv + decision_ledger_round06.csv — جولةُ القرار (14 سنداً · 10 بطاقات · E1 وحيدة = H71)",
-      "scripts/fitness/check_decision_round06.py — بوابةُ الجولة (16 فحصاً: الاتّصال · E1 الواحدة · 21 رقماً · الاسمُ الميّت · منعُ نقل الرسم · الأصفارُ الستة)"
+      "docs/governance/ASSET_LICENSE_CLEARANCE.json — سجلُّ البراءة: 75 مصدرًا خارجيًا + تبعياتُ الإنتاج + الموادُّ الثنائية + حكمُ الترقية لكلِّ عرض، بقاموسٍ مُعلَنٍ داخلَ الملفِّ نفسِه",
+      "scripts/fitness/check_asset_license_clearance.py — فارضٌ stdlib فقط، يقبل `--root` كثقبِ اختبار، ويفشلُ صوتيّاً عندَ غيابِ أيٍّ من مصادرِه الثلاثة",
+      "scripts/fitness/check_commercial_offers_parity.py — مطابقةُ وثائقِ العروضِ مع الكتالوج (يُغلقُ وعدَ W-13 في الخارطةِ السيادية)",
+      "docs/commercial/ASSET_KNOWLEDGE_AND_REVENUE_MAP.md — طبقةُ التدقيقِ المرجعيّةِ المُشتقّةِ (غيرُ مُسَلَّطة)",
+      ".github/workflows/ci.yml — البوّابتانِ خطوتانِ داخل `guardrails`، أي داخل `required-ci`"
     ],
+    "failure_behavior_ar": "أيُّ مصدرٍ مُضافٍ إلى `SOURCE_ADOPTION_MATRIX.json` بلا سجلِّ براءة ⇒ أحمر. أيُّ عرضٍ يُرقّى إلى `OFFER_READY/PILOT/PAID_PROOF/REPEATABLE` وهو يستندُ إلى مرجعٍ لا يُبيحُ البيع ⇒ أحمر. ادّعاءٌ أقدمُ من نافذةِ المراجعة ⇒ أحمر مع أمرِ إعادةِ القياس. ملفٌّ ثنائيٌّ في الشجرة بلا سجلِّ توزيع ⇒ أحمر. بوّابةٌ تفقدُ أحدَ ملفاتِها الثلاثة ⇒ أحمرٌ لا أخضرُ صامت.",
+    "observability_ar": "لا خطَّ تشغيليّاً جديداً يُقاس؛ المُخرَجُ سجلٌّ مُدقَّقٌ وتاريخُ قراءة. البوّابتانِ تطبعانِ العدّاداتِ المُشتقّةَ وقتَ التشغيل (`upstream_sources` و`production_dependencies` و`tracked_binary_artifacts` و`offer_clearance` و`findings_ar`)، ولا تُخبّئُ رقماً في الملفِّ ليكذبَ بعدَ شهر (D-192). تُشغّلانِ محليّاً: `make gates`.",
+    "security_boundary_ar": "لا أسرارَ، ولا مفاتيحَ، ولا بياناتٍ شخصيةَ في أيٍّ من الملفاتِ المضافة؛ لا شبكةَ في CI (القراءةُ من المنبع إجراءٌ مؤرَّخٌ ينفّذُه انسانٌ بصلاحيةٍ ويُثبِتُ تاريخَه — البوّابةُ ترفضُ الادّعاءَ القديمَ بدلَ أن تُعيدَ القياسَ صمتاً)؛ ولا تنفيذَ لشفرةِ غيرِ موثوقةٍ هنا: الموادُّ الثنائيةُ مُصرَّحٌ عنها فقط، والمنشورُ التجاريُّ المُودَعُ مُسجَّلٌ حجاباً بمالكٍ وإجراءٍ لا حذفًا.",
+    "rollback_ar": "تراجُعٌ نظيفٌ بلا حالةٍ مُخزَّنة: `git revert` يلغيَ السجلَّ والبوّابتينِ والوثائقَ وسطرَينِ في `ci.yml` وصفّاً في `NEGATIVE_PROOFS.json` وعدّاداً مُشتقّاً في `.memory/ci-gates.md`. لا ملفَّ حُذف ولا سطرَ عقيدةٍ مُحي؛ وكلُّ تعديلٍ في الملفاتِ القائمة إضافةٌ أو تحديثُ سجلّ؛ والتعديلُ الوحيدُ خارجُ ملفاتِ الدفعة إضافةُ سطرِ صلةٍ واحدٍ إلى كلٍّ من وثائقِ العروضِ الخمس.",
     "runtime_evidence_paths": [
-      "shared/research/first_invoice.py",
-      "shared/research/__init__.py",
-      "scripts/research/measure_first_invoice.py",
-      "docs/research/FIV_MEASUREMENTS.json",
-      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md",
-      "studies/algeria-hard-currency/DECISION-ROUND-06.md",
-      "scripts/fitness/check_decision_round06.py",
-      "tests/shared/test_fiv_first_invoice.py",
-      "tests/fitness/test_decision_round06_gate.py"
-    ],
-    "failure_behavior_ar": "لا مسارَ إنتاجيّاً: لا `app/` ولا `microservices/` يستورد الوحدةَ الجديدة. وأسوأُ فشلٍ ممكن محجوبٌ هكذا: (أ) رقمٌ في وثيقةٍ بيعية لا يطابق الكود — يمنعه اختبارُ المطابقة (21 رقماً بمساراتٍ مُسمّاة تُقارَن بالملفّ الحتمي) و`--check`؛ (ب) رقمٌ مودَعٌ عُدِّل يدوياً — يُعيد `--check` بناءَه فيفشل البناء؛ (ج) رسمٌ يُنقَل من فئةٍ مُعلَنة إلى فئةٍ بلا جدول — محجوبٌ كوداً (`FeeScheduleMissingError`) ونصّاً (البوابة تُثبِت أنّ الصافيَ الوحيدَ القابلَ للاقتباس من فئة codebase وحدها).",
-    "observability_ar": "كلُّ رقمٍ في الوثيقة مُشتقٌّ من `docs/research/FIV_MEASUREMENTS.json` بمسارٍ مُسمّى وصيغةِ عرضٍ معلَنة، وأيُّهما تحرَّر يدوياً يُحمِّر `--check` وبوابةَ الجولة في CI بدل أن يبقى فرقاً يقرؤه باحثٌ لاحق. والملفّ يحمل بصمةَ مُدخلاتٍ (`3cf6ee76…15fae`) فأيّ تغييرٍ في القنوات أو الرسوم يجعل البصمةَ القديمة مكشوفةً — أي أنّ «الرقم يُعرف من أين جاء» مفروضٌ بالبناء لا بالانضباط. وحقولُ الصفرِ الستة مكتوبةٌ في رأس الملفّ ليقرأها أيُّ مراجعٍ قبل أيّ رقمٍ آخر.",
-    "security_boundary_ar": "صفرُ اعتماديةٍ جديدة (stdlib فقط، ومسموحُ الاستيراد مُعلَنٌ في `STDLIB_ONLY` ويُفحَص بـAST في الاختبارات)، وصفرُ استيرادٍ من `app/` أو `microservices/`، وصفرُ سرٍّ، وصفرُ وصولٍ شبكي في الكود أو الاختبارات أو المولِّد. والبياناتُ الحسّاسة الوحيدة المحتملة هي أسماءُ قنواتٍ وفئاتِ أصول — وهي فئاتٌ مجرّدة لا أسماءُ جهات، ولا تحتوي أيّ بياناتِ شخصٍ أو عميل. والأدلّةُ الخارجية الستة المودَعة في `EVIDENCE_CATALOG.json` صفحاتٌ عامّةٌ التُقِطت بتاريخ 2026-09-15 ولا تُضمَّن محتوياتُها في المستودع.",
-    "rollback_ar": "التغييرُ إضافةٌ صافية على مستوى الملفّات (صفرُ ملفٍّ محذوف — `git diff --diff-filter=D` ⇒ فارغ)، فالارتدادُ = `git revert` للالتزام الواحد. ولا نصَّ عقيدةٍ تعدَّل، ولا خطَّ عرضٍ أُضيف أو أُعيد ترتيبه، ولا يُوجد رقمٌ ماليٌّ يُلزِم أحداً: الرقمُ الوحيد «$800» صافِي مسبارٍ مشتقٌّ حتمياً من $1000 × 0.8 ومطبوعٌ في الكود وفي الوثيقة معاً — وهو قابلٌ للاقتباس لا مستحَقّ الدفع."
+      "docs/governance/ASSET_LICENSE_CLEARANCE.json",
+      "docs/governance/NEGATIVE_PROOFS.json",
+      "docs/governance/CONSTITUTION_REGISTRY.json",
+      ".memory/ci-gates.md"
+    ]
   },
   "commercial_trace": {
     "offer_ids": [
       "ai-red-teaming-multilingual",
+      "on-premise-energy-ai",
       "niche-rlhf-data"
     ],
-    "customer_problem_ar": "المشكلةُ الأولى قبل أيّ صفقةٍ مع مشترٍ أجنبيّ ليست السعرَ بل الترتيب: خمسُ قنواتٍ مُعلَنة (سوقُ شيفرات · مكافآتُ بيئات · قوائمُ مهام · تدقيقٌ مُعلَن السعر · منحٌ) تتفاوت في إثبات الدفع من «تقسيمٌ مُعلَن 80/20» إلى «سعرٌ بلا عقدٍ واحدٍ مُبرَم»، والخطأُ في اختيار الأولى يُحرِق أسابيعَ على قناةٍ لا تدفع. والحاجزُ الثاني وهمُ الرسم: تقسيمُ الشيفرات المُعلَن يُغري بتطبيقه على البيئات والتقييمات التي لا جدولَ لها — وهو نقلٌ غيرُ مشروعٍ يُنتِج صافياً مُختلَقاً.",
-    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 أطروحة، ⛔ ليست نتيجةً ولا إيراداً): معرفةُ **أيّ قناةٍ تُختبَر أولاً وبأيّ سقفٍ زمنيٍّ ومالي** تُعيد ترتيبَ الأولويات قبل أيّ إنفاق — مَن تُخاطَب أولاً (CH1 بسقفٍ مغلق)، وبأيّ تعريفٍ تُقبَل الفاتورةُ الأولى (C1–C3 + سقفُ $0 و5 أيام)، ومتى يُقتَل المسار (K1–K6). ⛔ ولا يُدّعى أنّ شيئاً من هذا إيراد: صفرُ عقدٍ مُبرَم (NOT FOUND بتاريخ 2026-09-15)، صفرُ فاتورة، صفرُ خطٍّ ثامن؛ والخطّان المسمّيان كلاهما `PROPOSED`.",
-    "foreign_currency_path_ar": "المسارُ الحرِج يبقى واحداً كما في FXR: بطاقة ANAE ← حسابٌ مهني ← إيصالٌ واحد مستلمٌ قانوناً — بإطارٍ يسمح بالاستلام الكامل (100% بموجب التعليمة 06-2021، مع IFU 0.5%). وما تُضيفه FIV أنّه قبل الوصول إليه يُعرَف أيُّ قناةٍ تُصدِر الفاتورةَ الأولى: CH1 (شيفرةٌ بتقسيمٍ مُعلَن) ⇒ صافٍ محسوب، بينما CH4 (تدقيقٌ بسعرٍ مُعلَن بلا عقد) ⇒ تُرتَّب أخيرةً ولا تُصدِر شيئاً حتى أولُ عقدٍ مُبرَم. ⛔ وطريقُ المكافأةِ كعميلٍ مستبعَدٌ بنصّ (D-267 §1: المكافأةُ ليست عميلاً) لا بتحفّظ.",
-    "foundation_exception_ar": "**استثناءُ أساسيات مُعلَن:** هذا التغييرُ لا يُضيف خطّاً تجارياً ولا يُعدّل تعريفَ واحدٍ من السبعة؛ هو **عدسةُ ترتيبٍ** تخدم الخطّين 1 · 2، ولذلك سُمِّي خطّان قائمان بدل اختراع ثامن. ولا سعرَ ولا نطاقَ سعرٍ في أيّ سطرٍ منه: النطاقاتُ المودَعة (18000–65000 للقوائم · 8000–150000 للتدقيق) نطاقاتُ أدلّةٍ مُلتقطةٍ لا عروضُ بيع، والصافيُّ الوحيد $800 مسبارٌ محسوب لا فاتورة. والقيدُ الذي يفرضه على بقية الخطوط قيدٌ واحدٌ قابلٌ للفحص: أيُّ صافيٍّ يُقتبَس من فئةٍ بلا جدولِ رسمٍ مُعلَن يبقى مخالفةً — والتسليمُ يُحاسَب عليه في `HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md` §3."
+    "customer_problem_ar": "لا يستطيعُ المشتري المؤسسيّ أن يشتريَ ما لا يستطيعُ أن يُثبتَ ملكيتَه: ثلاثةٌ من أسطرِ الكتالوجِ السبعةِ تُبنى على مراجعَ خارجيّةٍ تمنعُ رخصتُها الاستخدامَ التجاريَّ أو الاشتقاقَ أو النشر (CC BY-NC-ND · «شخصيٌّ فقط» · CC BY-SA) أو لا ترخيصَ لها إطلاقًا — والخطرُ لا يظهرُ في الاختباراتِ بل في أولِ فحصٍ قانونيٍّ قبلَ التوقيع. يخدمُ هذا التغيّرُ `ai-red-teaming-multilingual` (يطالبُ developer-roadmap وawesome-claude-skills)، و`on-premise-energy-ai` (يطالبُ system-design-101 وbuild-your-own-x، وعلى عنقودِ العميلِ تظهرُ التبعياتُ المقيِّدةُ أيضاً)، و`niche-rlhf-data` (يطالبُ coding-interview-university).",
+    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 لم تُختبَر بالبيع): إذا صارَ «هل يُمكِنُ بيعُ هذا؟» سؤالاً تُجيبُه بوّابةٌ بخُضرةٍ وحُمرَةٍ مُؤرَّخَةٍ، انخفضَ وقتُ التفاوضِ القانونيّ في أوّلِ صفقةٍ تصديرية، وصارَ بمقدورِ المشروعِ أن يُسلِّمَ البراءةَ نفسَها كخدمةٍ مُستقلة. لا رقمَ إيرادٍ ولا ادّعاءَ عميلٍ هنا — القياسُ الحالى: صفرُ مقابلة، صفرُ عرضٍ مُرسَل، صفرُ فاتورة، صفرُ تحصيل.",
+    "foreign_currency_path_ar": "لا يُغيّرُ هذا التغيّرُ مسارَ القبضِ ولا يفتحُ قناةً جديدة؛ يبقى التحصيلُ مُعلَّقاً عندَ بوّابةِ الدفعِ `SEAM` وفقَ عقيدةِ العملةِ الصعبةِ المُسجَّلةِ في `docs/FOREIGN_CURRENCY_DOCTRINE.md`. الذي يتغيّرُ هو **شرطُ التأهيل**: لا يُرسَلُ عرضُ سعرٍ (ولا فاتورةٌ لاحقاً) قبلَ أن تُطابِقَ البراءةُ المنهجيّةُ لا الاقتباس؛ وعرضُ `on-premise-energy-ai` يحمِلُ قائمةَ رخصٍ ومُسلَّماتِ مصادرَ قبلَ أيِّ رقم.",
+    "foundation_exception_ar": "لا استثناءَ تأسيسياً ولا إعفاءً مُجمَّداً: البوّابتانِ مُطبَّقتانِ على الكتالوجِ كلِّهِ، والنتيجةُ الحاليةُ هي **حجابُ سبعةِ أسطرٍ كلها** — وهذا ليسَ إخفاقاً تقنياً بل الموقفُ الصادقُ الوحيدُ المسموح. لا تُمنحُ أيُّ إعفاءٍ مُجمَّد؛ الرافعُ الوحيدُ استبدالُ المرجعِ المحجوبِ بمرجعٍ مُرخَّصٍ أو بنصٍّ أصليٍّ كامل، ثمَّ إعادةُ القياس."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفرُ حذفٍ على مستوى الملفّات: لا ملفَّ محذوف، ولا خطُّ عرضٍ أُزيل، ولا سطرُ عقيدةٍ مُحي. والتعديلُ الوحيد خارج ملفّات الدفعة محصورٌ في `research/fx-hard-currency/cbam_value.py` (14 سطراً مُضافاً و13 محذوفاً) وهو **تطبيعُ lint** لا محوُ منطق: `ruff check --fix` حوّل `{y: 0.0 for y in FACTOR}` إلى `dict.fromkeys`، وتحويلٌ يدويٌّ مكافئ `for y in FACTOR` إلى `.items()`، و`ruff format` أعاد المحاذاة. والبرهانُ أنّ المُخرَج مطابقٌ قبل الإصلاح وبعده: `python3 research/fx-hard-currency/cbam_value.py` أنتج stdout متطابقاً بايت-ببايت (مقارنةُ `diff` ضدّ نسخةٍ قُبض عليها في `/tmp/cbam_before.txt` قبل التعديل ⇒ فارغ). وهذا التطبيعُ هو ما يجعل وظيفةَ `lint` (ruff مثبَّتٌ على 0.14.0) خضراء بدل أن تظلّ حمراء على `main` بملاحظتَين سابقتَين لا علاقةَ لهما بدفعة FIV. وأُضيف سطرُ سماحٍ موثّق (`research/*` في قاعدة `print` داخل `scripts/ci_guardrails.py`, +8 أسطرٍ مع التعليل المؤرّخ 2026-09-15) — لا لتخفيف حماية كود التطبيق (يبقى `app/` محظوراً) بل لتصنيف شجرة الأبحاث مع شجرة الدراسات (`studies/*`, السابقة المؤرّخة 2026-09-13): نصُّ القاعدة نفسُه يحصر الحظرَ بكود التطبيق، وطابعاتُ `cbam_value.py` هي المُسلَّم (جدولُ إعادة الحساب الذي تستشهد به الدراسة) لا تشخيصاً."
+    "policy_ar": "صفرُ حذفٍ على مستوى الملفات: لا ملفَّ أُزيل، ولا خطَّ عرضٍ مُحِي، ولا سطرَ عقيدةٍ مُحي. التعديلاتُ الوحيدةُ خارجَ ملفاتِ الدفعة: (أ) إضافةُ سطرِ `catalog-relationship` واحدٍ إلى كلٍّ من وثائقِ العروضِ الخمس، (ب) سطرُ البوصلةِ `commercial-license-check` في `docs/governance/AGENT_BOOT_MANIFEST.md`، و(ج) العلامةُ المُشتقّةِ في `.memory/ci-gates.md` من 98 إلى 100 مع عدَّادِ المنفَّذ. المنشورُ التجاريُّ المُودَعُ في الشجرةِ **لمْ يُحذف**: سِجلُّ الحذفِ يخنقُ القانونَ الذي يحرمُه، والحكمُ عليه جاءَ رصدٌ باسمِ مالكٍ وإجراءٌ منطوق (`F-IP-02`) بانتظارِ قرارِ المالك."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 scripts/research/measure_first_invoice.py --check  # PASS — الملفُّ المودَع يُعاد بناؤه (21/21 رقماً · بصمة 3cf6ee76…15fae)",
-      "python3 scripts/fitness/check_decision_round06.py  # PASS — 10 بطاقات (8 مُنجَزة · 1 جزئية · 1 معلّقة) · E1 وحيدة = H71 · 21 رقماً مطابقة",
-      "python3 -m pytest tests/shared/test_fiv_first_invoice.py tests/fitness/test_decision_round06_gate.py -q --noconftest -p no:cacheprovider  # PASS — 47 اختباراً (pytest 9.1.1)",
-      "ruff check .  # PASS — ruff 0.14.0 على كامل المستودع (بعد تطبيع ملاحظتَين سابقتَين في research/fx-hard-currency/cbam_value.py)",
-      "ruff format --check .  # PASS — 2192 ملفاً منسّقاً",
-      "mypy --config-file mypy.ini --follow-imports=silent shared/ app/integration/  # PASS — 68 ملفاً بلا ملاحظة",
-      "python3 scripts/ci_guardrails.py  # PASS — الماسح المعماري (بعد تصنيف research/* مع studies/* بسابقةٍ موثّقة)",
-      "/tmp/tvenv/bin/python scripts/fitness/check_governance_registry.py  # PASS — 98 بوابة مُنفَّذة (97) + دَينٌ مُعلَن (1)، والعلامة المشتقة مطابقة",
-      "python3 scripts/fitness/check_documentation_contract.py  # PASS — والروابط تُحلّ",
-      "python3 scripts/fitness/check_authority_links.py  # PASS — كل روابط ملفّات السلطة تصل",
-      "python3 scripts/fitness/check_agent_reliability_constitution.py  # PASS",
-      "python3 scripts/fitness/check_research_doctrines.py  # PASS",
-      "python3 scripts/fitness/check_dual_track_alignment.py  # PASS",
-      "python3 scripts/fitness/check_revenue_doctrine.py  # PASS",
-      "python3 -m py_compile shared/research/first_invoice.py scripts/research/measure_first_invoice.py scripts/fitness/check_decision_round06.py tests/shared/test_fiv_first_invoice.py tests/fitness/test_decision_round06_gate.py  # PASS"
-    ],
-    "environment_ar": "منفَّذٌ في بيئة التحقق ببايثون 3.11.2 (لا 3.12 متاحةٌ في العزل)، ولذلك شُغِّل pytest بـ`--noconftest` — وهو نفسُ ما سُجِّل في حزم WOD وFXR. الوحدةُ والمولِّد والبوابةُ والاختبارات تُحلَّل جميعاً على 3.11 (py_compile + AST) وتعمل؛ وCI يشغّلها على 3.12 مع conftest الكامل."
+      "python3 scripts/fitness/check_asset_license_clearance.py  # PASS — قاموسٌ مُطبَّق · تغطيةٌ ثنائيةُ الاتجاهِ مع المصفوفة · لا براءةَ بلا قراءةِ رخصة · ترقيةُ العروضِ محجوبةٌ بالبراءة · 59 تبعيةً بالتسمية · 4 ثنائياتٍ بسجلِّ توزيع · 6 بطاقاتِ رصد",
+      "python3 scripts/fitness/check_commercial_offers_parity.py  # PASS — 5 وثائقَ عروضٍ بصلةٍ مُعلَنةٍ وسببٍ منطوق، وحالةُ نضجٍ واحدةٌ في الكتالوج",
+      "python3 -m pytest tests/architecture/test_asset_license_clearance_gate.py tests/architecture/test_commercial_offers_parity_gate.py -q --noconftest -p no:cacheprovider  # PASS — 29 اختباراً أخضر، منها 15 حالةُ كسرٍ تُرجِعُ الرمزَ 1 وتُسمّي البندَ المكسور",
+      "ruff check . && ruff format --check .  # PASS على الملفاتِ الجديدة بـruff 0.14.0 (نسخةُ CI نفسها)؛ بلا توسيعٍ لـ`per-file-ignores`",
+      "python3 scripts/fitness/check_documentation_contract.py  # PASS — 50 وثيقةً حية، الروابطُ والمساراتُ والأوامرُ متسقة",
+      "python3 scripts/fitness/check_gate_negative_proof.py  # PASS — البراهينُ السلبيةُ مُسجَّلةٌ للبوّابتينِ في docs/governance/NEGATIVE_PROOFS.json",
+      "python3 scripts/fitness/check_governance_registry.py  # PASS بعدَ هذا التغيير — كان أحمرَ على main بإحالةٍ وهميةٍ إلى بوّابةٍ وُعدتْ ولم تُبنَ؛ الفارضُ المحلّيُّ يُشتَقُّ من ci.yml فعدّادُ البوّاباتِ تحرّك 98 ⇒ 100 مع الوثيقة",
+      "python3 scripts/fitness/check_memory_coherence.py  # PASS — الترتيبُ والفهرسَ والحدودُ والسِلمُ مُتّسقةٌ مع عقيدةِ D-287…D-295",
+      "python3 scripts/fitness/check_constitution_reality.py  # PASS — لا أرقامَ مُضلِّلةَ في وثائقِ السلطة؛ الوثائقُ الجديدةُ `supporting` لا تُصدِرُ أرقاماً",
+      "python3 scripts/fitness/check_agent_context.py  # PASS — البراءةُ صارت جزءاً من مِلفِّ إقلاعِ الوكيلِ العاشر",
+      "CODE_ACCEPTANCE_BASE_SHA=efb0c4f python3 scripts/fitness/check_code_acceptance.py  # تُنفَّذ في CI على فرقِ الـPR",
+      "gh api repos/<owner>/<repo> --jq .license  # إجراءُ إعادةِ القياسِ المُؤرَّخ (خارجُ CI عمداً): لا شبكةَ في بوّاباتِ الدمج"
+    ]
   },
   "curriculum": {
     "catalog_path": "docs/research/UNIVERSITY_CURRICULUM_CATALOG.json",
@@ -184,55 +174,48 @@
   },
   "changed_paths": [
     ".github/workflows/ci.yml",
-    ".memory/agent_reliability_hard_currency_truth.md",
     ".memory/ci-gates.md",
     "docs/DOCUMENTATION_INDEX.md",
+    "docs/DOCUMENTATION_MANIFEST.json",
+    "docs/adr/ADR-017-asset-license-clearance.md",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
     "docs/changes/current_changed_paths.txt",
+    "docs/commercial/AHW_EXPORT_OFFER.md",
+    "docs/commercial/ASSET_KNOWLEDGE_AND_REVENUE_MAP.md",
+    "docs/commercial/CDKC_EXPORTABLE_EVAL_OFFER.md",
+    "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
+    "docs/commercial/VERA_EXPORT_OFFER.md",
+    "docs/commercial/WOD_BUYER_LAYER_OFFER.md",
+    "docs/governance/ASSET_LICENSE_CLEARANCE.json",
     "docs/governance/NEGATIVE_PROOFS.json",
-    "docs/research/EVIDENCE_CATALOG.json",
-    "docs/research/FIV_MEASUREMENTS.json",
-    "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md",
-    "docs/research/README_NEW_KNOWLEDGE.md",
-    "research/fx-hard-currency/cbam_value.py",
-    "scripts/ci_guardrails.py",
-    "scripts/fitness/check_decision_round06.py",
-    "scripts/research/measure_first_invoice.py",
-    "shared/research/__init__.py",
-    "shared/research/first_invoice.py",
-    "studies/algeria-hard-currency/DECISION-ROUND-06.md",
-    "studies/algeria-hard-currency/decision_ledger_round06.csv",
-    "studies/algeria-hard-currency/evidence_round06.csv",
-    "tests/fitness/test_decision_round06_gate.py",
-    "tests/shared/test_fiv_first_invoice.py"
+    "scripts/fitness/check_asset_license_clearance.py",
+    "scripts/fitness/check_commercial_offers_parity.py",
+    "tests/architecture/test_asset_license_clearance_gate.py",
+    "tests/architecture/test_commercial_offers_parity_gate.py"
   ],
   "git_change_snapshot": {
     "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
       ".github/workflows/ci.yml",
-      ".memory/agent_reliability_hard_currency_truth.md",
       ".memory/ci-gates.md",
       "docs/DOCUMENTATION_INDEX.md",
+      "docs/DOCUMENTATION_MANIFEST.json",
+      "docs/adr/ADR-017-asset-license-clearance.md",
       "docs/changes/current_changed_paths.txt",
+      "docs/commercial/AHW_EXPORT_OFFER.md",
+      "docs/commercial/ASSET_KNOWLEDGE_AND_REVENUE_MAP.md",
+      "docs/commercial/CDKC_EXPORTABLE_EVAL_OFFER.md",
+      "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
+      "docs/commercial/VERA_EXPORT_OFFER.md",
+      "docs/commercial/WOD_BUYER_LAYER_OFFER.md",
+      "docs/governance/ASSET_LICENSE_CLEARANCE.json",
       "docs/governance/NEGATIVE_PROOFS.json",
-      "docs/research/EVIDENCE_CATALOG.json",
-      "docs/research/FIV_MEASUREMENTS.json",
-      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_FIV.md",
-      "docs/research/README_NEW_KNOWLEDGE.md",
-      "research/fx-hard-currency/cbam_value.py",
-      "scripts/ci_guardrails.py",
-      "scripts/fitness/check_decision_round06.py",
-      "scripts/research/measure_first_invoice.py",
-      "shared/research/__init__.py",
-      "shared/research/first_invoice.py",
-      "studies/algeria-hard-currency/DECISION-ROUND-06.md",
-      "studies/algeria-hard-currency/decision_ledger_round06.csv",
-      "studies/algeria-hard-currency/evidence_round06.csv",
-      "tests/fitness/test_decision_round06_gate.py",
-      "tests/shared/test_fiv_first_invoice.py"
+      "scripts/fitness/check_asset_license_clearance.py",
+      "scripts/fitness/check_commercial_offers_parity.py",
+      "tests/architecture/test_asset_license_clearance_gate.py",
+      "tests/architecture/test_commercial_offers_parity_gate.py"
     ],
-    "content_sha256_excluding_packet": "b42005bf540f36181885e1d61fa537c665521695cc40d0a72959e9e2e34a0dad",
-    "refreshed_on": "2026-09-15",
-    "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
+    "content_sha256_excluding_packet": "de4b5b0ed76ad172299bfdb86586bf20f5d669139b60b414d3eacf4c8f6589e7",
+    "method_ar": "يُولَّدُ الالتقاطُ من `git diff --name-only --diff-filter=ACMRTUXB <base>...HEAD` ثمَّ بصمةُ sha256 على بايتاتِ الملفاتِ بالترتيبِ نفسه بعدَ استبعادِ هذا الملفِّ نفسِه؛ لا يُعادُ توليدُها إلا بعدَ تثبيتِ كلِّ الملفاتِ الأُخرى."
   }
 }

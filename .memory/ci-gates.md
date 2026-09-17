@@ -16,7 +16,8 @@
 > them. All seven are wired now and `check_governance_registry.py` makes an
 > eighth impossible. Total gates on disk (derived, verified in CI):
 >
-> <!-- derived:gates_total=98 -->
+> <!-- derived:gates_total=100 -->
+> **100** on disk in `scripts/fitness/` + `tools/ci/` — 99 executed, 1 declared debt
 > **98** on disk in `scripts/fitness/` + `tools/ci/` — 97 executed, 1 declared debt
 > (`check_pocock_gates.py`, see `unenforced_debt` in `CONSTITUTION_REGISTRY.json`).
 > **D-291 honesty note:** the prose number used to read **92** while the derived marker
@@ -26,7 +27,15 @@
 > `check_decision_round05.py` (95 → 97), both wired in `ci.yml` and both carrying a
 > negative-proof test. Round 06 adds `check_decision_round06.py` (97 → 98), wired in
 > `ci.yml` and carrying a negative-proof test — so the marker, the prose, and the
-> executed count move together.
+> executed count move together. **ADR-017 adds two** (98 → 100):
+> `check_asset_license_clearance.py` — licence clearance per upstream source, per
+> production dependency and per tracked binary, blocking any catalog offer whose
+> citations do not permit sale (measured: **all seven** offers were underwritten by an
+> upstream that forbids it, and the tree carried one full third-party publication);
+> and `check_commercial_offers_parity.py` — the gate
+> `docs/commercial/SOVEREIGN_KNOWLEDGE_REVENUE_MAP.md` §5.3 had promised by name and
+> never built, which had `main` reading red from a phantom reference (ISS-186). Both
+> wired in `ci.yml`, both carrying a negative proof.
 
 ## Required jobs (must be green)
 
@@ -200,6 +209,8 @@ proves the block is bounded: R&D work stays green while the legal gate is `ABSEN
 | `check_decision_round02.py` | Round-02 numbers are derived, not copied: ledger counts (§5.1) come from `decision_ledger_round02.csv`, **every instrument number in §4 is resolved by named path against `docs/research/CND_MEASUREMENTS.json`**, no commitment level above E1 while no loss ceiling exists, `empty_run_cells.flips_total` stays 0 (no model was run), the no-spend statement is present, no evidence id is dangling or unreferenced, no `C##` claim lacks a row, refuted claims appear only inside an explicit prohibition line, and no phantom/eighth offer line is named. | يمنع أخطرَ انزلاقٍ في جولةٍ بحثية: رقمٌ عن **أداة قياس** يُقرأ قياساً على نموذج (وصفرُ محاكماتٍ جرى فعلاً)، وعبارةٌ دحضتها أدلّةُ الجولة نفسها تعود إلى النصّ لأنها أسهل من الرقم. البرهان السلبي في `tests/fitness/test_decision_round02_gate.py` (26 فحصاً: كسرُ كلّ قاعدة على شجرةٍ مؤقتة + مرور الشجرة الحقيقية). |
 | `check_reference_backbone.py` | Pinned reference backbone remains additive, non-runtime, and represented by the declared source files. | يمنع استبدال مصدر مرجعي أو إدخاله إلى runtime بصمت. |
 | `check_source_adoption_matrix.py` | Every discovered source has status, purpose, local application, enforcer, and owner. | يمنع استخدام مصدر خارجي كسلطة غير معلنة أو تبعية غير مراجعة. |
+| `check_asset_license_clearance.py` | Licence clearance per upstream source, per production dependency and per tracked binary; blocks promotion of any offer citing a source that forbids commercial use. | يمنع بيعَ أصلٍ لا يملكه البائع — الحراسةُ التي غابت فبُنيت كلُّ عروض الكتالوج على NC/ND وshare-alike ومصادر بلا رخصة. |
+| `check_commercial_offers_parity.py` | Every `docs/commercial/*_OFFER.md` declares its relation to the canonical catalog and may not restate a readiness status the catalog does not carry. | يمنع سُلَّمين لحقيقةٍ تجاريةٍ واحدة، ويُغلق وعدَ الخارطة السيادية بنفسها (W-13). |
 
 `check_documentation_contract.py` is deliberately executed in both `.github/workflows/doc_integrity.yml` and the `guardrails` job in `.github/workflows/ci.yml`; a documentation-only PR therefore cannot bypass the required path.
 

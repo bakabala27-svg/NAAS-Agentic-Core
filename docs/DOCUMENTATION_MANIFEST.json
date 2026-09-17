@@ -234,6 +234,13 @@
       "status": "live"
     },
     {
+      "path": "docs/commercial/ASSET_KNOWLEDGE_AND_REVENUE_MAP.md",
+      "audience": "product-owner",
+      "role": "asset-knowledge-revenue-audit",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
       "path": "docs/sovereign-atlas/README.md",
       "audience": "all",
       "role": "sovereign-atlas-index",

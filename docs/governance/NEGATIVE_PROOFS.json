@@ -17,6 +17,12 @@
     "check_agent_reliability_constitution.py": [
       "tests/fitness/test_agent_reliability_constitution_gate.py"
     ],
+    "check_commercial_offers_parity.py": [
+      "tests/architecture/test_commercial_offers_parity_gate.py"
+    ],
+    "check_asset_license_clearance.py": [
+      "tests/architecture/test_asset_license_clearance_gate.py"
+    ],
     "check_agent_skills_spec.py": [
       "tests/fitness/test_agent_standards_gates.py"
     ],

@@ -3,6 +3,7 @@
 ## Exportable Offer — Certified-Null Divergence & Language-Invariance Dossier
 
 > **الحالة:** `PROPOSED` — صفرُ مقابلات اكتشاف، صفرُ دفعات، ⛔ ليست `OFFER_READY`
+> **الصلةُ بالكتالوج:** <!-- catalog-relationship: OUTSIDE_CANONICAL_SEVEN | reason: عرضٌ بحثيٌّ مُشتَقٌّ من الدفعة الثالثة (D-291)؛ يُوسّع أسطراً قائمةً بمُخرَجٍ قياسيّ ولا يُنشئ سطرًا كنسيًّا جديدًا -->
 > **الاستناد:** [`docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_CND.md`](../research/HARD_CURRENCY_NEW_KNOWLEDGE_CND.md) ·
 > [`docs/research/AR_FR_SAFETY_BENCHMARK_INVENTORY.md`](../research/AR_FR_SAFETY_BENCHMARK_INVENTORY.md) ·
 > [`docs/research/CND_MEASUREMENTS.json`](../research/CND_MEASUREMENTS.json)

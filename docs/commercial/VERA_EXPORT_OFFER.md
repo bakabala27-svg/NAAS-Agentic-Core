@@ -3,6 +3,7 @@
 ## Exportable Offer — Verifiable Evidence Protocol
 
 > **الحالة:** `PROPOSED` — لا مقابلةَ اكتشافٍ واحدة، ولا `OFFER_READY`
+> **الصلةُ بالكتالوج:** <!-- catalog-relationship: OUTSIDE_CANONICAL_SEVEN | reason: بروتوكولُ دليلٍ قابلٍ للحمل يُرفَق بالعروض القائمة؛ ليس عرضًا مُسعَّرًا مستقلًّا في الكتالوج -->
 > **الاستناد:** [`docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_VERA.md`](../research/HARD_CURRENCY_NEW_KNOWLEDGE_VERA.md)
 > **القانون:** D-273 (سبعة خطوط) · D-290 L6 (بوابة العملة الصعبة) · D-290 L3 (حدّ المصداقية)
 > ⛔ **لا يفتح هذا العرض خطّاً ثامناً** — بل يخدم ثلاثةً من السبعة القائمة
