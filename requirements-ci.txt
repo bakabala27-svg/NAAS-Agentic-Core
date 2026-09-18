@@ -150,5 +150,5 @@ attrs==25.4.0
 # an ADR, not a dependency bump. `microservices/orchestrator_service/requirements.txt`
 # carries the identical coupled pair — change both or neither.
 langgraph-checkpoint>=2.0.0,<3.0.0
-langgraph-checkpoint-postgres>=2.0.0,<3.0.0
+langgraph-checkpoint-postgres>=3.1.2,<4.0.0
 psycopg-binary
