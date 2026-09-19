@@ -1,0 +1,13 @@
+id,offer,sales_evidence,client,price_or_contract,market_basis_S,matches_catalog_line,needs_governance,worth_small_test,decision
+EXT-25,Managed bookkeeping clean-up + monthly pack,S88-S89 $249-$599-mo bands,US SMBs behind on books,$249-$499-mo + catch-up fixed,S88-S89,no,no (E0-E1),yes 1 paid pilot,CAN_SELL_WITH_PARTNER
+EXT-26,Freelancer Schedule C return-prep support,S90-S91 $300-$450 Sch C; $150-hr CPA floor,US 1099 freelancers,$300-$450 per return + review,S90-S91,no,no (E0-E1),yes 1 sample return,CAN_SELL_WITH_PARTNER
+EXT-27,Tech sourcing shortlist + market map,S92-S93 $18K-$48K placement math; retained rigor,Hiring managers hard roles,flat per shortlist + map (fraction of 15pct),S92-S93,no,no (E0-E1),yes 1 paid map,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-28,PPC audit + build for sub-$10K accounts,S94-S95 $1K flat-to-10pct threshold,SMB advertisers $1K-$10K spend,$1K-$2K audit-build + care plan,S94-S95,no,no (E0-E1),yes 1 paid audit,CAN_SELL_WITH_PARTNER
+EXT-29,Formation paperwork concierge (non-legal),S96-S97 $500 flat; $9 SAFE floor,Non-US founders,concierge fee under $500,S96-S97,no,yes UPL risk,no,REJECT
+EXT-30,AI-staging QA + rush listing pack,S98-S99 $1-$2 AI listing vs $240 human,Agents + photo studios,per-listing rush + QA subscription,S98-S99,no,no (E0-E1),yes 1 paid listing,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-31,Overnight RE editing bench + QA,S100-S101 $0.50-$1.50-img bench bands,RE photographers high volume,$1-$2-img managed + SLA,S100-S101,no,no (E0-E1),yes 1 paid batch,CAN_SELL_WITH_PARTNER
+EXT-32,Denial-management + AR follow-up pod,S102-S103 4-10pct collections; $2-$12-claim,Small US practices,share of recovered + floor,S102-S103,no,yes HIPAA-BAA,no now,CAN_SELL_WITH_PARTNER
+EXT-33,Cloud waste audit fixed + savings share,S104-S105 $200-$350-hr; $25K+ projects,Mid-market cloud spenders,$3K-$8K audit + pct of savings,S104-S105,no,no (E0-E1),yes 1 paid audit,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-34,Klaviyo 5-flow build pack fixed,S106-S107 $5K-$15K flow builds; $1.5K-$5K retainers,DTC $10K-$200K-mo revenue,$5K-$8K fixed build,S106-S107,no,no (E0-E1),yes 1 paid build,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-35,Conversion copy sprint landing + seq,S108-S109 $800-$5K menu; 2-3x niche,B2B SaaS + DTC offers,$2K-$6K per sprint,S108-S109,no,no (E0-E1),yes 1 paid sprint,CAN_SELL_WITH_PACKAGING
+EXT-36,Dedicated offshore VA pod managed,S110-S111 $1.5K-$3K-mo FT; 30-50pct markup,Founders + SMB teams,$1.5K-$2.5K-mo per pod seat,S110-S111,no,no (E0-E1),yes after hire,CAN_SELL_AFTER_BUILD

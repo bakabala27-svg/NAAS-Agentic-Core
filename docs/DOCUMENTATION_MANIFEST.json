@@ -241,6 +241,13 @@
       "status": "live"
     },
     {
+      "path": "docs/commercial/MARKET_FIRST_SALES_REALITY_PROMPT.md",
+      "audience": "ai-agent",
+      "role": "market-first-sales-reality-prompt",
+      "authority": "supporting",
+      "status": "live"
+    },
+    {
       "path": "docs/sovereign-atlas/README.md",
       "audience": "all",
       "role": "sovereign-atlas-index",

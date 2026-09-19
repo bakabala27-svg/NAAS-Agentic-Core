@@ -1,7 +1,7 @@
 {
   "$schema_version": "1",
   "decision": "D-273",
-  "purpose_ar": "تحويل الخطوط التجارية المصرح بها إلى محفظة عروض قابلة للتحقق، مع منع الخلط بين فكرة واعدة وإيراد محصل فعلاً.",
+  "purpose_ar": "تحويل خطوط العرض (عضويةٌ مفتوحة بشرط السوق وحده D-296) إلى محفظة عروض قابلة للتحقق، مع منع الخلط بين فكرة واعدة وإيراد محصل فعلاً.",
   "commercial_objective_ar": "الهدف الأعلى هو إيراد مربح ومستدام بالعملة الصعبة من عميل خارج الجزائر؛ لا تُعد النجوم أو الزيارات أو عدد الوكلاء أو عدد الملفات دليلاً تجارياً.",
   "currency_policy_ar": "لا يُصنَّف العرض Paid أو Repeatable دون دليل عقد أو دفعة أو اشتراك قابل للتحقق، ومراجعة محاسبية/قانونية مناسبة قبل التنفيذ الفعلي.",
   "readiness_states": [
@@ -21,7 +21,12 @@
       "paid_problem_ar": "عدم اكتشاف مخاطر الحقن وتجاوز الحواجز والسلوكيات غير الآمنة في العربية والفرنسية قبل وصول النظام إلى المستخدمين.",
       "offer_outcome_ar": "تقييم موثق، حزمة حالات اختبار، مصفوفة مخاطر، وإصلاحات قابلة لإعادة الاختبار.",
       "hard_currency_route_ar": "خدمة تقييم مؤسسية مدفوعة بالدولار أو اليورو، قابلة للتحول إلى برنامج تقييم دوري.",
-      "backbone_refs": ["developer-roadmap", "system-design-primer", "browser-use", "awesome-claude-skills"],
+      "backbone_refs": [
+        "developer-roadmap",
+        "system-design-primer",
+        "browser-use",
+        "awesome-claude-skills"
+      ],
       "status": "PROPOSED",
       "evidence_paths": [],
       "activation_gate_ar": "مقابلات عميل موثقة، نطاق تقييم واضح، نموذج تقرير، اختبار تجريبي، ومالك تسليم أمني.",
@@ -35,7 +40,12 @@
       "paid_problem_ar": "بيانات عامة لا تقيس أداء النموذج في نطاق لغوي أو مهني دقيق ولا تكشف الفشل الحقيقي.",
       "offer_outcome_ar": "مجموعات بيانات ومهام تقييم منضبطة، دليل ترميز، قياس جودة، وسجل منشأ وخصوصية.",
       "hard_currency_route_ar": "عقود بيانات وتقييم مخصصة بالدولار أو اليورو مع مراحل تسليم وحقوق استخدام محددة.",
-      "backbone_refs": ["coding-interview-university", "llms-from-scratch", "free-programming-books", "awesome"],
+      "backbone_refs": [
+        "coding-interview-university",
+        "llms-from-scratch",
+        "free-programming-books",
+        "awesome"
+      ],
       "status": "PROPOSED",
       "evidence_paths": [],
       "activation_gate_ar": "تعريف نطاق البيانات، موافقات وحقوق استخدام، بروتوكول جودة، عينة مدفوعة، وقياس اتفاق المراجعين.",
@@ -49,7 +59,12 @@
       "paid_problem_ar": "عدم القدرة على استخدام الذكاء الاصطناعي السحابي مع بيانات تشغيلية حساسة أو متطلبات عزل صارمة.",
       "offer_outcome_ar": "حل محلي قابل للتدقيق مع حدود بيانات واضحة، مراقبة، تشغيل دون اتصال خارجي، وخطة دعم.",
       "hard_currency_route_ar": "مشروع مؤسسي عالي القيمة أو ترخيص ودعم سنوي بالدولار أو اليورو.",
-      "backbone_refs": ["system-design-primer", "system-design-101", "build-your-own-x", "llms-from-scratch"],
+      "backbone_refs": [
+        "system-design-primer",
+        "system-design-101",
+        "build-your-own-x",
+        "llms-from-scratch"
+      ],
       "status": "PROPOSED",
       "evidence_paths": [],
       "activation_gate_ar": "مقابلة مالك البيانات، متطلبات أمن وتشغيل، نموذج نشر محلي، اختبار قبول، وتكلفة تشغيل موثقة.",
@@ -63,7 +78,11 @@
       "paid_problem_ar": "ارتفاع كلفة التجارب أو بطء المحاكاة في مسائل تملك قيوداً فيزيائية قابلة للصياغة.",
       "offer_outcome_ar": "نموذج أو أداة محاكاة موثقة بحدود صلاحية واختبارات مقارنة مع مرجع فيزيائي.",
       "hard_currency_route_ar": "مشروع بحث وتطوير تطبيقي أو ترخيص نموذج متخصص بالدولار أو اليورو.",
-      "backbone_refs": ["build-your-own-x", "the-algorithms-python", "system-design-primer"],
+      "backbone_refs": [
+        "build-your-own-x",
+        "the-algorithms-python",
+        "system-design-primer"
+      ],
       "status": "PROPOSED",
       "evidence_paths": [],
       "activation_gate_ar": "مسألة عميل محددة، بيانات مرجعية، معيار خطأ، تجربة مقارنة، وخطة انتقال من المختبر إلى الإنتاج.",
@@ -77,7 +96,12 @@
       "paid_problem_ar": "مراجعة بشرية أو اختبار تقليدي لا يكفي لإثبات خصائص حرجة في كود أو مسار قرار.",
       "offer_outcome_ar": "مواصفات قابلة للفحص، خصائص مثبتة أو فشل موثق، وتقارير ربط بين المتطلبات والتنفيذ.",
       "hard_currency_route_ar": "خدمة تحقق متخصصة أو منصة مؤسسية بالدولار أو اليورو.",
-      "backbone_refs": ["coding-interview-university", "the-algorithms-python", "build-your-own-x", "system-design-primer"],
+      "backbone_refs": [
+        "coding-interview-university",
+        "the-algorithms-python",
+        "build-your-own-x",
+        "system-design-primer"
+      ],
       "status": "PROPOSED",
       "evidence_paths": [],
       "activation_gate_ar": "حالة استخدام قابلة للصياغة الرسمية، أداة تحقق محددة، معيار قبول، ومراجعة مستقلة للبرهان.",
@@ -91,7 +115,12 @@
       "paid_problem_ar": "صعوبة معرفة أين يستخدم الذكاء الاصطناعي وما المخاطر والأدلة المطلوبة عبر دورة الحياة.",
       "offer_outcome_ar": "سجل أنظمة، تصنيف مخاطر، خريطة مسؤوليات، حزمة أدلة، وسجل تحديثات قابل للمراجعة.",
       "hard_currency_route_ar": "خدمة امتثال مؤسسية أو اشتراك B2B بالدولار أو اليورو بعد مراجعة قانونية مختصة.",
-      "backbone_refs": ["system-design-primer", "system-design-101", "awesome", "free-programming-books"],
+      "backbone_refs": [
+        "system-design-primer",
+        "system-design-101",
+        "awesome",
+        "free-programming-books"
+      ],
       "status": "PROPOSED",
       "evidence_paths": [],
       "activation_gate_ar": "نطاق قانوني محدد، مراجعة مختص، نموذج دليل، عميل تجريبي، وقاعدة تمنع تقديم المخرجات كاستشارة قانونية.",
@@ -105,11 +134,18 @@
       "paid_problem_ar": "صعوبة بناء محتوى متخصص قابل للقياس دون التضحية بالثقة أو الإفصاح أو الجودة.",
       "offer_outcome_ar": "نظام بحث وإنتاج ومراجعة وإفصاح وتحليلات يحافظ على الأصالة ويقيس التحويلات الفعلية.",
       "hard_currency_route_ar": "عمولات وإيرادات إعلانية بالدولار أو اليورو، مع اختبار قابلية التكرار قبل التوسع.",
-      "backbone_refs": ["developer-roadmap", "awesome", "public-apis", "clean-code-javascript"],
+      "backbone_refs": [
+        "developer-roadmap",
+        "awesome",
+        "public-apis",
+        "clean-code-javascript"
+      ],
       "status": "PROPOSED",
       "evidence_paths": [],
       "activation_gate_ar": "اختبار سوق صغير، قياس زيارات ذات نية شراء، تحويلات موثقة، إفصاح ومراجعة حقوق المحتوى، وحد تكلفة.",
       "claims_forbidden_ar": "لا تُدَّعى مداخيل مستمرة أو سلبية أو مضمونة قبل بيانات تحويل فعلية وفترة اختبار كافية."
     }
-  ]
+  ],
+  "amended_by": "D-296 (2026-09-19): seven-line cap repealed by owner directive — open membership, market evidence is the only criterion",
+  "membership_ar": "عضويةٌ مفتوحة (D-296): أيُّ خطٍّ مشروعٌ إنْ وفقط إنْ استند إلى بيعٍ خارجيٍّ موثّق (سجلّ MF) وطلبٍ قائم — لا عددَ ثابت ولا قائمةَ مغلقة."
 }

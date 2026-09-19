@@ -19,7 +19,7 @@ ISS-186/149 الذي حارَسَه هذا المستودع في كل مكانٍ
 
 1. **صلةٌ مُعلَنة لكلّ وثيقة عرض:** كلُّ `docs/commercial/*_OFFER.md` يحمل علامةً واحدة
    `<!-- catalog-relationship: … -->` تُصَرِّح صلتَه بالكتالوج الكنسي: إمّا
-   `line:<offer-id>` أو `OUTSIDE_CANONICAL_SEVEN` **مع سببٍ منطوق**. الصلةُ الصامتة
+   `line:<offer-id>` أو `OUTSIDE_CATALOG` **مع سببٍ منطوق**. الصلةُ الصامتة
    تُقرأ «خارج الكتالوج» لدى قارئٍ و«داخله» لدى قارئٍ آخر — فالحالتان تُكتبان.
 2. **المرجعُ موجود:** كلُّ `line:<id>` يجب أن يكون سطراً في `OFFER_CATALOG.json`.
    خريطةُ سلطةٍ تكذب أسوأ من غيابها (ISS-149).
@@ -28,9 +28,9 @@ ISS-186/149 الذي حارَسَه هذا المستودع في كل مكانٍ
 4. **العلامةُ وحيدةٌ لا مكرَّرة:** علامتان لوثيقةٍ واحدة = حالتان، والبوابة ترفض
    الاختيار نيابةً عن الكاتب.
 
-⛔ **ما لا تفعله:** لا تُحصي عددَ الأسطر الكنسيّة ولا تُثبِّت قائمة العروض — العددُ
-والقائمة يعيشان في `OFFER_CATALOG.json` وحده وحراستُهما في بوّابة عقيدة القيمة
-(`check_revenue_doctrine.py`) والدستور (D-273). ولا تُلزم كلَّ وثيقةٍ في
+⛔ **ما لا تفعله:** لا تُحصي عددَ أسطر الكتالوج ولا تُثبِّت قائمة العروض — الكتالوج
+مفتوحُ العضوية (D-296 ألغت حصرَ السبعة: الشرطُ الوحيد سوقيّ)، والعددُ والقائمة
+يعيشان في `OFFER_CATALOG.json` وحده. ولا تُلزم كلَّ وثيقةٍ في
 `docs/commercial/` بأن تكون عرضاً: معيارُ الوثيقةِ-العرض هو اسمُها `*_OFFER.md`، وهو
 اختيارٌ صريحٌ لا استنتاجٌ بالذكاء.
 
@@ -51,11 +51,11 @@ COMMERCIAL_DIR = "docs/commercial"
 CATALOG_REL = "docs/commercial/OFFER_CATALOG.json"
 OFFER_DOC_GLOB = "*_OFFER.md"
 
-#: `line:<id>` أو `OUTSIDE_CANONICAL_SEVEN` مع سببٍ منطوق — لا صلةً صامتة.
+#: `line:<id>` أو `OUTSIDE_CATALOG` مع سببٍ منطوق — لا صلةً صامتة.
 _MARKER = re.compile(
     r"<!--\s*catalog-relationship:\s*(?P<kind>[A-Za-z_:-]+)\s*(?:\|\s*reason:\s*(?P<reason>[^>]*))?-->"
 )
-_OUTSIDE = "OUTSIDE_CANONICAL_SEVEN"
+_OUTSIDE = "OUTSIDE_CATALOG"
 _READINESS = re.compile(r"\b(PROPOSED|DISCOVERY|OFFER_READY|PILOT|PAID_PROOF|REPEATABLE)\b")
 
 _FAILURES: list[str] = []

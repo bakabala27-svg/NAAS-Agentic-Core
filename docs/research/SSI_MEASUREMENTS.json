@@ -1,0 +1,198 @@
+{
+  "instrument": "shared/research/offer_sellability.py",
+  "instrument_version": "SSI-v1",
+  "as_of": "2026-09-18",
+  "evidence_source": "studies/market-first-sales-reality/evidence_mf_round01.csv",
+  "eurusd_assumption": 1.08,
+  "model_runs_executed": 0,
+  "client_measurements": 0,
+  "coder": "single-coder-v1 (inter-rater NOT measured)",
+  "sha256_inputs": "13cfebcb14e0bf3e9eb9a3b9f0928be3c838f86570c84e36e0e80b7622b2e471",
+  "aggregates": {
+    "n_total": 26,
+    "n_graded": 19,
+    "n_reference_or_labor": 7,
+    "ssi_by_id": {
+      "S01": 0.6,
+      "S02": 0.8,
+      "S03": 0.2,
+      "S05": 0.6,
+      "S06": 1.0,
+      "S07": 1.0,
+      "S08": 0.8,
+      "S09": 0.6,
+      "S13": 0.2,
+      "S14": 0.6,
+      "S17": 0.2,
+      "S18": 0.2,
+      "S19": 1.0,
+      "S21": 0.4,
+      "S22": 0.4,
+      "S23": 0.4,
+      "S24": 0.4,
+      "S25": 0.6,
+      "S26": 0.6
+    },
+    "mean_ssi_graded": 0.5579,
+    "n_complete_1_0": 3,
+    "complete_ids": [
+      "S06",
+      "S07",
+      "S19"
+    ],
+    "n_strong_ge_0_8": 5,
+    "feature_frequency": {
+      "P": 0.8421,
+      "S": 0.8947,
+      "T": 0.4211,
+      "R": 0.3158,
+      "F": 0.3158
+    },
+    "first_invoice_tier_usd": {
+      "S06": 268.92,
+      "S08": 1350.0,
+      "S19": 4925.0,
+      "S14-floor": 500.0
+    },
+    "first_invoice_ceiling_usd": 5000.0,
+    "tier1_max_lte_ceiling": true,
+    "full_engagement_floor_usd": {
+      "S01-floor": 12000.0,
+      "S02-floor": 35000.0
+    },
+    "ladder_gap_tier2_min_over_tier1_max": 2.437,
+    "ar_fr_specific_fixed_price_offers_in_sample": 0
+  },
+  "grades": {
+    "S01": {
+      "kind": "offer",
+      "ssi": 0.6,
+      "grade": "PARTIAL"
+    },
+    "S02": {
+      "kind": "offer",
+      "ssi": 0.8,
+      "grade": "STRONG"
+    },
+    "S03": {
+      "kind": "offer",
+      "ssi": 0.2,
+      "grade": "WEAK"
+    },
+    "S04": {
+      "kind": "reference",
+      "ssi": null,
+      "grade": "UNGRADED"
+    },
+    "S05": {
+      "kind": "offer",
+      "ssi": 0.6,
+      "grade": "PARTIAL"
+    },
+    "S06": {
+      "kind": "offer",
+      "ssi": 1.0,
+      "grade": "STRUCTURALLY_COMPLETE"
+    },
+    "S07": {
+      "kind": "offer",
+      "ssi": 1.0,
+      "grade": "STRUCTURALLY_COMPLETE"
+    },
+    "S08": {
+      "kind": "offer",
+      "ssi": 0.8,
+      "grade": "STRONG"
+    },
+    "S09": {
+      "kind": "offer",
+      "ssi": 0.6,
+      "grade": "PARTIAL"
+    },
+    "S10": {
+      "kind": "reference",
+      "ssi": null,
+      "grade": "UNGRADED"
+    },
+    "S11": {
+      "kind": "reference",
+      "ssi": null,
+      "grade": "UNGRADED"
+    },
+    "S12": {
+      "kind": "reference",
+      "ssi": null,
+      "grade": "UNGRADED"
+    },
+    "S13": {
+      "kind": "offer",
+      "ssi": 0.2,
+      "grade": "WEAK"
+    },
+    "S14": {
+      "kind": "marketplace",
+      "ssi": 0.6,
+      "grade": "PARTIAL"
+    },
+    "S15": {
+      "kind": "reference",
+      "ssi": null,
+      "grade": "UNGRADED"
+    },
+    "S16": {
+      "kind": "labor",
+      "ssi": null,
+      "grade": "UNGRADED"
+    },
+    "S17": {
+      "kind": "marketplace",
+      "ssi": 0.2,
+      "grade": "WEAK"
+    },
+    "S18": {
+      "kind": "marketplace",
+      "ssi": 0.2,
+      "grade": "WEAK"
+    },
+    "S19": {
+      "kind": "offer",
+      "ssi": 1.0,
+      "grade": "STRUCTURALLY_COMPLETE"
+    },
+    "S20": {
+      "kind": "reference",
+      "ssi": null,
+      "grade": "UNGRADED"
+    },
+    "S21": {
+      "kind": "anchor",
+      "ssi": 0.4,
+      "grade": "PARTIAL"
+    },
+    "S22": {
+      "kind": "offer",
+      "ssi": 0.4,
+      "grade": "PARTIAL"
+    },
+    "S23": {
+      "kind": "offer",
+      "ssi": 0.4,
+      "grade": "PARTIAL"
+    },
+    "S24": {
+      "kind": "offer",
+      "ssi": 0.4,
+      "grade": "PARTIAL"
+    },
+    "S25": {
+      "kind": "offer",
+      "ssi": 0.6,
+      "grade": "PARTIAL"
+    },
+    "S26": {
+      "kind": "funnel",
+      "ssi": 0.6,
+      "grade": "PARTIAL"
+    }
+  }
+}

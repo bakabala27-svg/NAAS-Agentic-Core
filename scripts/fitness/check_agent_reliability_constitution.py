@@ -14,8 +14,10 @@
   السطر، و⛔ ممنوعةٌ نهائياً من وثيقتَي القانون والحالة.
 - المواضع الأربعة (L2 · L4 · L5) ثابتةٌ نصيّاً: Compute-Agnostic · Framework-Agnostic ·
   Adapter Layer · Compute Abstraction · Sovereignty-as-option.
-- خطوط OFFER_CATALOG السبعة (D-273): لا خطّ ثامن، و`PAID_PROOF`/`REPEATABLE` بلا دليل
-  مذكور في `evidence_paths` = انتهاك.
+- كتالوج `OFFER_CATALOG` مفتوحُ العضوية (D-296 ألغت حصرَ السبعة): لا عددَ ثابت ولا
+  قائمةَ مغلقة — الشرطُ الوحيد سوقيّ (بيعٌ موثّق + طلب) يثبُت في سجلّ MF لا هنا؛
+  وما تحرسه هذه البوّابة بنيويّ: معرّفاتٌ فريدة غير فارغة، وحالاتٌ من المجموعة
+  المغلقة، و`PAID_PROOF`/`REPEATABLE` بلا دليلٍ مذكورٍ في `evidence_paths` = انتهاك.
 - عدم استعارة أدلّة D-267 (L9): ذكر `naas_verifier` أو قياس «90 نقطة» يلزمه حدٌّ صريح
   في السطر نفسه أو في سطرَي ما بعده.
 
@@ -84,16 +86,10 @@ NEGATION_TOKENS = (
     "محرَّم",
 )
 
-#: خطوط الإيراد السبعة المصرّحة دستورياً (D-273) — قائمةٌ معيارية لا رقمٌ متحرّك.
-CANONICAL_OFFER_IDS = [
-    "ai-red-teaming-multilingual",
-    "niche-rlhf-data",
-    "on-premise-energy-ai",
-    "physics-informed-ai",
-    "formal-verification-ai",
-    "eu-ai-act-compliance",
-    "high-rpm-ai-affiliation",
-]
+#: D-296 (توجيه المالك 2026-09-19) ألغت حصرَ الخطوط السبعة نهائياً: لا قائمةَ معيارية
+#: مغلقة بعد اليوم — الشرطُ الوحيد سوقيّ (بيعٌ موثّق + طلب) ويثبُت في سجلّ MF
+#: (`studies/market-first-sales-reality/`) لا في هذه البوّابة. سُلّم الحقيقة الوحيد
+#: للكتالوج هو `OFFER_CATALOG.json` نفسه، وهذه البوّابة تحرس بنيتَه لا عضويتَه.
 
 HYPOTHESES = ("H1", "H2", "H3", "H4", "H5", "H6", "H7")
 HYPOTHESIS_STATUSES = {"OPEN", "IN_PROGRESS", "CLOSED_CONFIRMED", "CLOSED_REFUTED", "HOLD"}
@@ -334,9 +330,12 @@ def check_positioning() -> None:
 
 
 # --------------------------------------------------------------------------- #
-# 7) كتالوج العروض — السبعة المصرّحة فقط (L6)
+# 7) كتالوج العروض — عضويةٌ مفتوحة بشرط السوق وحده (L6 · D-296)
 # --------------------------------------------------------------------------- #
 def check_catalog() -> None:
+    """D-296 ألغت الحصرَ العددي: أيُّ عددٍ من الخطوط مشروعٌ متى استند إلى بيعٍ
+    موثّقٍ وطلب (سجلّ MF). هذه البوّابة تحرس البنية فقط: فرادةَ المعرّفات،
+    وانضباطَ الحالات، وأدلةَ الدفع — لا العضوية."""
     if not CATALOG.exists():
         return
     try:
@@ -345,14 +344,18 @@ def check_catalog() -> None:
         _fail(f"OFFER_CATALOG.json غير صالح JSON: {error}")
         return
     offers = catalog.get("offers", [])
-    ids = [offer.get("id") for offer in offers]
-    if ids != CANONICAL_OFFER_IDS:
-        extra = [i for i in ids if i not in CANONICAL_OFFER_IDS]
-        missing = [i for i in CANONICAL_OFFER_IDS if i not in ids]
-        if extra:
-            _fail(f"خطّ عرضٍ خارج السبعة المصرّحة (يتطلّب قرار حوكمة D-273): {sorted(extra)}")
-        if missing:
-            _fail(f"خطوط السبعة المصرّحة ناقصة من الكتالوج: {sorted(missing)}")
+    if not offers:
+        _fail("OFFER_CATALOG.json بلا عروض — كتالوجٌ فارغ لا يُسوَّق ولا يُحرس")
+        return
+    seen: set[str] = set()
+    for offer in offers:
+        offer_id = offer.get("id")
+        if not offer_id:
+            _fail("سطرٌ في الكتالوج بلا معرّف `id` — هويةٌ غائبة لا تُحرس")
+            continue
+        if offer_id in seen:
+            _fail(f"معرّفٌ مكرَّر في الكتالوج: {offer_id!r} — سطران بهويةٍ واحدة")
+        seen.add(offer_id)
     for offer in offers:
         status = offer.get("status")
         if status not in CATALOG_STATUSES:

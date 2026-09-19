@@ -1,0 +1,13 @@
+id,offer,sales_evidence,client,price_or_contract,serves_line_1_7,standalone,needs_governance,worth_small_test,decision
+EXT-01,Annex IV gap review fixed-scope,S06 EUR 249 published,AI startup founders selling to EU,EUR 249-1250 evidenced,6,no,no (E0-E1),yes T-MF01,CAN_SELL_WITH_PACKAGING
+EXT-02,AR-FR injection probe pack single system,S01/S02/S04 $12K-$100K band,AI security teams + model vendors,$12K-$18K evidenced band,1,no,no (E0-E1),yes T-MF02,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-03,Specialist annotation-QA pilot,S14/S16 Upwork + LXT,model labs needing AR-FR quality,$500-$2000 evidenced,2,partial,no (E0-E1),yes T-MF03,CAN_SELL_WITH_PACKAGING
+EXT-04,Commodity labeling $4-$8-hr,S13 published,GigaBPO-type buyers,$4-$8-hr evidenced,none,yes,yes (D-273 L2),no (watch only),REJECT
+EXT-05,General translation $0.05-$0.14-word,S22/S23 published,general business clients,$0.05-$0.14-word evidenced,none,yes,yes (D-273 L2),no (specialist only),REJECT
+EXT-06,Specialist AI FR-localization QA,S22/S23/S11,AI product teams shipping FR,$25-$60-hr linguistic band,2,partial,no (E0-E1),yes later,CAN_SELL_WITH_PACKAGING
+EXT-07,Traditional pentest $5K-$30K,S19/S20,SMB-midmarket IT,$5K-$30K evidenced,none,yes,yes (new line + capability),no,NOT_FEASIBLE_NOW
+EXT-08,SOC 2 audit,S21,seed-Series A SaaS,$7K-$150K evidenced,none,yes,yes (licensed profession),no,NOT_FEASIBLE_NOW
+EXT-09,Bug bounty participation (individual),S17/S18 $81M paid,platforms (HackerOne/Immunefi),median ~$2K; skewed evidenced,none-funding-not-line,yes,no (personal income D-282),yes eligibility check,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-10,CBAM analysis decision-support,SouthPole-SGS-GreenSutra sold-no-price,EU importers + customs advisors,price on request (ASK),none (research exists no line),yes,yes at commitment,yes price inquiry,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-11,LLM eval subscription,S05/S24/S25,AI product teams,$29-$2K-mo evidenced,1/5 partial,yes,yes (SaaS build),no now,CAN_SELL_AFTER_BUILD
+EXT-12,EA controls audit,S10/S02,compliance + platform teams,$3K-$15K boutique band,5/6,no,no (E0-E1),yes later,CAN_SELL_WITH_SMALL_ADAPTATION
