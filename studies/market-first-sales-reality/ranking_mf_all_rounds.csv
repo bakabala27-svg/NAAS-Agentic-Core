@@ -1,0 +1,58 @@
+id,domain,price_anchor,E_evidence_1to3,D_demand_1to3_ANALYSIS,F_future_1to3_ANALYSIS,total_9,verdict
+S01,AI red-teaming,$12K-$18K fixed,3,3,3,9,TOP10
+S02,AI red-teaming,$35K-$55K sprint,3,3,3,9,TOP10
+S03,AI red-teaming,$5K-$15K retainer,2,2,3,7,TIER2
+S04,AI red-teaming,market bands,1,3,3,7,TIER2
+S05,AI eval platform,$199-mo + enterprise,3,3,2,8,TIER2
+S06,AI Act Annex IV,EUR 249 24h,3,3,3,9,TOP10
+S07,AI Act documentation,EUR 9.9K-39.9K,3,3,3,9,TOP10
+S08,EU AI Act assessment,EUR 1250 fixed,3,3,3,9,TOP10
+S09,AI audit readiness,$499-$2499,3,2,3,8,TIER2
+S10,AI Act market,market bands,1,3,3,7,TIER2
+S11,Expert data (LXT),$15-150-hr,2,3,3,8,TIER2
+S12,Data annotation,market bands,1,3,2,6,LOWER
+S13,GigCX labeling,$4-$8-hr,3,3,1,7,ERODING
+S14,Upwork AR projects,$300-$5000 fixed,3,3,2,8,TIER2
+S15,Senior AI engineer,$100-$300-hr,2,3,3,8,TIER2
+S16,RLHF-Outlier,$15-$50-hr,2,3,2,7,TIER2
+S17,HackerOne bounties,$81M paid,3,3,3,9,TOP10
+S18,Immunefi,up to $15M vault,3,2,2,7,TIER2
+S19,BudgetSec pentest,$4925 fixed,3,3,2,8,TIER2
+S20,Pentest market,market bands,2,3,2,7,TIER2
+S21,SOC2 automation,market bands,2,3,2,7,TIER2
+S22,Translation agency,$0.10-$0.25-word,3,2,1,6,ERODING
+S23,GTS translation,$0.08-$0.30-word,3,2,1,6,ERODING
+S24,Braintrust talent,$85-$215-hr,3,2,2,7,TIER2
+S25,Langfuse observability,$29-mo +,3,2,2,7,TIER2
+S26,AI Act gap analysis,free funnel,2,3,2,7,TIER2
+S27,Smart-contract audit,$25K-eng-week; $80K-$200K+,3,3,2,8,TIER2
+S28,Audit contests,$20K-$200K+ pools,3,3,2,8,TIER2
+S29,Focused audit session,$500-$5K + $6K-aw,3,3,2,8,TIER2
+S30,Tiered audits,$10K-$150K+,2,3,2,7,TIER2
+S31,AI automation agency,$5K-$50K + retainers,3,3,3,9,TOP10
+S32,AAA market,$3K-$15K build + agents,2,3,3,8,TIER2
+S33,AI agent boutique,EUR 20K-80K,3,2,3,8,TIER2
+S34,External DPO,EUR 30-800-mo,3,3,3,9,TOP10
+S35,DPOaaS,$1.5K-$5K-mo,2,3,3,8,TIER2
+S36,CSRD consulting,EUR 15K-200K+,2,3,3,8,TIER2
+S37,ESG software,EUR 600-50K+-yr,2,3,3,8,TIER2
+S38,CSRD real costs (EFRAG),EUR 23K-95K borne,3,3,3,9,TOP10
+S39,Rev transcription,$0.25-$15.99-min,3,2,1,6,ERODING
+S40,Rev worker pay,$0.45-$0.75-min,2,2,1,5,REJECT-commodity
+S41,Arch-viz Bella,$550-$1000-image,3,2,2,7,TIER2
+S42,Arch-viz budget,$249-$799-image,3,2,2,7,TIER2
+S43,Viz premium,$4K-$12K-min animation,2,2,2,6,LOWER
+S44,SEO retainers,$1.5K-$15K+-mo,2,3,1,6,ERODING
+S45,Fixed-price SEO,$89-$490-task,3,2,2,7,TIER2
+S46,Salesforce consulting,$100-$400-hr + projects,3,3,2,8,TIER2
+S47,HubSpot rates,$40-$220-hr anecdotal,1,2,2,5,WEAK
+S48,BPO per-agent,$1200-$3200-mo,2,3,1,6,ERODING
+S49,Per-resolution,$1-$3 human; $0.10-$0.40 AI,2,3,3,8,TIER2
+S50,DevOps managed,$3.5K-$18K-mo,2,3,2,7,TIER2
+S51,Geo arbitrage,India 60-75pct below US,2,3,2,7,TIER2
+S52,CBAM verification,EUR 5K-50K,2,3,3,8,TIER2
+S53,CBAM software,EUR 9K-31K REPORTED,1,3,3,7,TIER2
+S54,CBAM cert price,EUR 75.28 official,3,3,3,9,TOP10
+S55,CBAM platform funnel,quote + free trial,2,2,3,7,TIER2
+S56,Fractional CFO,$3K-$15K-mo,2,2,2,6,LOWER
+S57,Series A finance,$10K-$25K-mo,2,2,2,6,LOWER
