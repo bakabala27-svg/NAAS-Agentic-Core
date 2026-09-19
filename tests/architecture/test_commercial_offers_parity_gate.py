@@ -81,7 +81,7 @@ def test_clean_declaration_passes(tmp_path: Path) -> None:
         pytest.param(
             {
                 "DEMO_OFFER.md": "# عرض\n\n> "
-                + _MARKER.format(kind="OUTSIDE_CANONICAL_SEVEN", reason="سبب")
+                + _MARKER.format(kind="OUTSIDE_CATALOG", reason="سبب")
                 + "\n> "
                 + _MARKER.format(kind="line:niche-rlhf-data", reason="سبب ثانٍ")
                 + "\n"
@@ -99,11 +99,7 @@ def test_clean_declaration_passes(tmp_path: Path) -> None:
             id="صلةٌ بسطرٍ غير موجود في الكتالوج",
         ),
         pytest.param(
-            {
-                "DEMO_OFFER.md": "> "
-                + _MARKER.format(kind="OUTSIDE_CANONICAL_SEVEN", reason="")
-                + "\n"
-            },
+            {"DEMO_OFFER.md": "> " + _MARKER.format(kind="OUTSIDE_CATALOG", reason="") + "\n"},
             "بلا سببٍ منطوق",
             id="خارج الكتالوج بلا سببٍ مكتوب",
         ),

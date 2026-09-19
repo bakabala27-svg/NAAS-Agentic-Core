@@ -1,0 +1,13 @@
+id,offer,sales_evidence,client,price_or_contract,market_basis_S,matches_catalog_line,needs_governance,worth_small_test,decision
+EXT-13,LinkedIn ghostwriting boutique retainer,S69-S70 $500-$15K-mo tiers,Mid-market B2B founders,$1K-$3K-mo sweet spot,S69-S70,no,no (E0-E1),yes 1 paid pilot,CAN_SELL_WITH_PACKAGING
+EXT-14,Foundation LOI + proposal pack,S71 $400-$1.2K LOI + $1.5K-$5K proposal,US-EU nonprofits,$400-$5K fixed per piece,S71-S72,no,no (E0-E1),yes 1 LOI sample,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-15,Investor-ready financial model build,S73 $3K entry 884 projects; S74 $500-$10K,Seed-Series B founders,$3K-$8K fixed 2-4 weeks,S73-S74,no,no (E0-E1),yes 1 model sample,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-16,Single-dashboard BI build fixed,S77 $4K-$15K single; S76 $8K-$25K,Ops-finance leads mid-market,$4K-$15K fixed 2-4 weeks,S76-S77,no,no (E0-E1),yes demo dashboard,CAN_SELL_WITH_PACKAGING
+EXT-17,n8n-Make automation build + AI-agent retainer,S79 invoiced $1.8K-$26K + $2.5K-$6K-mo,$1M-$10M businesses,$1.8K-$26K + retainer,S79-S80,no,no (E0-E1),yes 1 live build,CAN_SELL_NOW
+EXT-18,vCISO-lite SMB retainer,S84 $1K-$5K-mo SMB; S85 SOC2 $25K-$40K,50-200 emp SaaS-healthcare,$1K-$5K-mo advisory,S84-S85,no,yes at commitment (liability),yes questionnaire pack,CAN_SELL_WITH_PARTNER
+EXT-19,Live cohort workshop seat + B2B pilot,S82 $500-$3.5K-seat; S83 $8.5K-$9.5K pilot,Engineering-data teams,$500-seat / $9.5K pilot,S82-S83,no,no (E0-E1),yes free lightning lesson,CAN_SELL_AFTER_BUILD
+EXT-20,Fixed UX audit + quick wins,S64 $2K-$5K audit; S63 sprint $5K+,SaaS founders pre-redesign,$2K-$5K fixed 1-2 weeks,S63-S64,no,no (E0-E1),yes 1 teardown sample,CAN_SELL_WITH_PACKAGING
+EXT-21,Landing-page build fixed,S58 $1K-$3K MVP; S59 $2K-$10K freelance,SMB + funded founders,$1K-$6K fixed 1-2 weeks,S58-S59,no,no (E0-E1),no now (floor war),REJECT
+EXT-22,Async post-production edit package,S66 corporate $4.5K-$20K (post 20-35pct),Agencies + YouTube B2B,$1K-$5K-project async,S66-S67,no,no (E0-E1),yes 1 sample edit,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-23,Bare-metal sensor firmware fixed,S86 $2K-$5K bare-metal; $4K-$12K RTOS,Hardware startups,$2K-$12K fixed scoped,S86,no,no (E0-E1),yes reference driver demo,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-24,SOC2 readiness sprint scoped,S85 $25K-$40K readiness; S84 project band,SaaS selling to enterprise,$25K-$40K 6 months,S84-S85,no,yes at commitment,yes readiness checklist,CAN_SELL_WITH_PARTNER

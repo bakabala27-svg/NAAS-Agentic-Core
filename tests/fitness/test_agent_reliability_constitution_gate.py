@@ -122,14 +122,28 @@ def test_hypothesis_closed_without_evidence_rejected(tmp_path: Path, monkeypatch
     assert any("CLOSED_CONFIRMED بلا دليل" in f for f in gate._FAILURES)
 
 
-def test_catalog_eighth_line_rejected(tmp_path: Path, monkeypatch) -> None:
-    """خطّ عرضٍ ثامن خارج السبعة المصرّحة يُسقط البوّابة (L6 · D-273)."""
+def test_catalog_open_membership_eighth_line_allowed(tmp_path: Path, monkeypatch) -> None:
+    """D-296: الكتالوج مفتوحُ العضوية — خطٌّ ثامنٌ بسندٍ سوقيٍّ لا يُسقط البوّابة."""
     paths = _mini_repo(tmp_path)
     monkeypatch.setattr(gate, "REPO_ROOT", tmp_path)
     monkeypatch.setattr(gate, "CATALOG", paths["catalog"])
-    offers = [{"id": offer_id, "status": "PROPOSED"} for offer_id in gate.CANONICAL_OFFER_IDS]
-    offers.append({"id": "agent-reliability-evaluation", "status": "PROPOSED"})
+    offers = [{"id": f"line-{n:02d}", "status": "PROPOSED"} for n in range(1, 9)]
     paths["catalog"].write_text(json.dumps({"offers": offers}), encoding="utf-8")
     gate._FAILURES.clear()
     gate.check_catalog()
-    assert any("خارج السبعة" in f or "ثامن" in f for f in gate._FAILURES)
+    assert gate._FAILURES == []
+
+
+def test_catalog_duplicate_id_rejected(tmp_path: Path, monkeypatch) -> None:
+    """معرّفٌ مكرَّر في الكتالوج يُسقط البوّابة — سطران بهويةٍ واحدة (L6 · D-296)."""
+    paths = _mini_repo(tmp_path)
+    monkeypatch.setattr(gate, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(gate, "CATALOG", paths["catalog"])
+    offers = [
+        {"id": "line-01", "status": "PROPOSED"},
+        {"id": "line-01", "status": "PROPOSED"},
+    ]
+    paths["catalog"].write_text(json.dumps({"offers": offers}), encoding="utf-8")
+    gate._FAILURES.clear()
+    gate.check_catalog()
+    assert any("مكرَّر" in f for f in gate._FAILURES)

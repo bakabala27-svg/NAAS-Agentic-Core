@@ -3,15 +3,15 @@
 ## Exportable Offer — Buyer-Layer Onboarding for the First Hard-Currency Invoice
 
 > **الحالة:** `PROPOSED` — صفرُ مقابلات اكتشاف، صفرُ دفعات، ⛔ ليست `OFFER_READY`.
-> **الصلةُ بالكتالوج:** <!-- catalog-relationship: OUTSIDE_CANONICAL_SEVEN | reason: طبقةُ مُشتَرٍ تُزيل حاجزَ الفاتورة الأولى عن الأسطر القائمة؛ لا سطرٌ ثامن في الكتالوج -->
+> **الصلةُ بالكتالوج:** <!-- catalog-relationship: OUTSIDE_CATALOG | reason: طبقةُ مُشتَرٍ تُزيل حاجزَ الفاتورة الأولى عن الأسطر القائمة؛ الإضافةُ إلى الكتالوج مفتوحةٌ بشرط السوق وحده (D-296) -->
 > **الاستناد:** [`HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md`](../research/HARD_CURRENCY_NEW_KNOWLEDGE_WOD.md) ·
 > [`WOD_MEASUREMENTS.json`](../research/WOD_MEASUREMENTS.json) — بصمةُ المُدخلات
 > `sha256(inputs) = 17cf39bbd2ac…` (كاملةٌ في الملفّ) ·
 > [`withholding_onboarding.py`](../../shared/research/withholding_onboarding.py) ·
 > [`measure_withholding_onboarding.py`](../../scripts/research/measure_withholding_onboarding.py)
-> **القانون:** D-273 (سبعة خطوط) · D-290 L6 (بوابة العملة الصعبة) · L8 (⛔ لا خطَّ ثامن) ·
+> **القانون:** D-273/D-296 (السوقُ وحده هو الشرط — أُلغي حصرُ السبعة) · D-290 L6 (بوابة العملة الصعبة) ·
 > L9 (⛔ لا استعارةَ لدليل D-267) · D-292 (طبقةُ المشتري لا تُقاس على نموذج).
-> ⛔ **لا يفتح هذا العرض خطّاً ثامناً**؛ يخدم الخطوط **1 · 2 · 5 · 6** القائمة.
+> يخدم هذا العرض الخطوط القائمة **1 · 2 · 5 · 6**؛ وأيُّ خطٍّ جديدٍ مشروعٌ بسندِ بيعٍ وطلب.
 > ⛔ **ليست رأياً ضريبياً ولا قانونياً** ولا تُسعَّر بها فاتورةٌ حقيقية بلا تحقّق من مختصّ.
 
 ---
@@ -82,4 +82,4 @@
 
 ---
 
-*باحث مستقل — 2026-09-14 — إضافة لا حذف · ⛔ لا خطَّ ثامن · ⛔ لا رقمَ إيراد.*
+*باحث مستقل — 2026-09-14 — إضافة لا حذف · ⛔ لا رقمَ إيراد · (D-296 ألغت حصرَ السبعة: الشرطُ سوقيّ).*

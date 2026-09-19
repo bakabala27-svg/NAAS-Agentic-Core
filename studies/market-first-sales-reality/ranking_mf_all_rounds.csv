@@ -56,3 +56,33 @@ S54,CBAM cert price,EUR 75.28 official,3,3,3,9,TOP10
 S55,CBAM platform funnel,quote + free trial,2,2,3,7,TIER2
 S56,Fractional CFO,$3K-$15K-mo,2,2,2,6,LOWER
 S57,Series A finance,$10K-$25K-mo,2,2,2,6,LOWER
+S58,Web dev survey,$1K-$15K quoted (63pct),3,3,1,7,ERODING
+S59,Agency tiers,$2K-$300K+ ladder,2,3,2,7,TIER2
+S60,Mobile agency,MVP $25K+; mid $60K-$150K,2,3,2,7,TIER2
+S61,Clutch mobile,avg $90780; most $10K-$50K,3,3,2,8,TIER2
+S62,No-code vs custom,$15-mo vs $5K-$250K,2,3,2,7,TIER2
+S63,UX agency,$5K-$80K+; ret $5K-$20K,2,3,2,7,TIER2
+S64,SaaS design,MVP $6K-$35K; audit $2K-$5K,2,3,2,7,TIER2
+S65,Design freelance,$75-$195-hr med $120,2,3,2,7,TIER2
+S66,Video units,$4.5K-$20K; $3K-$15K-min,2,3,2,7,TIER2
+S67,Clutch video,avg $42280.92,3,2,2,7,TIER2
+S68,UGC-AI floor,UGC $198; AI under $5,2,3,3,8,TIER2
+S69,Ghostwriting tiers,$500-$15K-mo,2,3,1,6,ERODING
+S70,Ghostwriting 3x,200+ agencies; $1.5K-$3K,2,3,1,6,ERODING
+S71,Grant rates,$50-$150-hr; fed $3K-$15K,2,3,3,8,TIER2
+S72,EU grants+ethics,EUR 7.5K-$25K+; no pct,2,2,3,7,TIER2
+S73,Waveup models,from $3K; 884 projects,3,3,2,8,TIER2
+S74,Upwork modeling,$25-$65-hr; $500-$10K,3,3,2,8,TIER2
+S75,Modeling top-end,$120-$600-hr; to $100K+,2,2,2,6,LOWER
+S76,Tableau card,$125-$200-hr; $8K-$25K,2,3,2,7,TIER2
+S77,PowerBI DFW,$150-$350-hr; $4K-$75K,2,3,2,7,TIER2
+S78,BI floor,EUR 10-435; $9-$115-hr,3,2,1,6,ERODING
+S79,54 invoices automation,$95-$235-hr; $1.8K-$26K,3,3,3,9,TOP10
+S80,Upwork Zapier,$40-$90-hr; $300-$3K,2,3,2,7,TIER2
+S81,Fiverr floor,from $10-$125,3,2,1,6,ERODING
+S82,Maven cohorts,$500-$3.5K-seat,3,2,3,8,TIER2
+S83,B2B training,$1.5K-$3.5K-day; $9.5K tactic,2,3,3,8,TIER2
+S84,vCISO bands,$200-$500-hr; $1K-$20K-mo,2,3,3,8,TIER2
+S85,SOC2 budgets,readiness $25K-$40K,2,3,3,8,TIER2
+S86,Firmware bands,$2K-$60K+; $30-$160-hr,2,2,3,7,TIER2
+S87,IoT ladder,PoC $15K-$55K to $1M+,2,2,2,6,LOWER

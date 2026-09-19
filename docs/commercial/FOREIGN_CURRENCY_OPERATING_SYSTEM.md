@@ -41,7 +41,7 @@ Foreign-currency revenue, margin, skills, and Algerian jobs
 
 ## Revenue lines
 
-The canonical seven lines remain in `docs/commercial/OFFER_CATALOG.json`. Each line must connect to a real capability and a buyer problem:
+The open offer portfolio lives in `docs/commercial/OFFER_CATALOG.json` (D-296 repealed the seven-line cap: the market alone is the criterion — documented sales + demand). Each line must connect to a real capability and a buyer problem:
 
 | Line | Exportable value hypothesis | Required technical proof |
 |---|---|---|

@@ -86,7 +86,9 @@ CASES: tuple[Case, ...] = (
     Case("S16", "labor", 0, 0, 0, 0, 0, "سوقُ عملٍ (تشتري لا تبيع) — بلا SSI"),
     Case("S17", "marketplace", 0, 1, 0, 0, 0, "$81M دفعاتٌ مثبتة لاحقًا بلا سعرٍ ثابت"),
     Case("S18", "marketplace", 0, 1, 0, 0, 0, "دفعاتٌ مثبتة بلا سعرٍ ثابت"),
-    Case("S19", "offer", 1, 1, 1, 1, 1, "$4925 · 5 أيام · 7 أيام تسليم · إعادة اختبار · حاسبة مجانية"),
+    Case(
+        "S19", "offer", 1, 1, 1, 1, 1, "$4925 · 5 أيام · 7 أيام تسليم · إعادة اختبار · حاسبة مجانية"
+    ),
     Case("S20", "reference", 0, 0, 0, 0, 0, "نطاقاتٌ سوقية لا عرضٌ — بلا SSI"),
     Case("S21", "anchor", 1, 1, 0, 0, 0, "رسومٌ ثابتة معلنة $7-20K لنطاق Type II"),
     Case("S22", "offer", 1, 1, 0, 0, 0, "$0.05+/كلمة لوثائق الأعمال"),
@@ -173,9 +175,7 @@ def aggregates() -> dict:
     nums: list[float] = [float(v) for v in values]
     by_id = {c.id: float(v) for c, v in graded}
     feat_freq = {
-        feat: round(
-            sum(getattr(c, feat.lower()) for c, _ in graded) / len(graded), 4
-        )
+        feat: round(sum(getattr(c, feat.lower()) for c, _ in graded) / len(graded), 4)
         for feat in FEATURES
     }
     tier1_max = max(FIRST_INVOICE_TIER.values())
@@ -204,10 +204,7 @@ def aggregates() -> dict:
 def input_fingerprint() -> str:
     """بصمةُ المدخلات — أيُّ تغييرٍ في الترميز يكسرها عمدًا."""
     canonical = json.dumps(
-        [
-            [c.id, c.kind, c.p, c.s, c.t, c.r, c.f]
-            for c in CASES
-        ]
+        [[c.id, c.kind, c.p, c.s, c.t, c.r, c.f] for c in CASES]
         + [EURUSD, FIRST_INVOICE_CEILING_USD]
         + sorted(FIRST_INVOICE_TIER.items())
         + sorted(FULL_ENGAGEMENT_TIER.items()),
@@ -229,10 +226,7 @@ def emit_measurements() -> dict:
         "coder": "single-coder-v1 (inter-rater NOT measured)",
         "sha256_inputs": input_fingerprint(),
         "aggregates": aggregates(),
-        "grades": {
-            c.id: {"kind": c.kind, "ssi": ssi(c), "grade": grade(ssi(c))}
-            for c in CASES
-        },
+        "grades": {c.id: {"kind": c.kind, "ssi": ssi(c), "grade": grade(ssi(c))} for c in CASES},
     }
 
 
