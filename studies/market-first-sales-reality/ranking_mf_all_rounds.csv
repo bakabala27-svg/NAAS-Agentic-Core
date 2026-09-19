@@ -110,3 +110,15 @@ S108,Copy per-word ladder,$0.08-$4-word,3,3,1,7,ERODING
 S109,Copy project menu,$800-$20K; 2-3x,2,2,3,7,TIER2
 S110,VA hourly bands,$9-$80-hr; $1.5K-$3K,3,3,2,8,TIER2
 S111,VA arbitrage spread,$4-$50-hr; 30-50pct,2,3,2,7,TIER2
+S112,Pentest bands,$5K-$30K avg $18.3K,3,3,3,9,TOP10
+S113,Red team + SOC2,$30K-$150K+; $8K-$25K,3,2,3,8,TIER2
+S114,MDR endpoint,$8-$35-ep; $1.5K-$5K,3,3,2,8,TIER2
+S115,MSP per-user,$100-$225-user,2,3,2,7,TIER2
+S116,Translation word,$0.08-$0.40; AR $0.18-$0.25,3,3,1,7,ERODING
+S117,MTPE + transcreation,$0.02-$0.15; $0.25-$0.50+,2,3,2,7,TIER2
+S118,Labeling units,$0.02-$2+ per unit,3,3,2,8,TIER2
+S119,RLHF expert,$15-$65-hr; $50-$100-ex,3,3,2,8,TIER2
+S120,EOR fee,$199-$1200; med ~$399,3,3,2,8,TIER2
+S121,Entity vs EOR,$10K-$50K+ setup; 5-15pct,2,2,3,7,TIER2
+S122,LPO doc review,$0.50-$2-doc; $25-$75-hr,3,2,2,7,TIER2
+S123,Legal VA pod,$1.3K-$2K-mo; $19K-$30K-yr,3,3,2,8,TIER2

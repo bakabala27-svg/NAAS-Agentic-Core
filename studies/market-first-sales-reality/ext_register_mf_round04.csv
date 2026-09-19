@@ -1,0 +1,11 @@
+id,offer,sales_evidence,client,price_or_contract,market_basis_S,matches_catalog_line,needs_governance,worth_small_test,decision
+EXT-37,SOC2-driven web-API pentest via partner,S112-S113 $5K-$30K typical; SOC2 $8K-$25K,SaaS founders pre-audit,$8K-$15K fixed via partner,S112-S113,S19-S20,no (E0-E1),yes 1 joint bid,CAN_SELL_WITH_PARTNER
+EXT-38,SMB MDR via MSP channel + onboarding,S114-S115 $1.5K-$5K-mo flat; $8-$35-endpoint,SMBs 10-50 endpoints,$1.5K-$3K-mo via MSP partner,S114-S115,no,no (E0-E1),yes 1 pilot tenant,CAN_SELL_WITH_PARTNER
+EXT-39,AR-FR certified translation pages,S116 $0.18-$0.25 AR tier; $20-$100+ certified page,Diaspora + legal + immigration,$25-$55 per certified page,S116,S22-S23,no (E0-E1),yes 1 paid batch,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-40,FR-AR transcreation sprints,S117 transcreation $0.25-$0.50+; $40-$60-hr,Brands entering MENA-FR,$1K-$4K per sprint,S117,no,no (E0-E1),yes 1 paid sprint,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-41,FR-AR dataset annotation QA,S118 units $0.02-$5+; managed $6-$60-hr,AI teams with FR-AR data,per-unit QA + hourly lead,S118,S11-S16,no (E0-E1),yes 1 paid sample,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-42,RLHF expert contributor pod,S119 STEM-code $40-$65-hr; $50-$100-example,Data platforms + labs,platform pay pass-through + margin,S119,S16,no (E0-E1),yes platform test,CAN_SELL_WITH_SMALL_ADAPTATION
+EXT-43,LPO overflow review pod supervised,S122 $0.50-$2-doc; $25-$75-hr; TAR-assisted,US firms + ALSPs overflow,$25-$50-hr pod + per-doc,S122,no,yes attorney-supervision,yes after partner,CAN_SELL_WITH_PARTNER
+EXT-44,Legal VA pod monthly,S123 $1.3K-$2K-mo FT; $19K-$30K-yr arbitrage,Solo + small firms,$1.3K-$2K-mo per seat,S123,no,no (E0-E1),yes after hire,CAN_SELL_AFTER_BUILD
+EXT-45,EOR-payroll service for global hires,S120-S121 $199-$1200 fee; $10K-$50K+ entity moat,Remote-first companies,$199-$400-emp-mo ambition,S120-S121,no,yes entity-capital,no,REJECT
+EXT-46,MTPE commodity bench,S117 MTPE $0.02-$0.15; AI $0.02-$0.10 hybrid,High-volume low-stakes,per-word under $0.10,S117,no,no (E0-E1),no,REJECT
