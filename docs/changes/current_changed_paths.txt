@@ -33,13 +33,17 @@ A	studies/market-first-sales-reality/ROUND-01-SALES-REALITY-MAP.md
 A	studies/market-first-sales-reality/ROUND-02-FULL-MARKET-SWEEP.md
 A	studies/market-first-sales-reality/ROUND-03-SELLABLE-UNIVERSE.md
 A	studies/market-first-sales-reality/ROUND-04-REMOTE-OPS-SWEEP.md
+A	studies/market-first-sales-reality/ROUND-05-SECURITY-LOCALE-DATA.md
+A	studies/market-first-sales-reality/WHERE-THE-HARD-CURRENCY-IS.md
 A	studies/market-first-sales-reality/evidence_mf_round01.csv
 A	studies/market-first-sales-reality/evidence_mf_round02.csv
 A	studies/market-first-sales-reality/evidence_mf_round03.csv
 A	studies/market-first-sales-reality/evidence_mf_round04.csv
+A	studies/market-first-sales-reality/evidence_mf_round05.csv
 A	studies/market-first-sales-reality/ext_register_mf_round01.csv
 A	studies/market-first-sales-reality/ext_register_mf_round02.csv
 A	studies/market-first-sales-reality/ext_register_mf_round03.csv
+A	studies/market-first-sales-reality/ext_register_mf_round04.csv
 A	studies/market-first-sales-reality/fit_matrix_mf_round01.csv
 A	studies/market-first-sales-reality/ranking_mf_all_rounds.csv
 M	tests/architecture/test_commercial_offers_parity_gate.py
