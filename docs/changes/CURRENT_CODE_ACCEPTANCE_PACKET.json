@@ -231,17 +231,20 @@
       "studies/market-first-sales-reality/ROUND-01-SALES-REALITY-MAP.md",
       "studies/market-first-sales-reality/ROUND-02-FULL-MARKET-SWEEP.md",
       "studies/market-first-sales-reality/ROUND-03-SELLABLE-UNIVERSE.md",
+      "studies/market-first-sales-reality/ROUND-04-REMOTE-OPS-SWEEP.md",
       "studies/market-first-sales-reality/evidence_mf_round01.csv",
       "studies/market-first-sales-reality/evidence_mf_round02.csv",
       "studies/market-first-sales-reality/evidence_mf_round03.csv",
+      "studies/market-first-sales-reality/evidence_mf_round04.csv",
       "studies/market-first-sales-reality/ext_register_mf_round01.csv",
       "studies/market-first-sales-reality/ext_register_mf_round02.csv",
+      "studies/market-first-sales-reality/ext_register_mf_round03.csv",
       "studies/market-first-sales-reality/fit_matrix_mf_round01.csv",
       "studies/market-first-sales-reality/ranking_mf_all_rounds.csv",
       "tests/architecture/test_commercial_offers_parity_gate.py",
       "tests/fitness/test_agent_reliability_constitution_gate.py"
     ],
-    "content_sha256_excluding_packet": "88ec38bb2276597cddae7785b8978cf5950f33634ed862b629d082174b587f4b",
+    "content_sha256_excluding_packet": "1dfe3ca6962e2bf909ea86e0008f6ec27a1f22afceef3256b5b67294451e618c",
     "refreshed_on": "2026-09-19",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
