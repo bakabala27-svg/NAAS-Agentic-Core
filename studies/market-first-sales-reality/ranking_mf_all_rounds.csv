@@ -86,3 +86,27 @@ S84,vCISO bands,$200-$500-hr; $1K-$20K-mo,2,3,3,8,TIER2
 S85,SOC2 budgets,readiness $25K-$40K,2,3,3,8,TIER2
 S86,Firmware bands,$2K-$60K+; $30-$160-hr,2,2,3,7,TIER2
 S87,IoT ladder,PoC $15K-$55K to $1M+,2,2,2,6,LOWER
+S88,Bookkeeping Bench,$249-$499-mo,3,3,2,8,TIER2
+S89,Bookkeeping Pilot,$349-$599-mo + tax,3,2,2,7,TIER2
+S90,Tax prep consumer,$175-$650 ladder,2,3,2,7,TIER2
+S91,CPA tax bands,$150-hr; $192-$913,2,2,3,7,TIER2
+S92,Contingency recruiting,15-25pct; $18K-$45K,3,3,2,8,TIER2
+S93,Retained search,25-35pct; $48K,3,2,3,8,TIER2
+S94,PPC pct-of-spend,10-20pct; $500-$5K,3,3,2,8,TIER2
+S95,PPC threshold tactic,$1K flat to 10pct,2,3,3,8,TIER2
+S96,Formation Atlas,$500 flat,2,3,2,7,TIER2
+S97,Legal rigor ladder,$427-$819; $9,3,2,2,7,TIER2
+S98,Human staging gap,$24 vs $1 16x,3,3,1,7,ERODING
+S99,AI staging unit econ,$1-$2 per listing,2,3,1,6,ERODING
+S100,Offshore RE editing,$0.50-$10-img,2,3,1,6,ERODING
+S101,RE editing ladder,$0.25-$35-img,2,2,1,5,ERODING
+S102,Med billing pct,4-10pct avg ~6pct,3,3,2,8,TIER2
+S103,Med billing menu,$2-$12-claim; hybrid,2,3,2,7,TIER2
+S104,FinOps consulting,$200-$350-hr; $15K-$40K,3,2,3,8,TIER2
+S105,FinOps SaaS ladder,$25K-$200K-yr,2,2,3,7,TIER2
+S106,Klaviyo tiers,$1.5K-$10K-mo,3,3,2,8,TIER2
+S107,Flow-build wedge,$5K-$15K fixed,2,3,2,7,TIER2
+S108,Copy per-word ladder,$0.08-$4-word,3,3,1,7,ERODING
+S109,Copy project menu,$800-$20K; 2-3x,2,2,3,7,TIER2
+S110,VA hourly bands,$9-$80-hr; $1.5K-$3K,3,3,2,8,TIER2
+S111,VA arbitrage spread,$4-$50-hr; 30-50pct,2,3,2,7,TIER2
