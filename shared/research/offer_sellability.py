@@ -169,11 +169,9 @@ def audit_offer(name: str, kind: str, p: int, s: int, t: int, r: int, f: int) ->
 
 def aggregates() -> dict:
     """الإحصاءاتُ المشتقّة — كلُّ رقمٍ يُعاد إنتاجُه بـ`--emit`."""
-    graded = [(c, ssi(c)) for c in CASES if ssi(c) is not None]
-    values = [v for _, v in graded]
-    assert all(v is not None for v in values)
-    nums: list[float] = [float(v) for v in values]
-    by_id = {c.id: float(v) for c, v in graded}
+    graded: list[tuple[Case, float]] = [(c, v) for c in CASES if (v := ssi(c)) is not None]
+    nums: list[float] = [v for _, v in graded]
+    by_id = {c.id: v for c, v in graded}
     feat_freq = {
         feat: round(sum(getattr(c, feat.lower()) for c, _ in graded) / len(graded), 4)
         for feat in FEATURES
