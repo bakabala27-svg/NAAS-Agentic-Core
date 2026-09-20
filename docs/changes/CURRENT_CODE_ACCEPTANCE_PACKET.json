@@ -233,6 +233,7 @@
       "studies/market-first-sales-reality/ROUND-03-SELLABLE-UNIVERSE.md",
       "studies/market-first-sales-reality/ROUND-04-REMOTE-OPS-SWEEP.md",
       "studies/market-first-sales-reality/ROUND-05-SECURITY-LOCALE-DATA.md",
+      "studies/market-first-sales-reality/SALES-INTEL-01-HOW-MONEY-MOVES-AND-DEALS-CLOSE.md",
       "studies/market-first-sales-reality/WHERE-THE-HARD-CURRENCY-IS.md",
       "studies/market-first-sales-reality/evidence_mf_round01.csv",
       "studies/market-first-sales-reality/evidence_mf_round02.csv",
@@ -245,11 +246,12 @@
       "studies/market-first-sales-reality/ext_register_mf_round04.csv",
       "studies/market-first-sales-reality/fit_matrix_mf_round01.csv",
       "studies/market-first-sales-reality/ranking_mf_all_rounds.csv",
+      "studies/market-first-sales-reality/sales_intel_evidence_01.csv",
       "tests/architecture/test_commercial_offers_parity_gate.py",
       "tests/fitness/test_agent_reliability_constitution_gate.py"
     ],
-    "content_sha256_excluding_packet": "af1914c2b7b5c5d4d116024f23b58ca620b0e034c61ed366617312588dcad187",
-    "refreshed_on": "2026-09-19",
+    "content_sha256_excluding_packet": "4aa3bf41d72086b1b4e77564712c6406558792a94aee761453faa21a868b0497",
+    "refreshed_on": "2026-09-20",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
 }
