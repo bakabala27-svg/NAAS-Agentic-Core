@@ -27,31 +27,56 @@ CLAIMS = HERE / "claims_2026-09-21.csv"
 CHANNELS = HERE / "channels_2026-09-21.csv"
 
 CLAIM_COLUMNS = {
-    "id", "claim", "value", "unit", "type", "confidence", "source", "source_date", "note",
+    "id",
+    "claim",
+    "value",
+    "unit",
+    "type",
+    "confidence",
+    "source",
+    "source_date",
+    "note",
 }
 CHANNEL_COLUMNS = {
-    "rail", "type", "available_in_dz", "evidence", "evidence_source",
-    "evidence_date", "fees_published", "trap", "status",
+    "rail",
+    "type",
+    "available_in_dz",
+    "evidence",
+    "evidence_source",
+    "evidence_date",
+    "fees_published",
+    "trap",
+    "status",
 }
 
 #: سُلَّم نوع الدليل — مغلقٌ عن قصد. نوعٌ جديد يُضاف بقرار، لا بكتابةٍ عابرة.
 ALLOWED_TYPES = {
-    "official", "official_regulation", "press", "provider",
-    "community", "computed", "open", "contradiction",
+    "official",
+    "official_regulation",
+    "press",
+    "provider",
+    "community",
+    "computed",
+    "open",
+    "contradiction",
 }
 ALLOWED_CONFIDENCE = {"high", "medium_high", "medium", "low"}
 #: حالات قناة الدفع — مغلقة كذلك. «depends» ليست حالة، بل غياب قرار.
 ALLOWED_RAIL_STATUS = {
-    "usable", "usable_with_caution", "read_only", "open",
-    "prohibited", "prohibited_as_base",
+    "usable",
+    "usable_with_caution",
+    "read_only",
+    "open",
+    "prohibited",
+    "prohibited_as_base",
 }
 
 #: مدخلات الحساب — كلٌّ منها يعيش في صفٍّ من claims يحمل مصدره.
-OFFICIAL_RATE = 154.19        # RATE-OFF-01
-PARALLEL_RATE = 276.67        # RATE-PAR-01
-CEILING_DZD = 5_000_000       # ANAE-01
-IFU_RATE = 0.005              # ANAE-04
-PAYONEER_LOW, PAYONEER_HIGH = 0.012, 0.04   # FEE-01
+OFFICIAL_RATE = 154.19  # RATE-OFF-01
+PARALLEL_RATE = 276.67  # RATE-PAR-01
+CEILING_DZD = 5_000_000  # ANAE-01
+IFU_RATE = 0.005  # ANAE-04
+PAYONEER_LOW, PAYONEER_HIGH = 0.012, 0.04  # FEE-01
 
 #: المتوقَّع صراحةً: id → (القيمة العددية أو المدى، الوحدة)
 EXPECTED_COMPUTED = {
@@ -61,7 +86,10 @@ EXPECTED_COMPUTED = {
     "LOSS-01": (round((1 - OFFICIAL_RATE / PARALLEL_RATE) * 100, 1), "percent"),
     "IFU-01": (round(CEILING_DZD * IFU_RATE, 1), "DZD/year"),
     "FEE-03": (
-        (round(CEILING_DZD / OFFICIAL_RATE * PAYONEER_LOW), round(CEILING_DZD / OFFICIAL_RATE * PAYONEER_HIGH)),
+        (
+            round(CEILING_DZD / OFFICIAL_RATE * PAYONEER_LOW),
+            round(CEILING_DZD / OFFICIAL_RATE * PAYONEER_HIGH),
+        ),
         "EUR/year",
     ),
 }
@@ -76,7 +104,9 @@ def read_csv(path: Path, columns: set[str], failures: list[str]) -> list[dict[st
         header = set(reader.fieldnames or [])
         if header != columns:
             missing, extra = columns - header, header - columns
-            failures.append(f"{path.name}: أعمدة غير مطابقة (ناقص={sorted(missing)} زائد={sorted(extra)})")
+            failures.append(
+                f"{path.name}: أعمدة غير مطابقة (ناقص={sorted(missing)} زائد={sorted(extra)})"
+            )
             return []
         return list(reader)
 
@@ -123,7 +153,10 @@ def check_computed(by_id: dict[str, dict[str, str]], failures: list[str]) -> lis
         if row["unit"] != unit:
             failures.append(f"{rid}: الوحدة {row['unit']!r} والمتوقَّع {unit!r}")
         if isinstance(expected, tuple):
-            low, high = (as_number(row["value"].split("-")[0]), as_number(row["value"].split("-")[-1]))
+            low, high = (
+                as_number(row["value"].split("-")[0]),
+                as_number(row["value"].split("-")[-1]),
+            )
             if low is None or high is None or (low, high) != expected:
                 failures.append(f"{rid}: المدى المسجَّل {row['value']!r} ≠ المحسوب {expected}")
         else:
@@ -144,7 +177,10 @@ def check_channels(rows: list[dict[str, str]], failures: list[str]) -> int:
                 failures.append(f"{rail}: الحقل «{field}» فارغ — قناة بلا فخّ معلن فخُّها مجهول")
         if row["available_in_dz"] == "yes" and not row["evidence_source"].strip():
             failures.append(f"{rail}: مُعلَنة متاحة بلا مصدر")
-        if row["status"] in {"prohibited", "prohibited_as_base"} and "prohibited" not in row["available_in_dz"]:
+        if (
+            row["status"] in {"prohibited", "prohibited_as_base"}
+            and "prohibited" not in row["available_in_dz"]
+        ):
             failures.append(f"{rail}: حالة «ممنوعة» مع توفّر مُعلَن — تناقض داخلي")
     names = [r["rail"] for r in rows]
     if len(names) != len(set(names)):
