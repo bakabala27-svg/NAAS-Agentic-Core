@@ -47,7 +47,7 @@ mutmut==3.4.0
 
 # E2E Testing
 playwright==1.55.0
-pyee==13.0.0
+pyee==14.0.0
 
 # Test Utilities
 attrs==25.4.0
