@@ -1,97 +1,84 @@
 {
   "$schema_version": 1,
-  "packet_id": "CAP-2026-09-16-adr017-asset-license-clearance",
+  "packet_id": "CAP-2026-09-21-docs-hard-currency-workworld",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "ADR-017 (2026-09-16) — براءةُ الحقوق أصلٌ محروس",
+  "decision_of_change": "لا قرار حوكميّ جديد — دفعةٌ توثيقيّة/بحثيّة: ملفُّ تواصلٍ جراحيّ لأهدافِ الفوترة الإلكترونيّة الفرنسيّة (+dossier وCSV)، ودراسةُ آلياتِ العملة الصعبة من الجزائر بأربعة ملفات، وفيها فارضٌ محليٌّ واحد (`verify.py`) يُشغَّل يدوياً بلا شبكة. لا مساسَ بـ`app/` ولا `microservices/` ولا بخطوةِ CI.",
   "standards": [
-    "system-design-primer",
-    "free-programming-books"
+    "free-programming-books",
+    "system-design-primer"
   ],
   "evidence": [
-    "slsa-1.2",
-    "openssf-scorecard"
+    "anae-service-export-fx-100",
+    "ba-instruction-06-2021-retention",
+    "ba-reglement-26-02-repatriation",
+    "eu-gdpr-art-28-processor-terms"
   ],
   "local_application": [
     {
-      "standard": "system-design-primer",
-      "paths": [
-        "docs/governance/ASSET_LICENSE_CLEARANCE.json",
-        "scripts/fitness/check_asset_license_clearance.py",
-        "tests/architecture/test_asset_license_clearance_gate.py",
-        "docs/adr/ADR-017-asset-license-clearance.md"
-      ],
-      "gate": "python3 scripts/fitness/check_asset_license_clearance.py && python3 -m pytest tests/architecture/test_asset_license_clearance_gate.py -q --noconftest -p no:cacheprovider",
-      "application_ar": "منهجُ مراجعةِ المعمارية الذي يُعلِن العقودَ والحدودَ قبل الأرقام: السجلُّ كيانٌ مُنفصلٌ بمفتاحٍ واحد (`recorded_repo`) لا حقلٌ جديدٌ يُحقنُ في مصفوفةٍ يحرُسها بوّابةٌ أخرى — لأنّ تعديلَ البوّابةِ التي تُقيّمُ التغييرَ نفسَه ممنوعٌ بلا قرارٍ حوكميّ (`DOCUMENTATION_CONTRACT.md §3`). والطبقاتُ مفصولةٌ بقوّتِها: السجلُّ يصف، والبوّابةُ تَحجُب، والاختبارُ يُثبتُ أنّ الحجْبَ واقعٌ (18 حالةِ كسرٍ واحدةٌ لكلِّ بند). ولا حالةَ تشغيلٍ تُنسخُ إلى الوثيقة: الحالةُ تعيشُ في `.memory/` وحدها، والوثيقةُ الجديدة `supporting` صراحةً لتجنّبِ سُلَّمٍ ثانٍ."
-    },
-    {
       "standard": "free-programming-books",
       "paths": [
-        "docs/commercial/ASSET_KNOWLEDGE_AND_REVENUE_MAP.md",
-        "scripts/fitness/check_commercial_offers_parity.py",
-        "tests/architecture/test_commercial_offers_parity_gate.py",
-        "docs/commercial/AHW_EXPORT_OFFER.md",
-        "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
-        "docs/commercial/CDKC_EXPORTABLE_EVAL_OFFER.md",
-        "docs/commercial/VERA_EXPORT_OFFER.md",
-        "docs/commercial/WOD_BUYER_LAYER_OFFER.md"
+        "studies/dz-hard-currency-work-world/claims_2026-09-21.csv",
+        "studies/dz-hard-currency-work-world/channels_2026-09-21.csv",
+        "studies/dz-hard-currency-work-world/verify.py"
       ],
-      "gate": "python3 scripts/fitness/check_commercial_offers_parity.py",
-      "application_ar": "نمطُ فهرسٍ مرخَّصٍ بالإسناد: قائمةُ المصادر تُبنى على **الإحالةِ لا النسخ**، وكلُّ مدخلٍ يحملُ وصفًا ورخصةً وتاريخَ قراءة. ومن هذا النموذجِ اشتُقَّ مفهوماً لم يكن في المستودع: فهرسُ أصولٍ تجاريةٍ يجب أن يُصرَّحَ عن صلتهِ بالكتالوجِ الكنسيّ لا أن يُتركَ للقارئ — لذلكَ حُمِلتْ وثائقُ العروضِ الخمسةُ علامةَ `catalog-relationship` واحدةً بسببٍ منطوق، ومُنِعَ أن تُعلِنَ حالةَ نضجٍ لا يحملُها الكتالوج."
+      "gate": "python3 studies/dz-hard-currency-work-world/verify.py",
+      "application_ar": "نمطُ الإحالةِ لا النسخ: لا يعيشُ رقمٌ في النثرِ بلا صفٍّ يحملُه بمصدرِه وتاريخِه ونوعِ دليلِه ودرجةِ ثقتِه — والوثيقةُ تُحيلُ إلى السجلِّ ولا تُنشئُ رقماً موازياً. والفارضُ يمنعُ الصنفَ الذي تمنعُه هذه المدرسةُ في الفهارس: مدخلٌ بلا إسناد. والفرقُ المقصودُ أنّ السجلَّ هنا لا يسردُ كتباً بل ادّعاءاتٍ قابلةً للكسر، فصار «الإسنادُ» شرطاً بنيوياً لا تنسيقاً: نوعٌ خارجُ السُّلَّمِ المغلقِ ⇒ فشل، وادّعاءٌ بلا تاريخٍ ⇒ فشل، وبندٌ مفتوحٌ بثقةٍ عاليةٍ ⇒ فشل."
+    },
+    {
+      "standard": "system-design-primer",
+      "paths": [
+        "studies/dz-hard-currency-work-world/README.md",
+        "studies/dz-hard-currency-work-world/verify.py",
+        "docs/commercial/FR_EINVOICING_TARGET_CONTACT_DOSSIER.md"
+      ],
+      "gate": "python3 scripts/fitness/check_documentation_contract.py",
+      "application_ar": "فصلُ الطبقاتِ بقوّتِها: السجلُّ (CSV) يصف، والفارضُ (`verify.py`) يحجُب، وصفحةُ القرارِ (README §0) تقرأ — ولا تُنسخُ حالةٌ تشغيليّةٌ إلى وثيقة. والدليلُ على أنّ الحجبَ واقعٌ لا مُدّعًى: كلُّ رقمٍ مشتقٍّ مُعلَنٍ يُعادُ حسابُه من مدخلاتِه، ورقمٌ مُعدَّلٌ يدوياً ينكسرُ فوراً. وحدُّ هذا القياسِ معلَنٌ في رأسِ الملف: الفارضُ يفحصُ البنيةَ والحساب، ولا يدّعي التحقّقَ من صحةِ المصادرِ نفسِها (لا شبكةَ في الفارض) — لأنّ ادّعاءَ ما لا يُقاس هو الصنفُ الذي وُجدتْ هذه البوّاباتُ لمنعِه."
     }
   ],
   "production": {
-    "owner": "governance-commercial-clearance",
-    "status": "GOVERNANCE_REGISTERS_AND_CI_GATES_NO_RUNTIME_PATH",
+    "owner": "governance-commercial-research",
+    "status": "DOCS_AND_RESEARCH_ONLY_NO_RUNTIME_PATH",
     "interfaces": [
-      "docs/governance/ASSET_LICENSE_CLEARANCE.json — سجلُّ البراءة: 75 مصدرًا خارجيًا + تبعياتُ الإنتاج + الموادُّ الثنائية + حكمُ الترقية لكلِّ عرض، بقاموسٍ مُعلَنٍ داخلَ الملفِّ نفسِه",
-      "scripts/fitness/check_asset_license_clearance.py — فارضٌ stdlib فقط، يقبل `--root` كثقبِ اختبار، ويفشلُ صوتيّاً عندَ غيابِ أيٍّ من مصادرِه الثلاثة",
-      "scripts/fitness/check_commercial_offers_parity.py — مطابقةُ وثائقِ العروضِ مع الكتالوج (يُغلقُ وعدَ W-13 في الخارطةِ السيادية)",
-      "docs/commercial/ASSET_KNOWLEDGE_AND_REVENUE_MAP.md — طبقةُ التدقيقِ المرجعيّةِ المُشتقّةِ (غيرُ مُسَلَّطة)",
-      ".github/workflows/ci.yml — البوّابتانِ خطوتانِ داخل `guardrails`، أي داخل `required-ci`"
+      "docs/commercial/FR_EINVOICING_TARGET_CONTACT_DOSSIER.md — 30 هدفاً في 6 طبقات، لكلٍّ هويّتُه وقناةُ تواصلِه المهنيّةُ العامّةُ ودورُه وخطّافُه بالفرنسيّة، مع 4 جهاتٍ مُستبعَدةٍ لعلمِ اعتراضٍ RNE.",
+      "docs/commercial/FR_EINVOICING_TARGETS_2026-09-21.csv — 34 صفاً (30 هدفاً + X1–X4) بمخطّطِ متابعةٍ من 18 عموداً: مصدرُ الحقيقةِ للتواصلِ لا الوثيقة.",
+      "studies/dz-hard-currency-work-world/README.md — صفحةُ قرارٍ + آلياتُ الصرفِ والقنوات + خطةُ 30 يوماً + فجواتٌ مفتوحةٌ مُسمّاة.",
+      "studies/dz-hard-currency-work-world/claims_2026-09-21.csv — 46 ادّعاءً بمصدرٍ وتاريخٍ ونوعِ دليلٍ ودرجةِ ثقة؛ وحدةُ الحقيقةِ للأرقام.",
+      "studies/dz-hard-currency-work-world/channels_2026-09-21.csv — 14 قناةَ دفعٍ بحالتِها المعلَنةِ وفخِّها المكتوب.",
+      "studies/dz-hard-currency-work-world/verify.py — فارضٌ يدويٌّ stdlib يقرأ ملفَّيه المجاورَين، يُعادُ حسابُ كلِّ رقمٍ مشتقٍّ فيه، ويعودُ 1 بقائمةِ انتهاكاتٍ صريحة."
     ],
-    "failure_behavior_ar": "أيُّ مصدرٍ مُضافٍ إلى `SOURCE_ADOPTION_MATRIX.json` بلا سجلِّ براءة ⇒ أحمر. أيُّ عرضٍ يُرقّى إلى `OFFER_READY/PILOT/PAID_PROOF/REPEATABLE` وهو يستندُ إلى مرجعٍ لا يُبيحُ البيع ⇒ أحمر. ادّعاءٌ أقدمُ من نافذةِ المراجعة ⇒ أحمر مع أمرِ إعادةِ القياس. ملفٌّ ثنائيٌّ في الشجرة بلا سجلِّ توزيع ⇒ أحمر. بوّابةٌ تفقدُ أحدَ ملفاتِها الثلاثة ⇒ أحمرٌ لا أخضرُ صامت.",
-    "observability_ar": "لا خطَّ تشغيليّاً جديداً يُقاس؛ المُخرَجُ سجلٌّ مُدقَّقٌ وتاريخُ قراءة. البوّابتانِ تطبعانِ العدّاداتِ المُشتقّةَ وقتَ التشغيل (`upstream_sources` و`production_dependencies` و`tracked_binary_artifacts` و`offer_clearance` و`findings_ar`)، ولا تُخبّئُ رقماً في الملفِّ ليكذبَ بعدَ شهر (D-192). تُشغّلانِ محليّاً: `make gates`.",
-    "security_boundary_ar": "لا أسرارَ، ولا مفاتيحَ، ولا بياناتٍ شخصيةَ في أيٍّ من الملفاتِ المضافة؛ لا شبكةَ في CI (القراءةُ من المنبع إجراءٌ مؤرَّخٌ ينفّذُه انسانٌ بصلاحيةٍ ويُثبِتُ تاريخَه — البوّابةُ ترفضُ الادّعاءَ القديمَ بدلَ أن تُعيدَ القياسَ صمتاً)؛ ولا تنفيذَ لشفرةِ غيرِ موثوقةٍ هنا: الموادُّ الثنائيةُ مُصرَّحٌ عنها فقط، والمنشورُ التجاريُّ المُودَعُ مُسجَّلٌ حجاباً بمالكٍ وإجراءٍ لا حذفًا.",
-    "rollback_ar": "تراجُعٌ نظيفٌ بلا حالةٍ مُخزَّنة: `git revert` يلغيَ السجلَّ والبوّابتينِ والوثائقَ وسطرَينِ في `ci.yml` وصفّاً في `NEGATIVE_PROOFS.json` وعدّاداً مُشتقّاً في `.memory/ci-gates.md`. لا ملفَّ حُذف ولا سطرَ عقيدةٍ مُحي؛ وكلُّ تعديلٍ في الملفاتِ القائمة إضافةٌ أو تحديثُ سجلّ؛ والتعديلُ الوحيدُ خارجُ ملفاتِ الدفعة إضافةُ سطرِ صلةٍ واحدٍ إلى كلٍّ من وثائقِ العروضِ الخمس.",
+    "failure_behavior_ar": "`verify.py` يعودُ 1 بقائمةٍ صريحةٍ عند: رقمٍ مشتقٍّ لا يُعادُ حسابُه من مدخلاتِه · ادّعاءٍ بلا مصدرٍ أو تاريخٍ أو نوعِ دليلٍ من السُّلَّمِ المغلق · قناةِ دفعٍ بلا فخٍّ معلَنٍ أو بحالةٍ خارجِ السُّلَّم · أو تناقضٍ داخليٍّ (حالةٌ «ممنوعة» مع توفّرٍ مُعلَن). ولا يُصحّحُ الفارضُ شيئاً بنفسِه: يُفشلُ فقط. وفي CI: لا خطوةَ جديدة — الفارضُ يدويٌّ بقرارٍ مكتوبٍ في رأسِه (ربطُه يُحوّلُ كلَّ تحديثِ سعرِ صرفٍ إلى PR).",
+    "observability_ar": "لا خطَّ تشغيليّاً جديداً يُقاس. المُخرَجُ الطرفيُّ: عددُ الادّعاءات، عددُ الأرقامِ المشتقّةِ المُعادِ حسابُها، والأرضيةُ المحسوبةُ (سقفُ ANAE باليورو · فارقُ السوقِ الموازي · خسارةُ التحويلِ الرسميّ). والبوّاباتُ القائمةُ تُشغَّلُ محلياً عبر `make gates`؛ هذه الدفعةُ لا تُضيفُ زمناً إلى CIّ.",
+    "security_boundary_ar": "لا أسرارَ ولا مفاتيحَ ولا بياناتٍ شخصيّة: جهاتُ الاتصالِ في الملفِّ التجاريّ مهنيّةٌ منشورةٌ طوعاً على مواقعِ الجهاتِ والسجلّاتِ العامّة، ولكلِّ صفٍّ رابطُ مصدرِه وتاريخُ التقاطِه. ولا شبكةَ في الفارضِ ولا في CI: القراءةُ من المنبعِ إجراءٌ مؤرَّخٌ ينفّذُه إنسانٌ، لا ادّعاءٌ يُقاسُ آلياً. والدفعةُ لا تلمسُ `app/` ولا `microservices/` ولا أيَّ مسارِ بياناتِ عملاء.",
+    "rollback_ar": "حذفُ `studies/dz-hard-currency-work-world/` وملفَّي `docs/commercial/FR_EINVOICING_*` وحدَهما — لا شيءَ آخرَ يشيرُ إليهما، والفارضُ لا يقرأُ إلا ملفَّيه المجاورَين. لا حذفَ ولا استبدالَ صامتَ لأيّ ملفٍّ قائم: الدفعةُ إضافةٌ خالصة.",
     "runtime_evidence_paths": [
-      "docs/governance/ASSET_LICENSE_CLEARANCE.json",
-      "docs/governance/NEGATIVE_PROOFS.json",
-      "docs/governance/CONSTITUTION_REGISTRY.json",
-      ".memory/ci-gates.md"
+      "studies/dz-hard-currency-work-world/verify.py",
+      "studies/dz-hard-currency-work-world/claims_2026-09-21.csv",
+      "studies/dz-hard-currency-work-world/channels_2026-09-21.csv"
     ]
   },
   "commercial_trace": {
     "offer_ids": [
-      "ai-red-teaming-multilingual",
-      "on-premise-energy-ai",
       "niche-rlhf-data"
     ],
-    "customer_problem_ar": "لا يستطيعُ المشتري المؤسسيّ أن يشتريَ ما لا يستطيعُ أن يُثبتَ ملكيتَه: ثلاثةٌ من أسطرِ الكتالوجِ السبعةِ تُبنى على مراجعَ خارجيّةٍ تمنعُ رخصتُها الاستخدامَ التجاريَّ أو الاشتقاقَ أو النشر (CC BY-NC-ND · «شخصيٌّ فقط» · CC BY-SA) أو لا ترخيصَ لها إطلاقًا — والخطرُ لا يظهرُ في الاختباراتِ بل في أولِ فحصٍ قانونيٍّ قبلَ التوقيع. يخدمُ هذا التغيّرُ `ai-red-teaming-multilingual` (يطالبُ developer-roadmap وawesome-claude-skills)، و`on-premise-energy-ai` (يطالبُ system-design-101 وbuild-your-own-x، وعلى عنقودِ العميلِ تظهرُ التبعياتُ المقيِّدةُ أيضاً)، و`niche-rlhf-data` (يطالبُ coding-interview-university).",
-    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 لم تُختبَر بالبيع): إذا صارَ «هل يُمكِنُ بيعُ هذا؟» سؤالاً تُجيبُه بوّابةٌ بخُضرةٍ وحُمرَةٍ مُؤرَّخَةٍ، انخفضَ وقتُ التفاوضِ القانونيّ في أوّلِ صفقةٍ تصديرية، وصارَ بمقدورِ المشروعِ أن يُسلِّمَ البراءةَ نفسَها كخدمةٍ مُستقلة. لا رقمَ إيرادٍ ولا ادّعاءَ عميلٍ هنا — القياسُ الحالى: صفرُ مقابلة، صفرُ عرضٍ مُرسَل، صفرُ فاتورة، صفرُ تحصيل.",
-    "foreign_currency_path_ar": "لا يُغيّرُ هذا التغيّرُ مسارَ القبضِ ولا يفتحُ قناةً جديدة؛ يبقى التحصيلُ مُعلَّقاً عندَ بوّابةِ الدفعِ `SEAM` وفقَ عقيدةِ العملةِ الصعبةِ المُسجَّلةِ في `docs/FOREIGN_CURRENCY_DOCTRINE.md`. الذي يتغيّرُ هو **شرطُ التأهيل**: لا يُرسَلُ عرضُ سعرٍ (ولا فاتورةٌ لاحقاً) قبلَ أن تُطابِقَ البراءةُ المنهجيّةُ لا الاقتباس؛ وعرضُ `on-premise-energy-ai` يحمِلُ قائمةَ رخصٍ ومُسلَّماتِ مصادرَ قبلَ أيِّ رقم.",
-    "foundation_exception_ar": "لا استثناءَ تأسيسياً ولا إعفاءً مُجمَّداً: البوّابتانِ مُطبَّقتانِ على الكتالوجِ كلِّهِ، والنتيجةُ الحاليةُ هي **حجابُ سبعةِ أسطرٍ كلها** — وهذا ليسَ إخفاقاً تقنياً بل الموقفُ الصادقُ الوحيدُ المسموح. لا تُمنحُ أيُّ إعفاءٍ مُجمَّد؛ الرافعُ الوحيدُ استبدالُ المرجعِ المحجوبِ بمرجعٍ مُرخَّصٍ أو بنصٍّ أصليٍّ كامل، ثمَّ إعادةُ القياس."
+    "customer_problem_ar": "العاملُ من الجزائرِ يُختارُ له مسارُ القبضِ بالحظّ لا بالحساب: منصّاتٌ تعلنُ «10–25 $/ساعة» وتدفعُ 2.20 $ مقيسةً، ومنصّاتٌ لا تدفعُ إلا PayPal (مسدودٌ من الجزائر) فيصيرُ العملُ مُستحيلَ التحصيلِ بعد إنجازِه، ورسميٌّ 154.19 DZD/€ مقابل ~276.67 موازي — فالتحويلُ الرسميُّ يفقدُ 44% من القيمة، والمخالفةُ (الأمر 96-22) حبسٌ 2–7 سنوات وغرامةٌ لا تقلُّ عن ضعفِ المبلغ. المشكلةُ ليست غيابَ العمل، بل غيابَ ترتيبٍ يمنعُ العملَ الصحيحَ على قناةٍ ميتة.",
+    "value_hypothesis_ar": "فرضيةُ القيمة (🟡 لم تُختبَر بالبيع): قاعدةُ «القناةُ تسبقُ العرض» تُلغي شهوراً من العملِ على قنواتٍ مسدودة، وربطُ الإعفاءِ الضريبيِّ بوثيقةِ البنك (لا بالمحاسب) يمنعُ خسارةَ أهليةٍ لا تُستعاد بأثرٍ رجعي، وفارقُ 1.2–4% في القناةِ يتجاوزُ الضريبةَ المباشرةَ على سقفِ ANAE بخمسةَ عشرَ إلى خمسينَ ضعفاً. المقياسُ الوحيدُ المقبول: ≥1 دفعةٍ مقدَّمةٍ على حساب عملةٍ حقيقي. الحالةُ اليوم: صفرُ رسالةٍ مُرسَلة، صفرُ عرضٍ مُوقَّع، صفرُ فاتورة، صفرُ تحصيل — وهذا مكتوبٌ في الوثيقةِ نفسِها لا مُخفى.",
+    "foreign_currency_path_ar": "بطاقةُ ANAE (3 وثائق) ⇒ حسابٌ تجاريٌّ + حسابُ عملة (تعليمةُ بنكِ الجزائر 2024/01) ⇒ استلامُ 100% من عائداتِ تصديرِ الخدماتِ بالعملة (تعليمة 06-2021) ⇒ إعفاءٌ ضريبيٌّ دائمٌ بالنسبةِ لرقمِ الأعمالِ بالعملةِ مشروطٌ بوثيقةِ إيداعٍ بنكي. والقناةُ العاملةُ المقيسة: Payoneer/Deel/Malt — مع بقاءِ الإيرادِ بالعملةِ وعدمِ تحويلِه إلى دينارٍ إلا للحاجةِ الفعليّة. والسقفُ 5,000,000 DZD = 32,427.5 €/سنة يجعله سلّمَ اختبارٍ لا كيانَ أعمال — والطابقُ الأعلى (EURL في نظامِ التصدير) هو المسارُ عند التجاوز.",
+    "foundation_exception_ar": "استثناءٌ تأسيسيٌّ معلَن: هذه الدفعةُ لا تنتجُ قدرةً تشغيليّةً ولا إيراداً، ولا تُعلنُ جاهزيّةً إنتاجيّة. والصلةُ بسطرِ الكتالوج `niche-rlhf-data` صلةُ بحثٍ لا صلةُ تسليم: الدراسةُ تقيسُ منصّاتِ تقييم/بياناتِ العربية وتكشفُ الفارقَ بين المعلَنِ والمقيس. أمّا خدمةُ تنظيفِ بياناتِ الفوترةِ الإلكترونيّةِ الفرنسيّة التي يخدمُها الملفُّ التجاريُّ فليست بعدُ سطراً في الكتالوج — وهذا نقصٌ مُسجَّلٌ هنا، لا يُتجاوزُ بصمت."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفرُ حذفٍ على مستوى الملفات: لا ملفَّ أُزيل، ولا خطَّ عرضٍ مُحِي، ولا سطرَ عقيدةٍ مُحي. التعديلاتُ الوحيدةُ خارجَ ملفاتِ الدفعة: (أ) إضافةُ سطرِ `catalog-relationship` واحدٍ إلى كلٍّ من وثائقِ العروضِ الخمس، (ب) سطرُ البوصلةِ `commercial-license-check` في `docs/governance/AGENT_BOOT_MANIFEST.md`، و(ج) العلامةُ المُشتقّةِ في `.memory/ci-gates.md` من 98 إلى 100 مع عدَّادِ المنفَّذ. المنشورُ التجاريُّ المُودَعُ في الشجرةِ **لمْ يُحذف**: سِجلُّ الحذفِ يخنقُ القانونَ الذي يحرمُه، والحكمُ عليه جاءَ رصدٌ باسمِ مالكٍ وإجراءٌ منطوق (`F-IP-02`) بانتظارِ قرارِ المالك."
+    "policy_ar": "صفرُ حذفٍ على مستوى الملفات: الدفعةُ إضافةُ 6 ملفاتٍ جديدةٍ بالكامل، والتعديلُ الوحيدُ على ملفٍّ قائمٍ هو هذا الـpacket نفسُه (يُستثنى من بصمةِ التغيير بحكمِ التصميم). لا خطَّ عرضٍ مُحي، ولا سطرَ عقيدةٍ مُحي، ولا مصدرَ غُيّرت حالتُه."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 scripts/fitness/check_asset_license_clearance.py  # PASS — قاموسٌ مُطبَّق · تغطيةٌ ثنائيةُ الاتجاهِ مع المصفوفة · لا براءةَ بلا قراءةِ رخصة · ترقيةُ العروضِ محجوبةٌ بالبراءة · 59 تبعيةً بالتسمية · 4 ثنائياتٍ بسجلِّ توزيع · 6 بطاقاتِ رصد",
-      "python3 scripts/fitness/check_commercial_offers_parity.py  # PASS — 5 وثائقَ عروضٍ بصلةٍ مُعلَنةٍ وسببٍ منطوق، وحالةُ نضجٍ واحدةٌ في الكتالوج",
-      "python3 -m pytest tests/architecture/test_asset_license_clearance_gate.py tests/architecture/test_commercial_offers_parity_gate.py -q --noconftest -p no:cacheprovider  # PASS — 29 اختباراً أخضر، منها 15 حالةُ كسرٍ تُرجِعُ الرمزَ 1 وتُسمّي البندَ المكسور",
-      "ruff check . && ruff format --check .  # PASS على الملفاتِ الجديدة بـruff 0.14.0 (نسخةُ CI نفسها)؛ بلا توسيعٍ لـ`per-file-ignores`",
-      "python3 scripts/fitness/check_documentation_contract.py  # PASS — 50 وثيقةً حية، الروابطُ والمساراتُ والأوامرُ متسقة",
-      "python3 scripts/fitness/check_gate_negative_proof.py  # PASS — البراهينُ السلبيةُ مُسجَّلةٌ للبوّابتينِ في docs/governance/NEGATIVE_PROOFS.json",
-      "python3 scripts/fitness/check_governance_registry.py  # PASS بعدَ هذا التغيير — كان أحمرَ على main بإحالةٍ وهميةٍ إلى بوّابةٍ وُعدتْ ولم تُبنَ؛ الفارضُ المحلّيُّ يُشتَقُّ من ci.yml فعدّادُ البوّاباتِ تحرّك 98 ⇒ 100 مع الوثيقة",
-      "python3 scripts/fitness/check_memory_coherence.py  # PASS — الترتيبُ والفهرسَ والحدودُ والسِلمُ مُتّسقةٌ مع عقيدةِ D-287…D-295",
-      "python3 scripts/fitness/check_constitution_reality.py  # PASS — لا أرقامَ مُضلِّلةَ في وثائقِ السلطة؛ الوثائقُ الجديدةُ `supporting` لا تُصدِرُ أرقاماً",
-      "python3 scripts/fitness/check_agent_context.py  # PASS — البراءةُ صارت جزءاً من مِلفِّ إقلاعِ الوكيلِ العاشر",
-      "CODE_ACCEPTANCE_BASE_SHA=efb0c4f python3 scripts/fitness/check_code_acceptance.py  # تُنفَّذ في CI على فرقِ الـPR",
-      "gh api repos/<owner>/<repo> --jq .license  # إجراءُ إعادةِ القياسِ المُؤرَّخ (خارجُ CI عمداً): لا شبكةَ في بوّاباتِ الدمج"
+      "python3 studies/dz-hard-currency-work-world/verify.py  # PASS — 46 ادّعاءً (منها 6 أرقام مشتقّة أُعيد حسابها حتمياً) · 14 قناة",
+      "python3 -m ruff check .  # All checks passed! (ruff==0.14.0 — نفس الإصدار المثبّت في خطوة lint)",
+      "python3 -m ruff format --check .  # 2206 files already formatted",
+      "python3 scripts/fitness/check_documentation_contract.py  # ✅ 51 وثيقة حية والروابط والمسارات متسقة",
+      "python3 scripts/fitness/check_code_acceptance.py  # PASS (ببصمة diff محدَّثة من نفس أمر CI)"
     ]
   },
   "curriculum": {
@@ -173,85 +160,25 @@
     "owner": "curriculum-governance"
   },
   "changed_paths": [
-    ".github/workflows/ci.yml",
-    ".memory/ci-gates.md",
-    "docs/DOCUMENTATION_INDEX.md",
-    "docs/DOCUMENTATION_MANIFEST.json",
-    "docs/adr/ADR-017-asset-license-clearance.md",
-    "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
-    "docs/changes/current_changed_paths.txt",
-    "docs/commercial/AHW_EXPORT_OFFER.md",
-    "docs/commercial/ASSET_KNOWLEDGE_AND_REVENUE_MAP.md",
-    "docs/commercial/CDKC_EXPORTABLE_EVAL_OFFER.md",
-    "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
-    "docs/commercial/VERA_EXPORT_OFFER.md",
-    "docs/commercial/WOD_BUYER_LAYER_OFFER.md",
-    "docs/governance/ASSET_LICENSE_CLEARANCE.json",
-    "docs/governance/NEGATIVE_PROOFS.json",
-    "scripts/fitness/check_asset_license_clearance.py",
-    "scripts/fitness/check_commercial_offers_parity.py",
-    "tests/architecture/test_asset_license_clearance_gate.py",
-    "tests/architecture/test_commercial_offers_parity_gate.py"
+    "docs/commercial/FR_EINVOICING_TARGET_CONTACT_DOSSIER.md",
+    "docs/commercial/FR_EINVOICING_TARGETS_2026-09-21.csv",
+    "studies/dz-hard-currency-work-world/README.md",
+    "studies/dz-hard-currency-work-world/channels_2026-09-21.csv",
+    "studies/dz-hard-currency-work-world/claims_2026-09-21.csv",
+    "studies/dz-hard-currency-work-world/verify.py"
   ],
   "git_change_snapshot": {
-    "base_ref": "origin/main",
+    "base_ref": "e3f61a26a10ba51b837ee45fbfabd71778a69bcb",
     "changed_paths_excluding_packet": [
-      ".memory/README.md",
-      ".memory/agent_reliability_hard_currency_constitution.md",
-      ".memory/agent_reliability_hard_currency_truth.md",
-      ".memory/decisions.md",
-      ".memory/deep_tech_constitution_truth.md",
-      ".memory/fx_doctrine_truth.md",
-      ".memory/sellability_structure_truth.md",
-      ".runtime/truth_table.lock.json",
-      "CLAUDE.md",
-      "README.ar.md",
-      "README.md",
-      "docs/AGENT_WORKFLOW_CONSTITUTION.md",
-      "docs/DEEP_TECH_CONSTITUTION.md",
-      "docs/DOCUMENTATION_INDEX.md",
-      "docs/DOCUMENTATION_MANIFEST.json",
-      "docs/changes/current_changed_paths.txt",
-      "docs/commercial/AHW_EXPORT_OFFER.md",
-      "docs/commercial/CDKC_EXPORTABLE_EVAL_OFFER.md",
-      "docs/commercial/CND_EXPORTABLE_EVAL_OFFER.md",
-      "docs/commercial/FOREIGN_CURRENCY_OPERATING_SYSTEM.md",
-      "docs/commercial/MARKET_FIRST_SALES_REALITY_PROMPT.md",
-      "docs/commercial/NAAS_AGENT_RELIABILITY_STRATEGIC_RESEARCH.md",
-      "docs/commercial/OFFER_CATALOG.json",
-      "docs/commercial/SOVEREIGN_KNOWLEDGE_REVENUE_MAP.md",
-      "docs/commercial/SSI_EXPORT_OFFER.md",
-      "docs/commercial/VERA_EXPORT_OFFER.md",
-      "docs/commercial/WOD_BUYER_LAYER_OFFER.md",
-      "docs/research/HARD_CURRENCY_NEW_KNOWLEDGE_SSI.md",
-      "docs/research/SSI_MEASUREMENTS.json",
-      "scripts/fitness/check_agent_reliability_constitution.py",
-      "scripts/fitness/check_commercial_offers_parity.py",
-      "shared/research/offer_sellability.py",
-      "studies/market-first-sales-reality/ROUND-01-SALES-REALITY-MAP.md",
-      "studies/market-first-sales-reality/ROUND-02-FULL-MARKET-SWEEP.md",
-      "studies/market-first-sales-reality/ROUND-03-SELLABLE-UNIVERSE.md",
-      "studies/market-first-sales-reality/ROUND-04-REMOTE-OPS-SWEEP.md",
-      "studies/market-first-sales-reality/ROUND-05-SECURITY-LOCALE-DATA.md",
-      "studies/market-first-sales-reality/SALES-INTEL-01-HOW-MONEY-MOVES-AND-DEALS-CLOSE.md",
-      "studies/market-first-sales-reality/WHERE-THE-HARD-CURRENCY-IS.md",
-      "studies/market-first-sales-reality/evidence_mf_round01.csv",
-      "studies/market-first-sales-reality/evidence_mf_round02.csv",
-      "studies/market-first-sales-reality/evidence_mf_round03.csv",
-      "studies/market-first-sales-reality/evidence_mf_round04.csv",
-      "studies/market-first-sales-reality/evidence_mf_round05.csv",
-      "studies/market-first-sales-reality/ext_register_mf_round01.csv",
-      "studies/market-first-sales-reality/ext_register_mf_round02.csv",
-      "studies/market-first-sales-reality/ext_register_mf_round03.csv",
-      "studies/market-first-sales-reality/ext_register_mf_round04.csv",
-      "studies/market-first-sales-reality/fit_matrix_mf_round01.csv",
-      "studies/market-first-sales-reality/ranking_mf_all_rounds.csv",
-      "studies/market-first-sales-reality/sales_intel_evidence_01.csv",
-      "tests/architecture/test_commercial_offers_parity_gate.py",
-      "tests/fitness/test_agent_reliability_constitution_gate.py"
+      "docs/commercial/FR_EINVOICING_TARGETS_2026-09-21.csv",
+      "docs/commercial/FR_EINVOICING_TARGET_CONTACT_DOSSIER.md",
+      "studies/dz-hard-currency-work-world/README.md",
+      "studies/dz-hard-currency-work-world/channels_2026-09-21.csv",
+      "studies/dz-hard-currency-work-world/claims_2026-09-21.csv",
+      "studies/dz-hard-currency-work-world/verify.py"
     ],
-    "content_sha256_excluding_packet": "4aa3bf41d72086b1b4e77564712c6406558792a94aee761453faa21a868b0497",
-    "refreshed_on": "2026-09-20",
+    "content_sha256_excluding_packet": "ec77a2969f930bdedeea9d60f45f87591ec3c22eed3565ea5e7d26ac0d328864",
+    "refreshed_on": "2026-09-21",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
 }
