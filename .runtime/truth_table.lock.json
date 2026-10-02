@@ -1,5 +1,5 @@
 {
-  "branch": "ccr-0ff8dc1c-wm5oty",
+  "branch": "ccr-26d6a543-rhd0a5",
   "components": [
     {
       "agreed": false,
@@ -350,6 +350,6 @@
       "on_live_chain": true
     }
   ],
-  "generated_at_utc": "2026-10-01T22:59:18.625620+00:00",
+  "generated_at_utc": "2026-10-02T23:39:18.185962+00:00",
   "schema_version": 1
 }
