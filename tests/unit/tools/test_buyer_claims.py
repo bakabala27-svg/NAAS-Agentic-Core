@@ -114,3 +114,15 @@ def test_social_security_is_not_a_guarantee() -> None:
 def test_buyer_lines_reads_fences_and_quotes_only() -> None:
     text = "intro\n```\nBonjour,\n```\n> script line\n> ⛔ note au propriétaire\nnote\n"
     assert list(buyer_lines(text)) == [(3, "Bonjour,"), (5, "> script line")]
+
+
+def test_the_50_euro_fine_is_not_tied_to_reception() -> None:
+    """LF 2026 art. 123: 50 € per invoice (cap 15,000 €/year) punishes not *issuing* an
+    e-invoice. Not being able to *receive* from 2026-09-01 costs 500 €, then 1,000 €, after
+    formal notice (entreprendre.service-public.gouv.fr, A18802). Two true numbers can make
+    one false sentence."""
+    wrong = classify("Dès le 1er septembre 2026, sans réception électronique : 50 € par facture.")
+    assert wrong.verdict == "UNSUPPORTED"
+    assert "penalty_scope" in {item.rule for item in wrong.findings}
+    right = classify("Une facture non émise électroniquement coûte 50 € (plafond 15 000 € par an).")
+    assert right.verdict == "FACTUALLY_SAFE"

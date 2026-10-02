@@ -165,7 +165,7 @@ KNOWN_FACTS: tuple[KnownFact, ...] = (
     KnownFact(
         "fr_penalty",
         re.compile(r"50 ?€.{0,40}15[  .]?000 ?€", _I),
-        "50 € للفاتورة بسقف 15,000 €/سنة (قانون المالية 2026)",
+        "50 € لكلّ فاتورةٍ لم تُصدَر إلكترونياً بسقف 15,000 €/سنة (قانون المالية 2026 م123) — للإصدار لا للاستقبال",
         ".memory/decisions.md#D-300",
     ),
     KnownFact(
@@ -207,9 +207,25 @@ def identifier_mismatches(line: str) -> list[str]:
     return problems
 
 
+#: LF 2026 art. 123 (entreprendre.service-public.gouv.fr, A18802): 50 € per invoice punishes
+#: not *issuing* an e-invoice; not being able to *receive* costs 500 € then 1,000 € after
+#: formal notice. Two true numbers can make one false sentence.
+_RECEPTION = re.compile(r"réception|recevoir|reçu|receiv|استقبال|تلقّي", _I)
+_FIFTY_EUROS = re.compile(r"(?<![\d.,])50 ?€")
+
+
 def findings(text: str, *, settled_customers: int = 0) -> list[Finding]:
     """Every rule the text trips — all of them, not the first."""
     found: list[Finding] = []
+    if _RECEPTION.search(text) and (fifty := _FIFTY_EUROS.search(text)):
+        found.append(
+            Finding(
+                "penalty_scope",
+                UNSUPPORTED,
+                fifty.group(0),
+                "غرامة 50 € للفاتورة تخصّ عدم الإصدار؛ عدم القدرة على الاستقبال 500 € ثمّ 1,000 € بعد إنذار (LF 2026 م123)",
+            )
+        )
     for rule in _RULES:
         if rule.rule == "existing_clients" and settled_customers > 0:
             continue
