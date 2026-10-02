@@ -104,6 +104,17 @@ _RULES: tuple[_Rule, ...] = (
         "نتيجةٌ بلا فشلٍ تُقال يقيناً — لم يُقَس أيّ ملفٍّ حقيقي (D-300)",
     ),
     _Rule(
+        "absolute_outcome",
+        FORBIDDEN,
+        re.compile(
+            r"plus jamais|jamais plus|aucun rejet|aucune erreur|tous les rejets|toutes les erreurs"
+            r"|[ée]limin(e|ons|ez|er)\b|never again|eliminat\w*|every rejection|all rejections"
+            r"|no more rejections|لن تُرفَض|لن ترفض|أيّ رفض بعد|نهائياً",
+            _I,
+        ),
+        "وعدٌ مطلق بنتيجة — وصيغة الشرط («إذا…») لا تحوّله احتمالاً (D-306)",
+    ),
+    _Rule(
         "unmeasured_rate",
         UNSUPPORTED,
         re.compile(r"%|pour ?cent|percent|بالمئة|بالمائة|في المئة", _I),

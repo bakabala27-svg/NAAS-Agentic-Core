@@ -126,3 +126,19 @@ def test_the_50_euro_fine_is_not_tied_to_reception() -> None:
     assert "penalty_scope" in {item.rule for item in wrong.findings}
     right = classify("Une facture non émise électroniquement coûte 50 € (plafond 15 000 € par an).")
     assert right.verdict == "FACTUALLY_SAFE"
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Si vous nous confiez vos fichiers, vous n'aurez plus jamais de rejet.",
+        "Nous éliminons tous les rejets de routage.",
+        "Aucun rejet après notre nettoyage.",
+        "We eliminate every rejection.",
+    ],
+)
+def test_an_absolute_outcome_is_forbidden_even_behind_an_if(text: str) -> None:
+    """A conditional wrapper («Si …») must not launder a promise into a possibility."""
+    result = classify(text)
+    assert result.verdict == "FORBIDDEN", (text, result)
+    assert "absolute_outcome" in {item.rule for item in result.findings}
