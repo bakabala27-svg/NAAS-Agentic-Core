@@ -1,71 +1,78 @@
 {
   "$schema_version": 1,
-  "packet_id": "CAP-2026-10-02-d300-constitution-banner",
+  "packet_id": "CAP-2026-10-02-d306-decision-chamber",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "تنفيذ توصية المرحلة 0 (تقرير PHASE0_FORENSIC_REPORT_2026-10-02 §AE.1/§AH.2): قرار المالك D-300 (منتجٌ نشط واحد + تجميد المنصّة) كان مكتوباً في .memory/decisions.md لكنّ الدستور التشغيلي لم يكن يعرفه — CLAUDE.md بلا أيّ إشارةٍ إليه، فكلّ وكيلٍ يرث المسار المعرفي كان يرث مهمّة المنصّة المُجمَّدة لا أولويّة العملة الصعبة. التغيير: لافتةٌ في ترويسة CLAUDE.md (صفر أسطر صافية — سقف 1262 محفوظ)، وملاحظة حالةٍ تجارية في README.md وREADME.ar.md، وقسم «القرار الحاكم D-300» في عقد إقلاع الوكلاء AGENTS.md، وأرشفة تقرير المرحلة 0 كلقطةٍ مؤرَّخة. توثيقٌ فقط: لا كود، لا حذف، لا تغيير تشغيلي.",
+  "decision_of_change": "D-306 (توجيه المالك 2026-10-02 · Economic Truth Machine): غرفة القرار للمدير وحده تشتقّ أقصى ادّعاءٍ صادق وأوّل دليلٍ ناقص وفعلاً بشرياً واحداً من السلالم القائمة (سلسلة القيمة · السجلّ · الكتالوج) بلا سُلَّمٍ ثالث ولا بوّابةٍ جديدة؛ وعقد السجلّ يرفض الانتقالات المستحيلة (مالٌ بلا عرض · ردٌّ بلا اتصال)؛ وقواعد نصّ المشتري (D-304) صارت موطناً واحداً. حتميٌّ بلا نموذج لغوي، وبلا كتابة: معاينة النتيجة تُرجع السطر وwritten=false والمالك يلتزمه عبر git.",
   "standards": [
     "clean-code-book"
   ],
   "evidence": [
-    "nist-ssdf-1.1",
-    "dora-core"
+    "nist-ai-rmf-1.0",
+    "owasp-agent-security",
+    "eu-gdpr-art-28-processor-terms"
   ],
   "local_application": [
     {
       "standard": "clean-code-book",
       "paths": [
-        "CLAUDE.md",
-        "README.md",
-        "README.ar.md",
-        "AGENTS.md",
-        "docs/archive/diagnostics/PHASE0_FORENSIC_REPORT_2026-10-02.md"
+        "shared/research/economic_truth.py",
+        "shared/research/economic_decision.py",
+        "shared/research/contact_ledger.py",
+        "tools/hard_currency_engine/buyer_claims.py",
+        "app/services/hard_currency/decision_chamber.py",
+        "app/api/routers/hard_currency.py",
+        "frontend/app/components/hard-currency/DecisionChamber.jsx"
       ],
-      "gate": "python3 scripts/fitness/check_documentation_contract.py && python3 scripts/fitness/check_constitution_reality.py && python3 scripts/fitness/check_memory_coherence.py && python3 scripts/fitness/check_authority_links.py && CODE_ACCEPTANCE_BASE_SHA=359d4e3458e47688aee53c04c0f1380df20c4902 python3 scripts/fitness/check_outbound_before_research.py",
-      "application_ar": "الاسم يقول ما يفعل: ترويسة الدستور تقول الآن ما هو المنتج النشط وما هو المُجمَّد بدل أن تُعرِّف المشروع بالمهمّة المُجمَّدة وحدها — مصدرٌ واحد للقرار (D-300 في .memory/decisions.md) واللافتات تشير إليه ولا تنسخ أرقامه؛ وسقف CLAUDE.md (1262 سطراً) محفوظ بتعديلٍ صافي الصفر، والبوابات الأربع تُثبته خضراء."
+      "gate": "python -m pytest tests/shared/test_economic_truth.py tests/shared/test_contact_ledger.py tests/unit/tools/test_buyer_claims.py tests/unit/tools/test_outreach_truth.py tests/api/test_hard_currency_center.py && python scripts/fitness/check_value_chain.py && python scripts/fitness/check_outbound_before_research.py && mypy --config-file mypy.ini --follow-imports=silent shared/ app/integration/",
+      "application_ar": "دالّةٌ تفعل شيئاً واحداً وتسمّيه: الاشتقاق في economic_truth، والقرار واللغة في economic_decision، والقراءة والامتناع في الخدمة الرقيقة، والعرض في المكوّن. ولا نسخة ثانية: الحلقات والسقف من value_chain، والأفعال والقنوات من contact_ledger (والواجهة تقرؤها من الاستجابة)، وقواعد نصّ المشتري من موطنها الواحد. والقرار جدولٌ مرتَّب وقاعدةٌ معجمية مُعلَنة لا شجرة شروط."
     }
   ],
   "production": {
-    "owner": "governance",
-    "status": "DOCS_ONLY_NO_RUNTIME_CHANGE",
+    "owner": "commercial-wedge",
+    "status": "ADMIN_ONLY_DECISION_CHAMBER_NO_WRITES",
     "interfaces": [
-      "أسطح توثيق فقط: ترويسة CLAUDE.md · ملاحظة الحالة التجارية في README.md/README.ar.md · قسم إقلاع الوكلاء في AGENTS.md — لا مسار تشغيلٍ يُلمس"
+      "GET /admin/api/hard-currency/chamber",
+      "POST /admin/api/hard-currency/chamber/cross-examination (مجموعةٌ مغلقة: ready · build · why_no_money · say_to_buyer)",
+      "POST /admin/api/hard-currency/chamber/outcome-preview (تحقّقٌ بلا كتابة · written=false)",
+      "shared/research/contact_ledger.parse_ledger — يرفض الانتقالات المستحيلة لكلّ قارئ"
     ],
     "runtime_evidence_paths": [
-      "CLAUDE.md",
-      "README.md",
-      "README.ar.md",
-      "AGENTS.md",
-      "docs/archive/diagnostics/PHASE0_FORENSIC_REPORT_2026-10-02.md"
+      "docs/evidence/d306-decision-chamber-2026-10-02.png",
+      "docs/evidence/d306-outcome-preview-refused-2026-10-02.png",
+      "scripts/e2e/hard_currency_center_live.py",
+      "scripts/e2e/hard_currency_center_ui.cjs"
     ],
-    "failure_behavior_ar": "تغيير توثيقٍ فقط: لا مسار تشغيل يمكن أن يفشل. الفشل الوحيد الممكن بوّابةٌ حمراء (عقد التوثيق · واقع الدستور · اتساق الذاكرة · روابط السلطة) وتُسمّي سببها — وهو الفشل المطلوب.",
-    "observability_ar": "البوابات الأربع تعمل محلياً وفي CI (guardrails/doc-integrity) ومخرجاتها المطبوعة هي الرصد؛ لا مقياس Prometheus جديداً لأن لا سلوك تشغيلياً جديداً.",
-    "security_boundary_ar": "لا كود ولا أسرار ولا بيانات: لا أثر على أيّ حدٍّ أمني. تقرير المرحلة 0 لا ينقل أيّ قيمة سرٍّ — أدون النوع والمكان والفعل المطلوب فقط (بروتوكول §8).",
-    "rollback_ar": "git revert يعيد النصوص كما كانت — لا هجرة ولا بيانات ولا حالة."
+    "failure_behavior_ar": "مصدرٌ غائب ⇒ 503 بسببه؛ جملةٌ تتجاوز دليلها ⇒ الغرفة تمتنع بـ503 بالسبب لا تعرض؛ سجلٌّ لا يُقرأ أو شرط قتلٍ أُطلق ⇒ NO_LAWFUL_DECISION_AVAILABLE بالتفاصيل؛ سؤالٌ خارج المجموعة أو نصٌّ أطول من 2000 ⇒ 422؛ صفٌّ مستحيل ⇒ accepted=false بأسبابه.",
+    "observability_ar": "سجلّ hard_currency_outcome_previewed بالفعل والقبول فقط (لا الكيان ولا الملاحظة)؛ وكلّ تغييرٍ حقيقي يمرّ بصفٍّ ملتزَمٍ في CONTACT_LEDGER.csv فيظهر في الـdiff وفي الاشتقاق التالي. لا مقياس Prometheus جديد: لا سلوك تشغيليّ مستمرّ يُقاس.",
+    "security_boundary_ar": "دور ADMIN على النقاط الثلاث (401/403 مُختبَران حيّاً ومحلياً)؛ صفر كتابة في المستودع أو القاعدة (بصمة السجلّ وعدّ جداول الرسائل ثابتان حيّاً)؛ لا نموذج لغوي ولا شبكة ولا صدفة في الوحدتين (اختبار نقاءٍ بنيوي)؛ نصّ الاستجواب لا يُخزَّن ولا يُسجَّل؛ حدّ معدّلٍ على POST؛ والأسرار من بيئة العملية وحدها.",
+    "rollback_ar": "git revert للدفعات يحذف الغرفة والقواعد معاً؛ لا هجرة ولا بيانات ولا حالة خارج المستودع."
   },
   "commercial_trace": {
     "offer_ids": [
       "fr-be-einvoicing-referential-cleansing"
     ],
-    "customer_problem_ar": "المشكلة الداخلية التي تخدم العميل: الوكيل الذي يُكلَّف بعملٍ لا يرى في دستوره إلا مهمّة المنصّة المُجمَّدة، فيصرف وقت الإسفين على ما حظرَه المالك — والتقرير الجنائي قاسها: 62٪ من الأسطر في الأسبوعين بعد الاستيراد وثائقُ بحثٍ مقابل 8٪ أدوات (D-297).",
-    "value_hypothesis_ar": "أوّل ما يقرأه أيّ وكيلٍ أو مساهمٍ يصبح قرار المالك D-300 نفسه، فيتوجّه العمل الهندسي المسموح إلى صحّة أداة الإسفين وصدق CI — فرضيّةٌ تنظيمية تُقاس بمراجعة ما يُقترَح من عملٍ لاحقاً.",
-    "foreign_currency_path_ar": "غير مباشر ولا يُدَّعى إيرادٌ هنا: يمنع تسريب وقت الإسفين إلى المنصّة المُجمَّدة. المسار المالي يبقى ما حدّده الدوسييه §12 (أفعال المالك البشرية المسجَّلة في السجلّ).",
-    "foundation_exception_ar": "تغيير توثيقٍ بلا كود — الاستثناء من «لا عمل قبل أوّل دفعة» هو نفس نصّ D-300: «ما يُبقي CI صادقاً»، ووثيقةٌ تُخفي قرار المنتج عن كلّ وكيلٍ قادم فشلٌ صامتٌ في المسار المعرفي."
+    "customer_problem_ar": "المالك لا يرى في شاشةٍ واحدة أقصى ما يحقّ قوله للمشتري ولا الفعل البشري التالي؛ فرسالةٌ واحدة في ستة أسابيع بلا متابعة، ونصّ الكتالوج يعد بـ«صفر رفض توجيه» وهو ما لم يُقَس.",
+    "value_hypothesis_ar": "غرفةٌ تقول «الكود ليس الاختناق» وتسمّي المكالمة التالية تحوّل الجهد من البناء إلى الاتصال. فرضيةٌ تُقاس بصفوف السجلّ بعدها.",
+    "foreign_currency_path_ar": "لا إيراد هنا ولا يُدّعى؛ الغرفة تمنع ادّعاءه قبل PAYMENT_SETTLED وتجعل كلّ ارتفاعٍ مرئياً حين يتحرّك السجلّ.",
+    "foundation_exception_ar": "امتدادٌ محدود لاستثناء D-305 بتوجيه المالك 2026-10-02: سطحٌ للمدير وحده، حتمي، بلا كتابة ولا بوّابة عملاء."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفر حذف: تعديلات نصّية على ملفّاتٍ قائمة + ملفّان مضافان (التقرير الأرشيفي والحزمة)."
+    "policy_ar": "صفر حذف: إضافاتٌ وتعديلات؛ قواعد D-304 نُقلت من الاختبار إلى موطنها والاختبار يستوردها."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 scripts/fitness/check_documentation_contract.py — ✅ 51 وثيقة حية، الروابط والمسارات متسقة",
-      "python3 scripts/fitness/check_constitution_reality.py — ✅ بلا تناقض ذاتي · الأرقام مشتقّة (39 مهارة · 15 عقداً · 13 خدمة · تغطية 73 · 12 وظائف) · دَينٌ مُجمَّد: 0",
-      "python3 scripts/fitness/check_memory_coherence.py — ✅ الفهرس طازج والترتيب صارم وسقف الدستور محفوظ (CLAUDE.md = 1262 سطراً) والقفل حديث",
-      "python3 scripts/fitness/check_authority_links.py — ✅ روابط ملفّات السلطة الـ5 كلّها تصل",
-      "CODE_ACCEPTANCE_BASE_SHA=359d4e3458e47688aee53c04c0f1380df20c4902 python3 scripts/fitness/check_outbound_before_research.py — ✅ لا ملفّ بحث/عرض يدخل بلا صفّ اتصال",
-      "wc -l CLAUDE.md — 1262 (السقف 1262: تعديلٌ صافي الصفر)"
+      "python -m pytest tests/shared/ tests/unit/tools/ tests/fitness/test_check_value_chain.py (1155 passed)",
+      "python -m pytest tests/api/test_hard_currency_center.py tests/shared/test_economic_truth.py (90 passed)",
+      "python -m pytest tests/contract/ (15 passed)",
+      "mypy --config-file mypy.ini --follow-imports=silent shared/ app/integration/ (0 issues)",
+      "python scripts/fitness/check_openapi_parity.py — 15/15 · generate_frontend_types.py --check — current",
+      "npm run build + check_bundle_budget.py — 1094KB of 1100KB",
+      "scripts/e2e/hard_currency_center_live.py — 25/25 (full stack, local Postgres 16, real keys)",
+      "scripts/e2e/hard_currency_center_ui.cjs — 22/22 (Chromium, built bundle)"
     ]
   },
   "curriculum": {
@@ -155,15 +162,42 @@
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json"
   ],
   "git_change_snapshot": {
-    "base_ref": "359d4e3458e47688aee53c04c0f1380df20c4902",
+    "base_ref": "3d27eb16d2524e7fdd5888d7dece657dd0b3f717",
     "changed_paths_excluding_packet": [
-      "AGENTS.md",
-      "CLAUDE.md",
+      ".memory/README.md",
+      ".memory/decisions.md",
+      ".memory/runtime_truth.md",
+      ".runtime/truth_table.lock.json",
       "README.ar.md",
       "README.md",
-      "docs/archive/diagnostics/PHASE0_FORENSIC_REPORT_2026-10-02.md"
+      "app/api/routers/hard_currency.py",
+      "app/services/hard_currency/decision_chamber.py",
+      "docs/DOCUMENTATION_INDEX.md",
+      "docs/contracts/openapi/core-api-v1.yaml",
+      "docs/contracts/openapi/monolith_api-openapi.json",
+      "docs/evidence/README.md",
+      "docs/evidence/d306-decision-chamber-2026-10-02.png",
+      "docs/evidence/d306-decision-chamber-dark-2026-10-02.png",
+      "docs/evidence/d306-outcome-preview-refused-2026-10-02.png",
+      "docs/governance/ASSET_LICENSE_CLEARANCE.json",
+      "frontend/app/components/hard-currency/DecisionChamber.jsx",
+      "frontend/app/components/hard-currency/HardCurrencyCenter.jsx",
+      "frontend/app/components/hard-currency/HardCurrencyCenter.module.css",
+      "frontend/types/api.d.ts",
+      "scripts/e2e/hard_currency_center_live.py",
+      "scripts/e2e/hard_currency_center_ui.cjs",
+      "shared/research/contact_ledger.py",
+      "shared/research/economic_decision.py",
+      "shared/research/economic_truth.py",
+      "shared/research/value_chain.py",
+      "tests/api/test_hard_currency_center.py",
+      "tests/shared/test_contact_ledger.py",
+      "tests/shared/test_economic_truth.py",
+      "tests/unit/tools/test_buyer_claims.py",
+      "tests/unit/tools/test_outreach_truth.py",
+      "tools/hard_currency_engine/buyer_claims.py"
     ],
-    "content_sha256_excluding_packet": "80611fc769be391545a87fdfb123e614b0cbe0ac4d7356268cf8bf0173178e0a",
+    "content_sha256_excluding_packet": "a2dbe39b552b5914af5716ed3e43586a07325c3c39c4b49421c42932fe094130",
     "refreshed_on": "2026-10-02",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
