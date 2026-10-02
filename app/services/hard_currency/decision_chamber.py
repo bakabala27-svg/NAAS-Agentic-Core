@@ -18,7 +18,7 @@ from app.services.hard_currency.sources import (
     InputRejectedError,
     SourceUnavailableError,
 )
-from shared.research.contact_ledger import LEDGER_REL, SCORECARD_REL
+from shared.research.contact_ledger import ACTIONS, CHANNELS, LEDGER_REL, SCORECARD_REL
 from shared.research.economic_decision import (
     QUESTIONS,
     build_brief,
@@ -94,6 +94,8 @@ def chamber(sources: HardCurrencySources, *, today: date | None = None) -> dict[
         "brief": brief,
         "sentences": sentences,
         "questions": list(QUESTIONS),
+        # مجموعتا السجلّ المغلقتان من موطنهما — الواجهة لا تحمل نسخةً ثانية (D-192).
+        "ledger_vocabulary": {"actions": sorted(ACTIONS), "channels": sorted(CHANNELS)},
     }
 
 

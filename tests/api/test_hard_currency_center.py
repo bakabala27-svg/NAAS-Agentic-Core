@@ -312,6 +312,8 @@ def test_chamber_speaks_only_within_its_evidence(client, admin_auth_headers) -> 
     body = response.json()
     assert sentence_problems(body["sentences"], body["snapshot"]["evidence"]) == []
     assert body["questions"] == ["ready", "build", "why_no_money", "say_to_buyer"]
+    assert "PAYMENT_SETTLED" in body["ledger_vocabulary"]["actions"]
+    assert "phone" in body["ledger_vocabulary"]["channels"]
     classes = {sentence["class"] for sentence in body["sentences"]}
     assert {"FACT", "REFUSAL"} <= classes
     assert body["snapshot"]["thesis"]["id"] == "fr-be-einvoicing-referential-cleansing"

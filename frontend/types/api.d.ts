@@ -74,7 +74,7 @@ export interface MonolithApiCbamCodesResponse { provenance: Record<string, unkno
 export interface MonolithApiCbamDecisionRequest { see_actual: number }
 export interface MonolithApiCbamDecisionResponse { cn: string; see_actual_t: number; first_sellable_year: number | null; never_within_horizon: boolean; trajectory: Record<string, unknown>[]; provenance: Record<string, unknown>; reading_ar: string }
 export interface MonolithApiCbamDetailResponse { cn: string; sector: string; description: string; default_see_t: Record<string, unknown>; computable: boolean; absent_reason: string | null; provenance: Record<string, unknown>; year?: number | null; certificates_default?: Record<string, unknown> | null; crossover?: Record<string, unknown> | null; path_toll?: Record<string, unknown> | null; trajectory?: Record<string, unknown>[] | null }
-export interface MonolithApiChamberResponse { snapshot: Record<string, unknown>; brief: Record<string, unknown>; sentences: Record<string, unknown>[]; questions: string[] }
+export interface MonolithApiChamberResponse { snapshot: Record<string, unknown>; brief: Record<string, unknown>; sentences: Record<string, unknown>[]; questions: string[]; ledger_vocabulary: Record<string, unknown> }
 export interface MonolithApiChangePasswordRequest { current_password: string; new_password: string }
 export type MonolithApiCognitiveIntent = string;
 export type MonolithApiCognitiveState = string;

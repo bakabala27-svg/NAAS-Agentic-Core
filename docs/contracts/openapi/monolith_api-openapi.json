@@ -3835,6 +3835,16 @@
             },
             "type": "array",
             "title": "Questions"
+          },
+          "ledger_vocabulary": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Ledger Vocabulary"
           }
         },
         "type": "object",
@@ -3842,7 +3852,8 @@
           "snapshot",
           "brief",
           "sentences",
-          "questions"
+          "questions",
+          "ledger_vocabulary"
         ],
         "title": "ChamberResponse",
         "examples": [

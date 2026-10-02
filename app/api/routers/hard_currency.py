@@ -233,6 +233,7 @@ class ChamberResponse(RobustBaseModel):
     brief: dict[str, JsonValue]
     sentences: list[dict[str, JsonValue]]
     questions: list[str]
+    ledger_vocabulary: dict[str, list[str]]
 
 
 class CrossExaminationRequest(RobustBaseModel):
