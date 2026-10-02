@@ -29,11 +29,21 @@ from pathlib import Path
 from typing import TypedDict
 
 from shared.research.contact_ledger import (
+    CALL_MADE,
+    CLOSED_DECLINED,
+    CLOSED_NO_REPLY,
+    DEPOSIT_RECEIVED,
+    EMAIL_SENT,
+    FORM_SUBMITTED,
     INBOUND,
     LEDGER_REL,
+    LINKEDIN_SENT,
     MONEY,
     OUTBOUND,
     PAYMENT_SETTLED,
+    QUOTE_SENT,
+    REPLY_RECEIVED,
+    SAMPLE_DELIVERED,
     SCORECARD_REL,
     LedgerError,
     LedgerRow,
@@ -63,9 +73,11 @@ __all__ = [
     "NOT_RECORDABLE",
     "NOT_SUPPORTED",
     "NOT_YET_EVALUABLE",
+    "SCORECARD_ID",
     "SETTLEMENT_VIEW",
     "SUPPORTED",
     "UNKNOWN",
+    "VALUE_CHAIN_ID",
     "Claim",
     "Inputs",
     "KillCondition",
@@ -79,6 +91,10 @@ __all__ = [
 ACTIVE_THESIS_ID = "fr-be-einvoicing-referential-cleansing"
 ACTIVE_THESIS_DECISION = "D-300"
 DECISIONS_REL = ".memory/decisions.md"
+
+#: مُعرِّفا دليلٍ ثابتان في السجلّ — كلّ جملةٍ تستشهد بهما تستورد الاسم.
+SCORECARD_ID = "SCORECARD"
+VALUE_CHAIN_ID = "VALUE_CHAIN"
 
 SUPPORTED = "SUPPORTED"
 NOT_SUPPORTED = "NOT_SUPPORTED"
@@ -383,7 +399,7 @@ SETTLEMENT_VIEW: tuple[SettlementState, ...] = (
     ),
     SettlementState(
         "REPLIED",
-        "REPLY_RECEIVED",
+        REPLY_RECEIVED,
         "صفّ ردّ",
         _OWNER,
         False,
@@ -397,8 +413,8 @@ SETTLEMENT_VIEW: tuple[SettlementState, ...] = (
         "SAMPLE_REQUESTED", None, "طلب عيّنة", _OWNER, False, "—", "كلّ ادّعاءٍ عنه — لا فعل له"
     ),
     SettlementState(
-        "SAMPLE_DELIVERED",
-        "SAMPLE_DELIVERED",
+        SAMPLE_DELIVERED,
+        SAMPLE_DELIVERED,
         "صفّ عيّنة",
         _OWNER,
         False,
@@ -416,7 +432,7 @@ SETTLEMENT_VIEW: tuple[SettlementState, ...] = (
     ),
     SettlementState(
         "PROPOSAL",
-        "QUOTE_SENT",
+        QUOTE_SENT,
         "صفّ عرضٍ بمبلغ",
         _OWNER,
         False,
@@ -425,7 +441,7 @@ SETTLEMENT_VIEW: tuple[SettlementState, ...] = (
     ),
     SettlementState(
         "DEPOSIT",
-        "DEPOSIT_RECEIVED",
+        DEPOSIT_RECEIVED,
         "صفّ عربونٍ بمبلغٍ وإيصال",
         _OWNER,
         False,
@@ -439,7 +455,7 @@ SETTLEMENT_VIEW: tuple[SettlementState, ...] = (
         "INVOICE", None, "فاتورةٌ صادرة", _OWNER, False, "—", "عدّ الفاتورة مالاً — ولا فعل لها"
     ),
     SettlementState(
-        "PAYMENT_SETTLED",
+        PAYMENT_SETTLED,
         PAYMENT_SETTLED,
         "صفّ دفعةٍ بمبلغٍ وكشفٍ بنكي",
         _OWNER,
@@ -499,17 +515,17 @@ def _thesis_offer(catalog: Mapping[str, object]) -> Mapping[str, object]:
 
 
 _ACTION_PROOF: dict[str, tuple[str, str]] = {
-    "EMAIL_SENT": ("تواصلنا معه", "أنّ الرسالة قُرئت أو أنّ المشكلة محسوسة"),
-    "CALL_MADE": ("تواصلنا معه", "أنّ المكالمة أجيبت أو أنّ المشكلة محسوسة"),
-    "LINKEDIN_SENT": ("تواصلنا معه", "أنّ الرسالة قُرئت"),
-    "FORM_SUBMITTED": ("تواصلنا معه", "أنّ النموذج قُرئ"),
-    "REPLY_RECEIVED": ("ردّ", "نيّة الدفع"),
-    "SAMPLE_DELIVERED": ("سلّمنا عيّنة", "أنّها كانت مفيدة أو مقبولة"),
-    "QUOTE_SENT": ("اقترحنا سعراً", "أنّه قُبل"),
-    "DEPOSIT_RECEIVED": ("مالٌ تحرّك", "قبول التسليم أو التسوية"),
+    EMAIL_SENT: ("تواصلنا معه", "أنّ الرسالة قُرئت أو أنّ المشكلة محسوسة"),
+    CALL_MADE: ("تواصلنا معه", "أنّ المكالمة أجيبت أو أنّ المشكلة محسوسة"),
+    LINKEDIN_SENT: ("تواصلنا معه", "أنّ الرسالة قُرئت"),
+    FORM_SUBMITTED: ("تواصلنا معه", "أنّ النموذج قُرئ"),
+    REPLY_RECEIVED: ("ردّ", "نيّة الدفع"),
+    SAMPLE_DELIVERED: ("سلّمنا عيّنة", "أنّها كانت مفيدة أو مقبولة"),
+    QUOTE_SENT: ("اقترحنا سعراً", "أنّه قُبل"),
+    DEPOSIT_RECEIVED: ("مالٌ تحرّك", "قبول التسليم أو التسوية"),
     PAYMENT_SETTLED: ("دفعةٌ مسوّاة", "التكرار أو الهامش"),
-    "CLOSED_NO_REPLY": ("أُغلق الملفّ بلا ردّ", "لماذا"),
-    "CLOSED_DECLINED": ("أُغلق الملفّ برفض", "لماذا"),
+    CLOSED_NO_REPLY: ("أُغلق الملفّ بلا ردّ", "لماذا"),
+    CLOSED_DECLINED: ("أُغلق الملفّ برفض", "لماذا"),
 }
 
 
@@ -573,8 +589,8 @@ def _evidence(
             }
         )
     for eid, rel, proves in (
-        ("SCORECARD", SCORECARD_REL, "اللوحة المُشتقّة من السجلّ (GATE_C)"),
-        ("VALUE_CHAIN", VALUE_CHAIN_REL, "سلسلة القيمة: الحلقات المُعلَنة لكلّ مسار"),
+        (SCORECARD_ID, SCORECARD_REL, "اللوحة المُشتقّة من السجلّ (GATE_C)"),
+        (VALUE_CHAIN_ID, VALUE_CHAIN_REL, "سلسلة القيمة: الحلقات المُعلَنة لكلّ مسار"),
         (f"CATALOG:{ACTIVE_THESIS_ID}", CATALOG_REL, "حالة العرض في الكتالوج وما يُمنَع ادّعاؤه"),
         (ACTIVE_THESIS_DECISION, DECISIONS_REL, "الأطروحة النشطة الوحيدة وشروط قتلها"),
         ("D-304", DECISIONS_REL, "السعر الواحد وقواعد نصّ المشتري"),
@@ -632,8 +648,8 @@ def _funnel(rows: Sequence[LedgerRow]) -> dict[str, int]:
         "contacts_sent": sum(1 for row in rows if row.action in OUTBOUND),
         "entities_contacted": len(_entities_with(rows, OUTBOUND)),
         "entities_replied": len(_entities_with(rows, INBOUND)),
-        "samples_delivered": sum(1 for row in rows if row.action == "SAMPLE_DELIVERED"),
-        "entities_quoted": len(_entities_with(rows, {"QUOTE_SENT"})),
+        "samples_delivered": sum(1 for row in rows if row.action == SAMPLE_DELIVERED),
+        "entities_quoted": len(_entities_with(rows, {QUOTE_SENT})),
         "entities_paid_any": len(_entities_with(rows, MONEY)),
         "payments_settled": sum(1 for row in rows if row.action == PAYMENT_SETTLED),
     }
@@ -673,7 +689,7 @@ def _claim_status(
     best_path: str | None,
     rows: Sequence[LedgerRow],
 ) -> dict[str, object]:
-    status, evidence = UNKNOWN, ["SCORECARD"]
+    status, evidence = UNKNOWN, [SCORECARD_ID]
     basis = "لا موطن في المستودع لتسجيل هذا الدليل — الغياب لا يُثبت شيئاً"
     if claim.basis == "link" and int(claim.ref) <= _LAST_DECLARED_LINK:
         number = int(claim.ref)
@@ -690,7 +706,7 @@ def _claim_status(
         wanted = INBOUND if number == 7 else MONEY
         matching = [row for row in rows if row.action in wanted]
         status = SUPPORTED if matching else NOT_SUPPORTED
-        evidence = [f"LEDGER:{row.line_no}" for row in matching] or ["SCORECARD"]
+        evidence = [f"LEDGER:{row.line_no}" for row in matching] or [SCORECARD_ID]
         above_gap = matching and best_reached < number - 1
         basis = f"صفوف {sorted(wanted)} في السجلّ: {len(matching)}" + (
             " — فوق فجوة: مُسجَّل ولا يرفع السقف" if above_gap else ""
@@ -698,7 +714,7 @@ def _claim_status(
     elif claim.basis == "action":
         matching = [row for row in rows if row.action == claim.ref]
         status = SUPPORTED if matching else NOT_SUPPORTED
-        evidence = [f"LEDGER:{row.line_no}" for row in matching] or ["SCORECARD"]
+        evidence = [f"LEDGER:{row.line_no}" for row in matching] or [SCORECARD_ID]
         basis = f"صفوف {claim.ref} في السجلّ: {len(matching)}"
     elif claim.basis == "repeat":
         counts: dict[str, int] = {}
@@ -706,11 +722,11 @@ def _claim_status(
             if row.action == PAYMENT_SETTLED:
                 counts[row.entity] = counts.get(row.entity, 0) + 1
         status = SUPPORTED if any(n >= 2 for n in counts.values()) else NOT_SUPPORTED
-        evidence = ["SCORECARD"]
+        evidence = [SCORECARD_ID]
         basis = f"أكثر دفعاتٍ لكيانٍ واحد: {max(counts.values(), default=0)}"
     elif claim.basis == "absent":
         status = NOT_SUPPORTED
-        evidence = ["SCORECARD"] if SCORECARD_REL in claim.ref else [f"{best_path}.L5"]
+        evidence = [SCORECARD_ID] if SCORECARD_REL in claim.ref else [f"{best_path}.L5"]
         basis = f"موطن الدليل يُظهر غيابه: {claim.ref}"
     return {**asdict(claim), "status": status, "evidence_ids": evidence, "basis_ar": basis}
 
@@ -799,7 +815,7 @@ def build_snapshot(
                 else "الحلقة برمجية: مُسبارٌ أو اختبارٌ يستطيع الكود إنتاجه"
             ),
             "evidence_ids": (
-                [f"{best_path}.L{number}"] if number <= _LAST_DECLARED_LINK else ["SCORECARD"]
+                [f"{best_path}.L{number}"] if number <= _LAST_DECLARED_LINK else [SCORECARD_ID]
             ),
         }
 
@@ -813,12 +829,12 @@ def build_snapshot(
             {
                 "kind": "stale_scorecard",
                 "detail_ar": "اللوحة مُشتقّةٌ من نسخةٍ أخرى من السجلّ — شغّل scripts/research/hard_currency_scorecard.py",
-                "evidence_ids": ["SCORECARD"],
+                "evidence_ids": [SCORECARD_ID],
             }
         )
     for problem in problems(chain_doc, root=root, ledger_rows=rows, catalog=catalog):
         contradictions.append(
-            {"kind": "value_chain", "detail_ar": problem, "evidence_ids": ["VALUE_CHAIN"]}
+            {"kind": "value_chain", "detail_ar": problem, "evidence_ids": [VALUE_CHAIN_ID]}
         )
     if wording is not None:
         for field in _CATALOG_WORDING_FIELDS:

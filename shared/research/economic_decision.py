@@ -29,8 +29,16 @@ from datetime import date
 from pathlib import Path
 
 from shared.research.contact_ledger import (
+    CALL_MADE,
+    CLOSED_DECLINED,
     COLUMNS,
+    DEPOSIT_RECEIVED,
+    EMAIL_SENT,
     LEDGER_REL,
+    PAYMENT_SETTLED,
+    QUOTE_SENT,
+    REPLY_RECEIVED,
+    SAMPLE_DELIVERED,
     SCORECARD_REL,
     LedgerError,
     parse_ledger,
@@ -40,8 +48,11 @@ from shared.research.economic_truth import (
     ACTIVE_THESIS_DECISION,
     ACTIVE_THESIS_ID,
     FIRED,
+    NOT_SUPPORTED,
+    SCORECARD_ID,
     SUPPORTED,
     UNKNOWN,
+    VALUE_CHAIN_ID,
     WordingLinter,
     build_snapshot,
 )
@@ -144,7 +155,7 @@ ACTIONS: tuple[Action, ...] = (
             "اعرض عيّنة 20 سجلّاً مجّاناً — لا نسبة ولا ضمان (D-304)",
             "سجّل CALL_MADE، وREPLY_RECEIVED إن أجاب، أو CLOSED_DECLINED إن رفض",
         ),
-        ("CALL_MADE", "REPLY_RECEIVED", "CLOSED_DECLINED"),
+        (CALL_MADE, REPLY_RECEIVED, CLOSED_DECLINED),
         True,
         1,
         "محاولة اتصالٍ واحدة ورسالةٌ صوتية واحدة، ثمّ توقّف",
@@ -155,7 +166,7 @@ ACTIONS: tuple[Action, ...] = (
         "ردٌّ ⇒ طلب ملفٍّ حقيقي (الحلقة 5)؛ رفضٌ أو صمت ⇒ الهدف التالي",
         "إزعاجُ مكتبٍ اعترض على الاستقبال التجاري — لذلك فحص flag_opposition أوّلاً",
         "phone",
-        "CALL_MADE",
+        CALL_MADE,
         "K1",
     ),
     Action(
@@ -167,7 +178,7 @@ ACTIONS: tuple[Action, ...] = (
             "انسخ الرسالة من ready_to_send/01_MAILS_CABINETS_PRETS.md بلا تعديل الأرقام",
             "سجّل EMAIL_SENT بعد الإرسال لا قبله",
         ),
-        ("EMAIL_SENT",),
+        (EMAIL_SENT,),
         True,
         2,
         "رسالةٌ واحدة؛ كرِّر حتى 30 كياناً (شرط القتل K1)",
@@ -178,7 +189,7 @@ ACTIONS: tuple[Action, ...] = (
         "يقرّب K1 من مقامه — حتى 30 لا حكم",
         "إرسال إلى مكتبٍ معترِض",
         "email",
-        "EMAIL_SENT",
+        EMAIL_SENT,
         "K1",
     ),
     Action(
@@ -190,7 +201,7 @@ ACTIONS: tuple[Action, ...] = (
             "عالج الملفّ بالأداة الحتمية محلّياً — لا تخزين، لا نموذج لغوي، لا مشاركة",
             "سلّم التقرير والملفّ المنظَّف ثمّ سجّل SAMPLE_DELIVERED",
         ),
-        ("SAMPLE_DELIVERED",),
+        (SAMPLE_DELIVERED,),
         True,
         1,
         "ملفٌّ واحد حتى 20 سجلّاً",
@@ -201,7 +212,7 @@ ACTIONS: tuple[Action, ...] = (
         "نتيجةٌ مفيدة ⇒ عرض سعر؛ لا نتيجة ⇒ إعادة النظر في الأطروحة",
         "قالب DPA غير مُراجَع قانونياً (C-DPA مجهول)",
         "email",
-        "SAMPLE_DELIVERED",
+        SAMPLE_DELIVERED,
         "K2",
     ),
     Action(
@@ -253,7 +264,7 @@ ACTIONS: tuple[Action, ...] = (
         "pricing",
         "أرسل إلى {entity} عرض 290 € HT حتى 200 سجلّ",
         ("سعرٌ واحد (D-304)", "سجّل QUOTE_SENT بالمبلغ"),
-        ("QUOTE_SENT",),
+        (QUOTE_SENT,),
         True,
         1,
         "عرضٌ واحد",
@@ -264,7 +275,7 @@ ACTIONS: tuple[Action, ...] = (
         "يقرّب K3 وK5",
         "عرضٌ قبل جاهزية القبض",
         "email",
-        "QUOTE_SENT",
+        QUOTE_SENT,
         "K3",
         ("C-RAIL", "C-LEGAL"),
     ),
@@ -273,7 +284,7 @@ ACTIONS: tuple[Action, ...] = (
         "buyer_trust",
         "تابِع عرض السعر مع {entity}",
         ("مكالمةٌ واحدة", "سجّل الجواب: DEPOSIT_RECEIVED أو CLOSED_DECLINED"),
-        ("DEPOSIT_RECEIVED", "PAYMENT_SETTLED", "CLOSED_DECLINED"),
+        (DEPOSIT_RECEIVED, PAYMENT_SETTLED, CLOSED_DECLINED),
         True,
         1,
         "متابعةٌ واحدة",
@@ -284,7 +295,7 @@ ACTIONS: tuple[Action, ...] = (
         "مال ⇒ تسليم؛ رفض ⇒ الهدف التالي",
         "ضغطٌ يُفقد الثقة",
         "phone",
-        "CALL_MADE",
+        CALL_MADE,
         "K5",
     ),
     Action(
@@ -292,18 +303,18 @@ ACTIONS: tuple[Action, ...] = (
         "payment",
         "سلّم لـ{entity} وأصدر الفاتورة وسجّل الدفعة حين تُسوّى",
         ("سلّم الملفّ المنظَّف", "سجّل PAYMENT_SETTLED بكشف بنكي فقط"),
-        ("PAYMENT_SETTLED",),
+        (PAYMENT_SETTLED,),
         False,
         1,
         "مهمّةٌ واحدة",
         "التسليم يُقبَل والدفعة تُسوّى",
         "العربون ليس تسوية",
-        "PAYMENT_SETTLED",
+        PAYMENT_SETTLED,
         "استرجاع أو رفض التسليم",
         "GATE_C",
         "تسليمٌ قبل جاهزية القبض",
         "bank",
-        "PAYMENT_SETTLED",
+        PAYMENT_SETTLED,
         "K5",
     ),
     Action(
@@ -330,7 +341,7 @@ ACTIONS: tuple[Action, ...] = (
         "buyer_trust",
         "اطلب من {entity} الملفّ التالي",
         ("سجّل الجواب",),
-        ("QUOTE_SENT", "PAYMENT_SETTLED"),
+        (QUOTE_SENT, PAYMENT_SETTLED),
         True,
         1,
         "طلبٌ واحد",
@@ -455,8 +466,8 @@ def _row_template(action: Action, entity: Mapping[str, object] | None) -> dict[s
         "country": str(entity.get("country")) if entity else "FR",
         "channel": action.row_channel,
         "action": action.row_action,
-        "amount_eur": "<مبلغ>" if action.row_action in {"QUOTE_SENT", "PAYMENT_SETTLED"} else "",
-        "evidence_ref": "<كشف بنكي>" if action.row_action == "PAYMENT_SETTLED" else "",
+        "amount_eur": "<مبلغ>" if action.row_action in {QUOTE_SENT, PAYMENT_SETTLED} else "",
+        "evidence_ref": "<كشف بنكي>" if action.row_action == PAYMENT_SETTLED else "",
         "note": "",
     }
 
@@ -624,7 +635,7 @@ def render_sentences(
             f"كياناً، {funnel.get('entities_replied')} ردّ، {funnel.get('payments_settled')} "
             f"دفعة مسوّاة؛ GATE_C = {snapshot.get('gate_c')}.",
             FACT,
-            [*ledger_ids, "SCORECARD"],
+            [*ledger_ids, SCORECARD_ID],
         ),
     ]
     if missing:
@@ -653,7 +664,7 @@ def render_sentences(
                     f"شرط القتل الأقرب ({kill.get('kill_id')}): «{kill.get('source_quote')}» — "
                     f"{kill.get('status')} ({kill.get('progress')}).",
                     FACT,
-                    [ACTIVE_THESIS_DECISION, "SCORECARD"],
+                    [ACTIVE_THESIS_DECISION, SCORECARD_ID],
                 )
             )
     for claim in _maps(snapshot.get("claims")):
@@ -797,7 +808,7 @@ def _ready(snapshot: Mapping[str, object]) -> list[dict[str, object]]:
         _s(
             "جاهزون لماذا؟ لكلّ حالةٍ في الكتالوج حلقاتٌ يجب أن تُبلَغ:",
             FACT,
-            ["VALUE_CHAIN", f"CATALOG:{ACTIVE_THESIS_ID}"],
+            [VALUE_CHAIN_ID, f"CATALOG:{ACTIVE_THESIS_ID}"],
         ),
         _s(
             f"حالة العرض اليوم في الكتالوج: {thesis.get('catalog_status')}.",
@@ -812,7 +823,7 @@ def _ready(snapshot: Mapping[str, object]) -> list[dict[str, object]]:
             _s(
                 f"{status} يتطلّب الحلقات {list(links)} — {verdict}.",
                 FACT,
-                [f"CATALOG:{ACTIVE_THESIS_ID}", "SCORECARD"],
+                [f"CATALOG:{ACTIVE_THESIS_ID}", SCORECARD_ID],
             )
         )
     out.append(
@@ -825,7 +836,7 @@ def _ready(snapshot: Mapping[str, object]) -> list[dict[str, object]]:
     out.extend(
         _s(f"غير المسموح الآن: {claim.get('statement_ar')}.", REFUSAL)
         for claim in _maps(snapshot.get("claims"))
-        if claim.get("status") == "NOT_SUPPORTED"
+        if claim.get("status") == NOT_SUPPORTED
     )
     return out
 
@@ -840,7 +851,7 @@ def _build(snapshot: Mapping[str, object], brief: Mapping[str, object]) -> list[
             _s(
                 f"نعم، الكود هو الاختناق في {[p.get('id') for p in code_paths]}: الحلقة التالية برمجية.",
                 FACT,
-                ["VALUE_CHAIN"],
+                [VALUE_CHAIN_ID],
             )
         ]
     else:
@@ -848,7 +859,7 @@ def _build(snapshot: Mapping[str, object], brief: Mapping[str, object]) -> list[
             _s(
                 "لا. الكود ليس الاختناق: الحلقة التالية لكلّ مسارات الأطروحة مالكها إنسان.",
                 FACT,
-                _ids(missing.get("evidence_ids")) or ["VALUE_CHAIN"],
+                _ids(missing.get("evidence_ids")) or [VALUE_CHAIN_ID],
             ),
             _s(
                 "بناءُ كودٍ الآن لا يُنتج الدليل الناقص — يُنتج قدرةً إضافية فوق فجوةٍ بشرية.",
@@ -881,12 +892,14 @@ def _why_no_money(snapshot: Mapping[str, object]) -> list[dict[str, object]]:
         if reached is None:
             out.append(_s(f"{name}: مجهول — لا سجلّ.", UNKNOWN))
             continue
-        out.append(_s(f"{name}: {'نعم' if reached else 'لا'}.", FACT, ["SCORECARD", "VALUE_CHAIN"]))
+        out.append(
+            _s(f"{name}: {'نعم' if reached else 'لا'}.", FACT, [SCORECARD_ID, VALUE_CHAIN_ID])
+        )
         if not reached and first_break is None:
             first_break = name
     if first_break:
         out.append(
-            _s(f"السلسلة تنقطع أوّلاً عند: {first_break}.", FACT, ["SCORECARD", "VALUE_CHAIN"])
+            _s(f"السلسلة تنقطع أوّلاً عند: {first_break}.", FACT, [SCORECARD_ID, VALUE_CHAIN_ID])
         )
     return out
 
