@@ -26,6 +26,7 @@ from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import asdict, dataclass
 from datetime import date
 from pathlib import Path
+from typing import TypedDict
 
 from shared.research.contact_ledger import (
     INBOUND,
@@ -66,6 +67,7 @@ __all__ = [
     "SUPPORTED",
     "UNKNOWN",
     "Claim",
+    "Inputs",
     "KillCondition",
     "SettlementState",
     "WordingLinter",
@@ -905,7 +907,16 @@ def build_snapshot(
     }
 
 
-def load_inputs(root: Path) -> dict[str, object]:
+class Inputs(TypedDict):
+    """مُدخَلات ``build_snapshot`` من المستودع — مفتاحاً بمفتاح."""
+
+    chain_doc: dict[str, object]
+    ledger_text: str
+    catalog: dict[str, object]
+    scorecard: dict[str, object]
+
+
+def load_inputs(root: Path) -> Inputs:
     """المُدخَلات من المستودع — للسكربتات والاختبارات؛ الخادم يقرأها عبر مصادره المحقونة."""
 
     def read_json(rel: str) -> dict[str, object]:

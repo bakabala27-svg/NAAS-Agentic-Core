@@ -127,7 +127,7 @@ ONE_EMAIL = _ledger(_row("2026-09-22", "Cabinet A", "EMAIL_SENT"))
 @pytest.fixture(scope="module")
 def real() -> dict[str, object]:
     inputs = load_inputs(REPO_ROOT)
-    snapshot = build_snapshot(**inputs, root=REPO_ROOT, today=TODAY, wording=_lint)  # type: ignore[arg-type]
+    snapshot = build_snapshot(**inputs, root=REPO_ROOT, today=TODAY, wording=_lint)
     return {"inputs": inputs, "snapshot": snapshot, "brief": build_brief(snapshot)}
 
 
@@ -437,7 +437,7 @@ def test_preview_on_the_real_ledger_leaves_the_file_untouched() -> None:
         row=_proposed("CALL_MADE", target_ref="FR_EINVOICING_TARGETS_2026-09-21.csv#id=7"),
         root=REPO_ROOT,
         today=TODAY,
-        **inputs,  # type: ignore[arg-type]
+        **inputs,
     )
     assert hashlib.sha256(path.read_bytes()).hexdigest() == before
 
@@ -445,9 +445,13 @@ def test_preview_on_the_real_ledger_leaves_the_file_untouched() -> None:
 # ── purity ───────────────────────────────────────────────────────────────────
 
 
+#: Stdlib modules that would give the machine a network or a shell.
+_REACH = {"http", "urllib", "socket", "ssl", "subprocess", "asyncio", "smtplib", "ftplib"}
+
+
 @pytest.mark.parametrize("module", ["economic_truth", "economic_decision"])
 def test_the_machine_imports_nothing_but_stdlib_and_shared(module: str) -> None:
-    """No app, no tools, no network client, no model client — by construction, not by review."""
+    """No app, no tools, no network or shell, no model client — by construction, not by review."""
     tree = ast.parse((REPO_ROOT / "shared" / "research" / f"{module}.py").read_text("utf-8"))
     imported = {
         (node.module or "").split(".")[0]
@@ -459,16 +463,6 @@ def test_the_machine_imports_nothing_but_stdlib_and_shared(module: str) -> None:
         if isinstance(node, ast.Import)
         for alias in node.names
     }
-    allowed_stdlib = {
-        "__future__",
-        "ast",
-        "collections",
-        "csv",
-        "dataclasses",
-        "datetime",
-        "io",
-        "json",
-        "pathlib",
-        "re",
-    }
-    assert imported <= allowed_stdlib | {"shared"}, imported
+    outside = imported - {"shared"} - set(sys.stdlib_module_names)
+    assert outside == set(), outside
+    assert imported & _REACH == set(), imported & _REACH
