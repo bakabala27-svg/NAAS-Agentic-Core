@@ -19,7 +19,6 @@ a warning next to it says not to reuse its unmeasured phrase.
 from __future__ import annotations
 
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -27,7 +26,15 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.hard_currency_engine.france_validator import tva_fr_check
+# The rules live in one home since D-306; the Decision Chamber asks the same questions
+# of any sentence the owner types.
+from tools.hard_currency_engine.buyer_claims import (
+    EURO_RANGE,
+    PACKAGE_PRICE,
+    buyer_lines,
+    findings,
+    identifier_mismatches,
+)
 
 OUTREACH = REPO_ROOT / "docs/commercial/outreach"
 KIT = OUTREACH / "BALAGUE_FIRST_CLIENT_KIT_2026-09-22.md"
@@ -46,39 +53,10 @@ SEND_FILES = (
     KIT,
 )
 
-#: The one package price the owner chose (D-304).
-PACKAGE_PRICE = "290 €"
-
-_TVA = re.compile(r"\bFR ?\d{2} ?\d{3} ?\d{3} ?\d{3}\b")
-_SIREN_AFTER_LABEL = re.compile(r"SIREN\W{0,6}(\d{3} ?\d{3} ?\d{3})\b")
-_GUARANTEE = re.compile(r"garanti", re.IGNORECASE)
-_EURO_RANGE = re.compile(r"\d[\d  ]*\s?[–-]\s?\d[\d  ]*\s?€")
-
-
-def identifier_mismatches(line: str) -> list[str]:
-    """A TVA printed on the same line as a labelled SIREN must carry that SIREN."""
-    sirens = {match.replace(" ", "") for match in _SIREN_AFTER_LABEL.findall(line)}
-    problems = []
-    for raw in _TVA.findall(line):
-        tva = raw.replace(" ", "")
-        ok, _clean, message = tva_fr_check(tva)
-        if not ok:
-            problems.append(f"{tva}: {message}")
-        elif sirens and tva[4:] not in sirens:
-            problems.append(f"{tva} carries SIREN {tva[4:]}, the line names {sorted(sirens)}")
-    return problems
-
-
-def buyer_text(path: Path) -> list[tuple[int, str]]:
-    """Lines a buyer reads: inside code fences (emails, profile) and ``>`` quotes (scripts)."""
-    lines, inside = [], False
-    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
-        if line.lstrip().startswith("```"):
-            inside = not inside
-            continue
-        if inside or line.lstrip().startswith(">"):
-            lines.append((number, line))
-    return lines
+#: Verdicts that block a line from being sent. HYPOTHESIS_ONLY is not here: the email
+#: already sent to Balagué on 2026-09-22 stays verbatim as the record (D-304), and the
+#: rewording of trends is a human review.
+_BLOCKING = frozenset({"FORBIDDEN", "UNSUPPORTED"})
 
 
 def test_the_c12_line_is_caught() -> None:
@@ -102,10 +80,11 @@ def test_every_outreach_vat_number_matches_its_siren() -> None:
 
 def test_buyer_text_states_no_rate_and_no_guarantee() -> None:
     problems = [
-        f"{path.relative_to(REPO_ROOT)}:{number}: {line.strip()[:90]}"
+        f"{path.relative_to(REPO_ROOT)}:{number}: {item.rule} {item.excerpt!r}"
         for path in SEND_FILES
-        for number, line in buyer_text(path)
-        if "%" in line or _GUARANTEE.search(line)
+        for number, line in buyer_lines(path.read_text(encoding="utf-8"))
+        for item in findings(line)
+        if item.verdict in _BLOCKING
     ]
     assert problems == []
 
@@ -121,7 +100,7 @@ def test_one_package_price_everywhere() -> None:
         ("malt", MALT.read_text(encoding="utf-8")),
     ):
         assert PACKAGE_PRICE in text, name
-        assert _EURO_RANGE.findall(text) == [], name
+        assert EURO_RANGE.findall(text) == [], name
     # The catalog route also cites market day rates as ranges (sources, not our price).
     assert PACKAGE_PRICE in route
     assert "290–390" not in route
