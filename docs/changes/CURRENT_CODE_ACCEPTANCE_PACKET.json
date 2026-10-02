@@ -197,7 +197,7 @@
       "tests/unit/tools/test_outreach_truth.py",
       "tools/hard_currency_engine/buyer_claims.py"
     ],
-    "content_sha256_excluding_packet": "a2dbe39b552b5914af5716ed3e43586a07325c3c39c4b49421c42932fe094130",
+    "content_sha256_excluding_packet": "02701afba1c09e8b52582327974a3101ae9c180d679d1778458efa33e4f87d93",
     "refreshed_on": "2026-10-02",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
