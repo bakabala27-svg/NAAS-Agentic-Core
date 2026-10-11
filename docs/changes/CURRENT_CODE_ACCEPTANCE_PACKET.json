@@ -1,9 +1,9 @@
 {
   "$schema_version": 1,
-  "packet_id": "CAP-2026-10-11-hce-correctness-and-data-safety",
+  "packet_id": "CAP-2026-10-11-evidence-proportionality-constitution",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "إصلاح احتواءٍ محدود للمسار التجاري النشط D-300، بطلب المالك في 2026-10-11: منع الجاهزية الزائفة عند تعذر SIRENE، ورفض معرّفات FR/BE ذات الحروف الدخيلة، تسمية نتيجة Peppol كتحقق تنسيقي محلي لا كعضوية، حماية CSV من صيغ الجداول بما فيها العناوين، حفظ السجلات متعددة الأسطر، ومنع الكتابة فوق ملف الإدخال أو أحد أسمائه المستعارة. لا ميزة جديدة، ولا ادعاء جاهزية إنتاج أو إيراد.",
+  "decision_of_change": "تنفيذ قرار المالك D-318: اعتماد أطروحة «الصاروخ لا يُصدَّق بمنظره» دستورًا لتناسب الدليل وهندسة الثقة، مع فارض بنيوي واختبارات سلبية وربط CI ومراجعة بشرية مستقلة. لا ادعاء إنتاج أو إيراد.",
   "standards": [
     "clean-code-book"
   ],
@@ -15,73 +15,64 @@
     {
       "standard": "clean-code-book",
       "paths": [
-        "tools/hard_currency_engine/csv_safety.py",
-        "tools/hard_currency_engine/france_validator.py",
-        "tools/hard_currency_engine/belgium_validator.py",
-        "tools/hard_currency_engine/cli.py",
-        "app/services/hard_currency/einvoicing_audit.py",
-        "tests/unit/tools/test_hard_currency_engine.py",
-        "tests/api/test_hard_currency_center.py"
+        "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
+        "scripts/fitness/check_evidence_proportionality_constitution.py",
+        "tests/fitness/test_evidence_proportionality_constitution_gate.py"
       ],
-      "gate": "python scripts/fitness/check_hard_currency_engine.py && /tmp/hce-audit-venv/bin/python -m pytest -q -c pytest-hce.ini tests/unit/tools/test_hard_currency_engine.py tests/fitness/test_check_hard_currency_engine.py --confcutdir=tests/unit/tools --tb=short --cov=tools/hard_currency_engine --cov-fail-under=70",
-      "application_ar": "تطبيعٌ محافظٌ قبل التحقق (لا حذفٌ تعسفي للأحرف)، حالاتٌ صريحةٌ عند غياب مصدر الحقيقة، كتابة CSV محصّنة للخلايا والعناوين واختباراتٌ سلبية لكل ممر، ومنع تصادم المسارات قبل القراءة/الكتابة. مبدأ NIST SSDF 1.1: إنتاج برمجية آمنة واختبار السلوك السلبي. إرشاد OWASP CSV Injection/WSTG: https://owasp.org/www-community/attacks/CSV_Injection و https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/21-Testing_for_CSV_Injection ؛ الاختبار المحلي يثبت البايتات/الخلايا بعد round-trip CSV فقط، ولا يدّعي ضماناً مطلقاً عبر كل جداول البيانات أو الحفظ وإعادة الفتح."
+      "gate": "python scripts/fitness/check_evidence_proportionality_constitution.py && python -m pytest -q tests/fitness/test_evidence_proportionality_constitution_gate.py",
+      "application_ar": "فصل القانون عن الفارض والاختبار؛ أسماء E0–E7 وL1–L12 وNF-1–NF-5 صريحة، وظائف الفارض صغيرة، واختبارات سلبية تستهدف حذف العقد وفك أسلاك الحارس. NIST SSDF: حماية عملية التطوير والتحقق من مخرجات البرمجيات؛ لا ادعاء بأن الفحص النصي يثبت runtime."
     }
   ],
   "production": {
-    "owner": "مالك المنتج؛ التنفيذ المحلي لا يغيّر حالة النشر",
-    "status": "LOCAL_FIX_NOT_DEPLOYED; R1-R3 OPEN; production UNKNOWN",
+    "owner": "human/admin constitutional authority",
+    "status": "GOVERNANCE_PROPOSAL_NOT_APPROVED; production runtime UNKNOWN",
     "interfaces": [
-      "CLI: tools/hard_currency_engine/cli.py → france/belgium audits and CSV export",
-      "API: app.services.hard_currency.einvoicing_audit.run_audit → lazy HCE import → cleaned CSV response"
+      "Agent entrypoints: AGENTS.md and CLAUDE.md",
+      "Governance registry: docs/governance/CONSTITUTION_REGISTRY.json",
+      "Required CI guardrails: .github/workflows/ci.yml"
     ],
-    "failure_behavior_ar": "SIRENE غير المتاح ينتج A_VERIFIER ولا يدخل validés؛ المعرّف ذو محارف غير مسموحة يُرفض؛ عدم فحص دليل Peppol يظهر NON_VERIFIE؛ تصادم مسار الإدخال/الإخراج يفشل قبل أي كتابة؛ الخلايا والعناوين الخطرة تُسبق بعلامة نصية في CSV.",
-    "observability_ar": "ملخص تدقيق حتمي بعدادات SIRENE الحالية، وحالات CSV واضحة؛ لا استدعاء شبكة جديد ولا تسجيل لمحتوى الملفات.",
-    "security_boundary_ar": "بيانات اختبار اصطناعية فقط؛ لا تخزين دائم في API؛ لا اتصالات SIRENE ضمن الاختبارات؛ التصدير لا يكتب إلى مصدره، والتعقيم دفاعٌ عند حدود CSV ولا يُدَّعى أنه حماية شاملة لكل spreadsheet.",
-    "rollback_ar": "تراجعٌ ذريّ عبر revert للدفعة؛ لا قواعد بيانات أو migrations أو تبعيات جديدة. المخرجات التجريبية المولّدة تُعاد مع مولّدها واختبار تطابقها.",
+    "failure_behavior_ar": "غياب درجة أو قانون أو قاعدة NAAS أو التسجيل أو نقطة الدخول أو حماية الأصل أو سلك guardrails ينتج exit غير صفري؛ لا تحويل للفشل إلى تحذير.",
+    "observability_ar": "مخرجات البوابة تسمي D-318 والانتهاك المحدد؛ CI يسجل الأمر والرمز. لا قياس إنتاجي أو نافذة تشغيل في هذه الدفعة.",
+    "security_boundary_ar": "تغيير توثيق/حوكمة وفارض نصي قياسي المكتبة؛ لا أسرار أو شبكة أو قاعدة بيانات أو صلاحيات تشغيل. حماية GitHub الخارجية تبقى UNKNOWN حتى تدقيق إداري.",
+    "rollback_ar": "revert ذري لتطبيق D-318 مع إبقاء سجل التعديل append-only؛ لا migrations أو بيانات أو تبعيات.",
     "runtime_evidence_paths": [
-      "tools/hard_currency_engine/cli.py",
-      "tools/hard_currency_engine/france_validator.py",
-      "tools/hard_currency_engine/belgium_validator.py",
-      "app/services/hard_currency/einvoicing_audit.py",
-      "tests/unit/tools/test_hard_currency_engine.py",
-      "tests/api/test_hard_currency_center.py",
-      "tests/unit/tools/test_outreach_truth.py"
+      "scripts/fitness/check_evidence_proportionality_constitution.py",
+      "tests/fitness/test_evidence_proportionality_constitution_gate.py",
+      ".github/workflows/ci.yml"
     ]
   },
   "commercial_trace": {
     "offer_ids": [
       "fr-be-einvoicing-referential-cleansing"
     ],
-    "customer_problem_ar": "العميل المستهدف في الأطروحة D-300: مكتب محاسبة/ائتمان يعالج مرجعيات FR/BE؛ المشكلة الهندسية المدعومة بدليل هي خطر تصنيفٍ إيجابي زائف، وحقن صيغة CSV، وفقدان سجلّ أو ملف إدخال عند تصدير غير آمن.",
-    "value_hypothesis_ar": "خفض مخاطر إعادة العمل/ملف غير قابل للاستيراد وفقد البيانات قبل التسليم؛ الأثر المالي أو معدل الأخطاء على ملفات العملاء غير مقيس، لذلك لا يُدّعى عائدٌ أو طلبٌ مثبت.",
-    "foreign_currency_path_ar": "يحمي جودة العرض القائم ذي مسار تحصيل مفترض باليورو (290 EUR HT/Malt أو SWIFT)؛ هذا المسار والسعر فرضية في OFFER_CATALOG.json، ولا توجد دفعة موثقة ولا ترقية حالة.",
-    "foundation_exception_ar": "احتواء وإصلاح أساسٍ في أداة الأطروحة النشطة وفق ENGINEERING_CONSTITUTION §5.1؛ لا بناء فوقه ولا توسيع منتج ولا إغلاق ذاتي لـR1/R2/R3."
+    "customer_problem_ar": "التغيير لا يضيف عرضًا؛ يحد من الثقة الزائفة في أي ادعاء جودة أو جاهزية للمسار التجاري النشط D-300.",
+    "value_hypothesis_ar": "ربط قوة الدليل بكلفة الخطأ قد يخفض العيوب وإعادة العمل، لكن الأثر غير مقيس ويبقى فرضية قابلة للدحض.",
+    "foreign_currency_path_ar": "لا ترقية حالة ولا دفعة ولا إيراد؛ الدستور يحظر E7 وPAID_PROOF دون أثر/معاملة حقيقية.",
+    "foundation_exception_ar": "عمل حوكمة/احتواء للثقة الزائفة، لا ميزة منصة فوق R1–R3 الحرجة المفتوحة؛ لا يغلق أي remediation."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفر حذف؛ إصلاحات إضافية صغيرة مع اختبارات ارتداد ومخرجات عرض مولّدة فقط."
+    "policy_ar": "صفر حذف؛ D-318 إضافة إلى الدساتير القائمة ولا يستبدلها."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "PASS — python scripts/fitness/check_hard_currency_engine.py; HCE-focused suite: 50 passed, coverage 78.80%, Python 3.11.2.",
-      "PASS — tests/unit/tools/test_outreach_truth.py: 10 passed, including byte-for-byte parity of all four regenerated FR/BE demo artifacts.",
-      "PASS — Ruff check and format check for all touched Python files; git diff --check.",
-      "PASS — direct API-service run_audit smoke test parsed the cleaned CSV and verified formula-like header/data, leading newline, and fullwidth equals neutralization.",
-      "NOT RUN — full tests/api/test_hard_currency_center.py: local Python 3.11 cannot parse the repository test-conftest PEP 695 generic syntax; Python 3.12 is unavailable in this sandbox.",
-      "PASS — check_vibe_coding_constitution, check_engineering_maturity_matrix, check_engineering_governance, check_constitution_reality, and check_deep_tech_constitution.",
-      "UNKNOWN — exact-SHA GitHub architectural guardrail, production runtime, live Peppol-directory membership, and paid-customer/revenue proof."
+      "PASS — python scripts/fitness/check_evidence_proportionality_constitution.py (SHA-256 and byte count included)",
+      "PASS — 6 negative tests, including one-byte mutation, via isolated pytest with --confcutdir=tests/fitness",
+      "PASS — check_governance_registry.py using isolated PyYAML environment",
+      "PASS — check_engineering_governance.py, check_documentation_contract.py, check_constitution_reality.py, check_memory_coherence.py",
+      "PASS — Ruff lint/format on the new gate and tests; JSON parsing and git diff --check",
+      "UNKNOWN — required Python 3.12 CI, independent review, live branch protection, and production runtime"
     ],
     "claim_statuses": {
-      "baseline_hce_tests_python_3_11": "TESTED",
-      "post_fix_hce_tests_python_3_11": "TESTED",
-      "api_route_integration_python_3_12": "UNKNOWN",
-      "exact_sha_architectural_guardrail_inner_check": "UNKNOWN",
-      "python_3_12_verification": "UNKNOWN",
+      "d318_structural_gate": "TESTED",
+      "negative_pytest_suite": "TESTED",
+      "required_ci": "UNKNOWN",
+      "independent_human_approval": "UNKNOWN",
+      "branch_protection_live_state": "UNKNOWN",
       "production_runtime": "UNKNOWN",
-      "peppol_directory_membership": "UNKNOWN",
-      "customer_revenue_or_paid_proof": "UNKNOWN"
+      "commercial_value": "UNKNOWN"
     }
   },
   "curriculum": {
@@ -161,47 +152,60 @@
     "owner": "curriculum-governance"
   },
   "changed_paths": [
-    "app/services/hard_currency/einvoicing_audit.py",
+    ".github/workflows/ci.yml",
+    ".memory/README.md",
+    ".memory/ci-gates.md",
+    ".memory/decisions.md",
+    ".runtime/truth_table.lock.json",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "ENGINEERING_CONSTITUTION.md",
+    "README.ar.md",
+    "README.md",
+    "docs/DOCUMENTATION_INDEX.md",
+    "docs/DOCUMENTATION_MANIFEST.json",
+    "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
-    "docs/commercial/outreach/demo/DEMO_20_FICHES_ASSAINI.csv",
-    "docs/commercial/outreach/demo/DEMO_BELGIUM_PEPPOL_20_FICHES_ASSAINI.csv",
-    "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_BELGIQUE_PEPPOL.md",
-    "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_FRANCE_RFE.md",
-    "tests/api/test_hard_currency_center.py",
-    "tests/unit/tools/test_hard_currency_engine.py",
-    "tools/hard_currency_engine/belgium_validator.py",
-    "tools/hard_currency_engine/cli.py",
-    "tools/hard_currency_engine/csv_safety.py",
-    "tools/hard_currency_engine/france_validator.py"
+    "docs/governance/CONSTITUTION_REGISTRY.json",
+    "docs/governance/D318_IMMUTABLE_TEXT.json",
+    "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
+    "docs/governance/amendments/D-318-EVIDENCE-PROPORTIONALITY-CONSTITUTION.md",
+    "scripts/fitness/check_evidence_proportionality_constitution.py",
+    "tests/fitness/test_evidence_proportionality_constitution_gate.py"
   ],
   "git_change_snapshot": {
-    "base_ref": "origin/main",
+    "base_ref": "WORKTREE",
     "changed_paths_excluding_packet": [
       ".github/workflows/ci.yml",
-      "app/services/hard_currency/einvoicing_audit.py",
-      "coverage.codescene.ini",
-      "docs/commercial/outreach/demo/DEMO_20_FICHES_ASSAINI.csv",
-      "docs/commercial/outreach/demo/DEMO_BELGIUM_PEPPOL_20_FICHES_ASSAINI.csv",
-      "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_BELGIQUE_PEPPOL.md",
-      "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_FRANCE_RFE.md",
-      "docs/governance/amendments/D-317-CODESCENE-HCE-COVERAGE-SCOPE.md",
-      "tests/api/test_hard_currency_center.py",
-      "tests/unit/tools/test_hard_currency_engine.py",
-      "tools/hard_currency_engine/belgium_validator.py",
-      "tools/hard_currency_engine/cli.py",
-      "tools/hard_currency_engine/csv_safety.py",
-      "tools/hard_currency_engine/france_validator.py"
+      ".memory/README.md",
+      ".memory/ci-gates.md",
+      ".memory/decisions.md",
+      ".runtime/truth_table.lock.json",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "ENGINEERING_CONSTITUTION.md",
+      "README.ar.md",
+      "README.md",
+      "docs/DOCUMENTATION_INDEX.md",
+      "docs/DOCUMENTATION_MANIFEST.json",
+      "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
+      "docs/governance/CONSTITUTION_REGISTRY.json",
+      "docs/governance/D318_IMMUTABLE_TEXT.json",
+      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
+      "docs/governance/amendments/D-318-EVIDENCE-PROPORTIONALITY-CONSTITUTION.md",
+      "scripts/fitness/check_evidence_proportionality_constitution.py",
+      "tests/fitness/test_evidence_proportionality_constitution_gate.py"
     ],
-    "content_sha256_excluding_packet": "13fd6033f909b8c7569f2b06a23ddc60ebb269961fe7c59b7298cfd6b829438d",
+    "content_sha256_excluding_packet": "cb69c1b7f763c488d0a8d14f50e66303177e15cbf905a2d155464ee455cac7c4",
     "refreshed_on": "2026-10-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3491,
-    "total_bytes_excluding_packet": 50910936,
-    "total_newlines_excluding_packet": 890424,
-    "sha256_excluding_packet": "33a769a99296b403836ee41a3be5a4814f96064c243367402e435bfe973023a7",
+    "file_count_excluding_packet": 3496,
+    "total_bytes_excluding_packet": 50955119,
+    "total_newlines_excluding_packet": 891042,
+    "sha256_excluding_packet": "544d5d1f04f8a781e2209485135c1520c7c97f09d38834c7e81c690a4b8126ae",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -217,77 +221,67 @@
     "operator_attestation_ar": "هذا ليس ادعاء فهم شامل بذاته؛ إنه شرط مجهر آلي يسبق التحليل البشري والمصفوفة، ويجعل تجاهل القديم مرئياً."
   },
   "pre_modification": {
-    "current_state": "BASE_SHA=1583ddaf34f732fec6720e4173d4ff7afb424484; working tree was clean at task start. Test-first regressions were added before source edits; the focused HCE run then produced 13 failed and 35 passed, confirming the targeted defects. R1/R2/R3 and the exact-SHA architectural guardrail remain open/unknown; no production evidence was available.",
+    "current_state": "قبل التغيير لم يوجد D-318 أو سلم E0–E7 كدستور مسجل. كانت دساتير D-306/D-277/D-267 تغطي أجزاء متداخلة، لكن أطروحة المالك الكاملة وقانون التناسب واستقلال المولد والحكم لم تكن عقدًا واحدًا مسجلًا. R1–R3 حرجة ومفتوحة، وPython المحلي 3.11 بلا pytest/PyYAML.",
     "architecture_and_boundaries": [
-      "CLI imports france_validator/belgium_validator and writes reports/CSV; path safety belongs before audit and output.",
-      "API router reaches app.services.hard_currency.einvoicing_audit.run_audit; _engine imports HCE lazily and stores uploads only in a TemporaryDirectory.",
-      "HCE validators are stdlib-focused; tests inject the SIRENE lookup and use synthetic CSV. No network call or persistent state is required.",
-      "tests/unit/tools/test_outreach_truth.py requires the committed FR/BE demo reports and cleaned CSVs to match generator output exactly."
+      "القانون في docs/architecture؛ الحالة التاريخية في .memory/decisions.md؛ التسجيل في CONSTITUTION_REGISTRY؛ نقاط الدخول في AGENTS/CLAUDE/ENGINEERING_CONSTITUTION.",
+      "الفارض نصي standard-library ولا يستورد app؛ الاختبارات السلبية تحت tests/fitness؛ التنفيذ الصريح في guardrails.",
+      "سياسة ENGINEERING_GOVERNANCE_POLICY تحمي القانون والفارض والاختبار، وسجل التعديل يطلب مراجعة مستقلة."
     ],
     "existing_failures_and_old_debt": [
-      "Confirmed: a syntactically valid French SIREN with online=True and SIRENE unavailable was counted valid and labeled CONFORME/ready.",
-      "Confirmed: Belgian numeric validators stripped arbitrary letters before checksum/range checks; junk wrapped around valid digits passed.",
-      "Confirmed: direct HCE exporters did not neutralize formula-leading data/headers; API sanitizer missed headers, leading whitespace/control, and NFKC fullwidth formula characters.",
-      "Confirmed: physical-line # filtering deleted # lines within quoted multiline cells and could produce a NoneType validation crash.",
-      "Confirmed: CLI permitted --csv-out (and unchecked --out) to alias the source, silently replacing the input.",
-      "Confirmed scope overclaim: Peppol COMPATIBLE and RFE “prêtes à l’émission” implied more than local checks prove.",
-      "R1/R2/R3 remain OPEN in PROJECT_REMEDIATION_PLAN.json; no closure or production promotion is in scope. Exact-SHA architectural guardrail failure remains UNKNOWN."
+      "R1 Python 3.12 enforcement OPEN؛ البيئة الحالية 3.11.",
+      "R2 parser fail-closed OPEN.",
+      "R3 reproducible test execution OPEN؛ pytest وPyYAML غير متاحين محليًا.",
+      "الحماية الخارجية ونتائج CI والإنتاج UNKNOWN."
     ],
     "dependency_path": [
-      "input CSV → CLI/API → CSV parser → FR/BE normalizers → row result/status/valid count → CSV writer/report → customer/operator",
-      "CLI args → resolved/samefile path comparison → audit → report/export; collision check must precede all writes.",
-      "API upload → _engine lazy import → audit → annotated rows → HCE exporter → cleaned_csv JSON response.",
-      "Demo input CSV → audit/report/export → test_outreach_truth exact artifact parity."
+      "owner thesis → canonical law → constitution registry → agent entrypoints → deterministic gate → guardrails CI → independent review",
+      "protected artifact change → amendment record → engineering governance audit → CODEOWNER/platform controls"
     ],
     "foundational_frontier": {
       "status": "REPAIRED_OR_CONTAINED_BEFORE_EXTENSION",
       "relevant_defects": [
-        "This change is limited to correctness/data-safety containment on the active HCE dependency path; no feature is layered on.",
-        "R1–R3 remain OPEN; local Python 3.11 tests are scoped evidence only and do not replace Python 3.12 CI proof.",
-        "The exact-SHA CI inner failure and live production/Peppol registration remain UNKNOWN."
+        "العمل حوكمة واحتواء مباشر لخطر الثقة الزائفة؛ لا يبني ميزة منصة.",
+        "R1–R3 تبقى OPEN ولا تُغلق بهذه الدفعة؛ نتائج Python 3.12/CI مستقلة مطلوبة."
       ],
-      "decision": "Permitted foundation repair under ENGINEERING_CONSTITUTION §5.1; do not close the global remediation ledger or claim production readiness."
+      "decision": "مسموح كإصلاح/احتواء أساس وفق ENGINEERING_CONSTITUTION §5.1؛ ممنوع ادعاء الإنتاج أو الاعتماد الذاتي."
     },
-    "root_cause": "The validators normalize by deleting every non-digit before checking, so invalid syntax can collapse to a valid checksum. The French SIRENE-unavailable branch returns no error, leaving the row on the “valid” path. CSV parsing filters physical lines without CSV quote state; exporters serialize unneutralized headers/data; the API sanitizes only row values using an incomplete prefix check; CLI output paths are not compared with input paths. Finally, status/report labels describe regulatory or network compatibility that local checks did not establish.",
-    "intended_change": "Add one small stdlib CSV safety helper for logical-record comment handling, spreadsheet-cell neutralization, and safe row/header serialization; make FR/BE validators reject unsupported identifier characters before normalization; represent SIRENE/network absence as A_VERIFIER/NON_VERIFIE; rename report/status claims to local checks only; reject resolved/samefile input-output aliases before processing; add regression tests and regenerate only the parity-locked FR/BE demo outputs.",
+    "root_cause": "الأطروحة التي تميز المظهر عن الدليل كانت نصًا مقدّمًا من المالك دون موطن قانوني أو سجل أو فارض؛ لذا لا يستطيع مسار CI كشف حذف سلم الدليل أو قاعدة الاستقلال أو فك الربط.",
+    "intended_change": "إنشاء دستور D-318، تسجيله وربطه بنقاط الدخول والدستور الهندسي وفهرس التوثيق، تجميد النص القانوني حرفًا/بايتًا ببصمة SHA-256 محمية، حماية أصوله، إضافة فارض fail-closed واختبارات سلبية وسلك CI، وتسجيل تعديل مقترح وقرار المالك.",
     "affected_invariants": [
-      "Unknown external verification never counts as ready or conforming.",
-      "Only permitted numeric formatting is stripped; arbitrary letters/symbols cannot be normalized into a valid national identifier.",
-      "Local syntax/checksum success is not reported as Peppol directory membership, PDP enrollment, or invoice acceptance.",
-      "Every exported CSV cell, including headers, is checked for spreadsheet formula prefixes; the mitigation is scoped, not claimed universal.",
-      "CSV comments are removed only at logical record boundaries outside quoted fields; all field content is preserved.",
-      "An input and any report/CSV output may not alias (resolved path or same underlying file); rejection occurs before output side effects.",
-      "Generated demo artifacts remain byte-identical to current generators and tests.",
-      "R1/R2/R3 statuses remain open; no production, legal-eligibility, customer-demand, or revenue claim is promoted."
+      "قوة الدليل تتناسب مع كلفة الخطأ.",
+      "E0–E7 ادعاءات مختلفة ولا قفز بينها.",
+      "المولد ليس الحكم الوحيد ولا يخفف اختباره/CI/بوابته.",
+      "UNKNOWN صريحة، والآثار غير القابلة للعكس تحتاج سياسة حتمية وموافقة.",
+      "D-318 إضافة لا استبدال؛ الأشد مع الدساتير القائمة.",
+      "التعديل الدستوري لا يعتمد بلا مراجعة بشرية مستقلة.",
+      "النص القانوني D-318 وبصمته أصلان محميان؛ اختلاف بايت واحد يفشل ولا يُحدّثان معًا بلا تعديل جديد ومراجعة مستقلة."
     ],
     "test_plan": [
-      "Positive FR: valid SIREN with injected active SIRENE and standard spaced identifiers remain accepted; offline local controls are explicitly labeled as local only.",
-      "Negative FR: valid identifier + SIRENE unavailable gives valides=0, SIRENE_INDISPONIBLE, STATUT_RFE=A_VERIFIER; alphabetic-junk SIREN/SIRET/postal/VAT rejected.",
-      "Negative BE: junk BCE/VAT/postal around checksum-valid digits rejected; no PEPPOL_ID/URL derived from invalid raw BCE; local success remains NON_VERIFIE for directory membership.",
-      "CSV: both direct exporters sanitize malicious headers and values, leading newline/control whitespace and fullwidth equals; valid negative numbers remain numeric text unchanged.",
-      "CSV parsing: comment records outside quotes are skipped while physical # lines inside quoted multiline fields are preserved for both FR and BE.",
-      "CLI: same path, symlink alias, and report/CSV output collisions exit with code 2 before changing input bytes.",
-      "API: integration test parses cleaned CSV and verifies safe header/data cells, including newline and fullwidth formula candidates.",
-      "Run HCE workflow selection, API regression if dependencies permit, outreach artifact-parity test, Ruff on touched Python, code acceptance, relevant constitutions/gates, and git diff --check."
+      "تشغيل الفارض على الشجرة الحقيقية.",
+      "اختبار سلبي لحذف E4 وL6 والحماية وفارض السجل وسلك CI.",
+      "تشغيل governance registry وengineering governance/documentation/constitution/code-acceptance gates.",
+      "تحليل JSON وgit diff --check؛ CI تحت Python 3.12 هو الدليل المطلوب لما تعذر محليًا.",
+      "تغيير بايت واحد مع إبقاء البصمة المجمدة يجب أن يجعل البوابة حمراء."
     ],
-    "rollback_strategy": "Revert the single bounded change; there are no schema, DB, dependency, or external-service changes. Regenerated demo files are derived and reverted with code; no customer input is written by the tests.",
+    "rollback_strategy": "Revert تطبيق D-318 ومراجعه ذريًا مع إبقاء سجل التعديل append-only؛ لا بيانات أو مخطط أو تبعيات.",
     "verification_strategy": [
-      "python scripts/fitness/check_hard_currency_engine.py",
-      "/tmp/hce-audit-venv/bin/python -m pytest -q -c pytest-hce.ini tests/unit/tools/test_hard_currency_engine.py tests/fitness/test_check_hard_currency_engine.py --confcutdir=tests/unit/tools --tb=short --cov=tools/hard_currency_engine --cov-fail-under=70",
-      "python -m pytest -q tests/api/test_hard_currency_center.py -k audit_neutralises_spreadsheet_formulas",
-      "python -m pytest -q tests/unit/tools/test_outreach_truth.py -k committed_",
-      "ruff check touched Python files and ruff format --check touched Python files",
-      "python scripts/fitness/check_code_acceptance.py; python scripts/fitness/check_repository_microscope.py; python scripts/fitness/check_engineering_governance.py; git diff --check",
-      "Python 3.12 and whole-repository CI remain UNKNOWN until an actual 3.12 runner and exact-SHA check execute."
+      "python scripts/fitness/check_evidence_proportionality_constitution.py",
+      "python -m pytest -q tests/fitness/test_evidence_proportionality_constitution_gate.py",
+      "python scripts/fitness/check_governance_registry.py",
+      "python scripts/fitness/check_engineering_governance.py",
+      "python scripts/fitness/check_documentation_contract.py",
+      "python scripts/fitness/check_constitution_reality.py",
+      "python scripts/fitness/check_code_acceptance.py",
+      "git diff --check"
     ],
     "claim_statuses": {
-      "baseline_hce_tests_python_3_11": "TESTED",
-      "baseline_hce_quality_gate_python_3_11": "TESTED",
-      "exact_sha_architectural_guardrail_inner_check": "UNKNOWN",
-      "python_3_12_verification": "UNKNOWN",
+      "d318_law_and_wiring": "IMPLEMENTED",
+      "d318_structural_gate": "TESTED",
+      "negative_pytest_suite": "TESTED",
+      "required_ci": "UNKNOWN",
+      "branch_protection_live_state": "UNKNOWN",
       "production_runtime": "UNKNOWN",
-      "peppol_directory_membership": "UNKNOWN",
-      "customer_revenue_or_paid_proof": "UNKNOWN"
+      "independent_human_approval": "UNKNOWN"
     }
   }
 }

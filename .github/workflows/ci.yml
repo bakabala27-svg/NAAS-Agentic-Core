@@ -245,6 +245,10 @@ jobs:
           # exception), keeps the 7 canonical offer lines closed, and requires
           # every hypothesis H1-H7 to hold a closed-state, evidence-backed row.
           python scripts/fitness/check_agent_reliability_constitution.py
+          # D-318: evidence strength must match the cost of error. This gate
+          # protects E0-E7, verifier independence, HOLD rules, its own registry
+          # and entrypoint links, protected artifacts, and this fail-closed wire.
+          python scripts/fitness/check_evidence_proportionality_constitution.py
           # D-290 rounds 01/02/04: the decision-commitment gates. Each one was on
           # disk and enforced only by its own negative-proof test — the ISS-186
           # class again (a gate that reads as protection but is executed by

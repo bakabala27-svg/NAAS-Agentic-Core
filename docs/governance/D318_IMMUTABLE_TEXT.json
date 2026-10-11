@@ -1,0 +1,10 @@
+{
+  "$schema_version": "1",
+  "decision": "D-318",
+  "mode": "BYTE_FOR_BYTE_IMMUTABLE_UNDER_CONSTITUTIONAL_AMENDMENT",
+  "canonical_text": "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
+  "sha256": "1d5af8c454a011bc4fa3e72f6e83ce401d9f7bb6d503c94f95548d8b9d12b814",
+  "byte_count": 19030,
+  "rule_ar": "أي اختلاف بايت واحد يفشل البوابة. تغيير النص أو هذه البصمة تعديل دستوري محمي يحتاج سجل تعديل جديدًا ومراجعة بشرية مستقلة؛ لا يملك المؤلف التصديق على تغييره.",
+  "external_limit_ar": "يحرس هذا العقد مسار المستودع وCI؛ مدير المنصة الخارجي يستطيع تغيير الحماية، ولذلك يلزم تدقيق إعدادات GitHub مستقل."
+}
