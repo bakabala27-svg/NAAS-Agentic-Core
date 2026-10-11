@@ -44,8 +44,44 @@ from tools.hard_currency_engine.france_validator import (
 CUSTOMER_PATH_COMMANDS: tuple[str, ...] = ("france", "belgium", "crm")
 
 
+class PathCollisionError(ValueError):
+    """Raised before an output could overwrite the audit input or another output."""
+
+
+def _ensure_distinct_paths(source: Path, outputs: dict[str, Path]) -> None:
+    """Reject identical, symlinked, or hard-linked source/output file paths."""
+    paths = [("fichier source", source), *outputs.items()]
+    seen: list[tuple[str, Path, Path]] = []
+    for label, path in paths:
+        canonical = path.expanduser().resolve(strict=False)
+        for previous_label, previous_path, previous_canonical in seen:
+            same_file = canonical == previous_canonical
+            if not same_file and path.exists() and previous_path.exists():
+                try:
+                    same_file = path.samefile(previous_path)
+                except OSError:
+                    same_file = False
+            if same_file:
+                raise PathCollisionError(
+                    f"{label} « {path} » désigne le même fichier que {previous_label} "
+                    f"« {previous_path} »; choisissez des chemins distincts."
+                )
+        seen.append((label, path, canonical))
+
+
+def _audit_paths(args) -> tuple[Path, dict[str, Path]]:
+    source = Path(args.csv_file)
+    outputs = {}
+    if args.out:
+        outputs["rapport de sortie"] = Path(args.out)
+    if args.csv_out:
+        outputs["CSV de sortie"] = Path(args.csv_out)
+    _ensure_distinct_paths(source, outputs)
+    return source, outputs
+
+
 def cmd_france(args):
-    path = Path(args.csv_file)
+    path, _ = _audit_paths(args)
     res = audit_french_csv(path, online=bool(args.online))
     if args.json:
         print(json.dumps(res, indent=2, ensure_ascii=False))
@@ -64,7 +100,7 @@ def cmd_france(args):
 
 
 def cmd_belgium(args):
-    path = Path(args.csv_file)
+    path, _ = _audit_paths(args)
     res = audit_belgian_csv(path)
     if args.json:
         print(json.dumps(res, indent=2, ensure_ascii=False))
@@ -131,14 +167,18 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None):
-    args = build_parser().parse_args(argv)
+    parser = build_parser()
+    args = parser.parse_args(argv)
 
-    if args.command == "france":
-        cmd_france(args)
-    elif args.command == "belgium":
-        cmd_belgium(args)
-    elif args.command == "crm":
-        cmd_crm(args)
+    try:
+        if args.command == "france":
+            cmd_france(args)
+        elif args.command == "belgium":
+            cmd_belgium(args)
+        elif args.command == "crm":
+            cmd_crm(args)
+    except PathCollisionError as exc:
+        parser.error(str(exc))
 
 
 if __name__ == "__main__":

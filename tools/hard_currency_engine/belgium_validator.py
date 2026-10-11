@@ -13,6 +13,10 @@ from datetime import date
 from pathlib import Path
 
 from tools.hard_currency_engine.contracts import flag_duplicate
+from tools.hard_currency_engine.csv_safety import (
+    read_csv_lines_multi_encoding,
+    write_cleaned_csv,
+)
 
 
 def strip_accents(s: str) -> str:
@@ -66,8 +70,12 @@ def _find_bce_column(fields: list[str]) -> str | None:
 
 
 def validate_bce_modulo97(raw_number: str) -> tuple[bool, str, str]:
-    """Validation d'un numéro d'entreprise belge KBO/BCE par Modulo 97."""
-    digits = re.sub(r"\D", "", raw_number or "")
+    """Valide le format d'un numéro BCE/KBO et sa clé Modulo 97."""
+    raw = (raw_number or "").strip()
+    if not re.fullmatch(r"[0-9]+(?:[ .]+[0-9]+)*", raw):
+        digits = re.sub(r"[^0-9]", "", raw)
+        return False, digits, "Format invalide (chiffres, espaces et points uniquement)"
+    digits = re.sub(r"[ .]", "", raw)
     if len(digits) == 9:
         digits = "0" + digits
 
@@ -89,34 +97,37 @@ def validate_bce_modulo97(raw_number: str) -> tuple[bool, str, str]:
     return True, formatted, "OK"
 
 
+def _validated_bce_digits(bce_number: str) -> str:
+    valid, formatted, message = validate_bce_modulo97(bce_number)
+    if not valid:
+        raise ValueError(f"Numéro BCE invalide : {message}")
+    return formatted.replace(".", "")
+
+
 def format_peppol_id(bce_clean: str) -> str:
-    digits = re.sub(r"\D", "", bce_clean)
-    if len(digits) == 9:
-        digits = "0" + digits
-    return f"0208:{digits}"
+    """Construit un identifiant Peppol uniquement à partir d'un numéro BCE valide."""
+    return f"0208:{_validated_bce_digits(bce_clean)}"
 
 
 def get_peppol_directory_url(bce_clean: str) -> str:
-    """Génère l'URL officielle de vérification sur l'annuaire européen Peppol Directory."""
-    digits = re.sub(r"\D", "", bce_clean)
-    if len(digits) == 9:
-        digits = "0" + digits
+    """Génère l'URL Peppol Directory pour un participant à l'identifiant validé."""
+    digits = _validated_bce_digits(bce_clean)
     return f"https://directory.peppol.eu/participant/iso6523-actorid-upis%3A%3A0208%3A{digits}"
 
 
 def get_kbo_public_url(bce_clean: str) -> str:
-    """Génère l'URL de consultation directe sur la Banque-Carrefour des Entreprises (BCE / KBO)."""
-    digits = re.sub(r"\D", "", bce_clean)
-    if len(digits) == 9:
-        digits = "0" + digits
+    """Génère l'URL de consultation BCE/KBO pour un numéro d'entreprise validé."""
+    digits = _validated_bce_digits(bce_clean)
     return f"https://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?numero={digits}"
 
 
 def validate_belgian_postal_code(cp: str) -> tuple[bool, str, str]:
-    """Validation du code postal belge (4 chiffres compris entre 1000 et 9992)."""
-    digits = re.sub(r"\D", "", cp or "")
-    if len(digits) != 4:
-        return False, digits, f"Longueur {len(digits)} ≠ 4 chiffres"
+    """Valide un code postal belge composé exactement de quatre chiffres ASCII."""
+    raw = (cp or "").strip()
+    if not re.fullmatch(r"[0-9]{4}", raw):
+        digits = re.sub(r"[^0-9]", "", raw)
+        return False, digits, "Format invalide (4 chiffres ASCII uniquement)"
+    digits = raw
     val = int(digits)
     if 1000 <= val <= 9992:
         return True, digits, "OK"
@@ -124,17 +135,30 @@ def validate_belgian_postal_code(cp: str) -> tuple[bool, str, str]:
 
 
 def validate_belgian_vat(vat_str: str) -> tuple[bool, str, str]:
-    raw = (vat_str or "").strip().upper().replace(" ", "").replace(".", "")
-    if not raw.startswith("BE"):
-        return False, raw, "Préfixe BE manquant"
-    bce_part = raw[2:]
-    ok, num, err = validate_bce_modulo97(bce_part)
+    raw = (vat_str or "").strip().upper()
+    compact = re.sub(r"[ .]", "", raw)
+    if not compact.startswith("BE"):
+        return False, compact, "Préfixe BE manquant"
+    if not re.fullmatch(r"BE[0-9]{10}", compact):
+        return False, compact, "Format invalide (BE suivi de 10 chiffres ASCII)"
+    ok, num, err = validate_bce_modulo97(compact[2:])
     if not ok:
-        return False, raw, f"TVA invalide: {err}"
+        return False, compact, f"TVA invalide: {err}"
     return True, f"BE{num.replace('.', '')}", "OK"
 
 
-def _validate_belgian_row(
+def _duplicate_bce_digits(value: str) -> str:
+    """Return well-formed BCE digits for repeat detection, without asserting validity."""
+    raw = (value or "").strip()
+    if not re.fullmatch(r"[0-9]+(?:[ .]+[0-9]+)*", raw):
+        return ""
+    digits = re.sub(r"[ .]", "", raw)
+    if len(digits) == 9:
+        digits = "0" + digits
+    return digits if len(digits) == 10 else ""
+
+
+def _validate_belgian_row(  # noqa: PLR0912 — one pass mirrors the required-field checklist
     row: dict, cols: dict, line_no: int, seen_dedup: dict
 ) -> tuple[list[str], bool, bool]:
     line_errors = []
@@ -142,29 +166,39 @@ def _validate_belgian_row(
     bce_val = row.get(cols["bce"], "") if cols["bce"] else ""
     tva_val = row.get(cols["tva"], "") if cols["tva"] else ""
     cp_val = row.get(cols["cp"], "") if cols["cp"] else ""
+    tva_compact = re.sub(r"[ .]", "", (tva_val or "").upper().strip())
 
     err_bce = False
     err_tva = False
+    bce_digits = ""
 
     if bce_val:
-        ok_bce, _clean_bce, msg_bce = validate_bce_modulo97(bce_val)
+        ok_bce, normalized_bce, msg_bce = validate_bce_modulo97(bce_val)
         if not ok_bce:
             err_bce = True
             line_errors.append(f"BCE_INVALID({msg_bce})")
-    elif tva_val and tva_val.upper().startswith("BE"):
-        ok_bce, _clean_bce, msg_bce = validate_bce_modulo97(tva_val[2:])
+        else:
+            bce_digits = normalized_bce.replace(".", "")
+    elif tva_compact.startswith("BE"):
+        ok_bce, normalized_bce, msg_bce = validate_bce_modulo97(tva_compact[2:])
         if not ok_bce:
             err_bce = True
             line_errors.append(f"BCE_DERIVE_TVA_INVALID({msg_bce})")
+        else:
+            bce_digits = normalized_bce.replace(".", "")
     else:
         err_bce = True
         line_errors.append("BCE_MANQUANT")
 
     if tva_val:
-        ok_tva, _clean_tva, msg_tva = validate_belgian_vat(tva_val)
+        ok_tva, normalized_tva, msg_tva = validate_belgian_vat(tva_val)
         if not ok_tva:
             err_tva = True
             line_errors.append(f"TVA_INVALID({msg_tva})")
+        elif bce_digits and normalized_tva[2:] != bce_digits:
+            err_bce = True
+            err_tva = True
+            line_errors.append("BCE_TVA_MISMATCH(les deux numéros valides ne correspondent pas)")
 
     if cp_val:
         ok_cp, _, msg_cp = validate_belgian_postal_code(cp_val)
@@ -172,11 +206,12 @@ def _validate_belgian_row(
             line_errors.append(f"CP_INVALID({msg_cp})")
 
     dedup_keys = []
-    tva_text = tva_val or ""
-    bce_source = bce_val or (tva_text[2:] if tva_text.upper().startswith("BE") else "")
-    bce_key = re.sub(r"\D", "", bce_source)
-    if len(bce_key) in (9, 10):
-        dedup_keys.append(f"BCE:{bce_key.zfill(10)}")
+    dedup_bce = _duplicate_bce_digits(bce_val)
+    if not bce_val:
+        vat_match = re.fullmatch(r"BE([0-9]{10})", tva_compact)
+        dedup_bce = vat_match.group(1) if vat_match else ""
+    if dedup_bce:
+        dedup_keys.append(f"BCE:{dedup_bce}")
     name_cp_key = f"{norm(nom_val)}_{norm(cp_val)}"
     if len(name_cp_key) > 5:
         dedup_keys.append(f"NOM_CP:{name_cp_key}")
@@ -186,31 +221,13 @@ def _validate_belgian_row(
 
 
 def _read_csv_lines_multi_encoding(csv_path: Path) -> list[str]:
-    encodings = ["utf-8-sig", "utf-8", "cp1252", "iso-8859-1", "latin1"]
-    raw_bytes = csv_path.read_bytes()
-    for enc in encodings:
-        try:
-            text = raw_bytes.decode(enc)
-            return [
-                line for line in text.splitlines(keepends=True) if not line.strip().startswith("#")
-            ]
-        except UnicodeDecodeError:
-            continue
-    text = raw_bytes.decode("utf-8", errors="replace")
-    return [line for line in text.splitlines(keepends=True) if not line.strip().startswith("#")]
+    """Conserve l'API interne historique et respecte les limites des enregistrements CSV."""
+    return read_csv_lines_multi_encoding(csv_path)
 
 
 def export_cleaned_belgian_csv(results: dict, out_path: Path) -> Path:
-    annotees = results.get("annotees", [])
-    if not annotees:
-        out_path.write_text("", encoding="utf-8")
-        return out_path
-    fields = list(annotees[0].keys())
-    with open(out_path, mode="w", newline="", encoding="utf-8-sig") as f:
-        writer = csv.DictWriter(f, fieldnames=fields, delimiter=";")
-        writer.writeheader()
-        writer.writerows(annotees)
-    return out_path
+    """Exporte les données annotées avec neutralisation des cellules de tableur."""
+    return write_cleaned_csv(results.get("annotees", []), out_path)
 
 
 def audit_belgian_csv(csv_path: Path) -> dict:
@@ -232,7 +249,8 @@ def audit_belgian_csv(csv_path: Path) -> dict:
     if not valid_lines:
         return results
 
-    delimiter = ";" if ";" in valid_lines[0] else ","
+    first_record_line = next((line for line in valid_lines if line.strip()), "")
+    delimiter = ";" if ";" in first_record_line else ","
     reader = csv.DictReader(valid_lines, delimiter=delimiter)
     fields = reader.fieldnames or []
 
@@ -269,23 +287,24 @@ def audit_belgian_csv(csv_path: Path) -> dict:
             results["valides"] += 1
 
         row_ann = dict(row)
-        clean_bce_digits = re.sub(r"\D", "", bce_val) or (
-            re.sub(r"\D", "", row.get(cols["tva"], ""))[2:]
-            if cols["tva"] and (row.get(cols["tva"], "") or "").upper().startswith("BE")
-            else ""
-        )
-        if len(clean_bce_digits) == 9:
-            clean_bce_digits = "0" + clean_bce_digits
+        tva_input = (row.get(cols["tva"], "") or "") if cols["tva"] else ""
+        if bce_val:
+            bce_source = bce_val
+        else:
+            ok_vat, normalized_vat, _ = validate_belgian_vat(tva_input)
+            bce_source = normalized_vat[2:] if ok_vat else ""
 
         ok_mod97, formatted_bce, _ = (
-            validate_bce_modulo97(clean_bce_digits)
-            if len(clean_bce_digits) == 10
-            else (False, clean_bce_digits, "")
+            validate_bce_modulo97(bce_source) if bce_source else (False, "", "BCE manquant")
         )
+        clean_bce_digits = formatted_bce.replace(".", "") if ok_mod97 else ""
 
-        row_ann["ANOMALIES_PEPPOL"] = "; ".join(line_errors) if line_errors else "CONFORME"
+        row_ann["ANOMALIES_PEPPOL"] = (
+            "; ".join(line_errors) if line_errors else "AUCUNE_ANOMALIE_DETECTEE"
+        )
         row_ann["PEPPOL_ID"] = format_peppol_id(clean_bce_digits) if ok_mod97 else "A_CORRIGER"
-        row_ann["STATUT_PEPPOL"] = "COMPATIBLE" if not line_errors else "NON_CONFORME"
+        row_ann["STATUT_PEPPOL"] = "FORMAT_VALIDE_NON_VERIFIE" if not line_errors else "A_CORRIGER"
+        row_ann["ANNUAIRE_PEPPOL_STATUT"] = "NON_VERIFIE"
         row_ann["BCE_ASSAINI"] = formatted_bce if ok_mod97 else ""
         row_ann["TVA_BE_CALCULEE"] = f"BE{clean_bce_digits}" if ok_mod97 else ""
         row_ann["PEPPOL_DIRECTORY_URL"] = (
@@ -293,8 +312,8 @@ def audit_belgian_csv(csv_path: Path) -> dict:
         )
         row_ann["KBO_LOOKUP_URL"] = get_kbo_public_url(clean_bce_digits) if ok_mod97 else ""
         if cols["cp"] and row.get(cols["cp"]):
-            _, healed_cp, _ = validate_belgian_postal_code(row.get(cols["cp"], ""))
-            row_ann["CP_ASSAINI"] = healed_cp
+            cp_ok, healed_cp, _ = validate_belgian_postal_code(row.get(cols["cp"], ""))
+            row_ann["CP_ASSAINI"] = healed_cp if cp_ok else ""
         results["annotees"].append(row_ann)
 
     return results
@@ -311,20 +330,23 @@ def format_belgian_report(results: dict, filename: str, report_date: date | None
         f"**Date :** {when} · **Cadre :** Arrêté Royal Facturation Électronique B2B Obligatoire",
         "**Périmètre du contrôle :** contrôles algorithmiques hors ligne (Modulo 97, TVA, codes postaux, doublons) — l'inscription effective à l'annuaire Peppol se vérifie via les liens fournis dans le CSV",
         "",
-        "## 1. Synthèse de Conformité Peppol",
-        "| Indicateur | Valeur | Statut |",
+        "## 1. Résultat des contrôles hors ligne",
+        "| Indicateur | Valeur | Interprétation |",
         "|---|---|---|",
-        f"| Total fiches auditées | **{total}** | Base totale |",
-        f"| Fiches 100% compatibles Peppol | **{valides}** ({pct:.1f}%) | "
-        f"{'🟢 Prêt' if pct > 90 else '🔴 Risque de rejet de facturation'} |",
-        f"| Numéros BCE / KBO invalides | **{results['erreurs_bce']}** | Risque d'amende 1 500 € à 5 000 € |",
-        f"| Numéros de TVA invalides | **{results['erreurs_tva']}** | Risque de non-déductibilité TVA |",
-        f"| Doublons détectés | **{results['doublons']}** | Risque d'incohérence comptable |",
+        f"| Total fiches auditées | **{total}** | Lignes de données traitées |",
+        f"| Fiches sans anomalie détectée | **{valides}** ({pct:.1f}%) | "
+        "Format/clé localement valides; inscription Peppol non vérifiée |",
+        f"| Numéros BCE / KBO invalides | **{results['erreurs_bce']}** | À corriger ou vérifier |",
+        f"| Numéros de TVA invalides | **{results['erreurs_tva']}** | Contrôle local de format et de clé |",
+        f"| Doublons détectés | **{results['doublons']}** | À examiner avant fusion |",
         "",
-        "## 2. Risques Financiers Immédiats",
-        "Depuis le 1er janvier 2026 (fin de la tolérance au 31 mars 2026) :",
-        f"- {total - valides} fiches bloqueront les flux entrants/sortants sur Exact Online, WinBooks ou Clearfacts.",
-        "- Amendes administratives jusqu'à 5 000 € par infraction constatée par le SPF Finances.",
+        "## 2. Cadre et limites",
+        "- La facturation électronique structurée B2B est obligatoire en Belgique depuis le 1er janvier 2026 "
+        "pour la plupart des opérations dans le champ légal; des exceptions et mesures techniques existent.",
+        "- Cet audit ne consulte pas le répertoire Peppol, ne teste pas la réception du destinataire et "
+        "ne vérifie pas l'intégration avec un logiciel comptable ou une plateforme.",
+        f"- {total - valides} fiches comportent au moins une anomalie dans le périmètre testé; cela ne prouve "
+        "pas, à lui seul, qu'une facture sera rejetée ou qu'une sanction s'applique.",
     ]
 
     if results.get("anomalies"):

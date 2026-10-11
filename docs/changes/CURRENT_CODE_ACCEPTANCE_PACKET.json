@@ -1,70 +1,88 @@
 {
   "$schema_version": 1,
-  "packet_id": "CAP-2026-10-06-d316-codescene-pr-coverage-check",
+  "packet_id": "CAP-2026-10-11-hce-correctness-and-data-safety",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "D-316 (قرار المالك 2026-10-06: «يجب أن تظهر علامة الصحّ الخضراء في الفروع الحالية أوّلاً»): فحص CodeScene Code Coverage الخارجي ينتهي timed_out بعد 6 ساعات على كلّ PR لأنّ وظيفة codescene-coverage تشغّل upload، وCodeScene تقبل بيانات الفروع غير main ولا تستعملها؛ بوّابة الـPR تُغذّى بـcs-coverage check. على pull_request يُشغَّل check مع CS_PROJECT_URL، ويبقى upload على push إلى main؛ والوظيفة خارج required-ci كما كانت.",
+  "decision_of_change": "إصلاح احتواءٍ محدود للمسار التجاري النشط D-300، بطلب المالك في 2026-10-11: منع الجاهزية الزائفة عند تعذر SIRENE، ورفض معرّفات FR/BE ذات الحروف الدخيلة، تسمية نتيجة Peppol كتحقق تنسيقي محلي لا كعضوية، حماية CSV من صيغ الجداول بما فيها العناوين، حفظ السجلات متعددة الأسطر، ومنع الكتابة فوق ملف الإدخال أو أحد أسمائه المستعارة. لا ميزة جديدة، ولا ادعاء جاهزية إنتاج أو إيراد.",
   "standards": [
     "clean-code-book"
   ],
   "evidence": [
-    "nist-ai-rmf-1.0",
-    "owasp-agent-security",
-    "eu-gdpr-art-28-processor-terms"
+    "nist-ssdf-1.1",
+    "harvard-cs50x-foundations"
   ],
   "local_application": [
     {
       "standard": "clean-code-book",
       "paths": [
-        ".github/workflows/ci.yml",
-        "docs/governance/amendments/D-316-CODESCENE-PR-COVERAGE-CHECK.md",
-        ".memory/decisions.md",
-        ".memory/code_quality_truth.md"
+        "tools/hard_currency_engine/csv_safety.py",
+        "tools/hard_currency_engine/france_validator.py",
+        "tools/hard_currency_engine/belgium_validator.py",
+        "tools/hard_currency_engine/cli.py",
+        "app/services/hard_currency/einvoicing_audit.py",
+        "tests/unit/tools/test_hard_currency_engine.py",
+        "tests/api/test_hard_currency_center.py"
       ],
-      "gate": "python scripts/fitness/check_engineering_governance.py && python scripts/fitness/check_ci_workflow_hygiene.py && python scripts/run_fitness_gates.py && git diff --check",
-      "application_ar": "تغييرٌ أصغر ما يمكن: خطوةٌ جديدة واحدة مشروطة بالحدث (check على pull_request) وتقييد خطوة upload بـpush؛ لا وظيفة أخرى ولا required-ci ولا اختبار يتغيّر."
+      "gate": "python scripts/fitness/check_hard_currency_engine.py && /tmp/hce-audit-venv/bin/python -m pytest -q -c pytest-hce.ini tests/unit/tools/test_hard_currency_engine.py tests/fitness/test_check_hard_currency_engine.py --confcutdir=tests/unit/tools --tb=short --cov=tools/hard_currency_engine --cov-fail-under=70",
+      "application_ar": "تطبيعٌ محافظٌ قبل التحقق (لا حذفٌ تعسفي للأحرف)، حالاتٌ صريحةٌ عند غياب مصدر الحقيقة، كتابة CSV محصّنة للخلايا والعناوين واختباراتٌ سلبية لكل ممر، ومنع تصادم المسارات قبل القراءة/الكتابة. مبدأ NIST SSDF 1.1: إنتاج برمجية آمنة واختبار السلوك السلبي. إرشاد OWASP CSV Injection/WSTG: https://owasp.org/www-community/attacks/CSV_Injection و https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/21-Testing_for_CSV_Injection ؛ الاختبار المحلي يثبت البايتات/الخلايا بعد round-trip CSV فقط، ولا يدّعي ضماناً مطلقاً عبر كل جداول البيانات أو الحفظ وإعادة الفتح."
     }
   ],
   "production": {
-    "owner": "ci-maintainers",
-    "status": "CI_PR_COVERAGE_CHECK_ONLY",
+    "owner": "مالك المنتج؛ التنفيذ المحلي لا يغيّر حالة النشر",
+    "status": "LOCAL_FIX_NOT_DEPLOYED; R1-R3 OPEN; production UNKNOWN",
     "interfaces": [
-      "CI job codescene-coverage: pull_request ⇒ cs-coverage check --verbose --coverage-files coverage.xml (CS_PROJECT_URL=https://api.codescene.io/v2/projects/83387)",
-      "CI job codescene-coverage: push ⇒ cs-coverage upload كما كان حرفياً"
+      "CLI: tools/hard_currency_engine/cli.py → france/belgium audits and CSV export",
+      "API: app.services.hard_currency.einvoicing_audit.run_audit → lazy HCE import → cleaned CSV response"
     ],
+    "failure_behavior_ar": "SIRENE غير المتاح ينتج A_VERIFIER ولا يدخل validés؛ المعرّف ذو محارف غير مسموحة يُرفض؛ عدم فحص دليل Peppol يظهر NON_VERIFIE؛ تصادم مسار الإدخال/الإخراج يفشل قبل أي كتابة؛ الخلايا والعناوين الخطرة تُسبق بعلامة نصية في CSV.",
+    "observability_ar": "ملخص تدقيق حتمي بعدادات SIRENE الحالية، وحالات CSV واضحة؛ لا استدعاء شبكة جديد ولا تسجيل لمحتوى الملفات.",
+    "security_boundary_ar": "بيانات اختبار اصطناعية فقط؛ لا تخزين دائم في API؛ لا اتصالات SIRENE ضمن الاختبارات؛ التصدير لا يكتب إلى مصدره، والتعقيم دفاعٌ عند حدود CSV ولا يُدَّعى أنه حماية شاملة لكل spreadsheet.",
+    "rollback_ar": "تراجعٌ ذريّ عبر revert للدفعة؛ لا قواعد بيانات أو migrations أو تبعيات جديدة. المخرجات التجريبية المولّدة تُعاد مع مولّدها واختبار تطابقها.",
     "runtime_evidence_paths": [
-      ".github/workflows/ci.yml",
-      "docs/governance/amendments/D-316-CODESCENE-PR-COVERAGE-CHECK.md"
-    ],
-    "failure_behavior_ar": "فشل check (مصادقة أو بوّابة راسبة) يخرج بـ1 فتصير الخطوة حمراء ظاهرة؛ والوظيفة خارج required-ci فلا تحجب الدمج (D-234).",
-    "observability_ar": "ملخّص الخطوة يقول أيّ المسارين جرى (PR gate checked أو uploaded)، وحكم البوّابة نفسه هو فحص CodeScene Code Coverage على الـPR.",
-    "security_boundary_ar": "الرمز CS_ACCESS_TOKEN باقٍ على مستوى الوظيفة بحارسَي != '' و== ''؛ CS_PROJECT_URL مُعرِّفٌ عامّ لا سرّ؛ المُثبِّت يُنزَّل إلى ملفّ لا curl|sh؛ لا صلاحية ولا تبعية جديدة.",
-    "rollback_ar": "git revert للدفعة يعيد خطوة upload الوحيدة لكلّ حدث (ومعها المهلة على الـPR)."
+      "tools/hard_currency_engine/cli.py",
+      "tools/hard_currency_engine/france_validator.py",
+      "tools/hard_currency_engine/belgium_validator.py",
+      "app/services/hard_currency/einvoicing_audit.py",
+      "tests/unit/tools/test_hard_currency_engine.py",
+      "tests/api/test_hard_currency_center.py",
+      "tests/unit/tools/test_outreach_truth.py"
+    ]
   },
   "commercial_trace": {
     "offer_ids": [
       "fr-be-einvoicing-referential-cleansing"
     ],
-    "customer_problem_ar": "main أحمر يوقف كلّ دمجٍ لاحق، ومنها عمل الأطروحة النشطة؛ والأحمر هنا ليس عطباً في الكود بل سقفٌ بلا هامش.",
-    "value_hypothesis_ar": "استعادة main أخضر صادقاً تعيد قابلية الدمج دون إضعاف أيّ اختبار.",
-    "foreign_currency_path_ar": "لا إيراد ولا يُدّعى؛ تغييرٌ في البنية التحتية للتكامل المستمرّ فقط.",
-    "foundation_exception_ar": "إصلاح أساس (CI) مسموحٌ تحت ENGINEERING_CONSTITUTION §5.1؛ لا ميزة ولا ترقية قدرة."
+    "customer_problem_ar": "العميل المستهدف في الأطروحة D-300: مكتب محاسبة/ائتمان يعالج مرجعيات FR/BE؛ المشكلة الهندسية المدعومة بدليل هي خطر تصنيفٍ إيجابي زائف، وحقن صيغة CSV، وفقدان سجلّ أو ملف إدخال عند تصدير غير آمن.",
+    "value_hypothesis_ar": "خفض مخاطر إعادة العمل/ملف غير قابل للاستيراد وفقد البيانات قبل التسليم؛ الأثر المالي أو معدل الأخطاء على ملفات العملاء غير مقيس، لذلك لا يُدّعى عائدٌ أو طلبٌ مثبت.",
+    "foreign_currency_path_ar": "يحمي جودة العرض القائم ذي مسار تحصيل مفترض باليورو (290 EUR HT/Malt أو SWIFT)؛ هذا المسار والسعر فرضية في OFFER_CATALOG.json، ولا توجد دفعة موثقة ولا ترقية حالة.",
+    "foundation_exception_ar": "احتواء وإصلاح أساسٍ في أداة الأطروحة النشطة وفق ENGINEERING_CONSTITUTION §5.1؛ لا بناء فوقه ولا توسيع منتج ولا إغلاق ذاتي لـR1/R2/R3."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفر حذف: خطوةٌ جديدة وشروطٌ وتعليقاتٌ في ci.yml، وسجلّ تعديلٍ جديد، وقرارٌ مُلحَق."
+    "policy_ar": "صفر حذف؛ إصلاحات إضافية صغيرة مع اختبارات ارتداد ومخرجات عرض مولّدة فقط."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "check_ci_workflow_hygiene — PASS (17 ملفّاً؛ الرمز محروس ومنطوق الغياب، ولا تكامل خارجي في required-ci)",
-      "check_engineering_governance (GOVERNANCE_BASE_SHA=origin/main) — PASS (سجلّ التعديل D-316 موجود)",
-      "run_fitness_gates.py (CODE_ACCEPTANCE_BASE_SHA=GOVERNANCE_BASE_SHA=origin/main) — كلّ البوّابات خضراء",
-      "runtime_truth.py --check · git diff --check — PASS",
-      "الأداة نفسها محلياً (sha256 مطابق للمنشور): check يقبل --coverage-files وحده، ويخرج بـ1 عند خطأ المصادقة",
-      "الدليل على العطب: check run 112247837361 (PR #2595) timed_out بعد 6 ساعات «No valid coverage report found in the build pipeline»، وسجلّ job 112454859769: «CodeScene only analyse the following branches: (\"main\")»"
-    ]
+      "PASS — python scripts/fitness/check_hard_currency_engine.py; HCE-focused suite: 50 passed, coverage 78.80%, Python 3.11.2.",
+      "PASS — tests/unit/tools/test_outreach_truth.py: 10 passed, including byte-for-byte parity of all four regenerated FR/BE demo artifacts.",
+      "PASS — Ruff check and format check for all touched Python files; git diff --check.",
+      "PASS — direct API-service run_audit smoke test parsed the cleaned CSV and verified formula-like header/data, leading newline, and fullwidth equals neutralization.",
+      "NOT RUN — full tests/api/test_hard_currency_center.py: local Python 3.11 cannot parse the repository test-conftest PEP 695 generic syntax; Python 3.12 is unavailable in this sandbox.",
+      "PASS — check_vibe_coding_constitution, check_engineering_maturity_matrix, check_engineering_governance, check_constitution_reality, and check_deep_tech_constitution.",
+      "UNKNOWN — exact-SHA GitHub architectural guardrail, production runtime, live Peppol-directory membership, and paid-customer/revenue proof."
+    ],
+    "claim_statuses": {
+      "baseline_hce_tests_python_3_11": "TESTED",
+      "post_fix_hce_tests_python_3_11": "TESTED",
+      "api_route_integration_python_3_12": "UNKNOWN",
+      "exact_sha_architectural_guardrail_inner_check": "UNKNOWN",
+      "python_3_12_verification": "UNKNOWN",
+      "production_runtime": "UNKNOWN",
+      "peppol_directory_membership": "UNKNOWN",
+      "customer_revenue_or_paid_proof": "UNKNOWN"
+    }
   },
   "curriculum": {
     "catalog_path": "docs/research/UNIVERSITY_CURRICULUM_CATALOG.json",
@@ -133,52 +151,54 @@
       "COMPSCI 2990R"
     ],
     "baseline_evidence_ids": [
-      "harvard-cs50x-foundations",
-      "harvard-cs-concentration-domains"
+      "harvard-cs50x-foundations"
     ],
     "task_specific_evidence_ids": [
-      "harvard-cs50x-foundations",
-      "harvard-cs-concentration-domains"
+      "harvard-cs50x-foundations"
     ],
-    "unapplied_course_policy_ar": "كل المقررات قُرئت على مستوى الكتالوج والمصفوفة؛ ما لا ينطبق مباشرةً على طبقة أدلّةٍ حتمية (اشتقاقٌ · تحقّقٌ · برهانٌ سلبي) يُسجَّل غير منطبقٍ بسبب، ولا يتحوّل إلى ادّعاء تطبيق.",
+    "unapplied_course_policy_ar": "اعتُبرت المقررات الـ59 في الكتالوج والمصفوفة؛ المنطبق لهذه الدفعة: صياغة المدخلات، سلامة الحساب/checksum، تصميم التحقق، الاختبار السلبي، أمن البيانات/CSV، ومصداقية ادعاء الحالة. المقررات غير المتعلقة مباشرةً بـCSV/التحقق/الأمن لا تُحوَّل إلى ادعاء تطبيق؛ تبقى أسباب عدم الانطباق ضمن قاعدة المصفوفة.",
     "applicability_result": "ALL_CATALOG_COURSES_CONSIDERED",
     "owner": "curriculum-governance"
   },
   "changed_paths": [
-    ".github/workflows/ci.yml",
-    ".memory/README.md",
-    ".memory/code_quality_truth.md",
-    ".memory/decisions.md",
-    ".runtime/truth_table.lock.json",
-    "README.ar.md",
-    "README.md",
-    "docs/DOCUMENTATION_INDEX.md",
+    "app/services/hard_currency/einvoicing_audit.py",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
-    "docs/governance/amendments/D-316-CODESCENE-PR-COVERAGE-CHECK.md"
+    "docs/commercial/outreach/demo/DEMO_20_FICHES_ASSAINI.csv",
+    "docs/commercial/outreach/demo/DEMO_BELGIUM_PEPPOL_20_FICHES_ASSAINI.csv",
+    "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_BELGIQUE_PEPPOL.md",
+    "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_FRANCE_RFE.md",
+    "tests/api/test_hard_currency_center.py",
+    "tests/unit/tools/test_hard_currency_engine.py",
+    "tools/hard_currency_engine/belgium_validator.py",
+    "tools/hard_currency_engine/cli.py",
+    "tools/hard_currency_engine/csv_safety.py",
+    "tools/hard_currency_engine/france_validator.py"
   ],
   "git_change_snapshot": {
     "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
-      ".github/workflows/ci.yml",
-      ".memory/README.md",
-      ".memory/code_quality_truth.md",
-      ".memory/decisions.md",
-      ".runtime/truth_table.lock.json",
-      "README.ar.md",
-      "README.md",
-      "docs/DOCUMENTATION_INDEX.md",
-      "docs/governance/amendments/D-316-CODESCENE-PR-COVERAGE-CHECK.md"
+      "app/services/hard_currency/einvoicing_audit.py",
+      "docs/commercial/outreach/demo/DEMO_20_FICHES_ASSAINI.csv",
+      "docs/commercial/outreach/demo/DEMO_BELGIUM_PEPPOL_20_FICHES_ASSAINI.csv",
+      "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_BELGIQUE_PEPPOL.md",
+      "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_FRANCE_RFE.md",
+      "tests/api/test_hard_currency_center.py",
+      "tests/unit/tools/test_hard_currency_engine.py",
+      "tools/hard_currency_engine/belgium_validator.py",
+      "tools/hard_currency_engine/cli.py",
+      "tools/hard_currency_engine/csv_safety.py",
+      "tools/hard_currency_engine/france_validator.py"
     ],
-    "content_sha256_excluding_packet": "b1d78f7cdf0a5ba249bcb7a37e6f4530226a7dc140e3cdb1dc2097d5c26da08c",
-    "refreshed_on": "2026-10-06",
+    "content_sha256_excluding_packet": "b43501448c38fb722b5c8e64fbe5e6d6132180d377074dc41526f8f4588e1f19",
+    "refreshed_on": "2026-10-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3475,
-    "total_bytes_excluding_packet": 50783352,
-    "total_newlines_excluding_packet": 888319,
-    "sha256_excluding_packet": "4d7129714c228414de314e2e1cd2f3d5b643f9dea02b1551aae35b781a0c4e6c",
+    "file_count_excluding_packet": 3489,
+    "total_bytes_excluding_packet": 50895376,
+    "total_newlines_excluding_packet": 890160,
+    "sha256_excluding_packet": "02048aa7f69f7838666bb935be1ed88616b5042547e05b7cb11632b2416ac947",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -194,51 +214,77 @@
     "operator_attestation_ar": "هذا ليس ادعاء فهم شامل بذاته؛ إنه شرط مجهر آلي يسبق التحليل البشري والمصفوفة، ويجعل تجاهل القديم مرئياً."
   },
   "pre_modification": {
-    "current_state": "TESTED: main عند 9ec9994 (بعد دمج PR #2597) وكلّ فحوص Actions على PR #2597 خضراء؛ لكنّ فحص CodeScene Code Coverage الخارجي لا يكتمل على أيّ PR (timed_out بعد 6 ساعات على PR #2595).",
+    "current_state": "BASE_SHA=1583ddaf34f732fec6720e4173d4ff7afb424484; working tree was clean at task start. Test-first regressions were added before source edits; the focused HCE run then produced 13 failed and 35 passed, confirming the targeted defects. R1/R2/R3 and the exact-SHA architectural guardrail remain open/unknown; no production evidence was available.",
     "architecture_and_boundaries": [
-      ".github/workflows/ci.yml — وظيفة codescene-coverage وحدها؛ required-ci وكلّ وظيفةٍ أخرى لا تُمسّ.",
-      "مسارٌ محميّ تحت ENGINEERING_GOVERNANCE_POLICY ⇒ سجلّ تعديلٍ دستوري جديد بانتظار مراجعةٍ مستقلّة.",
-      "إعدادات مشروع CodeScene (الفروع المُحلَّلة وعتبات البوّابة) سلطةٌ خارجية يملكها المالك لا هذا المستودع."
+      "CLI imports france_validator/belgium_validator and writes reports/CSV; path safety belongs before audit and output.",
+      "API router reaches app.services.hard_currency.einvoicing_audit.run_audit; _engine imports HCE lazily and stores uploads only in a TemporaryDirectory.",
+      "HCE validators are stdlib-focused; tests inject the SIRENE lookup and use synthetic CSV. No network call or persistent state is required.",
+      "tests/unit/tools/test_outreach_truth.py requires the committed FR/BE demo reports and cleaned CSVs to match generator output exactly."
     ],
     "existing_failures_and_old_debt": [
-      "FOUND: codescene-coverage يشغّل upload على فروع الـPR فتقبله CodeScene ولا تستعمله؛ فحص تغطية الـPR لم يكتمل قطّ منذ D-234 والوظيفة خضراء.",
-      "FOUND: بطء الحزمة (db_lifecycle) — متابعة D-315 المستحقّة، خارج هذا التغيير.",
-      "REMAINS OPEN: R1–R3 في PROJECT_REMEDIATION_PLAN.json؛ هذا التغيير لا يغلق شيئاً منها."
+      "Confirmed: a syntactically valid French SIREN with online=True and SIRENE unavailable was counted valid and labeled CONFORME/ready.",
+      "Confirmed: Belgian numeric validators stripped arbitrary letters before checksum/range checks; junk wrapped around valid digits passed.",
+      "Confirmed: direct HCE exporters did not neutralize formula-leading data/headers; API sanitizer missed headers, leading whitespace/control, and NFKC fullwidth formula characters.",
+      "Confirmed: physical-line # filtering deleted # lines within quoted multiline cells and could produce a NoneType validation crash.",
+      "Confirmed: CLI permitted --csv-out (and unchecked --out) to alias the source, silently replacing the input.",
+      "Confirmed scope overclaim: Peppol COMPATIBLE and RFE “prêtes à l’émission” implied more than local checks prove.",
+      "R1/R2/R3 remain OPEN in PROJECT_REMEDIATION_PLAN.json; no closure or production promotion is in scope. Exact-SHA architectural guardrail failure remains UNKNOWN."
     ],
     "dependency_path": [
-      "ci.yml:codescene-coverage → cs-coverage check → فحص CodeScene Code Coverage على رأس الـPR → علامة الـPR الخضراء"
+      "input CSV → CLI/API → CSV parser → FR/BE normalizers → row result/status/valid count → CSV writer/report → customer/operator",
+      "CLI args → resolved/samefile path comparison → audit → report/export; collision check must precede all writes.",
+      "API upload → _engine lazy import → audit → annotated rows → HCE exporter → cleaned_csv JSON response.",
+      "Demo input CSV → audit/report/export → test_outreach_truth exact artifact parity."
     ],
     "foundational_frontier": {
       "status": "REPAIRED_OR_CONTAINED_BEFORE_EXTENSION",
       "relevant_defects": [
-        "R3 (reproducible tests) OPEN — غير مُمسوس؛ هذا تغييرٌ في توصيل تقرير التغطية لا في الاختبارات.",
-        "وظيفةٌ خضراء لا تفعل شيئاً (D-235) — مُصلَحة هنا للـPR."
+        "This change is limited to correctness/data-safety containment on the active HCE dependency path; no feature is layered on.",
+        "R1–R3 remain OPEN; local Python 3.11 tests are scoped evidence only and do not replace Python 3.12 CI proof.",
+        "The exact-SHA CI inner failure and live production/Peppol registration remain UNKNOWN."
       ],
-      "decision": "إصلاح أساس CI مسموحٌ تحت §5.1؛ لا ميزة ولا ترقية قدرة."
+      "decision": "Permitted foundation repair under ENGINEERING_CONSTITUTION §5.1; do not close the global remediation ledger or claim production readiness."
     },
-    "root_cause": "الأمر الخطأ للحدث: upload يغذّي الفرع المُحلَّل (main) وحده، وبوّابة الـPR تُغذّى بـcheck؛ والخطوة تخرج بـ0 فيخفي الأخضرُ العطل.",
-    "intended_change": "في codescene-coverage: check على pull_request مع CS_PROJECT_URL، وupload على push فقط؛ مع تعليقٍ يروي الجذر وسجلّ تعديل وقرار D-316.",
+    "root_cause": "The validators normalize by deleting every non-digit before checking, so invalid syntax can collapse to a valid checksum. The French SIRENE-unavailable branch returns no error, leaving the row on the “valid” path. CSV parsing filters physical lines without CSV quote state; exporters serialize unneutralized headers/data; the API sanitizes only row values using an incomplete prefix check; CLI output paths are not compared with input paths. Finally, status/report labels describe regulatory or network compatibility that local checks did not establish.",
+    "intended_change": "Add one small stdlib CSV safety helper for logical-record comment handling, spreadsheet-cell neutralization, and safe row/header serialization; make FR/BE validators reject unsupported identifier characters before normalization; represent SIRENE/network absence as A_VERIFIER/NON_VERIFIE; rename report/status claims to local checks only; reject resolved/samefile input-output aliases before processing; add regression tests and regenerate only the parity-locked FR/BE demo outputs.",
     "affected_invariants": [
-      "الأخضر لا يعني «لم يفعل شيئاً» (D-235).",
-      "خدمةٌ خارجية لا تحجب الدمج (D-234).",
-      "الرمز على مستوى الوظيفة بحارسين، والغياب يُعلَن (check_ci_workflow_hygiene)."
+      "Unknown external verification never counts as ready or conforming.",
+      "Only permitted numeric formatting is stripped; arbitrary letters/symbols cannot be normalized into a valid national identifier.",
+      "Local syntax/checksum success is not reported as Peppol directory membership, PDP enrollment, or invoice acceptance.",
+      "Every exported CSV cell, including headers, is checked for spreadsheet formula prefixes; the mitigation is scoped, not claimed universal.",
+      "CSV comments are removed only at logical record boundaries outside quoted fields; all field content is preserved.",
+      "An input and any report/CSV output may not alias (resolved path or same underlying file); rejection occurs before output side effects.",
+      "Generated demo artifacts remain byte-identical to current generators and tests.",
+      "R1/R2/R3 statuses remain open; no production, legal-eligibility, customer-demand, or revenue claim is promoted."
     ],
     "test_plan": [
-      "سلبي: check_ci_workflow_hygiene أخضر بعد التعديل؛ والأداة تخرج بـ1 عند خطأ المصادقة فلا صمت.",
-      "إيجابي/حيّ: فحص CodeScene Code Coverage يكتمل على رأس الـPR الجديد بدل المهلة، وupload يبقى على main بعد الدمج."
+      "Positive FR: valid SIREN with injected active SIRENE and standard spaced identifiers remain accepted; offline local controls are explicitly labeled as local only.",
+      "Negative FR: valid identifier + SIRENE unavailable gives valides=0, SIRENE_INDISPONIBLE, STATUT_RFE=A_VERIFIER; alphabetic-junk SIREN/SIRET/postal/VAT rejected.",
+      "Negative BE: junk BCE/VAT/postal around checksum-valid digits rejected; no PEPPOL_ID/URL derived from invalid raw BCE; local success remains NON_VERIFIE for directory membership.",
+      "CSV: both direct exporters sanitize malicious headers and values, leading newline/control whitespace and fullwidth equals; valid negative numbers remain numeric text unchanged.",
+      "CSV parsing: comment records outside quotes are skipped while physical # lines inside quoted multiline fields are preserved for both FR and BE.",
+      "CLI: same path, symlink alias, and report/CSV output collisions exit with code 2 before changing input bytes.",
+      "API: integration test parses cleaned CSV and verifies safe header/data cells, including newline and fullwidth formula candidates.",
+      "Run HCE workflow selection, API regression if dependencies permit, outreach artifact-parity test, Ruff on touched Python, code acceptance, relevant constitutions/gates, and git diff --check."
     ],
-    "rollback_strategy": "git revert للدفعة؛ يعيد خطوة upload الوحيدة.",
+    "rollback_strategy": "Revert the single bounded change; there are no schema, DB, dependency, or external-service changes. Regenerated demo files are derived and reverted with code; no customer input is written by the tests.",
     "verification_strategy": [
-      "python scripts/fitness/check_ci_workflow_hygiene.py",
-      "python scripts/fitness/check_engineering_governance.py",
-      "python scripts/run_fitness_gates.py",
-      "مراقبة codescene-coverage وفحص CodeScene Code Coverage على رأس الـPR"
+      "python scripts/fitness/check_hard_currency_engine.py",
+      "/tmp/hce-audit-venv/bin/python -m pytest -q -c pytest-hce.ini tests/unit/tools/test_hard_currency_engine.py tests/fitness/test_check_hard_currency_engine.py --confcutdir=tests/unit/tools --tb=short --cov=tools/hard_currency_engine --cov-fail-under=70",
+      "python -m pytest -q tests/api/test_hard_currency_center.py -k audit_neutralises_spreadsheet_formulas",
+      "python -m pytest -q tests/unit/tools/test_outreach_truth.py -k committed_",
+      "ruff check touched Python files and ruff format --check touched Python files",
+      "python scripts/fitness/check_code_acceptance.py; python scripts/fitness/check_repository_microscope.py; python scripts/fitness/check_engineering_governance.py; git diff --check",
+      "Python 3.12 and whole-repository CI remain UNKNOWN until an actual 3.12 runner and exact-SHA check execute."
     ],
     "claim_statuses": {
-      "current_state": "TESTED",
-      "ci_change": "IMPLEMENTED",
-      "codescene_pr_check": "UNKNOWN",
-      "branch_protection_live_state": "UNKNOWN"
+      "baseline_hce_tests_python_3_11": "TESTED",
+      "baseline_hce_quality_gate_python_3_11": "TESTED",
+      "exact_sha_architectural_guardrail_inner_check": "UNKNOWN",
+      "python_3_12_verification": "UNKNOWN",
+      "production_runtime": "UNKNOWN",
+      "peppol_directory_membership": "UNKNOWN",
+      "customer_revenue_or_paid_proof": "UNKNOWN"
     }
   }
 }

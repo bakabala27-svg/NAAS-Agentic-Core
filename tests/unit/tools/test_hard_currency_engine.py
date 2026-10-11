@@ -7,6 +7,7 @@ Couvre la validation France, Belgique Peppol, CBAM, ZATCA, EAA, CRM et Contrats.
 from __future__ import annotations
 
 import contextlib
+import csv
 import io
 import sys
 import tempfile
@@ -119,6 +120,7 @@ class TestFranceValidator(unittest.TestCase):
         ok_eu, _, msg_eu = tva_fr_check("BE0123456749")
         self.assertTrue(ok_eu)
         self.assertIn("Intra-UE", msg_eu)
+        self.assertFalse(tva_fr_check("BEABC123")[0])
 
     def test_french_postal_code(self):
         ok, cp_clean, _ = validate_french_postal_code("75008")
@@ -129,6 +131,11 @@ class TestFranceValidator(unittest.TestCase):
         ok_healed, cp_healed, _ = validate_french_postal_code("1000")
         self.assertTrue(ok_healed)
         self.assertEqual(cp_healed, "01000")
+
+        self.assertFalse(validate_french_postal_code("x75008y")[0])
+        self.assertFalse(siren_check("x443061841y")[0])
+        self.assertFalse(siret_check("x44306184100047y")[0])
+        self.assertFalse(tva_fr_check("FR64x443061841")[0])
 
     def test_french_audit_and_export_csv(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -240,10 +247,34 @@ class TestFranceValidatorCustomerPathFixes(unittest.TestCase):
             self.assertNotIn("443061841", flat)
             self.assertTrue(any(e.startswith("ENTREPRISE_RADIEE") for e in flat["501058812"]))
             self.assertTrue(any(e.startswith("SIREN_INCONNU_SIRENE") for e in flat["552032534"]))
+            self.assertTrue(any(e.startswith("SIRENE_INDISPONIBLE") for e in flat["380129866"]))
             self.assertEqual(res["sirene_indisponible"], 1)
             self.assertEqual(res["radiees"], 1)
+            self.assertEqual(res["valides"], 1)
+            offline_row = next(row for row in res["annotees"] if row["siren"] == "380129866")
+            unknown_row = next(row for row in res["annotees"] if row["siren"] == "552032534")
+            self.assertEqual(offline_row["STATUT_RFE"], "A_VERIFIER")
+            self.assertEqual(unknown_row["STATUT_RFE"], "A_VERIFIER")
+            self.assertNotEqual(offline_row["ANOMALIES_RFE"], "AUCUNE_ANOMALIE_DETECTEE")
             report = format_french_report(res, "tiers.csv")
             self.assertIn("SIRENE", report)
+            self.assertNotIn("Fiches prêtes à l'émission", report)
+
+    def test_incomplete_sirene_record_is_not_misreported_as_deregistered(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "tiers.csv"
+            csv_in.write_text("nom;siren\nAcme;443061841\n", encoding="utf-8")
+            res = audit_french_csv(
+                csv_in,
+                online=True,
+                lookup=lambda _siren: {"trouve": True, "etat": "?", "nom_officiel": "ACME"},
+            )
+
+        errors = res["anomalies"][0]["erreurs"]
+        self.assertIn("SIRENE_STATUT_INDETERMINE(contrôle à relancer)", errors)
+        self.assertFalse(any(error.startswith("ENTREPRISE_RADIEE") for error in errors))
+        self.assertEqual(res["sirene_indeterminees"], 1)
+        self.assertEqual(res["annotees"][0]["STATUT_RFE"], "A_VERIFIER")
 
     def test_fine_is_tied_to_the_issuance_deadline_not_stated_as_immediate(self):
         # Loi de finances 2026: 50 €/invoice (cap 15 000 €/year) sanctions *issuing*
@@ -294,6 +325,18 @@ class TestFranceValidatorCustomerPathFixes(unittest.TestCase):
             csv_in.write_text("nom;siren;cp\nACME;;75001\nAcme;;75001\n", encoding="utf-8")
             self.assertEqual(audit_french_csv(csv_in)["doublons"], 1)
 
+    def test_comment_lines_inside_quoted_multiline_fields_are_preserved(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "tiers.csv"
+            csv_in.write_text(
+                '# début\nnom;siren\n# commentaire\n"ACME\n#Acme;443061841\nSA";443061841\n',
+                encoding="utf-8",
+            )
+            result = audit_french_csv(csv_in)
+            self.assertEqual(result["total"], 1)
+            self.assertEqual(result["valides"], 1)
+            self.assertEqual(result["annotees"][0]["nom"], "ACME\n#Acme;443061841\nSA")
+
 
 class TestBelgiumValidator(unittest.TestCase):
     def test_bce_modulo97(self):
@@ -304,6 +347,7 @@ class TestBelgiumValidator(unittest.TestCase):
         ok_bad, _, msg_bad = validate_bce_modulo97("0123.456.750")
         self.assertFalse(ok_bad)
         self.assertIn("Échec Modulo 97", msg_bad)
+        self.assertFalse(validate_bce_modulo97("0123X.456.749")[0])
 
     def test_belgian_vat_and_peppol_id(self):
         ok, vat, _ = validate_belgian_vat("BE0123456749")
@@ -319,6 +363,9 @@ class TestBelgiumValidator(unittest.TestCase):
 
         kbo_url = get_kbo_public_url("0123.456.749")
         self.assertIn("kbopub.economie.fgov.be", kbo_url)
+        self.assertFalse(validate_belgian_vat("BEABC0123456749")[0])
+        with self.assertRaises(ValueError):
+            format_peppol_id("0123X.456.749")
 
     def test_belgian_postal_code(self):
         ok, cp, _ = validate_belgian_postal_code("1000")
@@ -327,6 +374,7 @@ class TestBelgiumValidator(unittest.TestCase):
 
         ok_bad, _, _ = validate_belgian_postal_code("0500")
         self.assertFalse(ok_bad)
+        self.assertFalse(validate_belgian_postal_code("B1000X")[0])
 
     def test_belgian_audit_and_export_csv(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -346,8 +394,42 @@ class TestBelgiumValidator(unittest.TestCase):
             self.assertTrue(csv_out.exists())
             out_txt = csv_out.read_text(encoding="utf-8-sig")
             self.assertIn("0208:0123456749", out_txt)
-            self.assertIn("COMPATIBLE", out_txt)
+            self.assertIn("FORMAT_VALIDE_NON_VERIFIE", out_txt)
             self.assertIn("directory.peppol.eu", out_txt)
+
+    def test_dirty_belgian_identifiers_do_not_collapse_to_valid_digits(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "be.csv"
+            csv_in.write_text(
+                "Nom_entreprise;Numero_BCE;Numero_TVA;Code_postal\n"
+                "Proximus;0123X.456.749;BEABC0123456749;B1000X\n",
+                encoding="utf-8",
+            )
+            result = audit_belgian_csv(csv_in)
+            row = result["annotees"][0]
+            self.assertEqual(result["valides"], 0)
+            self.assertEqual(result["erreurs_bce"], 1)
+            self.assertEqual(result["erreurs_tva"], 1)
+            self.assertEqual(row["STATUT_PEPPOL"], "A_CORRIGER")
+            self.assertEqual(row["PEPPOL_ID"], "A_CORRIGER")
+            self.assertEqual(row["PEPPOL_DIRECTORY_URL"], "")
+            self.assertEqual(row.get("CP_ASSAINI", ""), "")
+
+    def test_comment_lines_inside_quoted_multiline_fields_are_preserved(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "be.csv"
+            csv_in.write_text(
+                "# début\nNom_entreprise;Numero_BCE;Code_postal\n# commentaire\n"
+                '"ACME\n#Acme;0472.198.275\nSA";0472.198.275;1000\n',
+                encoding="utf-8",
+            )
+            result = audit_belgian_csv(csv_in)
+            self.assertEqual(result["total"], 1)
+            self.assertEqual(result["valides"], 1, result["anomalies"])
+            self.assertEqual(
+                result["annotees"][0]["Nom_entreprise"], "ACME\n#Acme;0472.198.275\nSA"
+            )
+            self.assertEqual(result["annotees"][0]["ANNUAIRE_PEPPOL_STATUT"], "NON_VERIFIE")
 
 
 class TestBelgiumValidatorCustomerPathFixes(unittest.TestCase):
@@ -407,6 +489,77 @@ class TestBelgiumValidatorCustomerPathFixes(unittest.TestCase):
         report = format_belgian_report(res, "be.csv")
         self.assertIn(date.today().isoformat(), report)
         self.assertIn("| 2 | X | 0123456750 | BCE_INVALID |", report)
+
+
+class TestCSVDataSafety(unittest.TestCase):
+    def test_both_direct_exporters_neutralize_headers_and_formula_like_cells(self):
+        results = {
+            "annotees": [
+                {
+                    "=HYPERLINK(https://example.invalid)": "safe header value",
+                    "nom": "\n=1+1",
+                    "fullwidth": "＝1+1",
+                    "tab": "\t=1+1",
+                    "negative_amount": "-12.50",
+                }
+            ]
+        }
+        exporters = (export_cleaned_french_csv, export_cleaned_belgian_csv)
+        for exporter in exporters:
+            with self.subTest(exporter=exporter.__name__), tempfile.TemporaryDirectory() as tmpdir:
+                output = Path(tmpdir) / "clean.csv"
+                exporter(results, output)
+                with output.open(encoding="utf-8-sig", newline="") as handle:
+                    header, row = list(csv.reader(handle, delimiter=";"))
+                self.assertEqual(header[0], "'=HYPERLINK(https://example.invalid)")
+                self.assertEqual(row[1], "'\n=1+1")
+                self.assertEqual(row[2], "'＝1+1")
+                self.assertEqual(row[3], "'\t=1+1")
+                self.assertEqual(row[4], "-12.50")
+
+
+class TestCLIPathSafety(unittest.TestCase):
+    def test_cli_rejects_source_aliases_before_writing_france_or_belgium_outputs(self):
+        for command in ("france", "belgium"):
+            with self.subTest(command=command), tempfile.TemporaryDirectory() as tmpdir:
+                source = Path(tmpdir) / "source.csv"
+                source.write_text("nom;siren\nACME;443061841\n", encoding="utf-8")
+                original = source.read_bytes()
+                alias = Path(tmpdir) / "alias.csv"
+                alias.symlink_to(source)
+                stderr = io.StringIO()
+                with contextlib.redirect_stderr(stderr):
+                    with self.assertRaises(SystemExit) as ctx:
+                        hce_cli.main([command, str(source), "--csv-out", str(alias)])
+                self.assertEqual(ctx.exception.code, 2)
+                self.assertEqual(source.read_bytes(), original)
+                self.assertTrue(stderr.getvalue())
+
+    def test_cli_rejects_report_output_equal_to_source(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            source = Path(tmpdir) / "source.csv"
+            source.write_text("nom;siren\nACME;443061841\n", encoding="utf-8")
+            original = source.read_bytes()
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                with self.assertRaises(SystemExit) as ctx:
+                    hce_cli.main(["france", str(source), "--out", str(source)])
+            self.assertEqual(ctx.exception.code, 2)
+            self.assertEqual(source.read_bytes(), original)
+
+    def test_cli_rejects_report_and_csv_outputs_that_alias_each_other(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            source = Path(tmpdir) / "source.csv"
+            output = Path(tmpdir) / "result.out"
+            source.write_text("nom;siren\nACME;443061841\n", encoding="utf-8")
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                with self.assertRaises(SystemExit) as ctx:
+                    hce_cli.main(
+                        ["france", str(source), "--out", str(output), "--csv-out", str(output)]
+                    )
+            self.assertEqual(ctx.exception.code, 2)
+            self.assertFalse(output.exists())
 
 
 class TestCLIQuarantine(unittest.TestCase):

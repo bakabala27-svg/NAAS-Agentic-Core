@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import ast
+import csv
 import hashlib
+import io
 import json
 from pathlib import Path
 
@@ -149,13 +151,35 @@ def test_audit_matches_the_engine_exactly(
     assert body["report_markdown"].strip()
 
 
-def test_audit_neutralises_spreadsheet_formulas(client, admin_auth_headers) -> None:
-    content = b'Nom;SIREN;TVA;CP\n=HYPERLINK("http://evil","x");732829320;FR44732829320;75001\n'
-    response = _upload(client, admin_auth_headers, name="inject.csv", content=content)
+def test_audit_neutralises_spreadsheet_formulas_in_headers_and_data(
+    client, admin_auth_headers
+) -> None:
+    buffer = io.StringIO(newline="")
+    writer = csv.writer(buffer, delimiter=";")
+    writer.writerow(
+        ["Nom", "SIREN", "TVA", "CP", '=HYPERLINK("https://example.invalid","h")', "note", "note2"]
+    )
+    writer.writerow(
+        [
+            '=HYPERLINK("https://example.invalid","x")',
+            "443061841",
+            "FR64443061841",
+            "75001",
+            "ok",
+            "\n=1+1",
+            "＝1+1",
+        ]
+    )
+    response = _upload(
+        client, admin_auth_headers, name="inject.csv", content=buffer.getvalue().encode("utf-8")
+    )
     assert response.status_code == 200
     cleaned = response.json()["cleaned_csv"]
-    assert "'=HYPERLINK" in cleaned
-    assert not any(line.startswith("=") for line in cleaned.splitlines())
+    rows = list(csv.reader(io.StringIO(cleaned, newline=""), delimiter=";"))
+    assert rows[0][4].startswith("'=HYPERLINK")
+    assert rows[1][0].startswith("'=HYPERLINK")
+    assert rows[1][5] == "'\n=1+1"
+    assert rows[1][6] == "'＝1+1"
 
 
 @pytest.mark.parametrize(
@@ -180,7 +204,7 @@ def test_audit_neutralises_spreadsheet_formulas(client, admin_auth_headers) -> N
         "over-row-limit",
     ],
 )
-def test_audit_rejects_bad_inputs(
+def test_audit_rejects_bad_inputs(  # noqa: PLR0917 — pytest parameterizes each request fixture
     client, admin_auth_headers, name, content, corridor, status
 ) -> None:
     response = _upload(client, admin_auth_headers, name=name, content=content, corridor=corridor)

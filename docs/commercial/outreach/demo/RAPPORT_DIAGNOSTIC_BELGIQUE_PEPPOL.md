@@ -2,19 +2,19 @@
 **Date :** 2026-09-29 · **Cadre :** Arrêté Royal Facturation Électronique B2B Obligatoire
 **Périmètre du contrôle :** contrôles algorithmiques hors ligne (Modulo 97, TVA, codes postaux, doublons) — l'inscription effective à l'annuaire Peppol se vérifie via les liens fournis dans le CSV
 
-## 1. Synthèse de Conformité Peppol
-| Indicateur | Valeur | Statut |
+## 1. Résultat des contrôles hors ligne
+| Indicateur | Valeur | Interprétation |
 |---|---|---|
-| Total fiches auditées | **20** | Base totale |
-| Fiches 100% compatibles Peppol | **3** (15.0%) | 🔴 Risque de rejet de facturation |
-| Numéros BCE / KBO invalides | **16** | Risque d'amende 1 500 € à 5 000 € |
-| Numéros de TVA invalides | **14** | Risque de non-déductibilité TVA |
-| Doublons détectés | **2** | Risque d'incohérence comptable |
+| Total fiches auditées | **20** | Lignes de données traitées |
+| Fiches sans anomalie détectée | **3** (15.0%) | Format/clé localement valides; inscription Peppol non vérifiée |
+| Numéros BCE / KBO invalides | **16** | À corriger ou vérifier |
+| Numéros de TVA invalides | **14** | Contrôle local de format et de clé |
+| Doublons détectés | **2** | À examiner avant fusion |
 
-## 2. Risques Financiers Immédiats
-Depuis le 1er janvier 2026 (fin de la tolérance au 31 mars 2026) :
-- 17 fiches bloqueront les flux entrants/sortants sur Exact Online, WinBooks ou Clearfacts.
-- Amendes administratives jusqu'à 5 000 € par infraction constatée par le SPF Finances.
+## 2. Cadre et limites
+- La facturation électronique structurée B2B est obligatoire en Belgique depuis le 1er janvier 2026 pour la plupart des opérations dans le champ légal; des exceptions et mesures techniques existent.
+- Cet audit ne consulte pas le répertoire Peppol, ne teste pas la réception du destinataire et ne vérifie pas l'intégration avec un logiciel comptable ou une plateforme.
+- 17 fiches comportent au moins une anomalie dans le périmètre testé; cela ne prouve pas, à lui seul, qu'une facture sera rejetée ou qu'une sanction s'applique.
 
 ## 3. Échantillon des Anomalies
 | Ligne | Nom | BCE | Erreurs Détectées |
