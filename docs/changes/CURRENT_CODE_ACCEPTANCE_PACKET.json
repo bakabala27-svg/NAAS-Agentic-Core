@@ -177,11 +177,14 @@
   "git_change_snapshot": {
     "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
+      ".github/workflows/ci.yml",
       "app/services/hard_currency/einvoicing_audit.py",
+      "coverage.codescene.ini",
       "docs/commercial/outreach/demo/DEMO_20_FICHES_ASSAINI.csv",
       "docs/commercial/outreach/demo/DEMO_BELGIUM_PEPPOL_20_FICHES_ASSAINI.csv",
       "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_BELGIQUE_PEPPOL.md",
       "docs/commercial/outreach/demo/RAPPORT_DIAGNOSTIC_FRANCE_RFE.md",
+      "docs/governance/amendments/D-317-CODESCENE-HCE-COVERAGE-SCOPE.md",
       "tests/api/test_hard_currency_center.py",
       "tests/unit/tools/test_hard_currency_engine.py",
       "tools/hard_currency_engine/belgium_validator.py",
@@ -189,16 +192,16 @@
       "tools/hard_currency_engine/csv_safety.py",
       "tools/hard_currency_engine/france_validator.py"
     ],
-    "content_sha256_excluding_packet": "b43501448c38fb722b5c8e64fbe5e6d6132180d377074dc41526f8f4588e1f19",
+    "content_sha256_excluding_packet": "13fd6033f909b8c7569f2b06a23ddc60ebb269961fe7c59b7298cfd6b829438d",
     "refreshed_on": "2026-10-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3489,
-    "total_bytes_excluding_packet": 50895376,
-    "total_newlines_excluding_packet": 890160,
-    "sha256_excluding_packet": "02048aa7f69f7838666bb935be1ed88616b5042547e05b7cb11632b2416ac947",
+    "file_count_excluding_packet": 3491,
+    "total_bytes_excluding_packet": 50910936,
+    "total_newlines_excluding_packet": 890424,
+    "sha256_excluding_packet": "33a769a99296b403836ee41a3be5a4814f96064c243367402e435bfe973023a7",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
