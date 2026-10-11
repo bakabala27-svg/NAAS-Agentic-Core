@@ -9,6 +9,7 @@ from __future__ import annotations
 import contextlib
 import csv
 import io
+import json
 import sys
 import tempfile
 import unittest
@@ -63,6 +64,7 @@ from tools.hard_currency_engine.france_validator import (
     format_french_report,
     luhn_ok,
     siren_check,
+    sirene_lookup,
     siret_check,
     tva_fr_check,
     validate_french_postal_code,
@@ -134,6 +136,7 @@ class TestFranceValidator(unittest.TestCase):
 
         self.assertFalse(validate_french_postal_code("x75008y")[0])
         self.assertFalse(siren_check("x443061841y")[0])
+        self.assertFalse(siret_check("123")[0])
         self.assertFalse(siret_check("x44306184100047y")[0])
         self.assertFalse(tva_fr_check("FR64x443061841")[0])
 
@@ -215,6 +218,98 @@ class TestFranceValidatorCustomerPathFixes(unittest.TestCase):
         report = format_french_report(res, "x.csv")
         self.assertNotIn("INSEE", report)
         self.assertIn("hors ligne", report.lower())
+
+    def test_foreign_eu_vat_checks_belgian_checksum_but_accepts_other_country_format(self):
+        ok_de, _, message_de = tva_fr_check("DE123456789")
+        self.assertTrue(ok_de, message_de)
+        self.assertFalse(tva_fr_check("BE0123456750")[0])
+        self.assertIn("Modulo 97", tva_fr_check("BE0123456750")[2])
+
+    def test_identifier_derivation_from_siret_and_vat_is_strict(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "derived_identifiers.csv"
+            csv_in.write_text(
+                "nom;siret;tva\n"
+                "Siret valide;44306184100047;\n"
+                "Siret mal formé;4430618410004X;\n"
+                "Siren dérivé invalide;12345678900012;\n"
+                "TVA valide;;FR40501058812\n"
+                "TVA avec SIREN invalide;;FR40123456789\n"
+                "TVA mal formée;;FR64x443061841\n"
+                "Sans identifiant;;\n",
+                encoding="utf-8",
+            )
+            result = audit_french_csv(csv_in)
+
+        rows = {row["nom"]: row for row in result["annotees"]}
+        errors = {item["nom"]: item["erreurs"] for item in result["anomalies"]}
+        self.assertEqual(rows["Siret valide"]["SIREN_ASSAINI"], "443061841")
+        self.assertEqual(rows["TVA valide"]["SIREN_ASSAINI"], "501058812")
+        self.assertTrue(
+            any(error.startswith("SIREN_DERIVE_INVALID") for error in errors["Siret mal formé"])
+        )
+        self.assertTrue(
+            any(
+                error.startswith("SIREN_DERIVE_INVALID")
+                for error in errors["Siren dérivé invalide"]
+            )
+        )
+        self.assertTrue(
+            any(
+                error.startswith("SIREN_DERIVE_TVA_INVALID")
+                for error in errors["TVA avec SIREN invalide"]
+            )
+        )
+        self.assertIn("SIREN_MANQUANT", errors["TVA mal formée"])
+        self.assertIn("SIREN_MANQUANT", errors["Sans identifiant"])
+
+    def test_sirene_lookup_uses_exact_identifier_and_preserves_uncertain_states(self):
+        active_response = mock.MagicMock()
+        active_response.__enter__.return_value.read.return_value = json.dumps(
+            {
+                "results": [
+                    {"siren": "123456789", "etat_administratif": "C"},
+                    {
+                        "siren": "443061841",
+                        "etat_administratif": "A",
+                        "nom_complet": "Acme France",
+                    },
+                ]
+            }
+        ).encode("utf-8")
+        with mock.patch(
+            "tools.hard_currency_engine.france_validator.urllib.request.urlopen",
+            return_value=active_response,
+        ) as urlopen:
+            active = sirene_lookup("443061841", timeout=3)
+        self.assertEqual(
+            active,
+            {"trouve": True, "etat": "A", "actif": True, "nom_officiel": "ACME FRANCE"},
+        )
+        self.assertEqual(urlopen.call_args.kwargs["timeout"], 3)
+
+        missing_response = mock.MagicMock()
+        missing_response.__enter__.return_value.read.return_value = json.dumps(
+            {"results": [{"siren": "123456789", "etat_administratif": "C"}]}
+        ).encode("utf-8")
+        with mock.patch(
+            "tools.hard_currency_engine.france_validator.urllib.request.urlopen",
+            return_value=missing_response,
+        ):
+            missing = sirene_lookup("443061841")
+        self.assertFalse(missing["trouve"])
+
+        unknown_status_response = mock.MagicMock()
+        unknown_status_response.__enter__.return_value.read.return_value = json.dumps(
+            {"results": [{"siren": "443061841", "nom_complet": "Acme France"}]}
+        ).encode("utf-8")
+        with mock.patch(
+            "tools.hard_currency_engine.france_validator.urllib.request.urlopen",
+            return_value=unknown_status_response,
+        ):
+            unknown_status = sirene_lookup("443061841")
+        self.assertEqual(unknown_status["etat"], "?")
+        self.assertIsNone(unknown_status["actif"])
 
     def test_online_lookup_flags_deregistered_and_unknown_companies(self):
         # The outreach templates promise detection of "radiés"; the tool must actually
@@ -337,6 +432,17 @@ class TestFranceValidatorCustomerPathFixes(unittest.TestCase):
             self.assertEqual(result["valides"], 1)
             self.assertEqual(result["annotees"][0]["nom"], "ACME\n#Acme;443061841\nSA")
 
+    def test_doubled_quotes_and_comment_records_in_a_multiline_field(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "quoted.csv"
+            csv_in.write_text(
+                '# début\nnom;siren\n"ACME ""North""\n# note;443061841\nSA";443061841\n# fin\n',
+                encoding="utf-8",
+            )
+            result = audit_french_csv(csv_in)
+            self.assertEqual(result["total"], 1)
+            self.assertEqual(result["annotees"][0]["nom"], 'ACME "North"\n# note;443061841\nSA')
+
 
 class TestBelgiumValidator(unittest.TestCase):
     def test_bce_modulo97(self):
@@ -344,10 +450,16 @@ class TestBelgiumValidator(unittest.TestCase):
         self.assertTrue(ok)
         self.assertEqual(formatted, "0123.456.749")
 
+        ok_short, padded, _ = validate_bce_modulo97("123456749")
+        self.assertTrue(ok_short)
+        self.assertEqual(padded, "0123.456.749")
+
         ok_bad, _, msg_bad = validate_bce_modulo97("0123.456.750")
         self.assertFalse(ok_bad)
         self.assertIn("Échec Modulo 97", msg_bad)
         self.assertFalse(validate_bce_modulo97("0123X.456.749")[0])
+        self.assertIn("Longueur", validate_bce_modulo97("12345")[2])
+        self.assertIn("débuter par 0 ou 1", validate_bce_modulo97("2123456749")[2])
 
     def test_belgian_vat_and_peppol_id(self):
         ok, vat, _ = validate_belgian_vat("BE0123456749")
@@ -364,6 +476,8 @@ class TestBelgiumValidator(unittest.TestCase):
         kbo_url = get_kbo_public_url("0123.456.749")
         self.assertIn("kbopub.economie.fgov.be", kbo_url)
         self.assertFalse(validate_belgian_vat("BEABC0123456749")[0])
+        self.assertIn("Préfixe BE manquant", validate_belgian_vat("FR0123456749")[2])
+        self.assertIn("TVA invalide", validate_belgian_vat("BE0123456750")[2])
         with self.assertRaises(ValueError):
             format_peppol_id("0123X.456.749")
 
@@ -461,6 +575,16 @@ class TestBelgiumValidatorCustomerPathFixes(unittest.TestCase):
                 res = audit_belgian_csv(csv_in)
                 self.assertEqual(res["valides"], 1, (header, res["anomalies"]))
 
+    def test_bce_column_fallback_skips_company_name_and_matches_qualified_header(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "be.csv"
+            csv_in.write_text(
+                "Nom entreprise,Code BCE,TVA\nProximus,0202239951,BE0202239951\n",
+                encoding="utf-8",
+            )
+            result = audit_belgian_csv(csv_in)
+            self.assertEqual(result["valides"], 1, result["anomalies"])
+
     def test_same_bce_with_a_legal_form_suffix_is_a_duplicate(self):
         # Live run 2026-09-29 on DEMO_BELGIUM_PEPPOL_20_FICHES (rows 13/14): one BCE,
         # names differing only by «SA», and the report said «Doublons détectés: 0».
@@ -473,6 +597,42 @@ class TestBelgiumValidatorCustomerPathFixes(unittest.TestCase):
             )
             res = audit_belgian_csv(csv_in)
             self.assertEqual(res["doublons"], 1, res["anomalies"])
+
+    def test_bce_duplicate_key_normalizes_unpadded_numbers_and_vat_fallback(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            unpadded_csv = Path(tmpdir) / "unpadded.csv"
+            unpadded_csv.write_text(
+                "Nom_entreprise;Numero_BCE\nProximus;202239951\nProximus SA;0202239951\n",
+                encoding="utf-8",
+            )
+            unpadded = audit_belgian_csv(unpadded_csv)
+            self.assertEqual(unpadded["doublons"], 1)
+
+            vat_csv = Path(tmpdir) / "vat_only.csv"
+            vat_csv.write_text(
+                "Nom_entreprise;Numero_TVA\nProximus;BE0202239951\nProximus SA;BE0202239951\n",
+                encoding="utf-8",
+            )
+            vat_only = audit_belgian_csv(vat_csv)
+
+        self.assertEqual(vat_only["doublons"], 1)
+        self.assertEqual(vat_only["annotees"][0]["PEPPOL_ID"], "0208:0202239951")
+        self.assertEqual(vat_only["annotees"][0]["BCE_ASSAINI"], "0202.239.951")
+
+    def test_valid_bce_and_vat_must_match(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "mismatch.csv"
+            csv_in.write_text(
+                "Nom_entreprise;Numero_BCE;Numero_TVA\nProximus;0202239951;BE0417497106\n",
+                encoding="utf-8",
+            )
+            result = audit_belgian_csv(csv_in)
+
+        self.assertEqual(result["erreurs_bce"], 1)
+        self.assertEqual(result["erreurs_tva"], 1)
+        self.assertTrue(
+            any(error.startswith("BCE_TVA_MISMATCH") for error in result["anomalies"][0]["erreurs"])
+        )
 
     def test_belgian_report_has_today_and_an_anomaly_table(self):
         res = {
@@ -501,6 +661,8 @@ class TestCSVDataSafety(unittest.TestCase):
                     "fullwidth": "＝1+1",
                     "tab": "\t=1+1",
                     "negative_amount": "-12.50",
+                    "numeric": -12.5,
+                    "zero_width": "\u200b=1+1",
                 }
             ]
         }
@@ -516,6 +678,16 @@ class TestCSVDataSafety(unittest.TestCase):
                 self.assertEqual(row[2], "'＝1+1")
                 self.assertEqual(row[3], "'\t=1+1")
                 self.assertEqual(row[4], "-12.50")
+                self.assertEqual(row[5], "-12.5")
+                self.assertEqual(row[6], "'\u200b=1+1")
+
+    def test_empty_exports_create_empty_utf8_files(self):
+        for exporter in (export_cleaned_french_csv, export_cleaned_belgian_csv):
+            with self.subTest(exporter=exporter.__name__), tempfile.TemporaryDirectory() as tmpdir:
+                output = Path(tmpdir) / "empty.csv"
+                result = exporter({"annotees": []}, output)
+                self.assertEqual(result, output)
+                self.assertEqual(output.read_bytes(), b"")
 
 
 class TestCLIPathSafety(unittest.TestCase):
@@ -560,6 +732,53 @@ class TestCLIPathSafety(unittest.TestCase):
                     )
             self.assertEqual(ctx.exception.code, 2)
             self.assertFalse(output.exists())
+
+    def test_cli_rejects_hard_link_aliases(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            source = Path(tmpdir) / "source.csv"
+            alias = Path(tmpdir) / "hardlink.csv"
+            source.write_text("nom;siren\nACME;443061841\n", encoding="utf-8")
+            alias.hardlink_to(source)
+            original = source.read_bytes()
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                with self.assertRaises(SystemExit) as ctx:
+                    hce_cli.main(["france", str(source), "--out", str(alias)])
+            self.assertEqual(ctx.exception.code, 2)
+            self.assertEqual(source.read_bytes(), original)
+
+    def test_path_identity_error_falls_back_to_resolved_paths(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            source = Path(tmpdir) / "source.csv"
+            output = Path(tmpdir) / "output.csv"
+            source.write_text("source", encoding="utf-8")
+            output.write_text("output", encoding="utf-8")
+            with mock.patch.object(Path, "samefile", side_effect=OSError("permission denied")):
+                hce_cli._ensure_distinct_paths(source, {"output": output})
+
+    def test_cli_allows_distinct_outputs_and_dispatches_crm(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            source = Path(tmpdir) / "source.csv"
+            report = Path(tmpdir) / "report.md"
+            clean = Path(tmpdir) / "clean.csv"
+            source.write_text("nom;siren\nACME;443061841\n", encoding="utf-8")
+            original = source.read_bytes()
+            with contextlib.redirect_stdout(io.StringIO()):
+                hce_cli.main(["france", str(source), "--out", str(report), "--csv-out", str(clean)])
+            self.assertTrue(report.exists())
+            self.assertTrue(clean.exists())
+            self.assertEqual(source.read_bytes(), original)
+
+            targets = Path(tmpdir) / "targets.csv"
+            targets.write_text(
+                "id,corridor,nom_entite,contact_cible,role_cible,statut,hook_accroche\n"
+                "1,FR_PDP,Alpha,a@alpha.fr,DAF,PROSPECT_QUALIFIE,hook a\n",
+                encoding="utf-8",
+            )
+            drafts = Path(tmpdir) / "drafts"
+            with contextlib.redirect_stdout(io.StringIO()):
+                hce_cli.main(["crm", str(targets), "--output-dir", str(drafts)])
+            self.assertTrue(list(drafts.glob("*.txt")))
 
 
 class TestCLIQuarantine(unittest.TestCase):

@@ -949,6 +949,7 @@ jobs:
           python -m pytest tests scripts/ci -v \
             --ignore=tests/microservices \
             --cov=app \
+            --cov=tools/hard_currency_engine \
             --cov-report=xml:coverage.xml \
             --cov-report=term-missing \
             --cov-fail-under=73 \
@@ -1124,9 +1125,9 @@ jobs:
             echo "Sent \`coverage.xml\` (cobertura, line-coverage) for commit"
             echo "\`${{ github.event.pull_request.head.sha || github.sha }}\`."
             echo
-            echo "Scope note: coverage is measured with \`--cov=app\` only. \`microservices/\`"
-            echo "and \`shared/\` are NOT measured — if CodeScene shows them as 0% rather than"
-            echo "as absent, the number is lying and the scope must be narrowed (D-197)."
+            echo "Scope note: coverage measures \`app/\` and \`tools/hard_currency_engine/\`."
+            echo "\`microservices/\` and \`shared/\` are NOT measured — if CodeScene shows them"
+            echo "as 0% rather than absent, the number is lying and the scope must be narrowed (D-197)."
           } >> "$GITHUB_STEP_SUMMARY"
 
   test-microservices:

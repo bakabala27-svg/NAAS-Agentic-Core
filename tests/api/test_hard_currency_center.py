@@ -204,7 +204,7 @@ def test_audit_neutralises_spreadsheet_formulas_in_headers_and_data(
         "over-row-limit",
     ],
 )
-def test_audit_rejects_bad_inputs(  # noqa: PLR0917 — pytest parameterizes each request fixture
+def test_audit_rejects_bad_inputs(
     client, admin_auth_headers, name, content, corridor, status
 ) -> None:
     response = _upload(client, admin_auth_headers, name=name, content=content, corridor=corridor)

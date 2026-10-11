@@ -404,7 +404,7 @@ def _clean_siren(row: dict, cols: dict) -> str:
     return ""
 
 
-def _process_french_row(  # noqa: PLR0917 — audit context is passed through this row processor
+def _process_french_row(
     row: dict,
     cols: dict,
     line_no: int,
