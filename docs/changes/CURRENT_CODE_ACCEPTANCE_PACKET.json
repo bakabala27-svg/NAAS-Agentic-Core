@@ -57,6 +57,7 @@
     "commands": [
       "PASS — python scripts/fitness/check_outbound_before_research.py (السجلّ سليم، اللوحة مُشتقّة)",
       "PASS — python scripts/fitness/check_documentation_contract.py (55 وثيقة حيّة، لا روابط مكسورة)",
+      "PASS — Personal Intelligence availability in the Arab world cross-checked against Google MENA blog + arabnews + The National (2026-04-14/15)",
       "PASS — python scripts/fitness/check_authority_links.py",
       "PASS — python scripts/fitness/check_memory_coherence.py",
       "PASS — python -m pytest tests/unit/tools/test_outreach_truth.py -q --noconftest (10 passed)",
