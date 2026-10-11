@@ -58,6 +58,7 @@
       "PASS — python scripts/fitness/check_outbound_before_research.py (السجلّ سليم، اللوحة مُشتقّة)",
       "PASS — python scripts/fitness/check_documentation_contract.py (55 وثيقة حيّة، لا روابط مكسورة)",
       "PASS — Personal Intelligence availability in the Arab world cross-checked against Google MENA blog + arabnews + The National (2026-04-14/15)",
+      "PASS — appended §15-§18 (false-citation mode, swap-and-confirm SxS method, real-transcript calibration, Arabic failure modes) with dated external sources",
       "PASS — python scripts/fitness/check_authority_links.py",
       "PASS — python scripts/fitness/check_memory_coherence.py",
       "PASS — python -m pytest tests/unit/tools/test_outreach_truth.py -q --noconftest (10 passed)",
@@ -160,16 +161,16 @@
     "changed_paths_excluding_packet": [
       "docs/commercial/outreach/TURING_ASSESSMENT_PLAYBOOK_AR_2026-10-11.md"
     ],
-    "content_sha256_excluding_packet": "2df564bf04f33c0d2c4f5767b8fa6411e1ee599195f89f1d5d6fa771a5bd06af",
+    "content_sha256_excluding_packet": "5a1e7415948caaeed723bb3c31a58abc8878a51a49a194d224078e20dbb3f98c",
     "refreshed_on": "2026-10-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
     "file_count_excluding_packet": 3497,
-    "total_bytes_excluding_packet": 50995515,
-    "total_newlines_excluding_packet": 891489,
-    "sha256_excluding_packet": "5fbdcc3fd4e47a6e114a0377a6fb6f589bd6df735f0e8efd904f2d1997af1bd5",
+    "total_bytes_excluding_packet": 51007333,
+    "total_newlines_excluding_packet": 891606,
+    "sha256_excluding_packet": "cb9468cb0cfa61407ce32ac8cee987b50bc451b54cefa062be57d803e248b3da",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
