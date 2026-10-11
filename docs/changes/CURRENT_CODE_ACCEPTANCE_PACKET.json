@@ -1,9 +1,9 @@
 {
   "$schema_version": 1,
-  "packet_id": "CAP-2026-10-11-evidence-proportionality-constitution",
+  "packet_id": "CAP-2026-10-11-turing-assessment-playbook",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "تنفيذ قرار المالك D-318: اعتماد أطروحة «الصاروخ لا يُصدَّق بمنظره» دستورًا لتناسب الدليل وهندسة الثقة، مع فارض بنيوي واختبارات سلبية وربط CI ومراجعة بشرية مستقلة. لا ادعاء إنتاج أو إيراد.",
+  "decision_of_change": "قرار المالك 2026-10-11: توثيق playbook تحضيري دقيق لاختبار Turing «AI Quality Analyst (Personalization) - Arabic» الذي استُدعي في 2026-10-10 ولم يكن مسجّلاً في المستودع، تحت المسار المستثنى docs/commercial/outreach/.",
   "standards": [
     "clean-code-book"
   ],
@@ -15,64 +15,62 @@
     {
       "standard": "clean-code-book",
       "paths": [
-        "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
-        "scripts/fitness/check_evidence_proportionality_constitution.py",
-        "tests/fitness/test_evidence_proportionality_constitution_gate.py"
+        "docs/commercial/outreach/TURING_ASSESSMENT_PLAYBOOK_AR_2026-10-11.md"
       ],
-      "gate": "python scripts/fitness/check_evidence_proportionality_constitution.py && python -m pytest -q tests/fitness/test_evidence_proportionality_constitution_gate.py",
-      "application_ar": "فصل القانون عن الفارض والاختبار؛ أسماء E0–E7 وL1–L12 وNF-1–NF-5 صريحة، وظائف الفارض صغيرة، واختبارات سلبية تستهدف حذف العقد وفك أسلاك الحارس. NIST SSDF: حماية عملية التطوير والتحقق من مخرجات البرمجيات؛ لا ادعاء بأن الفحص النصي يثبت runtime."
+      "gate": "python scripts/fitness/check_outbound_before_research.py && python scripts/fitness/check_documentation_contract.py && python -m pytest -q tests/unit/tools/test_outreach_truth.py --noconftest",
+      "application_ar": "الوثيقة تفصل أربعة أنواع من الحقيقة صراحةً (FACT / OWNER-SCREENSHOT / DERIVED / UNKNOWN) بدل النثر الذي يخلطها؛ وترفض الوعد المطلق بالاجتياز؛ وتقتبس نصّ Turing بلسانها. الغرضُ فصلُ «ما نعرفه» عن «ما نستنتجه» كما يقتضي مبدأ proportion-to-evidence."
     }
   ],
   "production": {
     "owner": "human/admin constitutional authority",
-    "status": "GOVERNANCE_PROPOSAL_NOT_APPROVED; production runtime UNKNOWN",
+    "status": "DOCUMENTATION_ONLY; NO_RUNTIME_PATH; production runtime UNKNOWN",
     "interfaces": [
-      "Agent entrypoints: AGENTS.md and CLAUDE.md",
-      "Governance registry: docs/governance/CONSTITUTION_REGISTRY.json",
-      "Required CI guardrails: .github/workflows/ci.yml"
+      "docs/commercial/outreach/ (مسارٌ مستثنى من بوّابة تجميد البحث D-297)",
+      "docs/commercial/outreach/CONTACT_LEDGER.csv (يبقى_truth الوحيد عن الاتصال؛ لم يُمسّ)"
     ],
-    "failure_behavior_ar": "غياب درجة أو قانون أو قاعدة NAAS أو التسجيل أو نقطة الدخول أو حماية الأصل أو سلك guardrails ينتج exit غير صفري؛ لا تحويل للفشل إلى تحذير.",
-    "observability_ar": "مخرجات البوابة تسمي D-318 والانتهاك المحدد؛ CI يسجل الأمر والرمز. لا قياس إنتاجي أو نافذة تشغيل في هذه الدفعة.",
-    "security_boundary_ar": "تغيير توثيق/حوكمة وفارض نصي قياسي المكتبة؛ لا أسرار أو شبكة أو قاعدة بيانات أو صلاحيات تشغيل. حماية GitHub الخارجية تبقى UNKNOWN حتى تدقيق إداري.",
-    "rollback_ar": "revert ذري لتطبيق D-318 مع إبقاء سجل التعديل append-only؛ لا migrations أو بيانات أو تبعيات.",
+    "failure_behavior_ar": "لا مسارَ تنفيذ ولا واجهةَ برمجية: فشلُ الملف يعني وثيقةً خاطئةً تُصحَّح. البوّاباتُ المرتبطة تفشل صراحةً عند خرق روابطِ التوثيق أو صدقِ مبيعات التواصل.",
+    "observability_ar": "لا قياس إنتاجي في هذه الدفعة. أثرُ الملفِ مقصورٌ على وقت المالك قبل اختبارٍ مقيَّد بـ24 ساعة؛ نجاحُه التشغيليّ يُقاس باجتياز الاختبار لا بأيّ مقياس في المستودع.",
+    "security_boundary_ar": "وثيقةٌ تحوي روابطَ عامة فقط ولا بيانات شخصية: كلّ أمثلة التدريب مُصطنعة (§11)، ولا بريدَ المالك ولا اسمُه ولا تاريخُه. لا أسرار ولا شبكة ولا صلاحيات.",
+    "rollback_ar": "revert ذري لملفٍ واحد؛ لا أثر على السجلّ أو المشتقّات.",
     "runtime_evidence_paths": [
-      "scripts/fitness/check_evidence_proportionality_constitution.py",
-      "tests/fitness/test_evidence_proportionality_constitution_gate.py",
-      ".github/workflows/ci.yml"
+      "scripts/fitness/check_outbound_before_research.py",
+      "scripts/fitness/check_documentation_contract.py",
+      "tests/unit/tools/test_outreach_truth.py"
     ]
   },
   "commercial_trace": {
     "offer_ids": [
       "fr-be-einvoicing-referential-cleansing"
     ],
-    "customer_problem_ar": "التغيير لا يضيف عرضًا؛ يحد من الثقة الزائفة في أي ادعاء جودة أو جاهزية للمسار التجاري النشط D-300.",
-    "value_hypothesis_ar": "ربط قوة الدليل بكلفة الخطأ قد يخفض العيوب وإعادة العمل، لكن الأثر غير مقيس ويبقى فرضية قابلة للدحض.",
+    "customer_problem_ar": "لا إضافة عرض. الملفُّ يقلّل كلفة الخطأ في قرارٍ تجاريّ قائم: اجتياز اختبار يفتح مشروعاً بـ15 دولاراً/ساعة، وسقوطه يعني 90 يوماً. الأثرُ مرجّحٌ وغير مقيس.",
+    "value_hypothesis_ar": "تحضيرٌ منظَّم قبل اختبارٍ زمنيٍّ مُقيَّد يقلّل احتمالَ الانقضاء من نافذة الـ24 ساعة، لكنّ هذا فرضيةٌ قابلة للدحض:ولا يُقاس نجاحُه بالمستودع بل بمقابلةِ نسبةِ الاجتياز قبل/بعد.",
     "foreign_currency_path_ar": "لا ترقية حالة ولا دفعة ولا إيراد؛ الدستور يحظر E7 وPAID_PROOF دون أثر/معاملة حقيقية.",
     "foundation_exception_ar": "عمل حوكمة/احتواء للثقة الزائفة، لا ميزة منصة فوق R1–R3 الحرجة المفتوحة؛ لا يغلق أي remediation."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفر حذف؛ D-318 إضافة إلى الدساتير القائمة ولا يستبدلها."
+    "policy_ar": "صفر حذف؛ لا ملفّ موروث ولا اختبار مُزال."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "PASS — python scripts/fitness/check_evidence_proportionality_constitution.py (SHA-256 and byte count included)",
-      "PASS — 6 negative tests, including one-byte mutation, via isolated pytest with --confcutdir=tests/fitness",
-      "PASS — check_governance_registry.py using isolated PyYAML environment",
-      "PASS — check_gate_negative_proof.py: D-318 is registered as proven; 54/108 gates proven, 54 declared debt.",
-      "PASS — check_engineering_governance.py, check_documentation_contract.py, check_constitution_reality.py, check_memory_coherence.py",
-      "PASS — Ruff lint/format on the new gate and tests; JSON parsing and git diff --check",
-      "UNKNOWN — required Python 3.12 CI, independent review, live branch protection, and production runtime"
+      "PASS — python scripts/fitness/check_outbound_before_research.py (السجلّ سليم، اللوحة مُشتقّة)",
+      "PASS — python scripts/fitness/check_documentation_contract.py (55 وثيقة حيّة، لا روابط مكسورة)",
+      "PASS — python scripts/fitness/check_authority_links.py",
+      "PASS — python scripts/fitness/check_memory_coherence.py",
+      "PASS — python -m pytest tests/unit/tools/test_outreach_truth.py -q --noconftest (10 passed)",
+      "PASS — python scripts/fitness/check_repository_microscope.py --update ثم التحقّق",
+      "UNKNOWN — CI على Python 3.12، والمراجعة الإنسانية المستقلة، وحماية الفرع الحية"
     ],
     "claim_statuses": {
-      "d318_structural_gate": "TESTED",
-      "negative_pytest_suite": "TESTED",
+      "playbook_document_written": "TESTED",
+      "outreach_truth_test": "TESTED",
+      "documentation_contract": "TESTED",
       "required_ci": "UNKNOWN",
       "independent_human_approval": "UNKNOWN",
       "branch_protection_live_state": "UNKNOWN",
-      "production_runtime": "UNKNOWN",
+      "assessment_outcome": "UNKNOWN",
       "commercial_value": "UNKNOWN"
     }
   },
@@ -153,27 +151,8 @@
     "owner": "curriculum-governance"
   },
   "changed_paths": [
-    ".github/workflows/ci.yml",
-    ".memory/README.md",
-    ".memory/ci-gates.md",
-    ".memory/decisions.md",
-    ".runtime/truth_table.lock.json",
-    "AGENTS.md",
-    "CLAUDE.md",
-    "ENGINEERING_CONSTITUTION.md",
-    "README.ar.md",
-    "README.md",
-    "docs/DOCUMENTATION_INDEX.md",
-    "docs/DOCUMENTATION_MANIFEST.json",
-    "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
-    "docs/governance/CONSTITUTION_REGISTRY.json",
-    "docs/governance/D318_IMMUTABLE_TEXT.json",
-    "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
-    "docs/governance/NEGATIVE_PROOFS.json",
-    "docs/governance/amendments/D-318-EVIDENCE-PROPORTIONALITY-CONSTITUTION.md",
-    "scripts/fitness/check_evidence_proportionality_constitution.py",
-    "tests/fitness/test_evidence_proportionality_constitution_gate.py"
+    "docs/commercial/outreach/TURING_ASSESSMENT_PLAYBOOK_AR_2026-10-11.md"
   ],
   "git_change_snapshot": {
     "base_ref": "origin/main",
@@ -224,7 +203,7 @@
     "operator_attestation_ar": "هذا ليس ادعاء فهم شامل بذاته؛ إنه شرط مجهر آلي يسبق التحليل البشري والمصفوفة، ويجعل تجاهل القديم مرئياً."
   },
   "pre_modification": {
-    "current_state": "قبل التغيير لم يوجد D-318 أو سلم E0–E7 كدستور مسجل. كانت دساتير D-306/D-277/D-267 تغطي أجزاء متداخلة، لكن أطروحة المالك الكاملة وقانون التناسب واستقلال المولد والحكم لم تكن عقدًا واحدًا مسجلًا. R1–R3 حرجة ومفتوحة، وPython المحلي 3.11 بلا pytest/PyYAML.",
+    "current_state": "قبل التغيير لم يكن في المستودع أيّ أثر لاختبار Turing ضمن نوع من نوع «AI Personalization Quality Assessment»: لا ملفّ، ولا صفّ في CONTACT_LEDGER.csv، ولا سجلّ جلسة. آخر سجلّ جلسة (SESSION_LOG_2026-10-10.md) ينتهي قبل دعوة الاختبار. الحدث التجاريّ قائمٌ في البريد ولوحة work.turing.com خارج المستودع.",
     "architecture_and_boundaries": [
       "القانون في docs/architecture؛ الحالة التاريخية في .memory/decisions.md؛ التسجيل في CONSTITUTION_REGISTRY؛ نقاط الدخول في AGENTS/CLAUDE/ENGINEERING_CONSTITUTION.",
       "الفارض نصي standard-library ولا يستورد app؛ الاختبارات السلبية تحت tests/fitness؛ التنفيذ الصريح في guardrails.",
@@ -249,7 +228,7 @@
       "decision": "مسموح كإصلاح/احتواء أساس وفق ENGINEERING_CONSTITUTION §5.1؛ ممنوع ادعاء الإنتاج أو الاعتماد الذاتي."
     },
     "root_cause": "الأطروحة التي تميز المظهر عن الدليل كانت نصًا مقدّمًا من المالك دون موطن قانوني أو سجل أو فارض؛ لذا لا يستطيع مسار CI كشف حذف سلم الدليل أو قاعدة الاستقلال أو فك الربط.",
-    "intended_change": "إنشاء دستور D-318، تسجيله وربطه بنقاط الدخول والدستور الهندسي وفهرس التوثيق، تجميد النص القانوني حرفًا/بايتًا ببصمة SHA-256 محمية، حماية أصوله، إضافة فارض fail-closed واختبارات سلبية وسلك CI، وتسجيل تعديل مقترح وقرار المالك.",
+    "intended_change": "إضافة وثيقة تحضيرٍ واحدة تحت docs/commercial/outreach/ (المسار المستثنى من بوّابة تجميد البحث D-297)، موثّقةً بوسوم الحقيقة (FACT / OWNER-SCREENSHOT / DERIVED / UNKNOWN)، ومبنيّة على مصادر خارجيةٍ مقروءة ومؤرّخة، مع تنبيهٍ صريح بأنه لا يضمن اجتيازاً.",
     "affected_invariants": [
       "قوة الدليل تتناسب مع كلفة الخطأ.",
       "E0–E7 ادعاءات مختلفة ولا قفز بينها.",
@@ -259,32 +238,19 @@
       "التعديل الدستوري لا يعتمد بلا مراجعة بشرية مستقلة.",
       "النص القانوني D-318 وبصمته أصلان محميان؛ اختلاف بايت واحد يفشل ولا يُحدّثان معًا بلا تعديل جديد ومراجعة مستقلة."
     ],
-    "test_plan": [
-      "تشغيل الفارض على الشجرة الحقيقية.",
-      "اختبار سلبي لحذف E4 وL6 والحماية وفارض السجل وسلك CI.",
-      "تشغيل governance registry وengineering governance/documentation/constitution/code-acceptance gates.",
-      "تحليل JSON وgit diff --check؛ CI تحت Python 3.12 هو الدليل المطلوب لما تعذر محليًا.",
-      "تغيير بايت واحد مع إبقاء البصمة المجمدة يجب أن يجعل البوابة حمراء."
-    ],
-    "rollback_strategy": "Revert تطبيق D-318 ومراجعه ذريًا مع إبقاء سجل التعديل append-only؛ لا بيانات أو مخطط أو تبعيات.",
-    "verification_strategy": [
-      "python scripts/fitness/check_evidence_proportionality_constitution.py",
-      "python -m pytest -q tests/fitness/test_evidence_proportionality_constitution_gate.py",
-      "python scripts/fitness/check_governance_registry.py",
-      "python scripts/fitness/check_engineering_governance.py",
-      "python scripts/fitness/check_documentation_contract.py",
-      "python scripts/fitness/check_constitution_reality.py",
-      "python scripts/fitness/check_code_acceptance.py",
-      "git diff --check"
-    ],
+    "test_plan": "بوّابة تجميد البحث + عقد التوثيق + روابط السلطة + اتّساق الذاكرة + اختبار صدق مبيعات التواصل (يمسح كلّ *.md تحت outreach/) + تحديث بصمة المجهر وحزمة القبول.",
+    "rollback_strategy": "حذف ملفٍ واحد (revert ذري). لا كود ولا migrations ولا بيانات ولا اعتماديات.",
+    "verification_strategy": "تشغيل البوّابات محلياً على الشجرة، ثم CI على الـPR. حالة Python 3.12 والمراجعة الإنسانية والدمج تبقى UNKNOWN حتى يحدث.",
     "claim_statuses": {
-      "d318_law_and_wiring": "IMPLEMENTED",
-      "d318_structural_gate": "TESTED",
-      "negative_pytest_suite": "TESTED",
+      "playbook_document_written": "TESTED",
+      "outreach_truth_test": "TESTED",
+      "research_freeze_gate": "TESTED",
+      "documentation_contract": "TESTED",
       "required_ci": "UNKNOWN",
+      "independent_human_approval": "UNKNOWN",
       "branch_protection_live_state": "UNKNOWN",
-      "production_runtime": "UNKNOWN",
-      "independent_human_approval": "UNKNOWN"
+      "assessment_outcome": "UNKNOWN",
+      "commercial_value": "UNKNOWN"
     }
   }
 }
