@@ -157,37 +157,18 @@
   "git_change_snapshot": {
     "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
-      ".github/workflows/ci.yml",
-      ".memory/README.md",
-      ".memory/ci-gates.md",
-      ".memory/decisions.md",
-      ".runtime/truth_table.lock.json",
-      "AGENTS.md",
-      "CLAUDE.md",
-      "ENGINEERING_CONSTITUTION.md",
-      "README.ar.md",
-      "README.md",
-      "docs/DOCUMENTATION_INDEX.md",
-      "docs/DOCUMENTATION_MANIFEST.json",
-      "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
-      "docs/governance/CONSTITUTION_REGISTRY.json",
-      "docs/governance/D318_IMMUTABLE_TEXT.json",
-      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
-      "docs/governance/NEGATIVE_PROOFS.json",
-      "docs/governance/amendments/D-318-EVIDENCE-PROPORTIONALITY-CONSTITUTION.md",
-      "scripts/fitness/check_evidence_proportionality_constitution.py",
-      "tests/fitness/test_evidence_proportionality_constitution_gate.py"
+      "docs/commercial/outreach/TURING_ASSESSMENT_PLAYBOOK_AR_2026-10-11.md"
     ],
-    "content_sha256_excluding_packet": "45e5694c8fe6e3dd56e0b489c2691148c0d0974ec4e7bcf07b73ad4c93802692",
+    "content_sha256_excluding_packet": "ce3945e80cbcbbbb56e71de296545bb1dd5a5c279c37d44b605d83bd8f9a23af",
     "refreshed_on": "2026-10-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3496,
-    "total_bytes_excluding_packet": 50955255,
-    "total_newlines_excluding_packet": 891045,
-    "sha256_excluding_packet": "0040f3a469be0ac6f3ed936f47c4050370233ec0331d32297b2a9176c74c133e",
+    "file_count_excluding_packet": 3497,
+    "total_bytes_excluding_packet": 50992653,
+    "total_newlines_excluding_packet": 891470,
+    "sha256_excluding_packet": "1c43f5c9148046665618673836aa72c3b30759185c384243e861ea5d76210d19",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
