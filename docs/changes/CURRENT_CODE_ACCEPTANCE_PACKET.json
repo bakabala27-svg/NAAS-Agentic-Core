@@ -160,16 +160,16 @@
     "changed_paths_excluding_packet": [
       "docs/commercial/outreach/TURING_ASSESSMENT_PLAYBOOK_AR_2026-10-11.md"
     ],
-    "content_sha256_excluding_packet": "ce3945e80cbcbbbb56e71de296545bb1dd5a5c279c37d44b605d83bd8f9a23af",
+    "content_sha256_excluding_packet": "2df564bf04f33c0d2c4f5767b8fa6411e1ee599195f89f1d5d6fa771a5bd06af",
     "refreshed_on": "2026-10-11",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
     "file_count_excluding_packet": 3497,
-    "total_bytes_excluding_packet": 50992653,
-    "total_newlines_excluding_packet": 891470,
-    "sha256_excluding_packet": "1c43f5c9148046665618673836aa72c3b30759185c384243e861ea5d76210d19",
+    "total_bytes_excluding_packet": 50995515,
+    "total_newlines_excluding_packet": 891489,
+    "sha256_excluding_packet": "5fbdcc3fd4e47a6e114a0377a6fb6f589bd6df735f0e8efd904f2d1997af1bd5",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
