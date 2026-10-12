@@ -122,7 +122,7 @@ PyYAML
 passlib
 argon2-cffi
 vecs==0.4.5
-flupy==1.2.3
+flupy==1.2.4
 litellm
 dspy
 llama-index-workflows
