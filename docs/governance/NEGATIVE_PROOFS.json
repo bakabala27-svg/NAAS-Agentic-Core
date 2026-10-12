@@ -9,22 +9,13 @@
     "«اختبارٌ يستدعي البوّابة ويتوقّع نجاحها» ليس برهاناً سلبياً — يُثبِت أنّها تعمل لا أنّها تحجب."
   ],
   "measured_2026_08_19": {
-    "gates": 107,
-    "proven": 53,
+    "gates": 108,
+    "proven": 54,
     "debt": 54
   },
   "proven": {
     "check_agent_reliability_constitution.py": [
       "tests/fitness/test_agent_reliability_constitution_gate.py"
-    ],
-    "check_commercial_offers_parity.py": [
-      "tests/architecture/test_commercial_offers_parity_gate.py"
-    ],
-    "check_outbound_before_research.py": [
-      "tests/fitness/test_check_outbound_before_research.py"
-    ],
-    "check_asset_license_clearance.py": [
-      "tests/architecture/test_asset_license_clearance_gate.py"
     ],
     "check_agent_skills_spec.py": [
       "tests/fitness/test_agent_standards_gates.py"
@@ -35,11 +26,20 @@
     "check_ambient_identity.py": [
       "tests/fitness/test_ambient_identity_gate.py"
     ],
+    "check_asset_license_clearance.py": [
+      "tests/architecture/test_asset_license_clearance_gate.py"
+    ],
     "check_bundle_budget.py": [
       "tests/fitness/test_check_design_tokens.py"
     ],
+    "check_code_acceptance.py": [
+      "tests/fitness/test_code_acceptance_gate.py"
+    ],
     "check_cognitive_execution.py": [
       "tests/architecture/test_cognitive_execution_gate.py"
+    ],
+    "check_commercial_offers_parity.py": [
+      "tests/architecture/test_commercial_offers_parity_gate.py"
     ],
     "check_config_credibility.py": [
       "tests/fitness/test_delivery_standards_gates.py"
@@ -77,6 +77,15 @@
     "check_endpoint_complexity.py": [
       "tests/fitness/test_check_endpoint_complexity.py"
     ],
+    "check_engineering_governance.py": [
+      "tests/fitness/test_engineering_governance_gate.py"
+    ],
+    "check_engineering_maturity_matrix.py": [
+      "tests/fitness/test_engineering_maturity_matrix_gate.py"
+    ],
+    "check_evidence_proportionality_constitution.py": [
+      "tests/fitness/test_evidence_proportionality_constitution_gate.py"
+    ],
     "check_external_standards.py": [
       "tests/fitness/test_agent_standards_gates.py"
     ],
@@ -86,6 +95,9 @@
     "check_governance_registry.py": [
       "tests/fitness/test_delivery_standards_gates.py",
       "tests/fitness/test_process_governance_gates.py"
+    ],
+    "check_hard_currency_engine.py": [
+      "tests/fitness/test_check_hard_currency_engine.py"
     ],
     "check_image_matrix_parity.py": [
       "tests/architecture/test_image_build_matrix.py"
@@ -117,11 +129,17 @@
     "check_no_system_text_as_user.py": [
       "tests/fitness/test_research_doctrine_gates.py"
     ],
+    "check_outbound_before_research.py": [
+      "tests/fitness/test_check_outbound_before_research.py"
+    ],
     "check_prerequisite_single_graph.py": [
       "tests/architecture/test_prerequisite_graph_gate.py"
     ],
     "check_redaction_parity.py": [
       "tests/architecture/test_redaction_parity_gate.py"
+    ],
+    "check_repository_microscope.py": [
+      "tests/fitness/test_repository_microscope_gate.py"
     ],
     "check_research_doctrines.py": [
       "tests/fitness/test_research_doctrine_gates.py"
@@ -156,23 +174,8 @@
     "check_value_chain.py": [
       "tests/fitness/test_check_value_chain.py"
     ],
-    "check_engineering_maturity_matrix.py": [
-      "tests/fitness/test_engineering_maturity_matrix_gate.py"
-    ],
-    "check_hard_currency_engine.py": [
-      "tests/fitness/test_check_hard_currency_engine.py"
-    ],
-    "check_repository_microscope.py": [
-      "tests/fitness/test_repository_microscope_gate.py"
-    ],
     "check_vibe_coding_constitution.py": [
       "tests/fitness/test_check_vibe_coding_constitution.py"
-    ],
-    "check_code_acceptance.py": [
-      "tests/fitness/test_code_acceptance_gate.py"
-    ],
-    "check_engineering_governance.py": [
-      "tests/fitness/test_engineering_governance_gate.py"
     ]
   },
   "frozen_debt": {

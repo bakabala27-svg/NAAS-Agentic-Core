@@ -14,6 +14,10 @@ It supplements, and does not replace, the existing operational and domain consti
 
 [`docs/governance/MASTER_INDEX_CONSTITUTION.md`](docs/governance/MASTER_INDEX_CONSTITUTION.md) is part of this constitution and is binding character by character on every AI coding agent, every human, and every tool, in all circumstances: reading the repository, reviewing code, documentation, adding a character, deleting a character. Its supreme rule, its sections 00–47, and its gate chain `GATE 00..15` must be traversed and applied before any change. It may never be bypassed, weakened, converted into a to-do list, or downgraded to a warning, and its gates may not be skipped because code already exists. Amending it is a constitutional amendment under section 9.
 
+## 1.2 Evidence proportionality and trust engineering
+
+[`docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md`](docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md) is part of this constitution. Its supreme rule—**evidence strength must be proportional to the cost of error**—governs every technical, operational, agentic, and commercial claim. Its E0–E7 ladder, risk zones, generator/verifier independence, negative-proof and sensitivity requirements, explicit unknowns, and hard controls for irreversible actions are mandatory. Code appearance, generation speed, fluent explanation, or one green check can never be promoted into a stronger claim than its evidence permits. Its complete text is byte-pinned in `docs/governance/D318_IMMUTABLE_TEXT.json`; a one-byte difference is a hard failure. It may not be bypassed, weakened, partially omitted, or converted to warning-only behavior; changing either text or pin follows section 9 and requires a new amendment plus independent human review.
+
 ## 2. Authority and precedence
 
 A lower item never silently overrides a higher item:

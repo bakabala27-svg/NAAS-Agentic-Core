@@ -183,15 +183,15 @@
       "tests/shared/test_economic_truth.py"
     ],
     "content_sha256_excluding_packet": "ccc781590d3ee49292fff155d737d383090a4d2adea52e372dd6a7e2b8e3b7ae",
-    "refreshed_on": "2026-10-09",
+    "refreshed_on": "2026-10-12",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3480,
-    "total_bytes_excluding_packet": 50829823,
-    "total_newlines_excluding_packet": 888744,
-    "sha256_excluding_packet": "43cce60e1230d7a703d6309d831aca9d8188625928aeeba5eb95bd431793af4c",
+    "file_count_excluding_packet": 3502,
+    "total_bytes_excluding_packet": 51053804,
+    "total_newlines_excluding_packet": 892031,
+    "sha256_excluding_packet": "3a20331dd7458e4d9bebde0fa1fa37e3429eda49f35ce48604cba1914dba1275",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606

@@ -94,6 +94,13 @@
       "status": "live"
     },
     {
+      "path": "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
+      "audience": "all-contributors",
+      "role": "evidence-proportionality-trust-engineering-constitution",
+      "authority": "primary",
+      "status": "live"
+    },
+    {
       "path": "docs/architecture/ENGINEERING_MATURITY_MATRIX.md",
       "audience": "coding-agent",
       "role": "engineering-maturity-matrix",

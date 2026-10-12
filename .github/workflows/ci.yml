@@ -245,6 +245,10 @@ jobs:
           # exception), keeps the 7 canonical offer lines closed, and requires
           # every hypothesis H1-H7 to hold a closed-state, evidence-backed row.
           python scripts/fitness/check_agent_reliability_constitution.py
+          # D-318: evidence strength must match the cost of error. This gate
+          # protects E0-E7, verifier independence, HOLD rules, its own registry
+          # and entrypoint links, protected artifacts, and this fail-closed wire.
+          python scripts/fitness/check_evidence_proportionality_constitution.py
           # D-290 rounds 01/02/04: the decision-commitment gates. Each one was on
           # disk and enforced only by its own negative-proof test — the ISS-186
           # class again (a gate that reads as protection but is executed by
@@ -946,9 +950,11 @@ jobs:
           # الهامش المتروك (~0.4pt) مقصود: تغطية تتذبذب قليلاً مع ترتيب الاختبارات،
           # وأرضيةٌ ملاصقة للقياس تُحوِّل التذبذب إلى فشلٍ عشوائي — والبوّابة التي
           # تفشل عشوائياً تُطفَأ.
+          # A repo-root Cobertura source preserves app/ and tools/ paths for CodeScene.
           python -m pytest tests scripts/ci -v \
             --ignore=tests/microservices \
-            --cov=app \
+            --cov-config=coverage.codescene.ini \
+            --cov \
             --cov-report=xml:coverage.xml \
             --cov-report=term-missing \
             --cov-fail-under=73 \
@@ -1099,6 +1105,7 @@ jobs:
             echo "Ran \`cs-coverage check\` on \`coverage.xml\` for PR head"
             echo "\`${{ github.event.pull_request.head.sha }}\`. The gate's verdict is the"
             echo "\`CodeScene Code Coverage\` check on this PR."
+            echo "Cobertura uses repository-root paths; measured scopes are \`app/\` and \`tools/hard_currency_engine/\`."
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload coverage to CodeScene
@@ -1124,9 +1131,10 @@ jobs:
             echo "Sent \`coverage.xml\` (cobertura, line-coverage) for commit"
             echo "\`${{ github.event.pull_request.head.sha || github.sha }}\`."
             echo
-            echo "Scope note: coverage is measured with \`--cov=app\` only. \`microservices/\`"
-            echo "and \`shared/\` are NOT measured — if CodeScene shows them as 0% rather than"
-            echo "as absent, the number is lying and the scope must be narrowed (D-197)."
+            echo "Scope note: coverage measures \`app/\` and \`tools/hard_currency_engine/\`."
+            echo "Cobertura filenames are repository-relative for PR path matching."
+            echo "\`microservices/\` and \`shared/\` are NOT measured — if CodeScene shows them"
+            echo "as 0% rather than absent, the number is lying and the scope must be narrowed (D-197)."
           } >> "$GITHUB_STEP_SUMMARY"
 
   test-microservices:

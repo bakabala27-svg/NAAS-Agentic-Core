@@ -22,16 +22,14 @@ MAX_UPLOAD_BYTES = 2 * 1024 * 1024
 MAX_ROWS = 5000
 MAX_ANOMALIES_RETURNED = 500
 CORRIDORS = ("fr", "be")
-#: محارف تجعل الخليّة صيغةً في جداول البيانات (OWASP CSV Injection).
-_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
 _SAFE_NAME = re.compile(r"[^\w.\- ]+", re.UNICODE)
 
 
 def neutralize_cell(value: object) -> object:
-    """``=HYPERLINK(...)`` ⇒ ``'=HYPERLINK(...)`` — يبقى النصّ ويسقط التنفيذ."""
-    if isinstance(value, str) and value.startswith(_FORMULA_PREFIXES):
-        return "'" + value
-    return value
+    """Use the same spreadsheet-cell neutralizer as the CSV exporters."""
+    from tools.hard_currency_engine.csv_safety import neutralize_spreadsheet_cell
+
+    return neutralize_spreadsheet_cell(value)
 
 
 def safe_display_name(filename: str) -> str:

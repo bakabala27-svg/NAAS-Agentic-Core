@@ -54,6 +54,10 @@
     "scripts/fitness/**",
     "tests/fitness/**",
     "docs/architecture/FOUNDATION_SAFETY_CONSTITUTION.md",
+    "docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md",
+    "docs/governance/D318_IMMUTABLE_TEXT.json",
+    "scripts/fitness/check_evidence_proportionality_constitution.py",
+    "tests/fitness/test_evidence_proportionality_constitution_gate.py",
     ".memory/project_diagnostic_truth.md",
     "scripts/ci_guardrails.py",
     "scripts/ci/**"
