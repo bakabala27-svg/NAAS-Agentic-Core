@@ -64,7 +64,7 @@ redis>=5.0.0
 websockets>=17.0.1
 beautifulsoup4==4.12.3
 numpy>=1.26.0
-pyyaml==6.0.1
+pyyaml==6.0.3
 
 # AI/runtime imports exercised by the current test suite
 # ⛔ The LangGraph/LangChain floors below are held deliberately (see the coupled
