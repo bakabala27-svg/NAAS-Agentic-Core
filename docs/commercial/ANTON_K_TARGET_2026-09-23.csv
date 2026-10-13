@@ -1,0 +1,2 @@
+id,entity,organisation,country,role,channel,status,status_date,next_action,source
+1,Anton K,"Free and Fair (as named by the owner)",EU,"contact at a CBAM verification body",email,REPLY_RECEIVED,2026-10-12,"his second reply redirects upstream-data questions to the manufacturer (the installation operator), not the verifier; decide whether to approach Algerian operators of CBAM goods directly",docs/commercial/outreach/SESSION_LOG_2026-10-10.md
