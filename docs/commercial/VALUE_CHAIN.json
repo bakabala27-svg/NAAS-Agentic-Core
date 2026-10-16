@@ -1224,8 +1224,8 @@
           7
         ],
         "ledger": {
-          "outbound": 3,
-          "replies": 2,
+          "outbound": 6,
+          "replies": 5,
           "money_events": 0,
           "payments_settled": 0
         }
