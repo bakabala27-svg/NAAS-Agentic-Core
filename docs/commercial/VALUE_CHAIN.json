@@ -10,7 +10,8 @@
       "catalog_id": "fr-be-einvoicing-referential-cleansing",
       "workbench": "einvoicing",
       "ledger_routes": [
-        "FR_EINVOICING_TARGETS_2026-09-21.csv"
+        "FR_EINVOICING_TARGETS_2026-09-21.csv",
+        "FR_EINVOICING_TARGETS_V2_2026-10-04.csv"
       ],
       "reused_assets": [
         {
@@ -139,6 +140,9 @@
       "id": "OPP-03",
       "title_ar": "عمل تقييم الذكاء الاصطناعي على المنصّات — قناة تمويل",
       "source": "docs/commercial/REVENUE_OPPORTUNITY_MAP_2026-09-29.csv",
+      "ledger_routes": [
+        "AI_EVAL_PLATFORM_TARGETS_2026-10-08.csv"
+      ],
       "links": {
         "1": {
           "status": "REACHED",
@@ -437,7 +441,9 @@
       "title_ar": "CBAM — أداة قرار المستورد الأوروبي من القيم الرسمية المدبوسة",
       "source": "docs/commercial/REVENUE_OPPORTUNITY_MAP_2026-09-29.csv",
       "workbench": "cbam",
-      "ledger_routes": [],
+      "ledger_routes": [
+        "ANTON_K_TARGET_2026-09-23.csv"
+      ],
       "locked_extensions": [
         {
           "title_ar": "المحادثة واجهةٌ لجمع أدلّة CBAM بالعربية والفرنسية",
@@ -1018,7 +1024,7 @@
     }
   ],
   "derived": {
-    "as_of": "2026-09-22",
+    "as_of": "2026-10-15",
     "as_of_basis": "آخر تاريخٍ في CONTACT_LEDGER.csv — لا ساعة النظام",
     "paths_total": 25,
     "by_classification": {
@@ -1045,7 +1051,7 @@
           4
         ],
         "ledger": {
-          "outbound": 1,
+          "outbound": 4,
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
@@ -1082,7 +1088,7 @@
           1
         ],
         "ledger": {
-          "outbound": 0,
+          "outbound": 1,
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
@@ -1214,11 +1220,12 @@
           1,
           2,
           3,
-          4
+          4,
+          7
         ],
         "ledger": {
-          "outbound": 0,
-          "replies": 0,
+          "outbound": 6,
+          "replies": 5,
           "money_events": 0,
           "payments_settled": 0
         }
