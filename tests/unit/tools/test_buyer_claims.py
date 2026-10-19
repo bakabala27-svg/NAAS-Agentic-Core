@@ -49,6 +49,17 @@ from tools.hard_currency_engine.buyer_claims import (
         ("Nos clients nous font confiance.", "UNSUPPORTED", "existing_clients"),
         # A forbidden superlative (D-305).
         ("Une solution révolutionnaire.", "FORBIDDEN", "forbidden_term"),
+        # Atlas §3.2 — asking for approval measures nothing about demand (D-319).
+        ("هل تعجبك فكرتي؟", "FORBIDDEN", "approval_seeking"),
+        ("Do you like my idea?", "FORBIDDEN", "approval_seeking"),
+        ("Aimez-vous mon idée ?", "FORBIDDEN", "approval_seeking"),
+        # Atlas §4.4 — the service is delivered by hand (D-300); "fully automated" is not true.
+        ("Un service entièrement automatisé.", "UNSUPPORTED", "full_automation"),
+        ("A fully automated cleansing service.", "UNSUPPORTED", "full_automation"),
+        ("خدمة مؤتمتة بالكامل", "UNSUPPORTED", "full_automation"),
+        # Atlas §12.1 — no collection rail is proven yet (C-RAIL).
+        ("Paiement par PayPal ou Stripe.", "UNSUPPORTED", "payment_rail"),
+        ("You can pay with Wise.", "UNSUPPORTED", "payment_rail"),
     ],
 )
 def test_d304_shapes_are_caught(text: str, verdict: str, rule: str | None) -> None:
@@ -58,16 +69,25 @@ def test_d304_shapes_are_caught(text: str, verdict: str, rule: str | None) -> No
         assert rule in {item.rule for item in result.findings}
 
 
-def test_the_catalog_outcome_wording_is_caught() -> None:
-    """The catalog promises "صفر رفض توجيه" — an outcome no real file has measured (D-300)."""
+def test_the_old_catalog_outcome_wording_is_caught_and_gone() -> None:
+    """The catalog promised «صفر رفض توجيه» — an outcome no real file has measured (D-300).
+
+    D-319 rewrote it; the old sentence must still be caught, and the catalog must not say it.
+    """
+    old = "ملفّ جاهز للاستيراد بصفر رفض توجيه: تحقّق SIREN/SIRET/TVA أو BCE/TVA"
+    assert classify(old).verdict == "FORBIDDEN"
+    assert classify("Fichier prêt à l'import, zéro rejet de routage").verdict == "FORBIDDEN"
     catalog = json.loads((REPO_ROOT / "docs/commercial/OFFER_CATALOG.json").read_text("utf-8"))
     outcome = next(
         offer["offer_outcome_ar"]
         for offer in catalog["offers"]
         if offer["id"] == "fr-be-einvoicing-referential-cleansing"
     )
-    assert classify(outcome).verdict == "FORBIDDEN"
-    assert classify("Fichier prêt à l'import, zéro rejet de routage").verdict == "FORBIDDEN"
+    # ``classify`` calls any unrecognised sentence UNSUPPORTED (a human judges it); what the
+    # rewrite must remove is every rule that fires.
+    assert [
+        item.rule for item in findings(outcome) if item.verdict in {"FORBIDDEN", "UNSUPPORTED"}
+    ] == []
 
 
 def test_a_mechanism_said_as_a_possibility_is_safe_with_qualification() -> None:

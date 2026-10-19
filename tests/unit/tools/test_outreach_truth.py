@@ -31,6 +31,7 @@ if str(REPO_ROOT) not in sys.path:
 
 # The rules live in one home since D-314; the Decision Chamber asks the same questions
 # of any sentence the owner types.
+from shared.research.economic_truth import CATALOG_WORDING_FIELDS
 from tools.hard_currency_engine.belgium_validator import (
     audit_belgian_csv,
     export_cleaned_belgian_csv,
@@ -121,6 +122,26 @@ def test_buyer_text_states_no_rate_and_no_guarantee() -> None:
         for path in SEND_FILES
         for number, line in buyer_lines(path.read_text(encoding="utf-8"))
         for item in findings(line)
+        if item.verdict in _BLOCKING
+    ]
+    assert problems == []
+
+
+def test_catalog_thesis_wording_states_no_unmeasured_promise() -> None:
+    """Atlas oath 3 and §4.1 (D-319): the catalog sentence a buyer reads passes the same rules.
+
+    Until D-319 the Economic Truth snapshot only *named* «صفر رفض توجيه» as a contradiction
+    while the catalog kept saying it. A promise no real file has measured is now red here.
+    """
+    offer = next(
+        offer
+        for offer in json.loads(CATALOG.read_text(encoding="utf-8"))["offers"]
+        if offer["id"] == WEDGE_ID
+    )
+    problems = [
+        f"{field}: {item.rule} {item.excerpt!r}"
+        for field in CATALOG_WORDING_FIELDS
+        for item in findings(str(offer.get(field) or ""))
         if item.verdict in _BLOCKING
     ]
     assert problems == []

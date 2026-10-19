@@ -131,6 +131,26 @@ _RULES: tuple[_Rule, ...] = (
         "حديثٌ عن عملاء قائمين — يتطلّب PAYMENT_SETTLED في السجلّ",
     ),
     _Rule(
+        "approval_seeking",
+        FORBIDDEN,
+        re.compile(
+            r"do you like (my|the|this|our) idea|(aimez|aimeriez)[- ]vous (mon|notre|cette) id[ée]e|"
+            + _AR_WORD.format("هل (تعجبك|أعجبتك) (فكرتي|الفكرة|فكرتنا)"),
+            _I,
+        ),
+        "سؤال الإعجاب لا يقيس الطلب — اسأل عن السلوك الحالي وكلفة المشكلة (الأطلس §3.2 · D-319)",
+    ),
+    _Rule(
+        "full_automation",
+        UNSUPPORTED,
+        re.compile(
+            r"fully[- ]automat\w*|(entièrement|totalement) automatis\w*|"
+            + _AR_WORD.format("مؤتمتة? بالكامل|مؤتمتة? كلي[اًّ]+|آلية? بالكامل"),
+            _I,
+        ),
+        "الخدمة يسلّمها المالك يدوياً (D-300) — «آلية بالكامل» وصفٌ غير صحيح (الأطلس §4.4 · D-319)",
+    ),
+    _Rule(
         "observed_trend",
         HYPOTHESIS_ONLY,
         re.compile(
@@ -223,11 +243,30 @@ def identifier_mismatches(line: str) -> list[str]:
 #: formal notice. Two true numbers can make one false sentence.
 _RECEPTION = re.compile(r"réception|recevoir|reçu|receiv|استقبال|تلقّي", _I)
 _FIFTY_EUROS = re.compile(r"(?<![\d.,])50 ?€")
+#: Atlas §12.1 (D-319): naming a payment route says money can arrive by it. Until the
+#: collection rail (``C-RAIL`` in Economic Truth) is SUPPORTED, no route is named.
+_PAYMENT_RAIL = re.compile(r"\b(pay ?pal|stripe|wise)\b|" + _AR_WORD.format("باي ?بال|سترايب"), _I)
 
 
-def findings(text: str, *, settled_customers: int = 0) -> list[Finding]:
-    """Every rule the text trips — all of them, not the first."""
+def findings(
+    text: str, *, settled_customers: int = 0, rail_supported: bool = False
+) -> list[Finding]:
+    """Every rule the text trips — all of them, not the first.
+
+    ``rail_supported`` is True only when Economic Truth holds ``C-RAIL`` as SUPPORTED; the
+    default is the strict side, so a caller that does not know never licenses a route.
+    """
     found: list[Finding] = []
+    if not rail_supported:
+        found.extend(
+            Finding(
+                "payment_rail",
+                UNSUPPORTED,
+                match.group(0),
+                "تسمية مسار دفعٍ لم يُثبَت — C-RAIL غير مدعوم (الأطلس §12.1 · D-319)",
+            )
+            for match in _PAYMENT_RAIL.finditer(text)
+        )
     if _RECEPTION.search(text) and (fifty := _FIFTY_EUROS.search(text)):
         found.append(
             Finding(
@@ -264,9 +303,11 @@ def findings(text: str, *, settled_customers: int = 0) -> list[Finding]:
     return found
 
 
-def classify(text: str, *, settled_customers: int = 0) -> Verdict:
+def classify(text: str, *, settled_customers: int = 0, rail_supported: bool = False) -> Verdict:
     """The verdict of one buyer-facing text. Unrecognised is UNSUPPORTED, never safe."""
-    found = tuple(findings(text, settled_customers=settled_customers))
+    found = tuple(
+        findings(text, settled_customers=settled_customers, rail_supported=rail_supported)
+    )
     facts = tuple(fact.fact_id for fact in KNOWN_FACTS if fact.pattern.search(text))
     if found:
         worst = min(found, key=lambda item: VERDICTS.index(item.verdict))

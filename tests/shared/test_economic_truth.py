@@ -12,6 +12,7 @@ Two kinds of test:
 from __future__ import annotations
 
 import ast
+import copy
 import hashlib
 import sys
 from datetime import date
@@ -168,10 +169,25 @@ def test_real_primary_action_belongs_to_a_human(real) -> None:
         assert brief["primary_action"]["owner_ar"].startswith("المالك")
 
 
-def test_real_catalog_zero_rejection_wording_is_reported(real) -> None:
-    """The catalog promises «صفر رفض توجيه»; the machine names it instead of repeating it."""
-    kinds = [(c["kind"], c["detail_ar"]) for c in real["snapshot"]["contradictions"]]
-    assert any(kind == "catalog_wording" and "صفر رفض" in detail for kind, detail in kinds)
+def test_catalog_zero_rejection_wording_is_reported_and_gone_from_the_catalog(real) -> None:
+    """The catalog promised «صفر رفض توجيه»; the machine names it instead of repeating it.
+
+    D-319 rewrote the sentence: the real snapshot has no wording contradiction, and the old
+    sentence put back into a copy of the catalog is still named.
+    """
+    kinds = [c["kind"] for c in real["snapshot"]["contradictions"]]
+    assert "catalog_wording" not in kinds
+    inputs = load_inputs(REPO_ROOT)
+    catalog = copy.deepcopy(inputs["catalog"])
+    offers = catalog["offers"]
+    assert isinstance(offers, list)
+    offer = next(o for o in offers if o["id"] == ACTIVE_THESIS_ID)
+    offer["offer_outcome_ar"] = "ملفّ جاهز للاستيراد بصفر رفض توجيه"
+    snapshot = build_snapshot(
+        **{**inputs, "catalog": catalog}, root=REPO_ROOT, today=REAL_TODAY, wording=_lint
+    )
+    details = [c["detail_ar"] for c in snapshot["contradictions"] if c["kind"] == "catalog_wording"]
+    assert any("صفر رفض" in str(detail) for detail in details)
 
 
 def test_active_thesis_and_kill_conditions_are_quoted_from_d300() -> None:

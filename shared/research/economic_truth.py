@@ -64,6 +64,7 @@ from shared.research.value_chain import (
 __all__ = [
     "ACTIVE_THESIS_DECISION",
     "ACTIVE_THESIS_ID",
+    "CATALOG_WORDING_FIELDS",
     "CLAIMS",
     "CLAIM_STATUSES",
     "DECISIONS_REL",
@@ -108,7 +109,7 @@ WordingLinter = Callable[[str], Sequence[tuple[str, str, str]]]
 _BLOCKING_VERDICTS = frozenset({"FORBIDDEN", "UNSUPPORTED"})
 #: ما يصف ما يتسلّمه المشتري ومشكلته. ``hard_currency_route_ar`` خارجها عمداً: نطاقاته
 #: أسعارُ سوقٍ منشورة يُستشهَد بها (مصادر) لا سعرنا — كما يقرّر اختبار D-304.
-_CATALOG_WORDING_FIELDS: tuple[str, ...] = ("offer_outcome_ar", "paid_problem_ar")
+CATALOG_WORDING_FIELDS: tuple[str, ...] = ("offer_outcome_ar", "paid_problem_ar")
 
 
 # ── الادّعاءات ───────────────────────────────────────────────────────────────────
@@ -839,7 +840,7 @@ def build_snapshot(
             {"kind": "value_chain", "detail_ar": problem, "evidence_ids": [VALUE_CHAIN_ID]}
         )
     if wording is not None:
-        for field in _CATALOG_WORDING_FIELDS:
+        for field in CATALOG_WORDING_FIELDS:
             for rule, verdict, excerpt in wording(str(offer.get(field) or "")):
                 if verdict in _BLOCKING_VERDICTS:
                     contradictions.append(
