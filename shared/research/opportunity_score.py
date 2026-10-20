@@ -34,6 +34,8 @@ from datetime import date
 from itertools import pairwise
 from statistics import median
 
+from shared.research.economic_truth import HOLDING, NOT_YET_EVALUABLE
+
 __all__ = [
     "ATLAS_WEIGHTS",
     "CONFIGURATION_OUTBOUND",
@@ -454,11 +456,11 @@ def _round_fails(round_: Mapping[str, Mapping[str, int]]) -> bool:
 def refutation_status(rounds: Sequence[Mapping[str, Mapping[str, int]]], today: date) -> str:
     """REFUTED after two consecutive failing rounds; UNVALIDATED past the deadline."""
     if not rounds:
-        return "UNVALIDATED" if today > UNVALIDATED_AFTER else "NOT_YET_EVALUABLE"
+        return "UNVALIDATED" if today > UNVALIDATED_AFTER else NOT_YET_EVALUABLE
     fails = [_round_fails(r) for r in rounds]
     if any(a and b for a, b in pairwise(fails)):
         return "REFUTED"
-    return "HOLDING"
+    return HOLDING
 
 
 def non_discriminating_criteria(

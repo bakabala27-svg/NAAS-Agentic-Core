@@ -101,6 +101,13 @@
       "status": "live"
     },
     {
+      "path": "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+      "audience": "all-contributors",
+      "role": "founder-atlas-no-magic-without-evidence-constitution",
+      "authority": "primary",
+      "status": "live"
+    },
+    {
       "path": "docs/architecture/ENGINEERING_MATURITY_MATRIX.md",
       "audience": "coding-agent",
       "role": "engineering-maturity-matrix",
