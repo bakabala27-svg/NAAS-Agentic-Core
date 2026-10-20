@@ -16,7 +16,7 @@
 > them. All seven are wired now and `check_governance_registry.py` makes an
 > eighth impossible. Total gates on disk (derived, verified in CI):
 >
-> <!-- derived:gates_total=109 -->
+> <!-- derived:gates_total=110 -->
 > **107** on disk in `scripts/fitness/` + `tools/ci/` — 106 executed, 1 declared debt
 > **2026-10-04 engineering-governance note:** `check_engineering_governance.py` adds a machine-readable protected-artifact policy, amendment-record control, and normal-path checks for test weakening, dependency manifests, and destructive migrations (106 → 107).
 > **2026-10-03 EMM note:** `check_engineering_maturity_matrix.py` adds the 29-stage / 295-checkpoint maturity matrix to required guardrails; it carries a negative-proof test and keeps the audit tied to D-300.
