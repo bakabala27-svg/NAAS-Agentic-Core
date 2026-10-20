@@ -1060,7 +1060,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OPP-02",
@@ -1080,7 +1084,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OPP-03",
@@ -1097,7 +1105,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-04",
@@ -1118,7 +1130,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OPP-05",
@@ -1135,7 +1151,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-06",
@@ -1150,7 +1170,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-07",
@@ -1165,7 +1189,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-08",
@@ -1180,7 +1208,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-09",
@@ -1197,7 +1229,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-10",
@@ -1212,7 +1248,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-11",
@@ -1233,7 +1273,13 @@
           "replies": 5,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [
+          "active_search"
+        ],
+        "replying_entities": 1,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OPP-12",
@@ -1250,7 +1296,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-13",
@@ -1267,7 +1317,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-14",
@@ -1284,7 +1338,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-15",
@@ -1299,7 +1357,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-16",
@@ -1316,7 +1378,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-17",
@@ -1333,7 +1399,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-18",
@@ -1350,7 +1420,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OPP-19",
@@ -1367,7 +1441,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": false
       },
       {
         "id": "OFF-AHW",
@@ -1387,7 +1465,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OFF-CDKC",
@@ -1406,7 +1488,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OFF-CND",
@@ -1426,7 +1512,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OFF-SSI",
@@ -1445,7 +1535,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OFF-VERA",
@@ -1465,7 +1559,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       },
       {
         "id": "OFF-WOD",
@@ -1485,7 +1583,11 @@
           "replies": 0,
           "money_events": 0,
           "payments_settled": 0
-        }
+        },
+        "demand_legs": [],
+        "replying_entities": 0,
+        "code_licensed": false,
+        "built_before_demand": true
       }
     ]
   }

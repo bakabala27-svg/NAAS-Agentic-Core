@@ -36,9 +36,12 @@ from shared.research.contact_ledger import INBOUND, MONEY, OUTBOUND, PAYMENT_SET
 
 __all__ = [
     "ACTIVATION_CLAIMS",
+    "BUILT_BEFORE_DEMAND",
     "CATALOG_REL",
     "CATALOG_REQUIRES",
     "CLASSIFICATIONS",
+    "CODE_LINKS",
+    "DEMAND_LEGS",
     "FORBIDDEN_TERMS",
     "LINKS",
     "MAP_REL",
@@ -139,6 +142,27 @@ ACTIVATION_CLAIMS: tuple[str, ...] = ("C-LEGAL", "C-RAIL")
 #: الأطلس §3.4: «أدلّةٌ متكرّرة لدى عدّة عملاء مستقلّين» — قرار مشترٍ واحد ليس طلباً.
 MIN_REPLYING_ENTITIES = 3
 
+#: D-321 «الألم أولاً»: أرجل الطلب الثلاث، تُعلَن في ``demand`` بحالتَي السلسلة نفسهما
+#: (لا سُلَّم جديد — D-319). الألم بكلمات من يتألّم، والبحث عن حلٍّ الآن، ودافعٌ يدفع اليوم.
+DEMAND_LEGS: tuple[str, ...] = ("pain", "active_search", "payer")
+#: حلقات البناء: المسبار والاختبار والنتيجة على نظامٍ لم نكتبه. لا تُعلَن قبل أن يتكلّم المشترون.
+CODE_LINKS: tuple[int, ...] = (3, 4, 5)
+#: ما بُني قبل الطلب يوم صار D-321 قانوناً (2026-10-20): المسار ⇒ أعلى حلقة بناءٍ أُعلنت يومها.
+#: يُعرَض ``built_before_demand`` ولا يُحذف — السجلّ يسجّل ما حدث (D-319). ويتقلّص فقط وفي
+#: الاتجاهين: لا يُضاف مسار، ولا ترتفع قيمة، ومسارٌ رخّصه الطلب أو نزل عن قيمته يُحذف منه.
+BUILT_BEFORE_DEMAND: Mapping[str, int] = {
+    "OPP-01": 4,
+    "OPP-02": 4,
+    "OPP-04": 5,
+    "OPP-11": 4,
+    "OFF-AHW": 4,
+    "OFF-CDKC": 4,
+    "OFF-CND": 4,
+    "OFF-SSI": 3,
+    "OFF-VERA": 4,
+    "OFF-WOD": 4,
+}
+
 #: وصفٌ ممنوع ما دام المسار دون ``commercial_evidence`` (قاعدة المالك 2026-10-01 · D-227).
 #: سطرٌ يحمل ⛔ مُستثنى: القانون يجب أن يستطيع تسمية ما يحظره (D-208 §7).
 FORBIDDEN_TERMS: tuple[str, ...] = (
@@ -228,7 +252,29 @@ def _contiguous(raw: Mapping[int, bool]) -> int:
     return reached
 
 
-def _derive_path(entry: Mapping[str, object], rows: Sequence[LedgerRow]) -> dict[str, object]:
+def _demand_state(
+    entry: Mapping[str, object], rows: Sequence[LedgerRow], frozen: Mapping[str, int]
+) -> dict[str, object]:
+    """D-321: أرجل الطلب المبلوغة، ومن ردّ، وهل يُرخَّص الكود — من الإعلان والسجلّ لا من الأمنية."""
+    demand = _mapping(entry.get("demand"))
+    legs = {leg for leg in DEMAND_LEGS if _mapping(demand.get(leg)).get("status") == REACHED}
+    actions = {row.action for row in rows}
+    if actions & INBOUND:
+        legs.add("active_search")
+    if actions & MONEY:
+        legs.add("payer")
+    replying = len({row.entity for row in rows if row.action in INBOUND})
+    return {
+        "demand_legs": [leg for leg in DEMAND_LEGS if leg in legs],
+        "replying_entities": replying,
+        "code_licensed": replying >= MIN_REPLYING_ENTITIES and "payer" in legs,
+        "built_before_demand": str(entry.get("id")) in frozen,
+    }
+
+
+def _derive_path(
+    entry: Mapping[str, object], rows: Sequence[LedgerRow], frozen: Mapping[str, int]
+) -> dict[str, object]:
     raw = _raw_links(entry, rows)
     reached = _contiguous(raw)
     next_link = _BY_NUMBER.get(reached + 1)
@@ -246,16 +292,22 @@ def _derive_path(entry: Mapping[str, object], rows: Sequence[LedgerRow]) -> dict
             "money_events": sum(1 for row in rows if row.action in MONEY),
             "payments_settled": sum(1 for row in rows if row.action == PAYMENT_SETTLED),
         },
+        **_demand_state(entry, rows, frozen),
     }
 
 
 def compute_derived(
-    doc: Mapping[str, object], ledger_rows: Sequence[LedgerRow]
+    doc: Mapping[str, object],
+    ledger_rows: Sequence[LedgerRow],
+    *,
+    built_before_demand: Mapping[str, int] = BUILT_BEFORE_DEMAND,
 ) -> dict[str, object]:
     """الكتلة ``derived`` كاملةً — لا تعتمد على الساعة ولا على وجود الملفّات (حتمية)."""
     paths = _paths(doc)
     grouped = _rows_by_path(paths, ledger_rows)
-    derived_paths = [_derive_path(entry, grouped[str(entry.get("id"))]) for entry in paths]
+    derived_paths = [
+        _derive_path(entry, grouped[str(entry.get("id"))], built_before_demand) for entry in paths
+    ]
     counts = dict.fromkeys(CLASSIFICATIONS, 0)
     for item in derived_paths:
         counts[str(item["classification"])] += 1
@@ -405,6 +457,83 @@ def _entry_problems(
     return found
 
 
+def _leg_evidence_problems(pid: str, leg: str, evidence: Sequence[object]) -> list[str]:
+    """دليل الساق مصدرٌ عامّ مؤرَّخ: رابطٌ وتاريخٌ وواقعة — والدافع يحمل ثمناً ظاهراً."""
+    found: list[str] = []
+    if not evidence:
+        return [f"{pid}: ساق الطلب {leg} REACHED بلا دليل (D-321)"]
+    for item in evidence:
+        link = _mapping(item)
+        url = str(link.get("url") or "")
+        if not url.startswith(("https://", "http://")) or not _iso_date(link.get("date")):
+            found.append(f"{pid}: ساق الطلب {leg}: دليلٌ بلا رابط http(s) أو بلا تاريخ ISO (D-321)")
+        if not str(link.get("fact") or "").strip():
+            found.append(f"{pid}: ساق الطلب {leg}: دليلٌ بلا واقعةٍ منطوقة (D-321)")
+    if (
+        leg == "pain"
+        and len({str(_mapping(i).get("url")) for i in evidence}) < MIN_REPLYING_ENTITIES
+    ):
+        found.append(
+            f"{pid}: ساق الطلب pain REACHED بأقلّ من {MIN_REPLYING_ENTITIES} مصادر متمايزة — "
+            "ألمٌ واحد ليس سوقاً (D-321)"
+        )
+    if leg == "payer" and not any(str(_mapping(i).get("price") or "").strip() for i in evidence):
+        found.append(
+            f"{pid}: ساق الطلب payer REACHED بلا `price` — دافعٌ بلا ثمنٍ ظاهرٍ ليس دافعاً (D-321)"
+        )
+    return found
+
+
+def _demand_declaration_problems(pid: str, entry: Mapping[str, object]) -> list[str]:
+    """الغياب يُقرأ «لم يُبلَغ» (الجانب الأشدّ)؛ والإعلان بحالةٍ مغلقة ودليلٍ أو سببٍ منطوق."""
+    if "demand" not in entry:
+        return []
+    demand = entry.get("demand")
+    if not isinstance(demand, Mapping):
+        return [f"{pid}: `demand` ليس كائناً (D-321)"]
+    found = [
+        f"{pid}: ساق طلبٍ غير معروفة {key!r} (D-321)" for key in demand if key not in DEMAND_LEGS
+    ]
+    for leg in DEMAND_LEGS:
+        declared = demand.get(leg)
+        if declared is None:
+            continue
+        status = _mapping(declared).get("status")
+        if status not in _STATUSES:
+            found.append(f"{pid}: ساق الطلب {leg} بحالةٍ خارج المجموعة: {status!r} (D-321)")
+        elif status == REACHED:
+            found.extend(
+                _leg_evidence_problems(pid, leg, list(_items(_mapping(declared).get("evidence"))))
+            )
+        elif not str(_mapping(declared).get("reason_ar") or "").strip():
+            found.append(f"{pid}: ساق الطلب {leg} NOT_REACHED بلا سببٍ منطوق (D-321)")
+    return found
+
+
+def _built_before_demand_problems(
+    pid: str, entry: Mapping[str, object], state: Mapping[str, object], frozen: Mapping[str, int]
+) -> list[str]:
+    """لا حلقة بناءٍ (3–5) قبل أن يتكلّم المشترون؛ وما بُني قبل القانون دَينٌ يتقلّص فقط."""
+    links = _mapping(entry.get("links"))
+    declared = [n for n in CODE_LINKS if _mapping(links.get(str(n))).get("status") == REACHED]
+    highest = max(declared, default=0)
+    licensed = state.get("code_licensed") is True
+    found: list[str] = []
+    if highest and not licensed and highest > frozen.get(pid, 0):
+        found.append(
+            f"{pid}: حلقة البناء {highest} مُعلَنة قبل الطلب — D-321 يتطلّب "
+            f"{MIN_REPLYING_ENTITIES} كيانات ردّت في السجلّ ودافعاً مُثبَتاً قبل أيّ كود"
+        )
+    if pid in frozen and licensed:
+        found.append(f"{pid}: رخّصه الطلب — احذفه من BUILT_BEFORE_DEMAND (D-321: الدَّين يتقلّص)")
+    elif pid in frozen and highest < frozen[pid]:
+        found.append(
+            f"{pid}: حلقة البناء نزلت إلى {highest} والدَّين يقول {frozen[pid]} — خفّض "
+            "BUILT_BEFORE_DEMAND (D-321: الدَّين يتقلّص في الاتجاهين)"
+        )
+    return found
+
+
 def _ledger_route_problems(
     paths: Sequence[Mapping[str, object]], ledger_rows: Sequence[LedgerRow]
 ) -> list[str]:
@@ -529,10 +658,12 @@ def problems(
     ledger_rows: Sequence[LedgerRow],
     catalog: Mapping[str, object],
     supported_claims: Collection[str] = (),
+    built_before_demand: Mapping[str, int] = BUILT_BEFORE_DEMAND,
 ) -> list[str]:
     """كلّ ما يمنع قبول ``VALUE_CHAIN.json`` — قائمةٌ كاملة لا أوّل خطأ.
 
     ``supported_claims``: مُعرِّفات ادّعاءات Economic Truth المدعومة؛ الافتراضيّ فارغ (الأشدّ).
+    ``built_before_demand``: الدَّين المُجمَّد لـD-321؛ الافتراضيّ ما وُجد يوم صار قانوناً.
     """
     raw_paths = _items(doc.get("paths"))
     if not raw_paths:
@@ -546,9 +677,17 @@ def problems(
         found.append(f"مُعرِّفات مكرَّرة: {duplicates}")
     grouped = _rows_by_path(paths, ledger_rows)
     for entry in paths:
-        found.extend(_entry_problems(entry, root, grouped.get(str(entry.get("id")), [])))
+        pid, rows = str(entry.get("id")), grouped.get(str(entry.get("id")), [])
+        found.extend(_entry_problems(entry, root, rows))
+        found.extend(_demand_declaration_problems(pid, entry))
+        state = _demand_state(entry, rows, built_before_demand)
+        found.extend(_built_before_demand_problems(pid, entry, state, built_before_demand))
+    found.extend(
+        f"{pid} في BUILT_BEFORE_DEMAND ولا مسار بهذا المُعرِّف — احذفه (D-321)"
+        for pid in sorted(set(built_before_demand) - set(ids))
+    )
     found.extend(_ledger_route_problems(paths, ledger_rows))
-    expected = compute_derived(doc, ledger_rows)
+    expected = compute_derived(doc, ledger_rows, built_before_demand=built_before_demand)
     if doc.get("derived") != expected:
         found.append(
             "الكتلة `derived` لا تساوي الاشتقاق — شغّل `python3 scripts/research/value_chain.py`"

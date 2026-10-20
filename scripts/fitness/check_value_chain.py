@@ -15,6 +15,8 @@
 4. ``derived`` يساوي الاشتقاق — التصنيف لا يُكتب بيد.
 5. حالةُ الكتالوج لا تتجاوز الحلقات المبلوغة (طبقةُ أدلّةٍ تحت السُّلَّم الوحيد، لا سُلَّمٌ ثانٍ).
 6. لا «ثوري/revolutionary/مضمون» في مسارٍ دون ``commercial_evidence``.
+7. D-321 «الألم أولاً»: لا حلقة بناءٍ (3–5) قبل 3 كيانات ردّت في السجلّ ودافعٍ مُثبَت؛ وما بُني
+   قبل القانون يُعرَض ``built_before_demand`` ودَينه يتقلّص فقط.
 
 ⛔ لا إعفاءٌ بمتغيّر بيئة. تُشغَّل ضمن وظيفة ``guardrails``. Exit 0 = نظيف · 1 = انتهاك.
 """
@@ -22,6 +24,7 @@
 from __future__ import annotations
 
 import sys
+from collections.abc import Mapping
 from datetime import date
 from pathlib import Path
 
@@ -31,6 +34,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from shared.research.contact_ledger import LEDGER_REL, LedgerError, parse_ledger
 from shared.research.value_chain import (
+    BUILT_BEFORE_DEMAND,
     CATALOG_REL,
     VALUE_CHAIN_REL,
     ValueChainError,
@@ -39,8 +43,16 @@ from shared.research.value_chain import (
 )
 
 
-def run(root: Path = REPO_ROOT, *, today: date | None = None) -> list[str]:
-    """قائمة الانتهاكات — فارغةٌ تعني نظيف. مدخلٌ لا يُقرأ يُبلَّغ انتهاكاً (D-208 §6)."""
+def run(
+    root: Path = REPO_ROOT,
+    *,
+    today: date | None = None,
+    built_before_demand: Mapping[str, int] = BUILT_BEFORE_DEMAND,
+) -> list[str]:
+    """قائمة الانتهاكات — فارغةٌ تعني نظيف. مدخلٌ لا يُقرأ يُبلَّغ انتهاكاً (D-208 §6).
+
+    ``built_before_demand``: دَين D-321 المُجمَّد؛ الاختبارات تمرّر دَين مستودعها المصغّر.
+    """
     try:
         doc = load_json(root / VALUE_CHAIN_REL)
         catalog = load_json(root / CATALOG_REL)
@@ -48,7 +60,9 @@ def run(root: Path = REPO_ROOT, *, today: date | None = None) -> list[str]:
         rows = parse_ledger(ledger_text, today=today or date.today())
     except (ValueChainError, LedgerError, OSError) as exc:
         return [f"تعذّرت قراءة المدخلات: {exc}"]
-    return problems(doc, root=root, ledger_rows=rows, catalog=catalog)
+    return problems(
+        doc, root=root, ledger_rows=rows, catalog=catalog, built_before_demand=built_before_demand
+    )
 
 
 def main() -> int:

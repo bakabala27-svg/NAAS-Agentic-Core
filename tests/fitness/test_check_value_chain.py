@@ -98,15 +98,22 @@ def _write_repo(
     (commercial / "OFFER_CATALOG.json").write_text(json.dumps(catalog), encoding="utf-8")
     if rederive:
         doc = copy.deepcopy(doc)
-        doc["derived"] = compute_derived(doc, parse_ledger(ledger_text, today=TODAY))
+        rows = parse_ledger(ledger_text, today=TODAY)
+        doc["derived"] = compute_derived(doc, rows, built_before_demand=_FIXTURE_DEBT)
     (commercial / "VALUE_CHAIN.json").write_text(
         json.dumps(doc, ensure_ascii=False), encoding="utf-8"
     )
     return root
 
 
-def _failures(root: Path) -> list[str]:
-    return check_value_chain.run(root, today=TODAY)
+#: The fixture path P-1 declares code links 3 and 4 with no demand evidence, the same state
+#: as the ten real paths D-321 found built before demand. It stands in their frozen debt.
+_FIXTURE_DEBT = {"P-1": 4}
+
+
+def _failures(root: Path, *, built_before_demand: dict[str, int] | None = None) -> list[str]:
+    debt = _FIXTURE_DEBT if built_before_demand is None else built_before_demand
+    return check_value_chain.run(root, today=TODAY, built_before_demand=debt)
 
 
 def test_clean_repo_passes(tmp_path: Path) -> None:
@@ -240,3 +247,82 @@ def test_link_6_needs_ledger_lines_from_three_replying_entities(tmp_path: Path) 
     links["6"] = {"status": "REACHED", "evidence": ["evidence/observation.md"]}  # type: ignore[index]
     failures = _failures(_write_repo(tmp_path, doc))
     assert _has(failures, "LEDGER:") and _has(failures, "as_of") and _has(failures, "3 ")
+
+
+# ── D-321 «الألم أولاً»: لا حلقة كودٍ قبل ألمٍ يُبحث عن حلّه ودافعٍ موجود ──────────────
+
+
+def _demand(**legs: object) -> dict[str, object]:
+    absent = {"status": "NOT_REACHED", "reason_ar": "لا دليل بعد"}
+    return {leg: legs.get(leg, absent) for leg in ("pain", "active_search", "payer")}
+
+
+def _source(n: int, **extra: str) -> dict[str, str]:
+    return {"url": f"https://example.org/thread/{n}", "date": "2026-10-01", "fact": "شكوى", **extra}
+
+
+_PAYER = {"status": "REACHED", "evidence": [_source(9, price="49 EUR/month")]}
+
+
+def _replies(count: int) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for n in range(1, count + 1):
+        sent = dict(_EMAIL, target_ref=f"TARGETS.csv#id={n}", entity=f"Firm {n}")
+        rows += [sent, dict(sent, date="2026-09-23", action="REPLY_RECEIVED")]
+    return rows
+
+
+def test_a_code_link_declared_after_the_law_needs_demand(tmp_path: Path) -> None:
+    """A path outside the frozen debt may not declare links 3-5 before buyers spoke."""
+    failures = _failures(_write_repo(tmp_path, _base_doc()), built_before_demand={})
+    assert _has(failures, "D-321")
+
+
+def test_a_frozen_path_cannot_raise_its_code_link(tmp_path: Path) -> None:
+    failures = _failures(_write_repo(tmp_path, _base_doc()), built_before_demand={"P-1": 3})
+    assert _has(failures, "D-321")
+
+
+def test_the_frozen_debt_shrinks_in_both_directions(tmp_path: Path) -> None:
+    """A debt entry for a path that is gone, or above what the path declares, is red."""
+    root = _write_repo(tmp_path, _base_doc())
+    assert _has(_failures(root, built_before_demand={"P-1": 4, "P-GONE": 3}), "P-GONE")
+    assert _has(_failures(root, built_before_demand={"P-1": 5}), "D-321")
+
+
+def test_three_replying_entities_and_a_payer_license_code(tmp_path: Path) -> None:
+    doc = _base_doc()
+    doc["paths"][0]["demand"] = _demand(payer=_PAYER)  # type: ignore[index]
+    root = _write_repo(tmp_path, doc, ledger_rows=_replies(3))
+    assert not _has(_failures(root, built_before_demand={}), "D-321")
+
+
+def test_two_replying_entities_do_not_license_code(tmp_path: Path) -> None:
+    doc = _base_doc()
+    doc["paths"][0]["demand"] = _demand(payer=_PAYER)  # type: ignore[index]
+    root = _write_repo(tmp_path, doc, ledger_rows=_replies(2))
+    assert _has(_failures(root, built_before_demand={}), "D-321")
+
+
+def test_a_licensed_path_must_leave_the_frozen_debt(tmp_path: Path) -> None:
+    doc = _base_doc()
+    doc["paths"][0]["demand"] = _demand(payer=_PAYER)  # type: ignore[index]
+    root = _write_repo(tmp_path, doc, ledger_rows=_replies(3))
+    assert _has(_failures(root), "BUILT_BEFORE_DEMAND")
+
+
+def test_a_reached_leg_needs_dated_sourced_evidence(tmp_path: Path) -> None:
+    doc = _base_doc()
+    doc["paths"][0]["demand"] = _demand(  # type: ignore[index]
+        pain={"status": "REACHED", "evidence": [_source(1), _source(2)]},
+        active_search={"status": "REACHED", "evidence": [{"url": "not-a-url", "fact": "x"}]},
+        payer={"status": "REACHED", "evidence": [_source(3)]},
+    )
+    failures = _failures(_write_repo(tmp_path, doc))
+    assert _has(failures, "pain") and _has(failures, "active_search") and _has(failures, "price")
+
+
+def test_a_leg_not_reached_must_say_why(tmp_path: Path) -> None:
+    doc = _base_doc()
+    doc["paths"][0]["demand"] = _demand(pain={"status": "NOT_REACHED"})  # type: ignore[index]
+    assert _has(_failures(_write_repo(tmp_path, doc)), "pain")

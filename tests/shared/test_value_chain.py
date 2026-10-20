@@ -124,3 +124,14 @@ def test_derivation_is_deterministic() -> None:
     doc = {"paths": [_entry({1, 2, 3})]}
     rows = [_row("EMAIL_SENT")]
     assert compute_derived(doc, rows) == compute_derived(doc, rows)
+
+
+def test_derived_paths_say_whether_code_is_licensed_and_what_was_built_first() -> None:
+    """D-321: the derived block shows each path's demand state; nothing is hidden or deleted."""
+    entry = _entry({1, 2, 3, 4})
+    derived = compute_derived({"paths": [entry]}, [], built_before_demand={"P-1": 4})
+    path = derived["paths"][0]  # type: ignore[index]
+    assert path["code_licensed"] is False
+    assert path["built_before_demand"] is True
+    assert path["replying_entities"] == 0
+    assert path["demand_legs"] == []
