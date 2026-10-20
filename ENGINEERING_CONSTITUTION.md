@@ -18,6 +18,10 @@ It supplements, and does not replace, the existing operational and domain consti
 
 [`docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md`](docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md) is part of this constitution. Its supreme rule—**evidence strength must be proportional to the cost of error**—governs every technical, operational, agentic, and commercial claim. Its E0–E7 ladder, risk zones, generator/verifier independence, negative-proof and sensitivity requirements, explicit unknowns, and hard controls for irreversible actions are mandatory. Code appearance, generation speed, fluent explanation, or one green check can never be promoted into a stronger claim than its evidence permits. Its complete text is byte-pinned in `docs/governance/D318_IMMUTABLE_TEXT.json`; a one-byte difference is a hard failure. It may not be bypassed, weakened, partially omitted, or converted to warning-only behavior; changing either text or pin follows section 9 and requires a new amendment plus independent human review.
 
+## 1.3 Founder's Atlas — no magic without evidence
+
+[`docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md`](docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md) is part of this constitution. Its supreme rule—**«لا سحر بلا دليل»**—governs what is built, claimed, priced, and written for a buyer. The owner's verbatim text wins over every summary; between the Atlas and an existing rule, the stricter wins; the D-318 escape hatches it quotes are void. Each enforced rule names its home (a file and a symbol), and the gate fails when one disappears. Its text is byte-pinned in `docs/governance/D319_IMMUTABLE_TEXT.json`; changing text or pin follows section 9 and requires a new amendment plus independent human review.
+
 ## 2. Authority and precedence
 
 A lower item never silently overrides a higher item:

@@ -61,6 +61,10 @@
     "docs/governance/D318_IMMUTABLE_TEXT.json",
     "scripts/fitness/check_evidence_proportionality_constitution.py",
     "tests/fitness/test_evidence_proportionality_constitution_gate.py",
+    "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+    "docs/governance/D319_IMMUTABLE_TEXT.json",
+    "scripts/fitness/check_founder_atlas_constitution.py",
+    "tests/fitness/test_founder_atlas_constitution_gate.py",
     ".memory/project_diagnostic_truth.md",
     "scripts/ci_guardrails.py",
     "scripts/ci/**"

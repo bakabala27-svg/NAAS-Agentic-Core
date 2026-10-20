@@ -495,6 +495,20 @@
       "enforcers": [
         "check_evidence_proportionality_constitution.py"
       ]
+    },
+    {
+      "section": "0.31",
+      "id": "D-319",
+      "title_en": "Founder's Atlas Constitution — No Magic Without Evidence",
+      "title_ar": "دستور أطلس المؤسس — لا سحر بلا دليل",
+      "law_docs": [
+        "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+        "docs/governance/D319_IMMUTABLE_TEXT.json"
+      ],
+      "status_docs": [],
+      "enforcers": [
+        "check_founder_atlas_constitution.py"
+      ]
     }
   ]
 }

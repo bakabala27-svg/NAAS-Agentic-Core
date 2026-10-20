@@ -249,6 +249,10 @@ jobs:
           # protects E0-E7, verifier independence, HOLD rules, its own registry
           # and entrypoint links, protected artifacts, and this fail-closed wire.
           python scripts/fitness/check_evidence_proportionality_constitution.py
+          # D-319: the Founder's Atlas — «لا سحر بلا دليل». Pins its law, voids the D-318
+          # escape hatches it quotes, and checks every enforced rule still names a home
+          # (a file and a symbol) that exists.
+          python scripts/fitness/check_founder_atlas_constitution.py
           # D-290 rounds 01/02/04: the decision-commitment gates. Each one was on
           # disk and enforced only by its own negative-proof test — the ISS-186
           # class again (a gate that reads as protection but is executed by

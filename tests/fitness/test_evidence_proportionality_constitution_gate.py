@@ -111,3 +111,32 @@ def test_gate_absent_from_guardrails_is_rejected(tmp_path: Path, monkeypatch) ->
     gate._FAILURES.clear()
     gate.check_ci_wiring()
     assert any("غير منفذ" in failure for failure in gate._FAILURES)
+
+
+def test_commented_out_gate_in_guardrails_is_rejected(tmp_path: Path, monkeypatch) -> None:
+    """D-319: سطرٌ مُعلَّق لا يُنفَّذ — وجود الاسم في تعليقٍ ليس توصيلاً."""
+    workflow = tmp_path / "ci.yml"
+    workflow.write_text(
+        "jobs:\n  guardrails:\n    run: |\n      set -euo pipefail\n"
+        f"      # python scripts/fitness/{gate.GATE_NAME}\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(gate, "CI_WORKFLOW", workflow)
+    gate._FAILURES.clear()
+    gate.check_ci_wiring()
+    assert any("غير منفذ" in failure for failure in gate._FAILURES)
+
+
+def test_gate_run_only_in_a_later_job_is_rejected(tmp_path: Path, monkeypatch) -> None:
+    """D-319: القراءة تنحصر في وظيفة guardrails لا حتى نهاية الملف."""
+    workflow = tmp_path / "ci.yml"
+    workflow.write_text(
+        "jobs:\n  guardrails:\n    run: |\n      set -euo pipefail\n"
+        "  other:\n    run: |\n"
+        f"      python scripts/fitness/{gate.GATE_NAME}\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(gate, "CI_WORKFLOW", workflow)
+    gate._FAILURES.clear()
+    gate.check_ci_wiring()
+    assert any("غير منفذ" in failure for failure in gate._FAILURES)

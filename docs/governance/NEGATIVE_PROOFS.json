@@ -86,6 +86,9 @@
     "check_evidence_proportionality_constitution.py": [
       "tests/fitness/test_evidence_proportionality_constitution_gate.py"
     ],
+    "check_founder_atlas_constitution.py": [
+      "tests/fitness/test_founder_atlas_constitution_gate.py"
+    ],
     "check_external_standards.py": [
       "tests/fitness/test_agent_standards_gates.py"
     ],

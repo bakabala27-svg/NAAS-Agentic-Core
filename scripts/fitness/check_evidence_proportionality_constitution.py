@@ -154,15 +154,31 @@ def check_entrypoints() -> None:
             _fail(f"{label} لا يحمل نقطة الدخول المطلوبة: {marker}")
 
 
+def _job_block(text: str, job: str) -> str | None:
+    """أسطر وظيفةٍ واحدة بلا تعليقات: من رأسها إلى رأس الوظيفة التالية (D-319).
+
+    القراءة حتى نهاية الملف كانت تقبل سطراً مُعلَّقاً أو فارضاً في وظيفةٍ أخرى توصيلاً.
+    """
+    lines = text.splitlines()
+    start = next((i for i, line in enumerate(lines) if line.rstrip() == f"  {job}:"), None)
+    if start is None:
+        return None
+    block: list[str] = []
+    for line in lines[start + 1 :]:
+        if re.match(r"^(  )?\S", line):
+            break
+        if not line.lstrip().startswith("#"):
+            block.append(line)
+    return "\n".join(block)
+
+
 def check_ci_wiring() -> None:
     if not CI_WORKFLOW.is_file():
         return
-    text = _read(CI_WORKFLOW)
-    start = text.find("  guardrails:")
-    if start < 0:
+    guardrails = _job_block(_read(CI_WORKFLOW), "guardrails")
+    if guardrails is None:
         _fail("وظيفة guardrails غائبة")
         return
-    guardrails = text[start:]
     if GATE_NAME not in guardrails:
         _fail(f"{GATE_NAME} غير منفذ في guardrails")
     if "set -euo pipefail" not in guardrails:

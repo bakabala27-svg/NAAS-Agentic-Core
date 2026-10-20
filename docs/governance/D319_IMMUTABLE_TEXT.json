@@ -1,0 +1,12 @@
+{
+  "$schema_version": "1",
+  "decision": "D-319",
+  "mode": "BYTE_FOR_BYTE_IMMUTABLE_UNDER_CONSTITUTIONAL_AMENDMENT",
+  "canonical_text": "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+  "sha256": "001bd91238f93610ebdc8448446240f5033231dbce1d9b320e3a987352c12848",
+  "byte_count": 12832,
+  "verbatim_texts_status": "PENDING_OWNER_CONFIRMATION",
+  "verbatim_texts_ar": "النسخ الحرفي لـ«أطلس المؤسس العظيم» (40 صفحة) و«الصاروخ لا يُصدَّق بمنظره» (22 صفحة) وبصمتا ملفّي PDF لا تدخل هذا السجلّ قبل أن يؤكّدها المالك؛ تدخل بسجلّ تعديلٍ دستوريٍّ جديد.",
+  "rule_ar": "أي اختلاف بايت واحد يفشل البوابة. تغيير النص أو هذه البصمة تعديل دستوري محمي يحتاج سجل تعديل جديدًا ومراجعة بشرية مستقلة؛ لا يملك المؤلف التصديق على تغييره.",
+  "external_limit_ar": "يحرس هذا العقد مسار المستودع وCI؛ مدير المنصة الخارجي يستطيع تغيير الحماية، ولذلك يلزم تدقيق إعدادات GitHub مستقل."
+}
