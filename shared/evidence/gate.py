@@ -2,7 +2,9 @@
 
 A faithful port of ``gate.py`` from the owner's thesis «الصاروخ لا يُصدَّق بمنظره»
 (pages 18-19), made binding by D-319. ``LEVELS``, ``evidence_level`` and ``verdict``
-keep the thesis's logic and messages exactly. Two additions only make it fail-closed:
+keep the thesis's logic and messages exactly. Fields are read through ``_at`` and
+``_num`` instead of bare indexing, so the report stays typed as ``object`` and the module
+carries no ``Any`` (``check_no_new_any``). Two additions only make it fail-closed:
 
 - a predicate that meets a missing or malformed field counts as *not met*, so a report
   that omits evidence stops at a lower level instead of crashing;
@@ -14,8 +16,7 @@ Pure stdlib, deterministic, no I/O.
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
-from typing import Any
+from collections.abc import Callable, Collection, Mapping
 
 __all__ = [
     "DECISIONS",
@@ -28,24 +29,51 @@ __all__ = [
     "verdict",
 ]
 
-Report = Mapping[str, Any]
+Report = Mapping[str, object]
+
+
+def _at(r: Report, *keys: str) -> object:
+    """``r[k1][k2]…``; a missing key raises ``KeyError``, a non-mapping ``TypeError``."""
+    value: object = r
+    for key in keys:
+        if not isinstance(value, Mapping):
+            raise TypeError(f"{'.'.join(keys)}: {key!r} is read from a non-mapping")
+        value = value[key]
+    return value
+
+
+def _num(r: Report, *keys: str) -> float:
+    value = _at(r, *keys)
+    if isinstance(value, bool) or not isinstance(value, int | float):
+        raise TypeError(f"{'.'.join(keys)} must be a number")
+    return value
+
+
+def _items(r: Report, *keys: str) -> set[object]:
+    value = _at(r, *keys)
+    if isinstance(value, str | bytes) or not isinstance(value, Collection):
+        raise TypeError(f"{'.'.join(keys)} must be a list")
+    return set(value)
+
 
 LEVELS: list[tuple[str, Callable[[Report], bool]]] = [
-    ("E1", lambda r: r["registered"]),
-    ("E2", lambda r: r["evidence"]["reachability_trace"] is not None),
+    ("E1", lambda r: bool(_at(r, "registered"))),
+    ("E2", lambda r: _at(r, "evidence", "reachability_trace") is not None),
     (
         "E3",
-        lambda r: r["evidence"]["tests"]["failed"] == 0
-        and r["evidence"]["tests"]["passed"] > 0
-        and r["evidence"]["tests"]["new_negative_cases"] > 0,
+        lambda r: _num(r, "evidence", "tests", "failed") == 0
+        and _num(r, "evidence", "tests", "passed") > 0
+        and _num(r, "evidence", "tests", "new_negative_cases") > 0,
     ),
     (
         "E4",
-        lambda r: r["evidence"]["vacuity_probe"] == "pass"
-        and r["evidence"]["mutation_score"]["after"] >= r["evidence"]["mutation_score"]["floor"]
-        and r["evidence"]["mutation_score"]["after"] >= r["evidence"]["mutation_score"]["before"],
+        lambda r: _at(r, "evidence", "vacuity_probe") == "pass"
+        and _num(r, "evidence", "mutation_score", "after")
+        >= _num(r, "evidence", "mutation_score", "floor")
+        and _num(r, "evidence", "mutation_score", "after")
+        >= _num(r, "evidence", "mutation_score", "before"),
     ),
-    ("E5", lambda r: r["evidence"]["runtime_check"] is not None),
+    ("E5", lambda r: _at(r, "evidence", "runtime_check") is not None),
 ]
 
 #: The lower bound of each risk zone's range in D-318 (EXPERIMENT E2–E3, PRODUCT E3–E5,
@@ -80,11 +108,11 @@ def evidence_level(r: Report) -> str:
 def verdict(r: Report, required: str) -> str:
     if required not in _ALL_LEVELS:
         raise ValueError(f"required level must be one of E0..E7, got {required!r}")
-    if set(r["scope"]["touched_files"]) - set(r["scope"]["declared_files"]):
+    if _items(r, "scope", "touched_files") - _items(r, "scope", "declared_files"):
         return "HOLD: out-of-scope change"
-    if r["protected_paths_changed"]:
+    if _at(r, "protected_paths_changed"):
         return "HOLD: verifier files modified"
-    if not r["unverified"]:
+    if not _at(r, "unverified"):
         return "HOLD: unverified list is empty without justification"
     if evidence_level(r) < required:  # E0..E7 compare correctly as strings
         return "HOLD: insufficient evidence"
@@ -142,7 +170,7 @@ def _computed_field_problems(r: Report) -> list[str]:
             f"got {r.get('evidence_level')!r}"
         )
     zone = r.get("risk_zone")
-    if zone in REQUIRED_BY_ZONE:
+    if isinstance(zone, str) and zone in REQUIRED_BY_ZONE:
         computed = decision_for(verdict(r, REQUIRED_BY_ZONE[zone]))
         if r.get("decision") != computed:
             problems.append(
