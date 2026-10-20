@@ -101,6 +101,13 @@
       "status": "live"
     },
     {
+      "path": "docs/architecture/DEMAND_FIRST_CONSTITUTION.md",
+      "audience": "all-contributors",
+      "role": "demand-first-no-build-without-pain-search-and-payer-law",
+      "authority": "primary",
+      "status": "live"
+    },
+    {
       "path": "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
       "audience": "all-contributors",
       "role": "founder-atlas-no-magic-without-evidence-constitution",

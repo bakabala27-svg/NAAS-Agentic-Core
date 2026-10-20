@@ -253,6 +253,10 @@ jobs:
           # escape hatches it quotes, and checks every enforced rule still names a home
           # (a file and a symbol) that exists.
           python scripts/fitness/check_founder_atlas_constitution.py
+          # D-321: «الألم أولاً» — no build without a pain people search to solve and a
+          # payer. Pins its law, keeps its line at the top of CLAUDE.md, and checks every
+          # enforced rule still names a home (a file and a symbol) that exists.
+          python scripts/fitness/check_demand_first_constitution.py
           # D-290 rounds 01/02/04: the decision-commitment gates. Each one was on
           # disk and enforced only by its own negative-proof test — the ISS-186
           # class again (a gate that reads as protection but is executed by

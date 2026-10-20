@@ -509,6 +509,24 @@
       "enforcers": [
         "check_founder_atlas_constitution.py"
       ]
+    },
+    {
+      "section": "0.32",
+      "id": "D-321",
+      "title_en": "Demand-First Law — No Build Without Pain, Active Search and a Payer",
+      "title_ar": "قانون الألم أولاً — لا بناء بلا ألمٍ يُبحث عن حلّه ودافعٍ موجود",
+      "law_docs": [
+        "docs/architecture/DEMAND_FIRST_CONSTITUTION.md",
+        "docs/governance/D321_IMMUTABLE_TEXT.json"
+      ],
+      "status_docs": [
+        "docs/commercial/VALUE_CHAIN.json"
+      ],
+      "enforcers": [
+        "check_demand_first_constitution.py",
+        "check_value_chain.py",
+        "check_code_acceptance.py"
+      ]
     }
   ]
 }

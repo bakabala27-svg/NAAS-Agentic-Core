@@ -3,6 +3,7 @@
 > **The system is not a Chat Tutor. It is a Cognitive Lab / Thinking Engine that models, tests, and improves student reasoning.**
 > Chat is an assistive interface only. The platform core is: Interactive Object UI, Cognitive Modeling, Error Memory, Adaptive Generation, and Simulation.
 > **AI tutor for Algerian students** | FastAPI 8000 + Next.js 5000 + LangGraph 1.1.10 | Arabic / French / Darija | BAC preparation platform
+> **القانون الأعلى — الألم أولاً (D-321 · 2026-10-20):** أكبر خطرٍ كارثي بناءُ منتجٍ بلا سوق؛ فلا يُبنى شيءٌ قبل دليلٍ على ثلاث معاً: **من يتألّم** (بكلماته، من ثلاثة مصادر متمايزة)، و**من يبحث عن الحلّ الآن**، و**من يدفع** (ثمنٌ ظاهر لهذا الألم أو لبديله). الدليل العامّ يُرخّص اختبار مشترٍ فقط؛ وكود المنتج يتطلّب ثلاث جهاتٍ ردّت في `CONTACT_LEDGER.csv` ودافعاً مُثبَتاً (`code_licensed` في `VALUE_CHAIN.json`). يحكم كلّ قرارٍ تجاري وكلّ خطّة بناء، والأشدّ يغلب، ولا يلغي دستوراً قائماً — [`docs/architecture/DEMAND_FIRST_CONSTITUTION.md`](docs/architecture/DEMAND_FIRST_CONSTITUTION.md) · §0.32.
 > **القرار التجاري الحاكم (D-300 · 2026-09-29):** الأطروحة النشطة **الوحيدة** هي `fr-be-einvoicing-referential-cleansing` — خدمةٌ يسلّمها المالك يدوياً بأدوات `tools/hard_currency_engine` — والمنصّة التعليمية **مُجمَّدة** (لا ميزات ولا هجرة خدمات ولا عمل على سلسلة النماذج إلا ما يُبقي CI صادقاً)، والحقيقة التجارية الوحيدة سجلّ `docs/commercial/outreach/CONTACT_LEDGER.csv` ولوحتُه المُشتقّة. **Governing commercial decision (D-300):** one active thesis (FR/BE e-invoicing referential cleansing, delivered manually); the platform is FROZEN; commercial truth lives only in the contact ledger and its derived scorecard.
 > **دستور سلامة الأساس (D-309):** قبل إضافة أو حذف أو نقل أي حرف، يجب تحميل [`docs/architecture/FOUNDATION_SAFETY_CONSTITUTION.md`](docs/architecture/FOUNDATION_SAFETY_CONSTITUTION.md)؛ ثم تطبيق دستور منع Vibe Coding: [`docs/architecture/VIBE_CODING_PREVENTION_CONSTITUTION.md`](docs/architecture/VIBE_CODING_PREVENTION_CONSTITUTION.md) ومصفوفة النضج [`docs/architecture/ENGINEERING_MATURITY_MATRIX.md`](docs/architecture/ENGINEERING_MATURITY_MATRIX.md) واجتياز `scripts/fitness/check_vibe_coding_constitution.py` و`scripts/fitness/check_engineering_maturity_matrix.py` و`scripts/fitness/check_repository_microscope.py`. الخطة، التصميم، الاختبار، المراجعة، CI، الأمن، الرجوع، وسجل الإثبات إلزامية؛ يجب تحميل `.memory/project_diagnostic_truth.md` و`docs/governance/PROJECT_REMEDIATION_PLAN.json` وتحديد العلاج المتأثر والتوقف أمام أي blocker حرج؛ لا حذف ولا تجاوز صامت، ولا قفز إلى طبقة عليا بلا دليل الطبقات التي تحتها؛ وينطبق ذلك على الكود القديم عند لمسه أو الاعتماد عليه وعلى كل كود مستقبلي قبل دخوله؛ وتثبت حزمة القبول قراءة المستودع بايتياً عبر `repository_microscope`.
 > **الدستور الأعلى — MASTER INDEX (مُلزِم حرفًا بحرف):** قبل أي حرف يُقرأ أو يُكتب أو يُحذف في هذا المستودع — كودًا أو توثيقًا أو إعدادًا — يجب المرور على [`docs/governance/MASTER_INDEX_CONSTITUTION.md`](docs/governance/MASTER_INDEX_CONSTITUTION.md) وتطبيقه كاملًا: القاعدة العليا الثمانية (`NO FEATURE BEFORE FOUNDATION` … `NO "DONE" WITHOUT VERIFICATION`)، والأقسام 00–47، وسلسلة البوابات `GATE 00..15`. لا يجوز لأي وكيل ذكاء اصطناعي أو إنسان تجاوزه أو تخفيفه أو تحويله إلى To-Do List، ولا القفز بين البوابات لمجرد وجود الكود. تعديله يتطلّب سجلّ تعديل دستوري ومراجعة بشرية مستقلة.
@@ -551,7 +552,6 @@ Evaluation → Governance → Infrastructure → Humans`. المعرفةُ ما 
 - **الإضافة لا الاستبدال**: D-271 وكلّ ما سبقه يبقى سارياً. تعديل هذا الدستور = ADR + بوّابةٌ خضراء.
 
 ---
-
 ## 1. What This Project Does
 
 CogniForge is an educational AI platform for Algerian high-school students preparing for the Baccalaureate exam. Students chat in Arabic, French, or Darija and receive tutoring in math, physics, and sciences. The backend is a FastAPI monolith.
@@ -585,7 +585,6 @@ D-WS-\*) يعيش في [`.memory/issues.md`](.memory/issues.md) مع الجذر 
 > دائم يتحوّل حتماً إلى كذبٍ بمرور الوقت (هذا بالضبط ما حدث بين 2026-05-09 و2026-07-29).
 
 ---
-
 ## 2) خريطة التنفيذ (Execution Topology)
 
 ```bash
@@ -600,7 +599,6 @@ curl -s http://localhost:8000/health | python -m json.tool
 ```
 
 ---
-
 ## 3. Architecture at a Glance
 
 ```text
@@ -1260,3 +1258,5 @@ exercise_explanation_with_context(2.5) → LangGraph(3.0) → general_chat(4.0)`
 > **القانون:** [`docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md`](docs/architecture/EVIDENCE_PROPORTIONALITY_CONSTITUTION.md) (E0–E7 · L1–L12 · NF-1–NF-5) · **الفارض:** `check_evidence_proportionality_constitution.py` (guardrails · اختبارات سلبية · أصول محمية). **الجملة:** يجب أن تتناسب قوة الدليل مع كلفة الخطأ؛ المظهر والطلاقة ونجاح فحص واحد لا تثبت الصحة أو المتانة أو القيمة، والمولّد لا يعلن نجاحه، و«يعمل» محجوزة لـE5، والأثر غير القابل للعكس يحتاج سياسة حتمية وموافقة. النص كاملٌ ومجمّد البايتات في `docs/governance/D318_IMMUTABLE_TEXT.json`: اختلاف بايت واحد أحمر؛ يطبّق الأشد ولا يحوّل الفشل إلى تحذير.
 ## 0.31. Founder's Atlas Constitution (D-319) — لا سحر بلا دليل
 > **القانون:** [`docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md`](docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md) · **البصمة:** `docs/governance/D319_IMMUTABLE_TEXT.json` · **الفارض:** `check_founder_atlas_constitution.py` (guardrails · اختبارات سلبية · أصول محمية). **الجملة:** نصّ المالك الحرفي يغلب كل ملخّص، والأشدّ يغلب بين الأطلس وقواعد المستودع، ومنافذ D-318 المقتبسة ملغاة؛ CI يحجب ما نكتبه والسجلّ يسجّل ما حدث؛ كل قاعدةٍ مفروضة تسمّي موطنها (ملفٌّ ورمز)، والكود لا يقول PIVOT ولا STOP بدل المالك. النصّان الحرفيّان (`FOUNDER_ATLAS_VERBATIM.md` · `EVIDENCE_PROPORTIONALITY_VERBATIM.md`) أكّدهما المالك ومثبَّتان بالبايت مع بصمتي ملفّي PDF.
+## 0.32. Demand-First Law (D-321) — لا بناء بلا ألمٍ يُبحث عن حلّه ودافعٍ موجود
+> **القانون:** [`docs/architecture/DEMAND_FIRST_CONSTITUTION.md`](docs/architecture/DEMAND_FIRST_CONSTITUTION.md) · **البصمة:** `docs/governance/D321_IMMUTABLE_TEXT.json` · **الحالة:** مُشتقّة في `docs/commercial/VALUE_CHAIN.json` (`demand_legs` · `replying_entities` · `code_licensed` · `built_before_demand`) · **الفوارض:** `check_demand_first_constitution.py` (guardrails) و`check_value_chain.py` و`check_code_acceptance.py`. **الجملة:** الأرجل الثلاث (ألمٌ · بحثٌ الآن · دافع) تُعلَن بحالتَي السلسلة بلا سُلَّمٍ جديد؛ الدليل العامّ يُرخّص اختبار مشترٍ فقط، ولا حلقة بناءٍ (3–5) ولا كود منتجٍ قبل ثلاث جهاتٍ ردّت ودافعٍ مُثبَت، أو صيانةٍ لا تضيف ملفّاً؛ وما بُني قبل الطلب (عشرة مسارات) يُعرَض ولا يُحذف ودَينه يتقلّص فقط؛ ورسائل الفوترة الفرنسية (D-300) مجمَّدة بقرار المالك حتى تقرير البحث، والقانون لا يقول PIVOT ولا STOP.

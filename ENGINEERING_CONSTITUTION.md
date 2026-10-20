@@ -22,6 +22,10 @@ It supplements, and does not replace, the existing operational and domain consti
 
 [`docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md`](docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md) is part of this constitution. Its supreme rule—**«لا سحر بلا دليل»**—governs what is built, claimed, priced, and written for a buyer. The owner's verbatim text wins over every summary; between the Atlas and an existing rule, the stricter wins; the D-318 escape hatches it quotes are void. Each enforced rule names its home (a file and a symbol), and the gate fails when one disappears. Its text is byte-pinned in `docs/governance/D319_IMMUTABLE_TEXT.json`; changing text or pin follows section 9 and requires a new amendment plus independent human review.
 
+## 1.4 Demand first — no build without pain, active search and a payer
+
+[`docs/architecture/DEMAND_FIRST_CONSTITUTION.md`](docs/architecture/DEMAND_FIRST_CONSTITUTION.md) is part of this constitution and stands first in `CLAUDE.md`. Nothing is built before evidence that someone is in pain, someone is searching for a solution now, and someone pays. Public dated evidence licenses only a buyer test; product code needs three replying entities in the ledger and an evidenced payer, or maintenance that adds no product file. Between this law and an existing rule, the stricter wins. Its text is byte-pinned in `docs/governance/D321_IMMUTABLE_TEXT.json`; changing text or pin follows section 9 and requires a new amendment plus independent human review.
+
 ## 2. Authority and precedence
 
 A lower item never silently overrides a higher item:

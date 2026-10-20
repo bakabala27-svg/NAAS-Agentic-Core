@@ -89,6 +89,9 @@
     "check_founder_atlas_constitution.py": [
       "tests/fitness/test_founder_atlas_constitution_gate.py"
     ],
+    "check_demand_first_constitution.py": [
+      "tests/fitness/test_demand_first_constitution_gate.py"
+    ],
     "check_external_standards.py": [
       "tests/fitness/test_agent_standards_gates.py"
     ],
