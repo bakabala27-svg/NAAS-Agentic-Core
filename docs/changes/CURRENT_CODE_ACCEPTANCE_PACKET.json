@@ -3,7 +3,7 @@
   "packet_id": "CAP-2026-10-20-d319-founder-atlas-constitution",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "D-319 (دستور أطلس المؤسّس «لا سحر بلا دليل») بأمر المالك في 2026-10-15: وثيقتان مؤرّختان 2026-10-11 تصيران قانوناً صارماً. يُفرَض ما يُفحَص آلياً من قواعد الأطلس في مواطنه القائمة (نصّ المشتري · الكتالوج · سلسلة القيمة · حزمة القبول · محرّك العملة الصعبة)، وتُنقَل منطقُ gate.py من أطروحة «الصاروخ لا يُصدَّق بمنظره» كوداً حتمياً يحسب مستوى الدليل والقرار، وتُبطَل منافذ D-318 بالاقتباس دون مسّ بايتاته، وتصير بوّابات الأطلس A–H عرضاً مشتقّاً بلا سُلَّمٍ جديد (D-314). والنصّان الحرفيّان خارج هذا التغيير حتى يؤكّدهما المالك.",
+  "decision_of_change": "D-319 (دستور أطلس المؤسّس «لا سحر بلا دليل») بأمر المالك في 2026-10-15: وثيقتان مؤرّختان 2026-10-11 تصيران قانوناً صارماً. يُفرَض ما يُفحَص آلياً من قواعد الأطلس في مواطنه القائمة (نصّ المشتري · الكتالوج · سلسلة القيمة · حزمة القبول · محرّك العملة الصعبة)، وتُنقَل منطقُ gate.py من أطروحة «الصاروخ لا يُصدَّق بمنظره» كوداً حتمياً يحسب مستوى الدليل والقرار، وتُبطَل منافذ D-318 بالاقتباس دون مسّ بايتاته، وتصير بوّابات الأطلس A–H عرضاً مشتقّاً بلا سُلَّمٍ جديد (D-314). وفي 2026-10-20 أكّد المالك النسخ الحرفي للوثيقتين كما هو، فدخل النصّان مثبَّتين بالبايت مع بصمتي ملفّي PDF بسجلّ التعديل D-319B.",
   "standards": [
     "clean-code-book"
   ],
@@ -39,7 +39,8 @@
       "tools/hard_currency_engine/buyer_claims.py: approval_seeking · full_automation · payment_rail",
       "shared/research/economic_truth.py: atlas_view وبوّابات الأطلس A–H مشتقّة",
       "shared/research/economic_decision.py: decide_by بعد سبعة أيام ومالك القرار",
-      "scripts/fitness/check_founder_atlas_constitution.py في guardrails"
+      "scripts/fitness/check_founder_atlas_constitution.py في guardrails",
+      "docs/governance/D319_IMMUTABLE_TEXT.json + check_verbatim_pins: النصّان الحرفيّان مثبَّتان بالبايت مع بصمتي ملفّي PDF"
     ],
     "runtime_evidence_paths": [
       "docs/commercial/HARD_CURRENCY_SCORECARD.json",
@@ -78,8 +79,9 @@
       "python3 scripts/fitness/check_hard_currency_engine.py && python3 scripts/fitness/check_no_magic_strings.py && python3 scripts/fitness/check_no_new_any.py — PASS (check_no_new_any كان أحمر على shared/evidence/gate.py حتى أُزيل Any)",
       "python3 scripts/run_fitness_gates.py — 90 من 92 بوّابة خضراء؛ الاثنتان الباقيتان (check_tracing_gate · check_contracts_verified) تفشلان محلياً لأنّ /usr/bin/python3 بلا pytest، لا بسبب هذا التغيير؛ والحكم لـCI",
       "python3 scripts/fitness/check_memory_coherence.py && python3 scripts/fitness/check_repository_microscope.py — PASS",
-      "pytest --noconftest tests/fitness/test_founder_atlas_constitution_gate.py tests/fitness/test_evidence_proportionality_constitution_gate.py tests/fitness/test_code_acceptance_gate.py tests/fitness/test_check_value_chain.py tests/fitness/test_check_hard_currency_engine.py tests/shared/test_evidence_gate.py tests/shared/test_opportunity_score.py tests/shared/test_economic_truth.py tests/shared/test_contact_ledger.py tests/unit/tools/test_buyer_claims.py tests/unit/tools/test_hard_currency_engine.py tests/unit/tools/test_outreach_truth.py — 270 passed",
-      "قبل التنفيذ: 27 حالةً سلبية حمراء محفوظة الخرج (buyer_claims 9 · code_acceptance 10 · hard_currency_engine 1 · value_chain 5 · وصلة D-318 في CI 2)",
+      "pytest --noconftest tests/fitness/test_founder_atlas_constitution_gate.py tests/fitness/test_evidence_proportionality_constitution_gate.py tests/fitness/test_code_acceptance_gate.py tests/fitness/test_check_value_chain.py tests/fitness/test_check_hard_currency_engine.py tests/shared/test_evidence_gate.py tests/shared/test_opportunity_score.py tests/shared/test_economic_truth.py tests/shared/test_contact_ledger.py tests/unit/tools/test_buyer_claims.py tests/unit/tools/test_hard_currency_engine.py tests/unit/tools/test_outreach_truth.py — 278 passed",
+      "قبل التنفيذ: 35 حالةً سلبية حمراء محفوظة الخرج (buyer_claims 9 · code_acceptance 10 · hard_currency_engine 1 · value_chain 5 · وصلة D-318 في CI 2 · بصمات النصّين الحرفيّين 8)",
+      "sha256sum docs/architecture/FOUNDER_ATLAS_VERBATIM.md docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md — 33f33167… و9c1e65cc… تطابقان بصمة الملفّين اللذين أكّدهما المالك",
       "ruff 0.14.0 check وformat --check على الملفّات المعدّلة — PASS؛ git diff --check نظيف"
     ]
   },
@@ -174,7 +176,9 @@
     "README.md",
     "docs/DOCUMENTATION_INDEX.md",
     "docs/DOCUMENTATION_MANIFEST.json",
+    "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
     "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+    "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
     "docs/commercial/OFFER_CATALOG.json",
     "docs/commercial/VALUE_CHAIN.json",
     "docs/governance/CONSTITUTION_REGISTRY.json",
@@ -182,6 +186,7 @@
     "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
     "docs/governance/NEGATIVE_PROOFS.json",
     "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
+    "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
     "scripts/fitness/check_code_acceptance.py",
     "scripts/fitness/check_engineering_governance.py",
     "scripts/fitness/check_evidence_proportionality_constitution.py",
@@ -224,7 +229,9 @@
       "README.md",
       "docs/DOCUMENTATION_INDEX.md",
       "docs/DOCUMENTATION_MANIFEST.json",
+      "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
       "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+      "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
       "docs/commercial/OFFER_CATALOG.json",
       "docs/commercial/VALUE_CHAIN.json",
       "docs/governance/CONSTITUTION_REGISTRY.json",
@@ -232,6 +239,7 @@
       "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
       "docs/governance/NEGATIVE_PROOFS.json",
       "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
+      "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
       "scripts/fitness/check_code_acceptance.py",
       "scripts/fitness/check_engineering_governance.py",
       "scripts/fitness/check_evidence_proportionality_constitution.py",
@@ -258,16 +266,16 @@
       "tools/hard_currency_engine/buyer_claims.py",
       "tools/hard_currency_engine/crm_dispatcher.py"
     ],
-    "content_sha256_excluding_packet": "687e24a570fc2b747c4022ac1544c33ede538a99d9c974b8782272a8e8465c47",
+    "content_sha256_excluding_packet": "793bb74234e4ef0dc26816a2bb312c7e0aed95fd5c2135e9fdfc0c6ba8f6cf83",
     "refreshed_on": "2026-10-20",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3513,
-    "total_bytes_excluding_packet": 51188292,
-    "total_newlines_excluding_packet": 894662,
-    "sha256_excluding_packet": "e051eaadaa479ae768c4ac419651b5220d9b5048a480cedbd59fed0837974f49",
+    "file_count_excluding_packet": 3516,
+    "total_bytes_excluding_packet": 51367334,
+    "total_newlines_excluding_packet": 896826,
+    "sha256_excluding_packet": "e2be5417957a360748dd9c572ed3ef52dec6745867e332179efd67512a7c84b2",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -310,7 +318,7 @@
       "decision": "حوكمة واحتواء مسموحان تحت D-300؛ لا ميزة ولا ترقية قدرة."
     },
     "root_cause": "قواعد الأطلس كانت نثراً بلا فارض، وD-318 كُتب مكثّفاً بمنافذ، فكان «الإعلان» يقوم مقام الدليل.",
-    "intended_change": "فرض قواعد الأطلس القابلة للفحص في مواطنها؛ gate.py حتمي؛ عرض ATLAS_* مشتقّ وتوصية محسوبة؛ دستور D-319 ببوّابته واختباراته السلبية وتسجيله؛ وإبطال منافذ D-318 بالاقتباس.",
+    "intended_change": "فرض قواعد الأطلس القابلة للفحص في مواطنها؛ gate.py حتمي؛ عرض ATLAS_* مشتقّ وتوصية محسوبة؛ دستور D-319 ببوّابته واختباراته السلبية وتسجيله؛ وإبطال منافذ D-318 بالاقتباس. وإدخال النصّين الحرفيّين اللذين أكّدهما المالك مثبَّتين بالبايت (D-319B).",
     "affected_invariants": [
       "نصّ المالك الحرفي يغلب كلّ ملخّص؛ وبين الأطلس وقاعدةٍ قائمة يغلب الأشدّ.",
       "مستوى الدليل والقرار يحسبهما الكود؛ تغييرٌ يمسّ ملفّات المُتحقِّق يُحسب HOLD.",
@@ -331,7 +339,7 @@
       "pytest tests/fitness tests/shared tests/unit/tools"
     ],
     "non_goals": [
-      "لا يدخل النصّان الحرفيّان ولا بصمتا PDF قبل تأكيد المالك.",
+      "لا يُرفع ملفّا PDF الأصليان؛ تُحفظ بصمتهما وحجمهما وعدد صفحاتهما فقط، ولا يدخل سطر التوقيع.",
       "لا ميزة في المنصّة التعليمية ولا هجرة خدمات (D-300).",
       "لا يقرّر الكود PIVOT أو STOP، ولا يغيّر نموذجُ الفرص الأطروحةَ النشطة.",
       "لا يُرسَل بريد ولا يُوقَّع شيء باسم المالك."
@@ -349,10 +357,11 @@
       "atlas_view_and_recommendation": "TESTED",
       "d318_wiring_fix": "TESTED",
       "decision_chamber_shows_atlas": "ASSUMED",
-      "verbatim_transcriptions": "UNKNOWN",
       "opportunity_score_validity": "UNKNOWN",
       "no_personal_data_committed": "TESTED",
-      "branch_protection_live_state": "UNKNOWN"
+      "branch_protection_live_state": "UNKNOWN",
+      "verbatim_texts_pinned": "TESTED",
+      "verbatim_transcription_fidelity": "ASSUMED"
     }
   },
   "evidence_report": {
@@ -376,7 +385,9 @@
         "README.md",
         "docs/DOCUMENTATION_INDEX.md",
         "docs/DOCUMENTATION_MANIFEST.json",
+        "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
         "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+        "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
         "docs/commercial/OFFER_CATALOG.json",
         "docs/commercial/VALUE_CHAIN.json",
         "docs/governance/CONSTITUTION_REGISTRY.json",
@@ -384,6 +395,7 @@
         "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
         "docs/governance/NEGATIVE_PROOFS.json",
         "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
+        "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
         "scripts/fitness/check_code_acceptance.py",
         "scripts/fitness/check_engineering_governance.py",
         "scripts/fitness/check_evidence_proportionality_constitution.py",
@@ -423,7 +435,9 @@
         "README.md",
         "docs/DOCUMENTATION_INDEX.md",
         "docs/DOCUMENTATION_MANIFEST.json",
+        "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
         "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+        "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
         "docs/commercial/OFFER_CATALOG.json",
         "docs/commercial/VALUE_CHAIN.json",
         "docs/governance/CONSTITUTION_REGISTRY.json",
@@ -431,6 +445,7 @@
         "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
         "docs/governance/NEGATIVE_PROOFS.json",
         "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
+        "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
         "scripts/fitness/check_code_acceptance.py",
         "scripts/fitness/check_engineering_governance.py",
         "scripts/fitness/check_evidence_proportionality_constitution.py",
@@ -463,12 +478,15 @@
       "AGENTS.md",
       "CLAUDE.md",
       "ENGINEERING_CONSTITUTION.md",
+      "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
       "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
+      "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
       "docs/governance/CONSTITUTION_REGISTRY.json",
       "docs/governance/D319_IMMUTABLE_TEXT.json",
       "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
       "docs/governance/NEGATIVE_PROOFS.json",
       "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
+      "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
       "scripts/fitness/check_code_acceptance.py",
       "scripts/fitness/check_engineering_governance.py",
       "scripts/fitness/check_evidence_proportionality_constitution.py",
@@ -485,14 +503,15 @@
       "shared/research/economic_decision.build_brief: مفتاحان جديدان decide_by وdecision_owner_ar (إضافة لا تغيير).",
       "shared/research/value_chain.problems: معاملٌ اختياري جديد supported_claims (القيمة الافتراضية فارغة).",
       "tools/hard_currency_engine/buyer_claims.findings/classify: معاملٌ اختياري جديد rail_supported (افتراضه False).",
-      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json: ثلاثة حقول إلزامية جديدة قبل التعديل، وأربعة مسارات محمية جديدة."
+      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json: ثلاثة حقول إلزامية جديدة قبل التعديل، وأربعة مسارات محمية جديدة.",
+      "docs/governance/D319_IMMUTABLE_TEXT.json: قائمة verbatim_texts جديدة وحالة CONFIRMED_BY_OWNER؛ ومساران محميّان جديدان للنصّين الحرفيّين."
     ],
     "evidence": {
       "reachability_trace": "ci.yml guardrails → python scripts/fitness/check_founder_atlas_constitution.py؛ ci.yml → scripts/fitness/check_code_acceptance.py → shared.evidence.gate.report_problems؛ scripts/fitness/check_value_chain.py → shared.research.value_chain.problems؛ economic_truth.build_snapshot → atlas_view → economic_decision.build_brief.",
       "tests": {
-        "passed": 270,
+        "passed": 278,
         "failed": 0,
-        "new_negative_cases": 27,
+        "new_negative_cases": 35,
         "files": [
           "tests/fitness/test_founder_atlas_constitution_gate.py",
           "tests/fitness/test_evidence_proportionality_constitution_gate.py",
@@ -507,7 +526,7 @@
           "tests/unit/tools/test_hard_currency_engine.py",
           "tests/unit/tools/test_outreach_truth.py"
         ],
-        "note_ar": "270 اختباراً في الملفّات الاثني عشر تمرّ محلياً. ولا يُحتسَب من الحالات السلبية إلّا ما حُفظ خرجه أحمر قبل الإصلاح: 9 + 10 + 1 + 5 + 2 = 27."
+        "note_ar": "278 اختباراً في الملفّات الاثني عشر تمرّ محلياً. ولا يُحتسَب من الحالات السلبية إلّا ما حُفظ خرجه أحمر قبل الإصلاح: 9 + 10 + 1 + 5 + 2 + 8 = 35."
       },
       "vacuity_probe": "not_run",
       "mutation_score": {
@@ -531,8 +550,8 @@
         "why": "لا يُستدعى أيّ مسارٍ حيّ؛ الأثر حسابٌ على ملفّات المستودع فقط."
       },
       {
-        "what": "النصّان الحرفيّان للوثيقتين وبصمتا ملفّي PDF",
-        "why": "لم يؤكّدهما المالك بعد؛ هما خارج هذا التغيير ويدخلان بسجلّ تعديلٍ جديد."
+        "what": "أمانة النسخ الحرفي للوثيقتين مقابل صور الصفحات",
+        "why": "قورنت كل صفحةٍ آلياً بطبقة النص في PDF وأكّد المالك النسخ، لكن لم يقرأه قارئٌ ثانٍ مستقلّ؛ البصمة تثبت أنّ النصّ لم يتغيّر بعد التأكيد، لا أنّه مطابقٌ للأصل."
       },
       {
         "what": "ثمانية اختبارات تفشل محلياً (correlated_http ×3 · e2e_deferred_findings ×3 · no_double_encoded_frames ×1 · phase0 f3 tracing ×1)",
