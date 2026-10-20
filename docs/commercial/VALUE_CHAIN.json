@@ -179,7 +179,9 @@
       "source": "docs/commercial/REVENUE_OPPORTUNITY_MAP_2026-09-29.csv",
       "catalog_id": "ai-red-teaming-multilingual",
       "workbench": "redteam",
-      "ledger_routes": [],
+      "ledger_routes": [
+        "AI_REDTEAM_TARGETS_2026-10-20.csv"
+      ],
       "reused_assets": [
         {
           "path": ".memory/issues.md",
