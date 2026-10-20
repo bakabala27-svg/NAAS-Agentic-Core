@@ -147,3 +147,60 @@ def test_pre_modification_names_non_goals_acceptance_criteria_and_operating_cost
     and what it may cost to run."""
     required = set(_policy()["pre_modification_packet"]["required_fields"])
     assert {"non_goals", "acceptance_criteria", "target_operating_cost"} <= required
+
+
+# ── D-321 «الألم أولاً»: كود المنتج يُقبَل لمسارٍ تكلّم مشتروه، أو صيانةً لا تضيف شيئاً ──
+
+
+_LICENSED = {"id": "P-OK", "code_licensed": True}
+_UNLICENSED = {"id": "P-NO", "code_licensed": False}
+
+
+def _demand_packet(**trace: object) -> dict:
+    return {"commercial_trace": dict(trace)}
+
+
+def _demand_failures(packet: dict, paths: list[str], added: list[str] | None = None) -> list[str]:
+    return acceptance_gate.validate_demand_first(
+        packet, paths, added or [], _policy(), [_LICENSED, _UNLICENSED]
+    )
+
+
+def test_product_code_without_a_change_class_is_rejected() -> None:
+    failures = _demand_failures(_demand_packet(), ["naas_verifier/core/verdict.py"])
+    assert "D-321" in "\n".join(failures)
+
+
+def test_governance_and_research_code_needs_no_demand_class() -> None:
+    paths = ["shared/research/value_chain.py", "scripts/fitness/x.py", "docs/a.md", "tests/t.py"]
+    assert _demand_failures(_demand_packet(), paths) == []
+
+
+def test_a_path_whose_buyers_have_not_spoken_does_not_license_code() -> None:
+    packet = _demand_packet(change_class="DEMAND_LICENSED", value_chain_path_ids=["P-NO"])
+    assert _demand_failures(packet, ["app/services/x.py"]) != []
+
+
+def test_a_licensed_path_licenses_product_code() -> None:
+    packet = _demand_packet(change_class="DEMAND_LICENSED", value_chain_path_ids=["P-OK"])
+    assert _demand_failures(packet, ["app/services/x.py"]) == []
+
+
+def test_maintenance_may_not_add_product_files() -> None:
+    packet = _demand_packet(
+        change_class="MAINTENANCE_KEEP_CI_HONEST", maintenance_reason_ar="إصلاح اختبار"
+    )
+    failures = _demand_failures(packet, ["app/new.py"], added=["app/new.py"])
+    assert "app/new.py" in "\n".join(failures)
+
+
+def test_maintenance_must_say_why() -> None:
+    packet = _demand_packet(change_class="MAINTENANCE_KEEP_CI_HONEST")
+    assert _demand_failures(packet, ["app/services/x.py"]) != []
+
+
+def test_maintenance_that_only_modifies_passes() -> None:
+    packet = _demand_packet(
+        change_class="MAINTENANCE_KEEP_CI_HONEST", maintenance_reason_ar="إصلاح اختبار أحمر"
+    )
+    assert _demand_failures(packet, ["app/services/x.py"]) == []

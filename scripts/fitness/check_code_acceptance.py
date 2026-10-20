@@ -23,6 +23,7 @@ EVIDENCE = ROOT / "docs/research/EVIDENCE_CATALOG.json"
 CURRICULUM = ROOT / "docs/research/CURRICULUM_APPLICATION_MATRIX.json"
 OFFERS = ROOT / "docs/commercial/OFFER_CATALOG.json"
 GOVERNANCE_POLICY = ROOT / "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json"
+VALUE_CHAIN = ROOT / "docs/commercial/VALUE_CHAIN.json"
 WORKFLOWS = ROOT / ".github/workflows"
 FAILURES: list[str] = []
 PACKET_REL = "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json"
@@ -129,6 +130,87 @@ def current_deleted_paths() -> list[str]:
         ):
             paths.update(line.strip() for line in run_git(args).splitlines() if line.strip())
     return sorted(paths)
+
+
+def current_added_paths() -> list[str]:
+    """Paths the change adds; D-321 maintenance may modify product code, never add to it."""
+    base = os.environ.get("CODE_ACCEPTANCE_BASE_SHA", "").strip()
+    paths: set[str] = set()
+    if base:
+        paths.update(
+            line.strip()
+            for line in run_git(
+                ["diff", "--name-only", "--diff-filter=A", f"{base}...HEAD"]
+            ).splitlines()
+            if line.strip()
+        )
+    else:
+        for args in (
+            ["diff", "--name-only", "--diff-filter=A"],
+            ["diff", "--cached", "--name-only", "--diff-filter=A"],
+        ):
+            paths.update(line.strip() for line in run_git(args).splitlines() if line.strip())
+        for line in run_git(["status", "--porcelain=v1", "--untracked-files=all"]).splitlines():
+            if line.startswith("?? "):
+                paths.add(line[3:].strip())
+    return sorted(paths)
+
+
+def _is_product_code(path: str, rules: dict) -> bool:
+    product = [str(prefix) for prefix in rules.get("product_code_prefixes", [])]
+    excluded = [str(prefix) for prefix in rules.get("non_product_prefixes", [])]
+    return any(path.startswith(prefix) for prefix in product) and not any(
+        path.startswith(prefix) for prefix in excluded
+    )
+
+
+def validate_demand_first(
+    packet: dict,
+    actual_paths: list[str],
+    added_paths: list[str],
+    policy: dict,
+    derived_paths: list[dict],
+) -> list[str]:
+    """D-321 «الألم أولاً»: product code is accepted for a value-chain path whose ledger shows
+    three replying entities and an evidenced payer, or as maintenance that adds no file."""
+    rules = policy.get("demand_first")
+    if not isinstance(rules, dict) or not rules.get("product_code_prefixes"):
+        return ["policy has no demand_first.product_code_prefixes (D-321)"]
+    product = [path for path in actual_paths if _is_product_code(path, rules)]
+    if not product:
+        return []
+    trace = packet.get("commercial_trace")
+    trace = trace if isinstance(trace, dict) else {}
+    change_class = trace.get("change_class")
+    if change_class == "MAINTENANCE_KEEP_CI_HONEST":
+        failures: list[str] = []
+        if not str(trace.get("maintenance_reason_ar") or "").strip():
+            failures.append("D-321: maintenance of product code needs maintenance_reason_ar")
+        added = sorted(path for path in added_paths if _is_product_code(path, rules))
+        if added:
+            failures.append(f"D-321: maintenance may not add product files: {added}")
+        return failures
+    if change_class != "DEMAND_LICENSED":
+        return [
+            f"D-321: {len(product)} product-code path(s) change (e.g. {product[:3]}) without "
+            "commercial_trace.change_class DEMAND_LICENSED or MAINTENANCE_KEEP_CI_HONEST"
+        ]
+    ids = trace.get("value_chain_path_ids")
+    named = [str(item) for item in ids] if isinstance(ids, list) else []
+    by_id = {str(item.get("id")): item for item in derived_paths if isinstance(item, dict)}
+    if not any(by_id.get(item, {}).get("code_licensed") is True for item in named):
+        return [
+            f"D-321: none of value_chain_path_ids {named} is code_licensed — three replying "
+            "entities in the ledger and an evidenced payer come before product code"
+        ]
+    return []
+
+
+def _derived_value_chain_paths() -> list[dict]:
+    payload = load(VALUE_CHAIN, "value chain")
+    derived = payload.get("derived") if isinstance(payload, dict) else None
+    paths = derived.get("paths") if isinstance(derived, dict) else None
+    return [item for item in paths if isinstance(item, dict)] if isinstance(paths, list) else []
 
 
 def load_governance_policy() -> dict | None:
@@ -443,6 +525,14 @@ def main() -> int:
     if verification.get("result") != "PASS" or not verification.get("commands"):
         fail("verification must include commands and PASS result")
     for violation in validate_verification_claims(packet, _workflow_text()):
+        fail(violation)
+    for violation in validate_demand_first(
+        packet,
+        actual_paths_excluding_packet,
+        current_added_paths(),
+        governance_policy,
+        _derived_value_chain_paths(),
+    ):
         fail(violation)
     if packet.get("decision") != "D-277":
         fail("packet must be governed by D-277")

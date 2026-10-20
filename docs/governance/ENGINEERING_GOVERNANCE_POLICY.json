@@ -43,6 +43,29 @@
       "BLOCKED_PENDING_FOUNDATIONAL_REPAIR"
     ]
   },
+  "demand_first": {
+    "decision": "D-321",
+    "rule": "Product code is accepted only for a value-chain path whose ledger shows three replying entities and an evidenced payer (DEMAND_LICENSED), or as MAINTENANCE_KEEP_CI_HONEST that adds no product file.",
+    "product_code_prefixes": [
+      "app/",
+      "microservices/",
+      "naas_verifier/",
+      "frontend/",
+      "tools/cbam/",
+      "tools/fr_einvoicing/",
+      "tools/hard_currency_engine/",
+      "shared/"
+    ],
+    "non_product_prefixes": [
+      "shared/research/",
+      "shared/evidence/"
+    ],
+    "non_product_reason": "shared/research and shared/evidence are the commercial-evidence and evidence-gate machinery that enforces this rule; they build no product a buyer pays for.",
+    "change_classes": [
+      "DEMAND_LICENSED",
+      "MAINTENANCE_KEEP_CI_HONEST"
+    ]
+  },
   "protected_paths": [
     "ENGINEERING_CONSTITUTION.md",
     "AGENTS.md",
@@ -67,6 +90,10 @@
     "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
     "scripts/fitness/check_founder_atlas_constitution.py",
     "tests/fitness/test_founder_atlas_constitution_gate.py",
+    "docs/architecture/DEMAND_FIRST_CONSTITUTION.md",
+    "docs/governance/D321_IMMUTABLE_TEXT.json",
+    "scripts/fitness/check_demand_first_constitution.py",
+    "tests/fitness/test_demand_first_constitution_gate.py",
     ".memory/project_diagnostic_truth.md",
     "scripts/ci_guardrails.py",
     "scripts/ci/**"
