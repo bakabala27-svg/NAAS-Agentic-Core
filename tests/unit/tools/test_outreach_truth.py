@@ -61,7 +61,8 @@ DEMO = OUTREACH / "demo"
 DEMO_REPORT_DATE = date(2026, 9, 29)
 WEDGE_ID = "fr-be-einvoicing-referential-cleansing"
 
-#: The files the owner copies into an email, a call or a profile for the active wedge.
+#: The files the owner copies into an email, a call or a profile for the active wedge,
+#: plus the message and evidence note of the D-320 buyer test (OPP-04).
 #: ``04_SCRIPTS_EXPANSION_GLOBAL.md`` is not listed: its corridors 3→9 are frozen
 #: (D-300) and its header says so.
 SEND_FILES = (
@@ -70,6 +71,8 @@ SEND_FILES = (
     OUTREACH / "ready_to_send/02_PARTENARIATS_PDP.md",
     MALT,
     KIT,
+    OUTREACH / "ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+    OUTREACH / "AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
 )
 
 #: Verdicts that block a line from being sent. HYPOTHESIS_ONLY is not here: the email
