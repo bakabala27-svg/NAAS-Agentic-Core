@@ -15,7 +15,7 @@ import ast
 import copy
 import hashlib
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
@@ -38,6 +38,8 @@ from shared.research.economic_decision import (
 )
 from shared.research.economic_truth import (
     ACTIVE_THESIS_ID,
+    ATLAS_GATES,
+    ATLAS_STATUSES,
     CLAIMS,
     DECISIONS_REL,
     FIRED,
@@ -45,6 +47,7 @@ from shared.research.economic_truth import (
     NOT_YET_EVALUABLE,
     SETTLEMENT_VIEW,
     UNKNOWN,
+    atlas_view,
     build_snapshot,
     load_inputs,
 )
@@ -508,3 +511,96 @@ def test_value_chain_activation_claims_are_economic_truth_claims() -> None:
     assert all(
         claim.basis == "unrecorded" for claim in CLAIMS if claim.claim_id in ACTIVATION_CLAIMS
     )
+
+
+# ── D-319: the Atlas decision gates as a computed view (Phase 11 of the master audit) ──
+
+
+def _gate_snapshot(supported: set[str], fired: set[str] = frozenset()) -> dict[str, object]:
+    return {
+        "claims": [
+            {"claim_id": c.claim_id, "status": "SUPPORTED" if c.claim_id in supported else UNKNOWN}
+            for c in CLAIMS
+        ],
+        "kill_conditions": [
+            {"kill_id": k.kill_id, "status": FIRED if k.kill_id in fired else NOT_YET_EVALUABLE}
+            for k in KILL_CONDITIONS
+        ],
+    }
+
+
+def test_every_claim_answers_the_final_reporting_standard() -> None:
+    """Atlas final reporting standard: no conclusion leaves a question unanswered or a dash."""
+    empty = [
+        (claim.claim_id, field)
+        for claim in CLAIMS
+        for field, value in vars(claim).items()
+        if not str(value).strip() or str(value).strip() in {"—", "-"}
+    ]
+    assert empty == []
+
+
+def test_atlas_gates_map_onto_existing_claims_and_kill_conditions() -> None:
+    """No new ladder (D-314): each gate reads claims and kill conditions that already exist."""
+    claim_ids = {claim.claim_id for claim in CLAIMS}
+    kill_ids = {kill.kill_id for kill in KILL_CONDITIONS}
+    assert [gate.gate_id for gate in ATLAS_GATES] == [
+        "ATLAS_A_PROBLEM",
+        "ATLAS_B_MARKET",
+        "ATLAS_C_PAYMENT",
+        "ATLAS_D_VALUE",
+        "ATLAS_E_ENGINEERING",
+        "ATLAS_F_ECONOMICS",
+        "ATLAS_G_RETENTION",
+        "ATLAS_H_SCALE",
+    ]
+    for gate in ATLAS_GATES:
+        assert gate.claim_ids and set(gate.claim_ids) <= claim_ids, gate.gate_id
+        assert set(gate.kill_ids) <= kill_ids, gate.gate_id
+        assert all(token.startswith("ATLAS_") for token in ATLAS_STATUSES)
+
+
+def test_nothing_supported_assumes_every_open_gate_and_blocks_the_later_ones() -> None:
+    view = atlas_view(_gate_snapshot(set()))
+    status = {gate["gate_id"]: gate["status"] for gate in view["gates"]}
+    assert status["ATLAS_A_PROBLEM"] == "ATLAS_ASSUMED"
+    assert status["ATLAS_G_RETENTION"] == "ATLAS_BLOCKED"
+    assert status["ATLAS_H_SCALE"] == "ATLAS_BLOCKED"
+    assert view["recommendation"] == "REVISE"
+
+
+def test_a_fired_kill_condition_fails_its_gate_and_hands_the_decision_to_the_owner() -> None:
+    """A failed gate triggers a documented action and is never hidden (Atlas Phase 11); the
+    code never says PIVOT or STOP itself (D-318: the generator does not decide)."""
+    view = atlas_view(_gate_snapshot(set(), fired={"K1"}))
+    status = {gate["gate_id"]: gate["status"] for gate in view["gates"]}
+    assert status["ATLAS_B_MARKET"] == "ATLAS_FAILED"
+    assert view["recommendation"] == "OWNER_DECISION_REQUIRED"
+    assert view["owner_options"] == ["PIVOT", "STOP"]
+
+
+def test_every_claim_supported_and_nothing_fired_gives_go() -> None:
+    view = atlas_view(_gate_snapshot({claim.claim_id for claim in CLAIMS}))
+    assert {gate["status"] for gate in view["gates"]} == {"ATLAS_PROVEN"}
+    assert view["recommendation"] == "GO"
+
+
+def test_some_claims_supported_is_partially_proven() -> None:
+    view = atlas_view(_gate_snapshot({"C-L1"}))
+    status = {gate["gate_id"]: gate["status"] for gate in view["gates"]}
+    assert status["ATLAS_A_PROBLEM"] == "ATLAS_PARTIALLY_PROVEN"
+
+
+def test_real_atlas_view_recommends_revise_and_names_the_first_unproven_gate(real) -> None:
+    atlas = real["snapshot"]["atlas"]
+    assert atlas["recommendation"] in {"REVISE", "OWNER_DECISION_REQUIRED"}
+    assert atlas["recommendation"] not in {"PIVOT", "STOP"}
+    assert atlas["first_unproven_gate"] in {gate.gate_id for gate in ATLAS_GATES}
+
+
+def test_the_brief_names_a_decision_date_one_week_out(real) -> None:
+    """Atlas §14.2: the weekly meeting ends with a decision, an owner, a date and a criterion."""
+    brief = real["brief"]
+    today = date.fromisoformat(str(real["snapshot"]["today"]))
+    assert brief["decide_by"] == (today + timedelta(days=7)).isoformat()
+    assert str(brief["decision_owner_ar"]).startswith("المالك")

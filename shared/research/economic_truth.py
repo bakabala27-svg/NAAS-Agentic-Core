@@ -64,26 +64,39 @@ from shared.research.value_chain import (
 __all__ = [
     "ACTIVE_THESIS_DECISION",
     "ACTIVE_THESIS_ID",
+    "ATLAS_ASSUMED",
+    "ATLAS_BLOCKED",
+    "ATLAS_FAILED",
+    "ATLAS_GATES",
+    "ATLAS_PARTIALLY_PROVEN",
+    "ATLAS_PROVEN",
+    "ATLAS_STATUSES",
     "CATALOG_WORDING_FIELDS",
     "CLAIMS",
     "CLAIM_STATUSES",
     "DECISIONS_REL",
     "FIRED",
+    "GO",
     "HOLDING",
     "KILL_CONDITIONS",
     "NOT_RECORDABLE",
     "NOT_SUPPORTED",
     "NOT_YET_EVALUABLE",
+    "OWNER_DECISION_REQUIRED",
+    "OWNER_OPTIONS",
+    "REVISE",
     "SCORECARD_ID",
     "SETTLEMENT_VIEW",
     "SUPPORTED",
     "UNKNOWN",
     "VALUE_CHAIN_ID",
+    "AtlasGate",
     "Claim",
     "Inputs",
     "KillCondition",
     "SettlementState",
     "WordingLinter",
+    "atlas_view",
     "build_snapshot",
     "load_inputs",
 ]
@@ -240,10 +253,10 @@ CLAIMS: tuple[Claim, ...] = (
         "نسبة الأخطاء في ملفّات الأطراف الثالثة الحقيقية معروفة",
         "قياسٌ على ملفّاتٍ حقيقية من عدّة مكاتب",
         "عدّة مكاتب محاسبة",
-        "—",
+        "قياسٌ على ملفّاتٍ حقيقية من عدّة مكاتب يُظهر نسبةً غير التي تُقال",
         "الاستقراء من ملفَّي العرض المُصنَّعَين",
         "صياغة العرض ونطاق السعر",
-        "—",
+        "يسقط بقياسٍ أحدث على ملفّاتٍ حقيقية يناقضه أو بتغيّر قواعد التوجيه",
     ),
     Claim(
         "C-MARGIN",
@@ -255,7 +268,7 @@ CLAIMS: tuple[Claim, ...] = (
         "مهمّةٌ تستهلك ساعاتٍ أكثر من ثمنها",
         "اعتبار «كلفة النموذج صفر» ربحاً",
         "السعر الواحد 290 €",
-        "—",
+        "يسقط حين تتجاوز ساعاتُ مهمّةٍ مسجَّلة ثمنَها أو يتغيّر السعر",
     ),
     Claim(
         "C-RAIL",
@@ -267,7 +280,7 @@ CLAIMS: tuple[Claim, ...] = (
         "رفض البنك أو Malt بلا بديل (شرط قتل)",
         "افتراض أنّ Malt يُحوِّل إلى الجزائر",
         "إرسال عرض سعرٍ مدفوع",
-        "—",
+        "يسقط بتغيّر شروط البنك أو Malt أو بدفعةٍ مرفوضة",
     ),
     Claim(
         "C-LEGAL",
@@ -279,7 +292,7 @@ CLAIMS: tuple[Claim, ...] = (
         "رفض التسجيل",
         "البيع قبل التسجيل",
         "قانونية الفاتورة الأولى",
-        "—",
+        "يسقط بانتهاء صلاحية البطاقة أو بتغيّر النشاط المسجَّل",
     ),
     Claim(
         "C-DPA",
@@ -291,7 +304,7 @@ CLAIMS: tuple[Claim, ...] = (
         "ملاحظاتٌ قانونية تمنع المعالجة",
         "عدّ وجود القالب مراجعةً له",
         "طلب ملفٍّ حقيقي من مكتب",
-        "—",
+        "يسقط بتعديل القالب بعد مراجعته أو بتغيّر النصّ القانوني الذي يستند إليه",
     ),
 )
 _CLAIMS_BY_ID: dict[str, Claim] = {claim.claim_id: claim for claim in CLAIMS}
@@ -362,6 +375,170 @@ FIRED = "FIRED"
 HOLDING = "HOLDING"
 NOT_YET_EVALUABLE = "NOT_YET_EVALUABLE"
 NOT_RECORDABLE = "NOT_RECORDABLE"
+
+
+# ── بوّابات الأطلس (D-319 · المرحلة 11 من تدقيق الأطلس) ─────────────────────────
+
+
+@dataclass(frozen=True)
+class AtlasGate:
+    """بوّابةٌ من الأطلس تُقرأ من ادّعاءاتٍ وشروط قتلٍ قائمة — لا سُلَّم ولا حالةٌ جديدة.
+
+    ``question_en`` سؤال الأطلس حرفياً. ``requires_proven``: بوّاباتٌ يجب أن تُثبَت قبلها.
+    """
+
+    gate_id: str
+    question_en: str
+    claim_ids: tuple[str, ...]
+    kill_ids: tuple[str, ...]
+    requires_proven: tuple[str, ...]
+
+
+ATLAS_PROVEN = "ATLAS_PROVEN"
+ATLAS_PARTIALLY_PROVEN = "ATLAS_PARTIALLY_PROVEN"
+ATLAS_ASSUMED = "ATLAS_ASSUMED"
+ATLAS_BLOCKED = "ATLAS_BLOCKED"
+ATLAS_FAILED = "ATLAS_FAILED"
+#: حالات الأطلس الخمس بسابقةٍ تمنع خلطها بحالات GATE_LEDGER أو السلّم (D-314).
+ATLAS_STATUSES: tuple[str, ...] = (
+    ATLAS_PROVEN,
+    ATLAS_PARTIALLY_PROVEN,
+    ATLAS_ASSUMED,
+    ATLAS_BLOCKED,
+    ATLAS_FAILED,
+)
+GO = "GO"
+REVISE = "REVISE"
+OWNER_DECISION_REQUIRED = "OWNER_DECISION_REQUIRED"
+#: ⛔ الكود لا يقول PIVOT ولا STOP أبداً: يعرضهما خيارين على المالك (D-318 · ED).
+OWNER_OPTIONS: tuple[str, ...] = ("PIVOT", "STOP")
+
+ATLAS_GATES: tuple[AtlasGate, ...] = (
+    AtlasGate(
+        "ATLAS_A_PROBLEM",
+        "Is a material customer problem demonstrated by credible evidence?",
+        ("C-L1", "C-L2", "C-L7"),
+        (),
+        (),
+    ),
+    AtlasGate(
+        "ATLAS_B_MARKET",
+        "Can we identify buyers, alternatives, budgets, and an accessible market?",
+        ("C-L7",),
+        ("K1", "K2"),
+        (),
+    ),
+    AtlasGate(
+        "ATLAS_C_PAYMENT",
+        "Has a buyer accepted a credible priced offer or made a purchase?",
+        # الأشدّ يغلب: «عرضٌ مقبول» في الأطلس يُقرأ هنا دفعةً مسوّاة (GATE_C).
+        ("C-PAID",),
+        ("K3", "K5"),
+        (),
+    ),
+    AtlasGate(
+        "ATLAS_D_VALUE",
+        "Does the solution produce a measured outcome that matters to the customer?",
+        ("C-L5", "C-L6"),
+        (),
+        (),
+    ),
+    AtlasGate(
+        "ATLAS_E_ENGINEERING",
+        "Does the solution meet the relevant quality, security, and operational requirements?",
+        ("C-L3", "C-L4", "C-DPA"),
+        (),
+        (),
+    ),
+    AtlasGate(
+        "ATLAS_F_ECONOMICS",
+        "Can delivery and acquisition costs support positive contribution margin and a "
+        "plausible path to profitability?",
+        ("C-MARGIN", "C-RAIL", "C-LEGAL"),
+        ("K4",),
+        ("ATLAS_C_PAYMENT",),
+    ),
+    AtlasGate(
+        "ATLAS_G_RETENTION",
+        "Do customers continue using, renewing, or repurchasing because the solution "
+        "remains valuable?",
+        ("C-REPEAT",),
+        (),
+        ("ATLAS_C_PAYMENT",),
+    ),
+    AtlasGate(
+        "ATLAS_H_SCALE",
+        "Can the business repeat acquisition and delivery without unacceptable degradation "
+        "in quality, cost, risk, or cash flow?",
+        ("C-REPEAT", "C-MARGIN", "C-RATE"),
+        (),
+        ("ATLAS_F_ECONOMICS", "ATLAS_G_RETENTION"),
+    ),
+)
+
+
+def atlas_view(snapshot: Mapping[str, object]) -> dict[str, object]:
+    """بوّابات الأطلس محسوبةً من ادّعاءات اللقطة وشروط قتلها — وتوصيةٌ لا تقرّر بدل المالك.
+
+    «A failed gate must trigger a documented action, not be hidden by success in another
+    area»: بوّابةٌ أُطلق شرط قتلها ``ATLAS_FAILED`` وتوصيتها ``OWNER_DECISION_REQUIRED``.
+    """
+    claims = {
+        str(item.get("claim_id")): item.get("status")
+        for item in _items(snapshot.get("claims"))
+        if isinstance(item, Mapping)
+    }
+    kills = {
+        str(item.get("kill_id")): item.get("status")
+        for item in _items(snapshot.get("kill_conditions"))
+        if isinstance(item, Mapping)
+    }
+    status_of: dict[str, str] = {}
+    gates: list[dict[str, object]] = []
+    for gate in ATLAS_GATES:
+        supported = [cid for cid in gate.claim_ids if claims.get(cid) == SUPPORTED]
+        fired = [kid for kid in gate.kill_ids if kills.get(kid) == FIRED]
+        blocked_by = [g for g in gate.requires_proven if status_of.get(g) != ATLAS_PROVEN]
+        if fired:
+            status = ATLAS_FAILED
+        elif blocked_by:
+            status = ATLAS_BLOCKED
+        elif len(supported) == len(gate.claim_ids):
+            status = ATLAS_PROVEN
+        else:
+            status = ATLAS_PARTIALLY_PROVEN if supported else ATLAS_ASSUMED
+        status_of[gate.gate_id] = status
+        gates.append(
+            {
+                "gate_id": gate.gate_id,
+                "question_en": gate.question_en,
+                "status": status,
+                "claims": [
+                    {"claim_id": cid, "status": claims.get(cid, UNKNOWN)} for cid in gate.claim_ids
+                ],
+                "fired_kill_conditions": fired,
+                "blocked_by": blocked_by,
+            }
+        )
+    statuses = set(status_of.values())
+    if ATLAS_FAILED in statuses:
+        recommendation = OWNER_DECISION_REQUIRED
+    elif statuses == {ATLAS_PROVEN}:
+        recommendation = GO
+    else:
+        recommendation = REVISE
+    return {
+        "gates": gates,
+        "recommendation": recommendation,
+        "owner_options": list(OWNER_OPTIONS) if recommendation == OWNER_DECISION_REQUIRED else [],
+        "first_unproven_gate": next(
+            (g.gate_id for g in ATLAS_GATES if status_of[g.gate_id] != ATLAS_PROVEN), None
+        ),
+        "rule_ar": (
+            "GO حين تُثبَت البوّابات الثماني ولا يُطلَق شرط قتل · REVISE ما بقيت بوّابةٌ "
+            "مفترَضة أو جزئية · شرط قتلٍ مُطلَق ⇒ قرار المالك بين PIVOT وSTOP (الأطلس · D-319)"
+        ),
+    }
 
 
 # ── عرض التسوية (لا سُلَّم: كلّ حالةٍ فعلٌ في السجلّ أو تُعلَن غير قابلةٍ للملاحظة) ─────
@@ -886,6 +1063,7 @@ def build_snapshot(
         if _mapping(value).get("value") is None
     ]
 
+    kill_conditions = [_kill_status(k, funnel, rows_in_thesis, today) for k in KILL_CONDITIONS]
     return {
         "today": today.isoformat(),
         "thesis": {
@@ -912,9 +1090,8 @@ def build_snapshot(
         ),
         "days_since_last_event": (today - last.date).days if last else None,
         "claims": claims,
-        "kill_conditions": [
-            _kill_status(k, funnel, rows_in_thesis, today) for k in KILL_CONDITIONS
-        ],
+        "atlas": atlas_view({"claims": claims, "kill_conditions": kill_conditions}),
+        "kill_conditions": kill_conditions,
         "entities": _entities(rows_in_thesis),
         "settlement_view": [asdict(state) for state in SETTLEMENT_VIEW],
         "missing_denominators": missing_denominators,

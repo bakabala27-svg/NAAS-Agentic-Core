@@ -25,7 +25,7 @@ import io
 import re
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 from shared.research.contact_ledger import (
@@ -475,8 +475,21 @@ def _row_template(action: Action, entity: Mapping[str, object] | None) -> dict[s
 # ── الموجز ───────────────────────────────────────────────────────────────────────
 
 
+#: الأطلس §14.2 (D-319): «يجب أن ينتهي الاجتماع بقرارٍ محدّد، ومسؤولٍ عنه، وموعدٍ، ومعيار نجاح».
+DECIDE_WITHIN_DAYS = 7
+
+
 def build_brief(snapshot: Mapping[str, object]) -> dict[str, object]:
-    """``EconomicDecisionBrief`` — فعلٌ أساسيٌّ واحد أو امتناعٌ بسببه."""
+    """``EconomicDecisionBrief`` — فعلٌ أساسيٌّ واحد أو امتناعٌ بسببه، بموعدٍ ومسؤول."""
+    today = date.fromisoformat(str(snapshot.get("today")))
+    return {
+        **_brief(snapshot),
+        "decide_by": (today + timedelta(days=DECIDE_WITHIN_DAYS)).isoformat(),
+        "decision_owner_ar": "المالك — القرار وموعده له وحده، والآلة لا تقرّر (الأطلس §14.2)",
+    }
+
+
+def _brief(snapshot: Mapping[str, object]) -> dict[str, object]:
     kills = _maps(snapshot.get("kill_conditions"))
     if not snapshot.get("ledger_valid"):
         return _no_decision(
