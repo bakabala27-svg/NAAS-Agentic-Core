@@ -108,6 +108,20 @@
       "status": "live"
     },
     {
+      "path": "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
+      "audience": "all-contributors",
+      "role": "founder-atlas-verbatim-owner-text",
+      "authority": "primary",
+      "status": "live"
+    },
+    {
+      "path": "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
+      "audience": "all-contributors",
+      "role": "evidence-proportionality-verbatim-owner-text",
+      "authority": "primary",
+      "status": "live"
+    },
+    {
       "path": "docs/architecture/ENGINEERING_MATURITY_MATRIX.md",
       "audience": "coding-agent",
       "role": "engineering-maturity-matrix",

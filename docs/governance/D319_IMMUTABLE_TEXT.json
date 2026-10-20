@@ -3,10 +3,34 @@
   "decision": "D-319",
   "mode": "BYTE_FOR_BYTE_IMMUTABLE_UNDER_CONSTITUTIONAL_AMENDMENT",
   "canonical_text": "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
-  "sha256": "001bd91238f93610ebdc8448446240f5033231dbce1d9b320e3a987352c12848",
-  "byte_count": 12832,
-  "verbatim_texts_status": "PENDING_OWNER_CONFIRMATION",
-  "verbatim_texts_ar": "النسخ الحرفي لـ«أطلس المؤسس العظيم» (40 صفحة) و«الصاروخ لا يُصدَّق بمنظره» (22 صفحة) وبصمتا ملفّي PDF لا تدخل هذا السجلّ قبل أن يؤكّدها المالك؛ تدخل بسجلّ تعديلٍ دستوريٍّ جديد.",
-  "rule_ar": "أي اختلاف بايت واحد يفشل البوابة. تغيير النص أو هذه البصمة تعديل دستوري محمي يحتاج سجل تعديل جديدًا ومراجعة بشرية مستقلة؛ لا يملك المؤلف التصديق على تغييره.",
+  "sha256": "730cd4ac32e5e14db38f37fc01db28d596c34949896e6cc4682e6e704ea5263b",
+  "byte_count": 13582,
+  "verbatim_texts_status": "CONFIRMED_BY_OWNER",
+  "verbatim_texts": [
+    {
+      "path": "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
+      "sha256": "33f33167676aafe5a3dfdf040ff7ac0467cb968a988afa85afe3e1281ee61c42",
+      "byte_count": 87007,
+      "source_title": "أطلس المؤسس العظيم",
+      "source_date": "2026-10-11",
+      "source_pdf_sha256": "eb42211fde27305fc720a5dfcd7681a5f5bcd6bac977ab764f6d2d8e799f557e",
+      "source_pdf_bytes": 1339086,
+      "source_pdf_pages": 40,
+      "confirmed_by_owner_on": "2026-10-20"
+    },
+    {
+      "path": "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
+      "sha256": "9c1e65cc0ba47b6ab0992a35070af5a5e60ba78c7e9f0b788fd558c380c45bee",
+      "byte_count": 76179,
+      "source_title": "الصاروخ لا يُصدَّق بمنظره",
+      "source_date": "2026-10-11",
+      "source_pdf_sha256": "676136eb7fb8e05996c271950a584eaf630bbd27925e1e756a2d23dc4f199be7",
+      "source_pdf_bytes": 790744,
+      "source_pdf_pages": 22,
+      "confirmed_by_owner_on": "2026-10-20"
+    }
+  ],
+  "verbatim_texts_ar": "النسخ الحرفي لـ«أطلس المؤسس العظيم» (40 صفحة) و«الصاروخ لا يُصدَّق بمنظره» (22 صفحة) أكّده المالك كما هو في 2026-10-20، فدخل هذا السجلّ بسجلّ التعديل D-319B. ملفّا PDF لا يُرفعان؛ تُحفظ بصمتهما وحجمهما وعدد صفحاتهما. والفرق الوحيد المقصود عن PDF: سطر التوقيع استُبدل بعبارة «وثيقة المالك المؤرخة في 2026-10-11».",
+  "rule_ar": "أي اختلاف بايت واحد في القانون أو في أيّ نصٍّ حرفي يفشل البوابة. تغيير النص أو هذه البصمة تعديل دستوري محمي يحتاج سجل تعديل جديدًا ومراجعة بشرية مستقلة؛ لا يملك المؤلف التصديق على تغييره.",
   "external_limit_ar": "يحرس هذا العقد مسار المستودع وCI؛ مدير المنصة الخارجي يستطيع تغيير الحماية، ولذلك يلزم تدقيق إعدادات GitHub مستقل."
 }

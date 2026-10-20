@@ -133,6 +133,107 @@ def test_a_commented_out_ci_line_is_not_wiring(tmp_path: Path, monkeypatch) -> N
     assert any("غير منفذ" in failure for failure in failures)
 
 
+def _verbatim_repo(tmp_path: Path, monkeypatch, **overrides: object) -> Path:
+    """مستودعٌ مصغّر: نصّان حرفيّان وبصمةٌ تطابقهما، ثمّ يُكسَر ما يُطلب كسره."""
+    entries = []
+    for rel in gate.VERBATIM_RELS:
+        path = tmp_path / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        data = f"# {rel}\nنصٌّ حرفي\n".encode()
+        path.write_bytes(data)
+        entries.append(
+            {
+                "path": rel,
+                "sha256": hashlib.sha256(data).hexdigest(),
+                "byte_count": len(data),
+                "source_title": "عنوان",
+                "source_pdf_sha256": "a" * 64,
+                "source_pdf_bytes": 1000,
+                "source_pdf_pages": 2,
+                "confirmed_by_owner_on": "2026-10-20",
+            }
+        )
+    pin_payload: dict[str, object] = {
+        "verbatim_texts_status": gate.VERBATIM_CONFIRMED,
+        "verbatim_texts": entries,
+    }
+    pin_payload.update(overrides)
+    pin = tmp_path / "pin.json"
+    pin.write_text(json.dumps(pin_payload), encoding="utf-8")
+    monkeypatch.setattr(gate, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(gate, "PIN", pin)
+    return tmp_path
+
+
+def _verbatim_failures() -> list[str]:
+    gate._FAILURES.clear()
+    gate.check_verbatim_pins()
+    return list(gate._FAILURES)
+
+
+def test_matching_verbatim_texts_pass(tmp_path: Path, monkeypatch) -> None:
+    _verbatim_repo(tmp_path, monkeypatch)
+    assert _verbatim_failures() == []
+
+
+def test_a_one_byte_change_in_a_verbatim_text_is_rejected(tmp_path: Path, monkeypatch) -> None:
+    root = _verbatim_repo(tmp_path, monkeypatch)
+    target = root / gate.VERBATIM_RELS[0]
+    target.write_bytes(target.read_bytes() + b"x")
+    assert any(gate.VERBATIM_RELS[0] in failure for failure in _verbatim_failures())
+
+
+def test_a_missing_verbatim_text_is_rejected(tmp_path: Path, monkeypatch) -> None:
+    root = _verbatim_repo(tmp_path, monkeypatch)
+    (root / gate.VERBATIM_RELS[1]).unlink()
+    assert any(gate.VERBATIM_RELS[1] in failure for failure in _verbatim_failures())
+
+
+def test_a_verbatim_text_still_pending_confirmation_is_rejected(
+    tmp_path: Path, monkeypatch
+) -> None:
+    _verbatim_repo(tmp_path, monkeypatch, verbatim_texts_status="PENDING_OWNER_CONFIRMATION")
+    assert any(gate.VERBATIM_CONFIRMED in failure for failure in _verbatim_failures())
+
+
+def test_a_dropped_verbatim_pin_is_rejected(tmp_path: Path, monkeypatch) -> None:
+    _verbatim_repo(tmp_path, monkeypatch, verbatim_texts=[])
+    failures = _verbatim_failures()
+    assert all(any(rel in failure for failure in failures) for rel in gate.VERBATIM_RELS)
+
+
+def test_a_verbatim_pin_without_its_source_pdf_hash_is_rejected(
+    tmp_path: Path, monkeypatch
+) -> None:
+    root = _verbatim_repo(tmp_path, monkeypatch)
+    pin = json.loads(gate.PIN.read_text(encoding="utf-8"))
+    pin["verbatim_texts"][0]["source_pdf_sha256"] = "not-a-hash"
+    gate.PIN.write_text(json.dumps(pin), encoding="utf-8")
+    assert root and any("source_pdf_sha256" in failure for failure in _verbatim_failures())
+
+
+def test_a_byline_in_a_verbatim_text_is_rejected(tmp_path: Path, monkeypatch) -> None:
+    """سطر التوقيع (تاريخ · @حساب) لا يدخل المستودع العامّ؛ الشكل يُرفض لا الاسم."""
+    root = _verbatim_repo(tmp_path, monkeypatch)
+    target = root / gate.VERBATIM_RELS[0]
+    data = target.read_bytes() + "Oct 11, 2026 · @someone\n".encode()
+    target.write_bytes(data)
+    pin = json.loads(gate.PIN.read_text(encoding="utf-8"))
+    pin["verbatim_texts"][0].update(sha256=hashlib.sha256(data).hexdigest(), byte_count=len(data))
+    gate.PIN.write_text(json.dumps(pin), encoding="utf-8")
+    assert any("توقيع" in failure for failure in _verbatim_failures())
+
+
+def test_unprotected_verbatim_texts_are_rejected(tmp_path: Path, monkeypatch) -> None:
+    policy = tmp_path / "policy.json"
+    policy.write_text(
+        json.dumps({"protected_paths": [gate.LAW_REL, gate.PIN_REL, gate.GATE_REL, gate.TEST_REL]}),
+        encoding="utf-8",
+    )
+    failures = _run(gate.check_protected_artifacts, monkeypatch, POLICY=policy)
+    assert set(gate.VERBATIM_RELS) <= {failure.rsplit(": ", 1)[-1] for failure in failures}
+
+
 def test_unprotected_artifacts_are_rejected(tmp_path: Path, monkeypatch) -> None:
     policy = tmp_path / "policy.json"
     policy.write_text(json.dumps({"protected_paths": []}), encoding="utf-8")

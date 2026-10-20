@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """بوابة دستور أطلس المؤسس — «لا سحر بلا دليل» (D-319).
 
-تفشل البوابة عند نقص القانون أو تغيّر بايتٍ واحد منه، أو فكّ ربطه من سجلّ السلطة ونقاط
-الدخول وCI، أو حذف حكمٍ على منفذٍ من منافذ D-318، أو غياب موطنٍ مسمّى لقاعدةٍ مفروضة
-(ملفٌّ محذوف أو رمزٌ أُزيل)، أو إخراج الأصول الحاكمة من الحماية. فحصٌ بنيوي لا يدّعي
-إثبات صحة الإنتاج. Exit 0 = العقد حاضر وموصول؛ Exit 1 = انتهاك.
+تفشل البوابة عند نقص القانون أو تغيّر بايتٍ واحد منه أو من النصّين الحرفيّين اللذين أكّدهما
+المالك، أو فكّ ربطه من سجلّ السلطة ونقاط الدخول وCI، أو حذف حكمٍ على منفذٍ من منافذ D-318،
+أو غياب موطنٍ مسمّى لقاعدةٍ مفروضة (ملفٌّ محذوف أو رمزٌ أُزيل)، أو إخراج الأصول الحاكمة من
+الحماية. فحصٌ بنيوي لا يدّعي إثبات صحة الإنتاج. Exit 0 = العقد حاضر وموصول؛ Exit 1 = انتهاك.
 """
 
 from __future__ import annotations
@@ -35,13 +35,24 @@ CONSTITUTION_ID = "D-319"
 CONSTITUTION_SECTION = "0.31"
 GATE_NAME = Path(GATE_REL).name
 
+#: النصّان الحرفيّان لوثيقتَي المالك (2026-10-11)، مثبَّتان بالبايت في PIN بعد تأكيده.
+VERBATIM_RELS = (
+    "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
+    "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
+)
+VERBATIM_CONFIRMED = "CONFIRMED_BY_OWNER"
+_SHA256 = re.compile(r"[0-9a-f]{64}")
+_ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+#: شكل سطر التوقيع في ملفّ PDF (تاريخ · @حساب). يُرفض الشكل، فلا يُكتب اسمٌ في الفارض.
+_BYLINE = re.compile(r"(?m)^[A-Z][a-z]{2} \d{1,2}, \d{4} · @\S+")
+
 REQUIRED_MARKERS = (
     "لا سحر بلا دليل",
     "لا يجوز تجاوز حكمٍ أو إسقاط معنى أو تخفيف قيد أو تغيير حرف",
     "اختلاف بايت واحد يجعل البوابة حمراء",
     "نصّ المالك الحرفي يغلب كل ملخّص",
     "الأشدّ يغلب",
-    "معلَّقان على تأكيد المالك",
+    "أكّد المالك النسخ",
     "لا تقول PIVOT ولا STOP",
     "لا يستطيع نص داخل المستودع",
     "مراجعة بشرية مستقلة",
@@ -171,6 +182,54 @@ def check_byte_pin() -> None:
         _fail("عدد بايتات D-319 لا يطابق السجل القانوني")
 
 
+def _verbatim_entry_problems(entry: dict, rel: str) -> list[str]:
+    path = REPO_ROOT / rel
+    if not path.is_file():
+        return [f"النصّ الحرفي غائب: {rel}"]
+    data = path.read_bytes()
+    problems: list[str] = []
+    if entry.get("sha256") != hashlib.sha256(data).hexdigest():
+        problems.append(f"اختلف بايت من النصّ الحرفي عن بصمته: {rel}")
+    if entry.get("byte_count") != len(data):
+        problems.append(f"عدد بايتات النصّ الحرفي لا يطابق البصمة: {rel}")
+    if not _SHA256.fullmatch(str(entry.get("source_pdf_sha256", ""))):
+        problems.append(f"source_pdf_sha256 غير صالح لـ {rel}")
+    pages = entry.get("source_pdf_pages")
+    if not isinstance(pages, int) or isinstance(pages, bool) or pages < 1:
+        problems.append(f"source_pdf_pages غير صالح لـ {rel}")
+    if not _ISO_DATE.fullmatch(str(entry.get("confirmed_by_owner_on", ""))):
+        problems.append(f"confirmed_by_owner_on غير صالح لـ {rel}")
+    if _BYLINE.search(data.decode("utf-8", errors="replace")):
+        problems.append(f"سطر توقيعٍ باسم حسابٍ داخل النصّ الحرفي: {rel}")
+    return problems
+
+
+def check_verbatim_pins() -> None:
+    """النصّان الحرفيّان موجودان ومطابقان لبصمتهما بالبايت، ومؤكَّدان من المالك."""
+    if not PIN.is_file():
+        return
+    try:
+        pin = json.loads(_read(PIN))
+    except json.JSONDecodeError as error:
+        _fail(f"ملف البصمة JSON غير صالح: {error}")
+        return
+    if pin.get("verbatim_texts_status") != VERBATIM_CONFIRMED:
+        _fail(f"حالة النصّين الحرفيّين ليست {VERBATIM_CONFIRMED}")
+    entries = pin.get("verbatim_texts")
+    by_path = {
+        str(entry.get("path")): entry
+        for entry in (entries if isinstance(entries, list) else [])
+        if isinstance(entry, dict)
+    }
+    for rel in VERBATIM_RELS:
+        entry = by_path.get(rel)
+        if entry is None:
+            _fail(f"لا بصمة للنصّ الحرفي: {rel}")
+            continue
+        for problem in _verbatim_entry_problems(entry, rel):
+            _fail(problem)
+
+
 def check_registry_entry() -> None:
     if not REGISTRY.is_file():
         return
@@ -248,7 +307,7 @@ def check_protected_artifacts() -> None:
         _fail(f"سياسة الحوكمة JSON غير صالحة: {error}")
         return
     protected = [str(pattern) for pattern in policy.get("protected_paths", [])]
-    for rel in (LAW_REL, PIN_REL, GATE_REL, TEST_REL):
+    for rel in (LAW_REL, PIN_REL, GATE_REL, TEST_REL, *VERBATIM_RELS):
         if not _covered_by_pattern(rel, protected):
             _fail(f"الأصل الحاكم غير محمي بسياسة التعديل: {rel}")
 
@@ -260,6 +319,7 @@ def main() -> int:
     check_escape_hatches()
     check_homes()
     check_byte_pin()
+    check_verbatim_pins()
     check_registry_entry()
     check_entrypoints()
     check_ci_wiring()

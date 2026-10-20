@@ -63,6 +63,8 @@
     "tests/fitness/test_evidence_proportionality_constitution_gate.py",
     "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
     "docs/governance/D319_IMMUTABLE_TEXT.json",
+    "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
+    "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
     "scripts/fitness/check_founder_atlas_constitution.py",
     "tests/fitness/test_founder_atlas_constitution_gate.py",
     ".memory/project_diagnostic_truth.md",
