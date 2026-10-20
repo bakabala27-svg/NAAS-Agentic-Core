@@ -265,9 +265,9 @@
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
     "file_count_excluding_packet": 3513,
-    "total_bytes_excluding_packet": 51188296,
+    "total_bytes_excluding_packet": 51188292,
     "total_newlines_excluding_packet": 894662,
-    "sha256_excluding_packet": "d6ef33a53d9ab3eb3544d5419a132c1ca1036aa0db2e7509ee7b836cf73a8f09",
+    "sha256_excluding_packet": "e051eaadaa479ae768c4ac419651b5220d9b5048a480cedbd59fed0837974f49",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
