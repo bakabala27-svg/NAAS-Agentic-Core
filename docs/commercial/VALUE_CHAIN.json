@@ -553,6 +553,56 @@
       "title_ar": "تدقيق إتاحة EAA",
       "source": "docs/commercial/REVENUE_OPPORTUNITY_MAP_2026-09-29.csv",
       "withdrawn": true,
+      "ledger_routes": [
+        "EAA_FR_ECOMMERCE_TARGETS_2026-10-20.csv"
+      ],
+      "demand": {
+        "pain": {
+          "status": "REACHED",
+          "evidence": [
+            {
+              "url": "https://www.botanic.com/accessibilite-non-conforme.html",
+              "date": "2026-10-02",
+              "fact": "Botanic's own statement: botanic.com is non conforme; Clever Age audit, 46.8% of RGAA criteria met (read 2026-10-20)"
+            },
+            {
+              "url": "https://www.grosbill.com/accessibilite",
+              "date": "2026-08-19",
+              "fact": "Grosbill's own statement: non conforme to RGAA 4.1.2 and no RGAA conformity audit done yet (read 2026-10-20)"
+            },
+            {
+              "url": "https://www.auchan.fr/accessibilite/ep-accessibilite",
+              "date": "2026-08-21",
+              "fact": "Auchan's own statement: the e-commerce site is non conforme; 37 of 69 criteria not met (Urbilog audit; read 2026-10-20)"
+            },
+            {
+              "url": "https://www.laredoute.fr/accessibilite.aspx",
+              "date": "2026-03-27",
+              "fact": "La Redoute's own statement: non conforme to RAWeb 1; 49 of 83 criteria not met (read 2026-10-20)"
+            }
+          ]
+        },
+        "active_search": {
+          "status": "NOT_REACHED",
+          "reason_ar": "لا طلب علنيّ من شركة تبحث عن مساعدة (مناقصة أو منشور أو إعلان توظيف) وجدناه بعد. التصريحات تُظهر تدقيقاتٍ مخطَّطة (Pharma GDD وKubota) وتصحيحاتٍ جارية، وهذا أضعف من بحثٍ علنيّ. والساق تُبلَغ بصفّ REPLY_RECEIVED من D-322"
+        },
+        "payer": {
+          "status": "REACHED",
+          "evidence": [
+            {
+              "url": "https://kolonell.com/fr/blog/audit-accessibilite-rgaa-site-entreprise-paris-cout-2026",
+              "date": "2026-10-10",
+              "price": "audit RGAA complet 2 500–5 000 € HT; corrections e-commerce 12 000–30 000 € HT",
+              "fact": "a Dakar-based agency publishes these prices for French companies; a price asked by a vendor, not a price shown paid"
+            },
+            {
+              "url": "https://www.auchan.fr/accessibilite/ep-accessibilite",
+              "date": "2026-08-21",
+              "fact": "named audit firms were engaged (Urbilog for Auchan, La Redoute and Groupe LDLC; Clever Age for Botanic; Agence Aksé for Saint James and the OM shop); the price paid is not public"
+            }
+          ]
+        }
+      },
       "links": {
         "1": {
           "status": "REACHED",
@@ -1318,7 +1368,10 @@
           "money_events": 0,
           "payments_settled": 0
         },
-        "demand_legs": [],
+        "demand_legs": [
+          "pain",
+          "payer"
+        ],
         "replying_entities": 0,
         "code_licensed": false,
         "built_before_demand": false
