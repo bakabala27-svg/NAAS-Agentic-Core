@@ -226,16 +226,16 @@
       "tests/shared/test_value_chain.py",
       "tests/unit/tools/test_outreach_truth.py"
     ],
-    "content_sha256_excluding_packet": "85e6f98ebfe8bb922d9938d8ac3000fa112f533edcc291d863b955726c15ca24",
+    "content_sha256_excluding_packet": "aae65954c94e61488a226a899efd9bacac52e0ddf974893d0b7530c6e4db2e8e",
     "refreshed_on": "2026-10-20",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
     "file_count_excluding_packet": 3526,
-    "total_bytes_excluding_packet": 51473658,
-    "total_newlines_excluding_packet": 898268,
-    "sha256_excluding_packet": "f6a139861593333b88c49598f77d361ff15c3901a468931be734d1386f1e8eb9",
+    "total_bytes_excluding_packet": 51474796,
+    "total_newlines_excluding_packet": 898276,
+    "sha256_excluding_packet": "3dd52b5514584a2e19d4f4259174fda1c766d2e96bf59c10edebd08bce41358a",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
