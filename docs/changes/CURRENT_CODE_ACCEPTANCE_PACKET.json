@@ -1,88 +1,71 @@
 {
-  "$schema_version": 1,
-  "packet_id": "CAP-2026-10-20-d319-founder-atlas-constitution",
+  "$schema_version": "1",
+  "packet_id": "CAP-2026-10-20-d320-opp04-buyer-test",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "D-319 (دستور أطلس المؤسّس «لا سحر بلا دليل») بأمر المالك في 2026-10-15: وثيقتان مؤرّختان 2026-10-11 تصيران قانوناً صارماً. يُفرَض ما يُفحَص آلياً من قواعد الأطلس في مواطنه القائمة (نصّ المشتري · الكتالوج · سلسلة القيمة · حزمة القبول · محرّك العملة الصعبة)، وتُنقَل منطقُ gate.py من أطروحة «الصاروخ لا يُصدَّق بمنظره» كوداً حتمياً يحسب مستوى الدليل والقرار، وتُبطَل منافذ D-318 بالاقتباس دون مسّ بايتاته، وتصير بوّابات الأطلس A–H عرضاً مشتقّاً بلا سُلَّمٍ جديد (D-314). وفي 2026-10-20 أكّد المالك النسخ الحرفي للوثيقتين كما هو، فدخل النصّان مثبَّتين بالبايت مع بصمتي ملفّي PDF بسجلّ التعديل D-319B.",
+  "decision_of_change": "D-320 بقرار المالك في 2026-10-20: اختبار مشترٍ قبل أيّ كود لـOPP-04 (إخفاق حواجز الذكاء الاصطناعي بالعربية والفرنسية)، في شريحة مختبرات النماذج القادرة على العربية ومورّدي الحواجز. 20 جهة بمصادر مؤرّخة، ورسالةٌ بطلبٍ واحد وعيّنة دليل يفحصهما buyer_claims، ونجاحٌ وإيقافٌ مسجَّلان مسبقاً. لا كود ولا فكّ تجميد (D-300 قائم).",
   "standards": [
     "clean-code-book"
   ],
   "evidence": [
-    "nist-ai-rmf-1.0",
-    "owasp-agent-security"
+    "owasp-agent-security",
+    "nist-ai-rmf-1.0"
   ],
   "local_application": [
     {
       "standard": "clean-code-book",
       "paths": [
-        "shared/evidence/gate.py",
-        "shared/research/opportunity_score.py",
-        "shared/research/value_chain.py",
-        "shared/research/economic_truth.py",
-        "shared/research/economic_decision.py",
-        "tools/hard_currency_engine/buyer_claims.py",
-        "tools/hard_currency_engine/crm_dispatcher.py",
-        "scripts/fitness/check_code_acceptance.py",
-        "scripts/fitness/check_founder_atlas_constitution.py"
+        "tests/unit/tools/test_outreach_truth.py"
       ],
-      "gate": "python scripts/fitness/check_founder_atlas_constitution.py && python scripts/fitness/check_code_acceptance.py && python scripts/fitness/check_value_chain.py && python scripts/fitness/check_hard_currency_engine.py && pytest tests/fitness/test_founder_atlas_constitution_gate.py tests/fitness/test_evidence_proportionality_constitution_gate.py tests/fitness/test_code_acceptance_gate.py tests/fitness/test_check_value_chain.py tests/fitness/test_check_hard_currency_engine.py tests/shared/test_evidence_gate.py tests/shared/test_opportunity_score.py tests/shared/test_economic_truth.py tests/shared/test_contact_ledger.py tests/unit/tools/test_buyer_claims.py tests/unit/tools/test_hard_currency_engine.py tests/unit/tools/test_outreach_truth.py",
-      "application_ar": "كلّ قاعدةٍ في موطنها القائم لا في وحدةٍ جديدة، وبرمزٍ مسمّى يفحص وجودَه بوّابةُ D-319؛ ودوالّ صغيرة نقية (gate.py stdlib بلا إدخال/إخراج)؛ وكلّ قاعدةٍ كُتب اختبارها أحمر قبل تنفيذها؛ وصفر حذف."
+      "gate": "tests/unit/tools/test_outreach_truth.py::test_buyer_text_states_no_rate_and_no_guarantee",
+      "application_ar": "قائمةٌ واحدة لنصوص المشتري (SEND_FILES) يقرأها الاختبار نفسه؛ أُضيف الملفّان إليها مع تحديث تعليقها بدل نسخ حلقة الفحص في اختبارٍ ثانٍ."
     }
   ],
   "production": {
     "owner": "repository-owner",
-    "status": "GOVERNANCE_GATES_ONLY",
+    "status": "NO_RUNTIME_CHANGE",
     "interfaces": [
-      "shared/evidence/gate.py: evidence_level · verdict · report_problems (منقولة من الأطروحة ص18-19)",
-      "scripts/fitness/check_code_acceptance.py: evidence_report محسوب · لا PASS مُعلَنٌ ذاتياً · مسارات الأثر موجودة",
-      "shared/research/value_chain.py: حقول العرض التسعة · C-LEGAL/C-RAIL · الحلقتان 5 و6",
-      "tools/hard_currency_engine/buyer_claims.py: approval_seeking · full_automation · payment_rail",
-      "shared/research/economic_truth.py: atlas_view وبوّابات الأطلس A–H مشتقّة",
-      "shared/research/economic_decision.py: decide_by بعد سبعة أيام ومالك القرار",
-      "scripts/fitness/check_founder_atlas_constitution.py في guardrails",
-      "docs/governance/D319_IMMUTABLE_TEXT.json + check_verbatim_pins: النصّان الحرفيّان مثبَّتان بالبايت مع بصمتي ملفّي PDF"
+      "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv: ملفّ أهداف جديد موجَّه في سلسلة القيمة (OPP-04 ledger_routes)",
+      "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md: نصّ مشترٍ يفحصه buyer_claims",
+      "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md: عيّنة دليل للمشتري يفحصها buyer_claims"
     ],
     "runtime_evidence_paths": [
-      "docs/commercial/HARD_CURRENCY_SCORECARD.json",
+      "docs/research/EXTERNAL_GUARD_PROBE.json",
       "docs/commercial/VALUE_CHAIN.json",
-      "docs/governance/D319_IMMUTABLE_TEXT.json"
+      "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv"
     ],
-    "failure_behavior_ar": "كلّ فحصٍ مغلقٌ عند الفشل: ملفٌّ ناقص أو حقلٌ فارغ أو رمزٌ محذوف أو سطر CI معلَّق ⇒ CI أحمر؛ وتقريرٌ يُعلن قراراً يخالف المحسوب ⇒ أحمر؛ وشرط قتلٍ أُطلق ⇒ OWNER_DECISION_REQUIRED لا PIVOT ولا STOP من الكود.",
-    "observability_ar": "المستودع الحقيقي يحسب اليوم REVISE: أوّل بوّابةٍ غير مثبتة ATLAS_A_PROBLEM، وF وG وH محجوبة، وdecide_by = 2026-10-27؛ وهذه الحزمة نفسها تحسب E3 وHOLD.",
-    "security_boundary_ar": "المستودع عامّ: لا بيانات شخصية ولا نصوص الوثيقتين؛ ولا استيراد إرسال بريد في محرّك العملة الصعبة؛ ودفعة المسودّات مسقوفة بعشرين ولا يُرسَل شيءٌ آلياً.",
-    "rollback_ar": "git revert لدفعات D-319 كتغييرٍ واحدٍ مُراجَع مع بقاء سجلّ التعديل للتاريخ؛ ولا يُضعف التراجع أيّ دستورٍ أو اختبارٍ أو شرط CI سابق."
+    "failure_behavior_ar": "كلّ فحصٍ مغلقٌ عند الفشل: جملةٌ في الرسالة أو العيّنة تقول ضماناً أو نسبةً أو نتيجةً بلا فشل ⇒ CI أحمر؛ وصفٌّ في السجلّ يشير إلى ملفّ أهدافٍ غير موجَّه ⇒ check_value_chain أحمر.",
+    "observability_ar": "كلّ إرسالٍ وردٍّ صفٌّ في CONTACT_LEDGER.csv، فتتحرّك الحلقتان 6-7 لـOPP-04 في VALUE_CHAIN.json ولوحة العملة الصعبة من السجلّ وحده. اليوم: صفر إرسال لهذا الإعداد.",
+    "security_boundary_ar": "المستودع عامّ: لا أسماء أشخاص ولا بريد ولا هاتف في الملفّات الجديدة (فُحصت بـgrep)؛ ولا يُشغَّل أيّ فحصٍ على نظامٍ مستضاف لجهةٍ قبل إذنٍ مكتوبٍ منها، والكود لا يرسل بريداً.",
+    "rollback_ar": "git revert لدفعات D-320 الثلاث؛ لا يمسّ التراجع أيّ بوّابة أو اختبار أو شرط CI سابق."
   },
   "commercial_trace": {
     "offer_ids": [
-      "fr-be-einvoicing-referential-cleansing"
+      "ai-red-teaming-multilingual"
     ],
-    "customer_problem_ar": "نصٌّ موجَّه للمشتري يعِد بما لم يُقَس («صفر رفض») أو يدّعي أتمتةً كاملة أو يسمّي طريق دفعٍ غير مثبت يُفقد الثقة في أوّل عرض.",
-    "value_hypothesis_ar": "منع الوعد غير المقيس قبل أن يصل مشترياً، وجعل قرار المالك مؤرَّخاً ومحسوباً من السجلّ.",
-    "foreign_currency_path_ar": "لا إيراد ولا يُدّعى؛ GATE_C = ABSENT؛ وC-LEGAL وC-RAIL غير مسجّلين فلا عرض يبلغ OFFER_READY.",
-    "foundation_exception_ar": "حوكمة واحتواء تحت D-300؛ لا ميزة ولا ترقية قدرة، والمنصّة التعليمية لا تُمسّ."
+    "customer_problem_ar": "حاجزٌ يقبل قاعدة حظرٍ عربية ويؤكّد قبولها ثمّ لا يطبّقها أبداً، بلا خطأٍ ولا تحذير، فيظنّ صاحبه أنّ سياسته مفعّلة وهي ليست كذلك.",
+    "value_hypothesis_ar": "فرضيّة غير مثبتة: مختبرٌ أو مورّد حواجز يدفع ليعرف إن كان حاجزه يُسقط قواعد عربية أو فرنسية بصمت. الاختبار يقيس الطلب قبل أيّ كود.",
+    "foreign_currency_path_ar": "لا إيراد ولا يُدّعى؛ GATE_C = ABSENT. الإشارة المطلوبة طلبٌ من مشترٍ مسمّى (الحلقة 6) لا دفعة.",
+    "foundation_exception_ar": "وثائق تجارية وقرارٌ مسجَّل واختبار نصّ؛ لا ميزة ولا كود منتج، وnaas_verifier مجمَّد (D-300)."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفر حذف: اختباران أعيدت تسميتهما وشُدِّدا لأنّ جملة الكتالوج التي كانا يقرآنها أعيدت كتابتها، ولا اختبار ولا فحص أُزيل."
+    "policy_ar": "صفر حذف: إضافة ملفّات وسطرٍ في قائمة اختبار ومسارٍ في سلسلة القيمة، ولا اختبار ولا فحص أُزيل."
   },
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 scripts/fitness/check_founder_atlas_constitution.py — PASS",
-      "python3 scripts/fitness/check_evidence_proportionality_constitution.py — PASS",
-      "CODE_ACCEPTANCE_BASE_SHA=origin/main python3 scripts/fitness/check_code_acceptance.py — PASS (evidence_report محسوب: E3 · hold)",
-      "CODE_ACCEPTANCE_BASE_SHA=origin/main python3 scripts/fitness/check_engineering_governance.py — PASS",
-      "python3 scripts/fitness/check_governance_registry.py && python3 scripts/fitness/check_gate_negative_proof.py — PASS",
-      "python3 scripts/fitness/check_value_chain.py && python3 scripts/research/value_chain.py --check && python3 scripts/research/hard_currency_scorecard.py --check — PASS",
-      "CODE_ACCEPTANCE_BASE_SHA=origin/main python3 scripts/fitness/check_outbound_before_research.py — PASS",
-      "python3 scripts/fitness/check_hard_currency_engine.py && python3 scripts/fitness/check_no_magic_strings.py && python3 scripts/fitness/check_no_new_any.py — PASS (check_no_new_any كان أحمر على shared/evidence/gate.py حتى أُزيل Any)",
-      "python3 scripts/run_fitness_gates.py — 90 من 92 بوّابة خضراء؛ الاثنتان الباقيتان (check_tracing_gate · check_contracts_verified) تفشلان محلياً لأنّ /usr/bin/python3 بلا pytest، لا بسبب هذا التغيير؛ والحكم لـCI",
-      "python3 scripts/fitness/check_memory_coherence.py && python3 scripts/fitness/check_repository_microscope.py — PASS",
-      "pytest --noconftest tests/fitness/test_founder_atlas_constitution_gate.py tests/fitness/test_evidence_proportionality_constitution_gate.py tests/fitness/test_code_acceptance_gate.py tests/fitness/test_check_value_chain.py tests/fitness/test_check_hard_currency_engine.py tests/shared/test_evidence_gate.py tests/shared/test_opportunity_score.py tests/shared/test_economic_truth.py tests/shared/test_contact_ledger.py tests/unit/tools/test_buyer_claims.py tests/unit/tools/test_hard_currency_engine.py tests/unit/tools/test_outreach_truth.py — 278 passed",
-      "قبل التنفيذ: 35 حالةً سلبية حمراء محفوظة الخرج (buyer_claims 9 · code_acceptance 10 · hard_currency_engine 1 · value_chain 5 · وصلة D-318 في CI 2 · بصمات النصّين الحرفيّين 8)",
-      "sha256sum docs/architecture/FOUNDER_ATLAS_VERBATIM.md docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md — 33f33167… و9c1e65cc… تطابقان بصمة الملفّين اللذين أكّدهما المالك",
-      "ruff 0.14.0 check وformat --check على الملفّات المعدّلة — PASS؛ git diff --check نظيف"
+      "python3 scripts/fitness/check_value_chain.py — PASS",
+      "python3 scripts/research/value_chain.py --check — PASS",
+      "python3 scripts/research/hard_currency_scorecard.py --check — PASS",
+      "python3 scripts/fitness/check_outbound_before_research.py — PASS",
+      "python3 scripts/fitness/check_memory_coherence.py — PASS",
+      "python3 scripts/fitness/check_documentation_contract.py — PASS",
+      "python3 scripts/fitness/check_code_acceptance.py — PASS",
+      "python3 scripts/fitness/check_repository_microscope.py — PASS",
+      "pytest tests/unit/tools/test_outreach_truth.py tests/unit/tools/test_buyer_claims.py tests/fitness/test_check_value_chain.py tests/shared/test_value_chain.py tests/shared/test_contact_ledger.py tests/shared/test_economic_truth.py — 152 passed",
+      "python3 scripts/run_fitness_gates.py — PASS"
     ]
   },
   "curriculum": {
@@ -159,123 +142,47 @@
       "harvard-cs50x-foundations",
       "harvard-cs-concentration-domains"
     ],
-    "unapplied_course_policy_ar": "كل المقررات قُرئت على مستوى الكتالوج والمصفوفة؛ ما لا ينطبق مباشرةً على طبقة أدلّةٍ حتمية (اشتقاقٌ · تحقّقٌ · برهانٌ سلبي) يُسجَّل غير منطبقٍ بسبب، ولا يتحوّل إلى ادّعاء تطبيق.",
+    "unapplied_course_policy_ar": "كل المقررات قُرئت على مستوى الكتالوج والمصفوفة؛ هذا تغييرٌ تجاريٌّ ووثائقي بلا كود منتج، فما لا ينطبق مباشرةً يُسجَّل غير منطبقٍ بسبب، ولا يتحوّل إلى ادّعاء تطبيق.",
     "applicability_result": "ALL_CATALOG_COURSES_CONSIDERED",
     "owner": "curriculum-governance"
   },
   "changed_paths": [
-    ".github/workflows/ci.yml",
     ".memory/README.md",
-    ".memory/ci-gates.md",
     ".memory/decisions.md",
-    ".runtime/truth_table.lock.json",
-    "AGENTS.md",
-    "CLAUDE.md",
-    "ENGINEERING_CONSTITUTION.md",
     "README.ar.md",
     "README.md",
     "docs/DOCUMENTATION_INDEX.md",
-    "docs/DOCUMENTATION_MANIFEST.json",
-    "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
-    "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
-    "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
-    "docs/commercial/OFFER_CATALOG.json",
+    "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
+    "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
     "docs/commercial/VALUE_CHAIN.json",
-    "docs/governance/CONSTITUTION_REGISTRY.json",
-    "docs/governance/D319_IMMUTABLE_TEXT.json",
-    "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
-    "docs/governance/NEGATIVE_PROOFS.json",
-    "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
-    "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
-    "scripts/fitness/check_code_acceptance.py",
-    "scripts/fitness/check_engineering_governance.py",
-    "scripts/fitness/check_evidence_proportionality_constitution.py",
-    "scripts/fitness/check_founder_atlas_constitution.py",
-    "scripts/fitness/check_hard_currency_engine.py",
-    "shared/evidence/__init__.py",
-    "shared/evidence/gate.py",
-    "shared/research/economic_decision.py",
-    "shared/research/economic_truth.py",
-    "shared/research/opportunity_score.py",
-    "shared/research/value_chain.py",
-    "tests/fitness/test_check_hard_currency_engine.py",
-    "tests/fitness/test_check_value_chain.py",
-    "tests/fitness/test_code_acceptance_gate.py",
-    "tests/fitness/test_evidence_proportionality_constitution_gate.py",
-    "tests/fitness/test_founder_atlas_constitution_gate.py",
-    "tests/shared/test_contact_ledger.py",
-    "tests/shared/test_economic_truth.py",
-    "tests/shared/test_evidence_gate.py",
-    "tests/shared/test_opportunity_score.py",
-    "tests/unit/tools/test_buyer_claims.py",
-    "tests/unit/tools/test_hard_currency_engine.py",
-    "tests/unit/tools/test_outreach_truth.py",
-    "tools/hard_currency_engine/buyer_claims.py",
-    "tools/hard_currency_engine/crm_dispatcher.py",
-    "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json"
+    "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
+    "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+    "tests/unit/tools/test_outreach_truth.py"
   ],
   "git_change_snapshot": {
     "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
-      ".github/workflows/ci.yml",
       ".memory/README.md",
-      ".memory/ci-gates.md",
       ".memory/decisions.md",
-      ".runtime/truth_table.lock.json",
-      "AGENTS.md",
-      "CLAUDE.md",
-      "ENGINEERING_CONSTITUTION.md",
       "README.ar.md",
       "README.md",
       "docs/DOCUMENTATION_INDEX.md",
-      "docs/DOCUMENTATION_MANIFEST.json",
-      "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
-      "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
-      "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
-      "docs/commercial/OFFER_CATALOG.json",
+      "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
       "docs/commercial/VALUE_CHAIN.json",
-      "docs/governance/CONSTITUTION_REGISTRY.json",
-      "docs/governance/D319_IMMUTABLE_TEXT.json",
-      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
-      "docs/governance/NEGATIVE_PROOFS.json",
-      "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
-      "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
-      "scripts/fitness/check_code_acceptance.py",
-      "scripts/fitness/check_engineering_governance.py",
-      "scripts/fitness/check_evidence_proportionality_constitution.py",
-      "scripts/fitness/check_founder_atlas_constitution.py",
-      "scripts/fitness/check_hard_currency_engine.py",
-      "shared/evidence/__init__.py",
-      "shared/evidence/gate.py",
-      "shared/research/economic_decision.py",
-      "shared/research/economic_truth.py",
-      "shared/research/opportunity_score.py",
-      "shared/research/value_chain.py",
-      "tests/fitness/test_check_hard_currency_engine.py",
-      "tests/fitness/test_check_value_chain.py",
-      "tests/fitness/test_code_acceptance_gate.py",
-      "tests/fitness/test_evidence_proportionality_constitution_gate.py",
-      "tests/fitness/test_founder_atlas_constitution_gate.py",
-      "tests/shared/test_contact_ledger.py",
-      "tests/shared/test_economic_truth.py",
-      "tests/shared/test_evidence_gate.py",
-      "tests/shared/test_opportunity_score.py",
-      "tests/unit/tools/test_buyer_claims.py",
-      "tests/unit/tools/test_hard_currency_engine.py",
-      "tests/unit/tools/test_outreach_truth.py",
-      "tools/hard_currency_engine/buyer_claims.py",
-      "tools/hard_currency_engine/crm_dispatcher.py"
+      "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
+      "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+      "tests/unit/tools/test_outreach_truth.py"
     ],
-    "content_sha256_excluding_packet": "793bb74234e4ef0dc26816a2bb312c7e0aed95fd5c2135e9fdfc0c6ba8f6cf83",
+    "content_sha256_excluding_packet": "bb42fd1338715b97025e35689363f561b73206535c74a2300e4fff0d4a979bf3",
     "refreshed_on": "2026-10-20",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3516,
-    "total_bytes_excluding_packet": 51367334,
-    "total_newlines_excluding_packet": 896826,
-    "sha256_excluding_packet": "e2be5417957a360748dd9c572ed3ef52dec6745867e332179efd67512a7c84b2",
+    "file_count_excluding_packet": 3519,
+    "total_bytes_excluding_packet": 51388530,
+    "total_newlines_excluding_packet": 897042,
+    "sha256_excluding_packet": "9020c4f34f017147fee260bc73aa5e1f8d23e0381de311f5ae0bc76974c65170",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -291,242 +198,121 @@
     "operator_attestation_ar": "هذا ليس ادعاء فهم شامل بذاته؛ إنه شرط مجهر آلي يسبق التحليل البشري والمصفوفة، ويجعل تجاهل القديم مرئياً."
   },
   "pre_modification": {
-    "current_state": "TESTED: main عند 2a87106؛ الأطلس بلا نسخة في المستودع؛ D-318 نصٌّ مكثّف بمنافذ لا يحملها نصّ المالك؛ gate.py من الأطروحة غير موجود كوداً؛ فحص وصلة D-318 في CI يقرأ حتى آخر ci.yml فيعدّ السطر المعلَّق وصلاً.",
+    "current_state": "TESTED: main عند 1dabe8e؛ OPP-04 عند الحلقة 5 (EXTERNAL_GUARD_PROBE.json) بصفر تواصل وبلا ledger_routes وبقرار DEFER؛ لا ملفّ أهداف ولا رسالة لهذا المسار.",
     "architecture_and_boundaries": [
-      "shared/ لا يستورد app ولا خدمةً شقيقة؛ gate.py وopportunity_score.py stdlib بلا إدخال/إخراج.",
-      "السجلّ CONTACT_LEDGER.csv يسجّل ما حدث ولا يُرفض صفٌّ صادق؛ CI يحجب ما نكتبه نحن (الكتالوج · نصّ المشتري · الحزمة).",
-      "لا سُلَّم ولا حالة بوّابة جديدة (D-314): رموز ATLAS_* عرضٌ مشتقّ لا يُكتب في GATE_LEDGER.json.",
-      "بايتات D-318 المجمّدة لا تُمسّ؛ الإبطال بالأسبقية والاقتباس."
+      "السجلّ CONTACT_LEDGER.csv يسجّل ما حدث؛ وكلّ صفٍّ يجب أن يجد مساره عبر ledger_routes (check_value_chain).",
+      "نصّ المشتري يمرّ بـbuyer_claims عبر SEND_FILES في test_outreach_truth.",
+      "naas_verifier مجمَّد بقرار D-300؛ المسبار يعيش خارجه ونتيجته بيانات.",
+      "لا كود يرسل بريداً (§9.3 · check_hard_currency_engine)."
     ],
     "existing_failures_and_old_debt": [
-      "FOUND: جملة الكتالوج «بصفر رفض توجيه» وعدٌ غير مقيس — أعيدت كتابتها هنا.",
-      "FOUND: فحص وصلة D-318 يعدّ السطر المعلَّق وصلاً — حُصر في وظيفة guardrails مع اختبارين.",
-      "REMAINS OPEN: R1–R3 في PROJECT_REMEDIATION_PLAN.json (OPEN_BLOCKED_FOR_PRODUCTION_CLAIMS)؛ هذا التغيير لا يغلق شيئاً منها ولا يدّعي قدرة.",
-      "REMAINS OPEN: ثمانية اختبارات تفشل محلياً على main وعلى الفرع معاً بسبب البيئة."
+      "FOUND: OPP-04 بلا ledger_routes، فأيّ صفّ إرسالٍ له كان سيُرفض بلا مسار — أُضيف المسار قبل أيّ إرسال.",
+      "FOUND: صياغتان في المسوّدة الأولى خالفتا buyer_claims («ضمان» في سطر ملاحظة مقتبَس، و«sans erreur») — غُيّرت الصياغة لا القاعدة.",
+      "OLD DEBT (خارج النطاق): 8 اختبارات تفشل على main محلياً أيضاً (correlated_http ×3 · e2e_deferred_findings ×3 · no_double_encoded_frames ×1 · phase0 f3 tracing ×1)."
     ],
     "dependency_path": [
-      "ci.yml guardrails → check_founder_atlas_constitution.py → D319_IMMUTABLE_TEXT.json + مواطن file::symbol",
-      "check_code_acceptance.py → shared.evidence.gate.report_problems → evidence_report",
-      "CONTACT_LEDGER.csv → hard_currency_scorecard → economic_truth.build_snapshot → atlas_view → economic_decision.build_brief"
+      "test_outreach_truth.SEND_FILES → buyer_claims.buyer_lines → buyer_claims.findings",
+      "check_value_chain.py → shared.research.value_chain.route_table → OPP-04 ledger_routes → CONTACT_LEDGER.csv"
     ],
     "foundational_frontier": {
-      "status": "REPAIRED_OR_CONTAINED_BEFORE_EXTENSION",
+      "status": "NO_BLOCKING_FOUNDATIONAL_DEFECT_IDENTIFIED",
       "relevant_defects": [
-        "وصلة D-318 في CI — أُصلحت قبل الاعتماد عليها.",
-        "وعد الكتالوج غير المقيس — أعيدت كتابته قبل تشغيل القاعدة عليه."
+        "لا عيب أساسي يمسّه هذا التغيير؛ مسار OPP-04 الغائب في ledger_routes أُضيف قبل أوّل صفّ."
       ],
-      "decision": "حوكمة واحتواء مسموحان تحت D-300؛ لا ميزة ولا ترقية قدرة."
+      "decision": "وثائق تجارية واختبار نصّ تحت D-300؛ لا ميزة ولا ترقية قدرة."
     },
-    "root_cause": "قواعد الأطلس كانت نثراً بلا فارض، وD-318 كُتب مكثّفاً بمنافذ، فكان «الإعلان» يقوم مقام الدليل.",
-    "intended_change": "فرض قواعد الأطلس القابلة للفحص في مواطنها؛ gate.py حتمي؛ عرض ATLAS_* مشتقّ وتوصية محسوبة؛ دستور D-319 ببوّابته واختباراته السلبية وتسجيله؛ وإبطال منافذ D-318 بالاقتباس. وإدخال النصّين الحرفيّين اللذين أكّدهما المالك مثبَّتين بالبايت (D-319B).",
+    "root_cause": "سأل المالك عن ألمٍ يحلّه كودٌ نبيعه بالعملة الصعبة؛ أقرب أصلٍ مثبت هو OPP-04 وليس له مشترٍ مسمّى ولا تواصل، فالمجهول الأوّل هو الطلب لا الكود.",
+    "intended_change": "قرار D-320 بنجاحٍ وإيقافٍ مسجَّلين مسبقاً؛ 20 جهة بمصادر مؤرّخة موجَّهة في سلسلة القيمة؛ رسالةٌ بطلبٍ واحد وعيّنة دليل تقول ما تثبته وما لا تثبته، ويفحصهما buyer_claims.",
     "affected_invariants": [
-      "نصّ المالك الحرفي يغلب كلّ ملخّص؛ وبين الأطلس وقاعدةٍ قائمة يغلب الأشدّ.",
-      "مستوى الدليل والقرار يحسبهما الكود؛ تغييرٌ يمسّ ملفّات المُتحقِّق يُحسب HOLD.",
-      "الكود لا يقول PIVOT ولا STOP؛ شرط قتلٍ أُطلق يسلّم القرار للمالك.",
-      "لا سُلَّم جديد (D-314)؛ والدساتير القائمة سارية كاملة.",
-      "لا بيانات شخصية في المستودع العامّ."
+      "D-300 قائم: الأطروحة النشطة الفوترة الفرنسية وnaas_verifier مجمَّد.",
+      "لا وعد غير مقيس في نصّ المشتري (buyer_claims).",
+      "كلّ صفٍّ في السجلّ له مسار (لا إسقاط صامت)."
     ],
     "test_plan": [
-      "سلبي: 27 حالةً حمراء محفوظة قبل التنفيذ، و10 اختبارات لبوّابة D-319 تكسر كلٌّ شيئاً عمداً.",
-      "إيجابي: 270 اختباراً في الملفّات الاثني عشر، والبوّابات كلّها على origin/main."
+      "سلبي: اختبار نصّ المشتري كان أحمر على سطرين في الملفّين الجديدين قبل تعديل الصياغة (محفوظ).",
+      "إيجابي: 152 اختباراً في ستّة ملفّات، والبوّابات كلّها على origin/main."
     ],
-    "rollback_strategy": "git revert لدفعات D-319 كتغييرٍ واحد مُراجَع؛ سجلّ التعديل يبقى للتاريخ.",
+    "rollback_strategy": "git revert للدفعات الثلاث؛ لا بوّابة ولا اختبار يُضعَف.",
     "verification_strategy": [
-      "python scripts/fitness/check_founder_atlas_constitution.py",
-      "python scripts/fitness/check_code_acceptance.py",
-      "python scripts/fitness/check_engineering_governance.py",
       "python scripts/fitness/check_value_chain.py",
-      "pytest tests/fitness tests/shared tests/unit/tools"
+      "python scripts/fitness/check_code_acceptance.py",
+      "pytest tests/unit/tools/test_outreach_truth.py"
     ],
     "non_goals": [
-      "لا يُرفع ملفّا PDF الأصليان؛ تُحفظ بصمتهما وحجمهما وعدد صفحاتهما فقط، ولا يدخل سطر التوقيع.",
-      "لا ميزة في المنصّة التعليمية ولا هجرة خدمات (D-300).",
-      "لا يقرّر الكود PIVOT أو STOP، ولا يغيّر نموذجُ الفرص الأطروحةَ النشطة.",
-      "لا يُرسَل بريد ولا يُوقَّع شيء باسم المالك."
+      "لا كود ولا فكّ تجميد لـnaas_verifier (D-300).",
+      "لا إرسال آلي: المالك يرسل بيده، بحدٍّ أقصى 20.",
+      "لا فحص لأيّ نظامٍ مستضاف قبل إذنٍ مكتوب من صاحبه.",
+      "لا سعر ولا ضمان في نصّ المشتري."
     ],
     "acceptance_criteria": [
       "كلّ البوّابات المذكورة خضراء على origin/main، وrequired-ci وguardrails وdoc-integrity خضراء على الـPR.",
-      "evidence_report في هذه الحزمة يحسب HOLD، والـPR يقول ذلك.",
-      "مراجعة CODEOWNER مستقلّة قبل الموافقة أو الدمج؛ وإن كان المالك هو المراجع الوحيد فالمراجعة غير مستقلّة ويُقال ذلك."
+      "buyer_claims لا يجد سطراً حاجباً في الرسالة ولا في العيّنة.",
+      "لا اسم شخص ولا بريد ولا هاتف في الملفّات الجديدة."
     ],
-    "target_operating_cost": "صفر كلفة تشغيل: فحوصٌ stdlib حتمية في وظيفة guardrails تزيد ثوانيَ على CI، بلا نداء نموذج لغوي ولا خدمة خارجية.",
+    "target_operating_cost": "صفر كلفة تشغيل: ملفّات نصّية واختبارٌ قائم؛ وقت المالك للإرسال اليدوي (20 رسالة) هو الكلفة الوحيدة.",
     "claim_statuses": {
       "current_state": "TESTED",
-      "evidence_gate_port": "TESTED",
-      "atlas_rules_enforced": "TESTED",
-      "atlas_view_and_recommendation": "TESTED",
-      "d318_wiring_fix": "TESTED",
-      "decision_chamber_shows_atlas": "ASSUMED",
-      "opportunity_score_validity": "UNKNOWN",
+      "targets_have_dated_sources": "TESTED",
+      "buyer_text_lint_clean": "TESTED",
+      "probe_still_reproduces": "TESTED",
+      "contact_channels_complete": "UNKNOWN",
+      "buyer_demand": "UNKNOWN",
       "no_personal_data_committed": "TESTED",
-      "branch_protection_live_state": "UNKNOWN",
-      "verbatim_texts_pinned": "TESTED",
-      "verbatim_transcription_fidelity": "ASSUMED"
+      "branch_protection_live_state": "UNKNOWN"
     }
   },
   "evidence_report": {
-    "change_id": "D-319-FOUNDER-ATLAS-CONSTITUTION",
-    "claim": "قواعد أطلس المؤسّس القابلة للفحص الآلي صارت تُرفض في CI، كلٌّ في موطنه، ويُحسَب مستوى الدليل والقرار بكودٍ حتمي (shared/evidence/gate.py) لا بإعلان المؤلِّف.",
+    "change_id": "D-320-OPP04-BUYER-TEST",
+    "claim": "اختبار مشترٍ لـOPP-04 جاهز للإرسال اليدوي: 20 جهة بمصادر مؤرّخة موجَّهة في سلسلة القيمة، ورسالة وعيّنة دليل يفحصهما buyer_claims، ونجاحٌ وإيقافٌ مسجَّلان في D-320.",
     "status": "PROPOSED",
     "risk_zone": "PRODUCT",
-    "risk_zone_reason_ar": "تغييرٌ قابل للتراجع على بوّاباتٍ ونصوص التزام؛ لا مدفوعات ولا صلاحيات ولا أسرار ولا ترحيل بيانات ولا فعلٌ خارجيٌّ لا رجعة فيه. وتعديل البوّابات نفسها يجعل القرار HOLD في كلّ الأحوال.",
+    "risk_zone_reason_ar": "نصٌّ موجَّهٌ لمشترين خارجيين، قابلٌ للتراجع؛ لا كود منتج ولا مدفوعات ولا أسرار ولا فعلٌ خارجيٌّ يقوم به الكود — الإرسال فعل المالك.",
     "registered": true,
     "scope": {
       "declared_files": [
-        ".github/workflows/ci.yml",
         ".memory/README.md",
-        ".memory/ci-gates.md",
         ".memory/decisions.md",
-        ".runtime/truth_table.lock.json",
-        "AGENTS.md",
-        "CLAUDE.md",
-        "ENGINEERING_CONSTITUTION.md",
         "README.ar.md",
         "README.md",
         "docs/DOCUMENTATION_INDEX.md",
-        "docs/DOCUMENTATION_MANIFEST.json",
-        "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
-        "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
-        "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
-        "docs/commercial/OFFER_CATALOG.json",
+        "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
         "docs/commercial/VALUE_CHAIN.json",
-        "docs/governance/CONSTITUTION_REGISTRY.json",
-        "docs/governance/D319_IMMUTABLE_TEXT.json",
-        "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
-        "docs/governance/NEGATIVE_PROOFS.json",
-        "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
-        "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
-        "scripts/fitness/check_code_acceptance.py",
-        "scripts/fitness/check_engineering_governance.py",
-        "scripts/fitness/check_evidence_proportionality_constitution.py",
-        "scripts/fitness/check_founder_atlas_constitution.py",
-        "scripts/fitness/check_hard_currency_engine.py",
-        "shared/evidence/__init__.py",
-        "shared/evidence/gate.py",
-        "shared/research/economic_decision.py",
-        "shared/research/economic_truth.py",
-        "shared/research/opportunity_score.py",
-        "shared/research/value_chain.py",
-        "tests/fitness/test_check_hard_currency_engine.py",
-        "tests/fitness/test_check_value_chain.py",
-        "tests/fitness/test_code_acceptance_gate.py",
-        "tests/fitness/test_evidence_proportionality_constitution_gate.py",
-        "tests/fitness/test_founder_atlas_constitution_gate.py",
-        "tests/shared/test_contact_ledger.py",
-        "tests/shared/test_economic_truth.py",
-        "tests/shared/test_evidence_gate.py",
-        "tests/shared/test_opportunity_score.py",
-        "tests/unit/tools/test_buyer_claims.py",
-        "tests/unit/tools/test_hard_currency_engine.py",
-        "tests/unit/tools/test_outreach_truth.py",
-        "tools/hard_currency_engine/buyer_claims.py",
-        "tools/hard_currency_engine/crm_dispatcher.py"
+        "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
+        "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+        "tests/unit/tools/test_outreach_truth.py"
       ],
       "touched_files": [
-        ".github/workflows/ci.yml",
         ".memory/README.md",
-        ".memory/ci-gates.md",
         ".memory/decisions.md",
-        ".runtime/truth_table.lock.json",
-        "AGENTS.md",
-        "CLAUDE.md",
-        "ENGINEERING_CONSTITUTION.md",
         "README.ar.md",
         "README.md",
         "docs/DOCUMENTATION_INDEX.md",
-        "docs/DOCUMENTATION_MANIFEST.json",
-        "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
-        "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
-        "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
-        "docs/commercial/OFFER_CATALOG.json",
+        "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
         "docs/commercial/VALUE_CHAIN.json",
-        "docs/governance/CONSTITUTION_REGISTRY.json",
-        "docs/governance/D319_IMMUTABLE_TEXT.json",
-        "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
-        "docs/governance/NEGATIVE_PROOFS.json",
-        "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
-        "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
-        "scripts/fitness/check_code_acceptance.py",
-        "scripts/fitness/check_engineering_governance.py",
-        "scripts/fitness/check_evidence_proportionality_constitution.py",
-        "scripts/fitness/check_founder_atlas_constitution.py",
-        "scripts/fitness/check_hard_currency_engine.py",
-        "shared/evidence/__init__.py",
-        "shared/evidence/gate.py",
-        "shared/research/economic_decision.py",
-        "shared/research/economic_truth.py",
-        "shared/research/opportunity_score.py",
-        "shared/research/value_chain.py",
-        "tests/fitness/test_check_hard_currency_engine.py",
-        "tests/fitness/test_check_value_chain.py",
-        "tests/fitness/test_code_acceptance_gate.py",
-        "tests/fitness/test_evidence_proportionality_constitution_gate.py",
-        "tests/fitness/test_founder_atlas_constitution_gate.py",
-        "tests/shared/test_contact_ledger.py",
-        "tests/shared/test_economic_truth.py",
-        "tests/shared/test_evidence_gate.py",
-        "tests/shared/test_opportunity_score.py",
-        "tests/unit/tools/test_buyer_claims.py",
-        "tests/unit/tools/test_hard_currency_engine.py",
-        "tests/unit/tools/test_outreach_truth.py",
-        "tools/hard_currency_engine/buyer_claims.py",
-        "tools/hard_currency_engine/crm_dispatcher.py"
+        "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
+        "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+        "tests/unit/tools/test_outreach_truth.py"
       ]
     },
-    "protected_paths_changed": [
-      ".github/workflows/ci.yml",
-      "AGENTS.md",
-      "CLAUDE.md",
-      "ENGINEERING_CONSTITUTION.md",
-      "docs/architecture/EVIDENCE_PROPORTIONALITY_VERBATIM.md",
-      "docs/architecture/FOUNDER_ATLAS_CONSTITUTION.md",
-      "docs/architecture/FOUNDER_ATLAS_VERBATIM.md",
-      "docs/governance/CONSTITUTION_REGISTRY.json",
-      "docs/governance/D319_IMMUTABLE_TEXT.json",
-      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
-      "docs/governance/NEGATIVE_PROOFS.json",
-      "docs/governance/amendments/D-319-FOUNDER-ATLAS-CONSTITUTION.md",
-      "docs/governance/amendments/D-319B-FOUNDER-ATLAS-VERBATIM-TEXTS.md",
-      "scripts/fitness/check_code_acceptance.py",
-      "scripts/fitness/check_engineering_governance.py",
-      "scripts/fitness/check_evidence_proportionality_constitution.py",
-      "scripts/fitness/check_founder_atlas_constitution.py",
-      "scripts/fitness/check_hard_currency_engine.py",
-      "tests/fitness/test_check_hard_currency_engine.py",
-      "tests/fitness/test_check_value_chain.py",
-      "tests/fitness/test_code_acceptance_gate.py",
-      "tests/fitness/test_evidence_proportionality_constitution_gate.py",
-      "tests/fitness/test_founder_atlas_constitution_gate.py"
-    ],
+    "protected_paths_changed": [],
     "contracts_touched": [
-      "shared/research/economic_truth.build_snapshot: مفتاحٌ جديد atlas (إضافة لا تغيير).",
-      "shared/research/economic_decision.build_brief: مفتاحان جديدان decide_by وdecision_owner_ar (إضافة لا تغيير).",
-      "shared/research/value_chain.problems: معاملٌ اختياري جديد supported_claims (القيمة الافتراضية فارغة).",
-      "tools/hard_currency_engine/buyer_claims.findings/classify: معاملٌ اختياري جديد rail_supported (افتراضه False).",
-      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json: ثلاثة حقول إلزامية جديدة قبل التعديل، وأربعة مسارات محمية جديدة.",
-      "docs/governance/D319_IMMUTABLE_TEXT.json: قائمة verbatim_texts جديدة وحالة CONFIRMED_BY_OWNER؛ ومساران محميّان جديدان للنصّين الحرفيّين."
+      "docs/commercial/VALUE_CHAIN.json: OPP-04 ledger_routes يضيف AI_REDTEAM_TARGETS_2026-10-20.csv (إضافة لا تغيير)."
     ],
     "evidence": {
-      "reachability_trace": "ci.yml guardrails → python scripts/fitness/check_founder_atlas_constitution.py؛ ci.yml → scripts/fitness/check_code_acceptance.py → shared.evidence.gate.report_problems؛ scripts/fitness/check_value_chain.py → shared.research.value_chain.problems؛ economic_truth.build_snapshot → atlas_view → economic_decision.build_brief.",
+      "reachability_trace": "tests/unit/tools/test_outreach_truth.py SEND_FILES → buyer_claims.buyer_lines/findings على الملفّين الجديدين؛ scripts/fitness/check_value_chain.py → shared.research.value_chain.route_table → OPP-04 ledger_routes.",
       "tests": {
-        "passed": 278,
+        "passed": 152,
         "failed": 0,
-        "new_negative_cases": 35,
+        "new_negative_cases": 1,
         "files": [
-          "tests/fitness/test_founder_atlas_constitution_gate.py",
-          "tests/fitness/test_evidence_proportionality_constitution_gate.py",
-          "tests/fitness/test_code_acceptance_gate.py",
-          "tests/fitness/test_check_value_chain.py",
-          "tests/fitness/test_check_hard_currency_engine.py",
-          "tests/shared/test_evidence_gate.py",
-          "tests/shared/test_opportunity_score.py",
-          "tests/shared/test_economic_truth.py",
-          "tests/shared/test_contact_ledger.py",
+          "tests/unit/tools/test_outreach_truth.py",
           "tests/unit/tools/test_buyer_claims.py",
-          "tests/unit/tools/test_hard_currency_engine.py",
-          "tests/unit/tools/test_outreach_truth.py"
+          "tests/fitness/test_check_value_chain.py",
+          "tests/shared/test_value_chain.py",
+          "tests/shared/test_contact_ledger.py",
+          "tests/shared/test_economic_truth.py"
         ],
-        "note_ar": "278 اختباراً في الملفّات الاثني عشر تمرّ محلياً. ولا يُحتسَب من الحالات السلبية إلّا ما حُفظ خرجه أحمر قبل الإصلاح: 9 + 10 + 1 + 5 + 2 + 8 = 35."
+        "note_ar": "152 اختباراً في الملفّات الستّة تمرّ محلياً. الحالة السلبية الوحيدة: اختبار نصّ المشتري أحمر على سطرين في الملفّين الجديدين قبل تعديل الصياغة، وخرجه محفوظ."
       },
       "vacuity_probe": "not_run",
       "mutation_score": {
@@ -538,40 +324,32 @@
     },
     "unverified": [
       {
-        "what": "tests/api/test_hard_currency_center.py (غرفة القرار عبر عميل الاختبار، وعرض atlas فيها)",
-        "why": "fastapi وjwt غير مثبّتين في البيئة المحلية؛ يشغّلها CI على الـPR."
+        "what": "قنوات التواصل لـ16 جهة من 20",
+        "why": "لم تُعثَر صفحة تواصل رسمية مؤكَّدة؛ الحقل UNKNOWN ويتحقّق منه المالك قبل الإرسال."
+      },
+      {
+        "what": "بلد 9 جهات",
+        "why": "المصدر المستشهَد به لا يذكره؛ كُتب UNKNOWN بدل التخمين."
+      },
+      {
+        "what": "مصدر HUMAIN أوّلي",
+        "why": "لم يُعثَر على البيان الصحفي للشركة؛ المصدر صحافة متخصّصة ومذكورٌ ذلك في الصفّ."
+      },
+      {
+        "what": "الطلب الفعلي من أيّ مشترٍ",
+        "why": "هذا ما يقيسه الاختبار؛ لم تُرسَل أيّ رسالة بعد."
+      },
+      {
+        "what": "صنف الإخفاق نفسه على نصٍّ فرنسي",
+        "why": "المكتبة تقطّع الحروف اللاتينية المشكولة، فلم يُثبَت إخفاقٌ فرنسي؛ العيّنة تقول ذلك."
       },
       {
         "what": "مجس الفراغ ونقاط الطفرات",
-        "why": "لم يُشغَّلا؛ لذلك يقف المستوى المحسوب عند E3 ولا يُدَّعى E4."
-      },
-      {
-        "what": "فحص وقت التشغيل (E5)",
-        "why": "لا يُستدعى أيّ مسارٍ حيّ؛ الأثر حسابٌ على ملفّات المستودع فقط."
-      },
-      {
-        "what": "أمانة النسخ الحرفي للوثيقتين مقابل صور الصفحات",
-        "why": "قورنت كل صفحةٍ آلياً بطبقة النص في PDF وأكّد المالك النسخ، لكن لم يقرأه قارئٌ ثانٍ مستقلّ؛ البصمة تثبت أنّ النصّ لم يتغيّر بعد التأكيد، لا أنّه مطابقٌ للأصل."
-      },
-      {
-        "what": "ثمانية اختبارات تفشل محلياً (correlated_http ×3 · e2e_deferred_findings ×3 · no_double_encoded_frames ×1 · phase0 f3 tracing ×1)",
-        "why": "تفشل بالعدد نفسه على origin/main في نسخة عمل منفصلة (8 failed, 40 passed)؛ سببها البيئة المحلية لا هذا التغيير، والحكم لـCI."
-      },
-      {
-        "what": "نموذج درجة الفرص المدمج",
-        "why": "اختبار التفنيد المسجَّل مسبقاً لم تُفتح له جولة؛ ترتيباته فرضية حتى ذلك."
-      },
-      {
-        "what": "الحدّ الأدنى للأجر بالساعة H وحدّ خسارة التجربة",
-        "why": "لم يصرّح بهما المالك؛ بوّابة الاقتصاد تبقى SUSPENDED لا PASS."
-      },
-      {
-        "what": "الحالة الحيّة لحماية الفرع على GitHub",
-        "why": "سلطة خارجية؛ لا يُتحقَّق منها من ملفّات المستودع."
+        "why": "لا كود منتج في هذا التغيير؛ لم يُشغَّلا."
       }
     ],
-    "computed_verdict": "HOLD: verifier files modified",
+    "computed_verdict": "ACCEPT",
     "evidence_level": "E3",
-    "decision": "hold"
+    "decision": "accept"
   }
 }
