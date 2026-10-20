@@ -1,9 +1,9 @@
 {
   "$schema_version": "1",
-  "packet_id": "CAP-2026-10-20-d320-opp04-buyer-test",
+  "packet_id": "CAP-2026-10-20-d320-d321-demand-first",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "D-320 بقرار المالك في 2026-10-20: اختبار مشترٍ قبل أيّ كود لـOPP-04 (إخفاق حواجز الذكاء الاصطناعي بالعربية والفرنسية)، في شريحة مختبرات النماذج القادرة على العربية ومورّدي الحواجز. 20 جهة بمصادر مؤرّخة، ورسالةٌ بطلبٍ واحد وعيّنة دليل يفحصهما buyer_claims، ونجاحٌ وإيقافٌ مسجَّلان مسبقاً. لا كود ولا فكّ تجميد (D-300 قائم).",
+  "decision_of_change": "D-320 وD-321 بقرار المالك في 2026-10-20. D-320: اختبار مشترٍ قبل أيّ كود لـOPP-04 (20 جهة بمصادر مؤرّخة، ورسالةٌ بطلبٍ واحد وعيّنة دليل يفحصهما buyer_claims). D-321 (القانون الأعلى «الألم أولاً»، §0.32): لا بناء قبل دليلٍ على من يتألّم ومن يبحث الآن ومن يدفع؛ الدليل العامّ يُرخّص اختبار مشترٍ فقط، وحلقات البناء وكود المنتج تتطلّب ثلاث جهاتٍ ردّت في السجلّ ودافعاً مُثبَتاً؛ وما بُني قبل الطلب يُعرَض ودَينه يتقلّص فقط. ورسائل الفوترة الفرنسية مجمَّدة حتى تقرير البحث.",
   "standards": [
     "clean-code-book"
   ],
@@ -15,56 +15,65 @@
     {
       "standard": "clean-code-book",
       "paths": [
+        "shared/research/value_chain.py",
+        "scripts/fitness/check_code_acceptance.py",
+        "scripts/fitness/check_demand_first_constitution.py",
         "tests/unit/tools/test_outreach_truth.py"
       ],
-      "gate": "tests/unit/tools/test_outreach_truth.py::test_buyer_text_states_no_rate_and_no_guarantee",
-      "application_ar": "قائمةٌ واحدة لنصوص المشتري (SEND_FILES) يقرأها الاختبار نفسه؛ أُضيف الملفّان إليها مع تحديث تعليقها بدل نسخ حلقة الفحص في اختبارٍ ثانٍ."
+      "gate": "scripts/fitness/check_demand_first_constitution.py",
+      "application_ar": "قاعدة الطلب تعيش في موطنٍ واحد (value_chain: الأرجل والدَّين والاشتقاق) وتُقرأ منه في البوّابتين؛ لا سُلَّم ثانٍ ولا قائمة كود منتجٍ ثانية (سياسة الحوكمة وحدها). ودوالّ صغيرة بمسؤوليةٍ واحدة لكلٍّ: إعلان الساق، ودَين ما بُني قبل الطلب، وترخيص الكود."
     }
   ],
   "production": {
     "owner": "repository-owner",
-    "status": "NO_RUNTIME_CHANGE",
+    "status": "GOVERNANCE_GATES_ONLY",
     "interfaces": [
-      "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv: ملفّ أهداف جديد موجَّه في سلسلة القيمة (OPP-04 ledger_routes)",
-      "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md: نصّ مشترٍ يفحصه buyer_claims",
-      "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md: عيّنة دليل للمشتري يفحصها buyer_claims"
+      "shared/research/value_chain.py: compute_derived يضيف demand_legs · replying_entities · code_licensed · built_before_demand (إضافة لا تغيير)",
+      "shared/research/value_chain.py: problems(..., built_before_demand=) يحمرّ لحلقة بناءٍ قبل الطلب أو دَينٍ لا يتقلّص أو ساقٍ بلا دليل",
+      "scripts/fitness/check_code_acceptance.py: validate_demand_first — كود المنتج بترخيص الطلب أو صيانةٍ لا تضيف ملفّاً",
+      "scripts/fitness/check_demand_first_constitution.py: البصمة والعلامات والمواطن والسجلّ ونقاط الدخول ورأس CLAUDE.md والسلك والحماية",
+      "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv و05_AI_REDTEAM_LABS_EN_FR.md وعيّنة الدليل (D-320)"
     ],
     "runtime_evidence_paths": [
       "docs/research/EXTERNAL_GUARD_PROBE.json",
       "docs/commercial/VALUE_CHAIN.json",
       "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv"
     ],
-    "failure_behavior_ar": "كلّ فحصٍ مغلقٌ عند الفشل: جملةٌ في الرسالة أو العيّنة تقول ضماناً أو نسبةً أو نتيجةً بلا فشل ⇒ CI أحمر؛ وصفٌّ في السجلّ يشير إلى ملفّ أهدافٍ غير موجَّه ⇒ check_value_chain أحمر.",
-    "observability_ar": "كلّ إرسالٍ وردٍّ صفٌّ في CONTACT_LEDGER.csv، فتتحرّك الحلقتان 6-7 لـOPP-04 في VALUE_CHAIN.json ولوحة العملة الصعبة من السجلّ وحده. اليوم: صفر إرسال لهذا الإعداد.",
+    "failure_behavior_ar": "كلّ فحصٍ مغلقٌ عند الفشل: حلقة بناءٍ بلا ترخيص الطلب، أو دَينٌ لم يتقلّص، أو ساقٌ بلا دليلٍ مؤرَّخ، أو كود منتجٍ بلا صنف تغيير، أو صيانةٌ تضيف ملفّاً، أو بايتٌ تغيّر في القانون، أو سطرٌ نزل عن رأس CLAUDE.md ⇒ CI أحمر. والقانون لا يقول PIVOT ولا STOP.",
+    "observability_ar": "الكتلة المُشتقّة في VALUE_CHAIN.json تعرض اليوم عشرة مسارات built_before_demand: true وصفر مسارٍ code_licensed؛ وهذه الحزمة نفسها تحسب HOLD لأنّها تمسّ ملفّات المُتحقِّق.",
     "security_boundary_ar": "المستودع عامّ: لا أسماء أشخاص ولا بريد ولا هاتف في الملفّات الجديدة (فُحصت بـgrep)؛ ولا يُشغَّل أيّ فحصٍ على نظامٍ مستضاف لجهةٍ قبل إذنٍ مكتوبٍ منها، والكود لا يرسل بريداً.",
-    "rollback_ar": "git revert لدفعات D-320 الثلاث؛ لا يمسّ التراجع أيّ بوّابة أو اختبار أو شرط CI سابق."
+    "rollback_ar": "git revert لدفعات D-320 وD-321 كتغييرٍ واحد مُراجَع مع بقاء سجلّ التعديل D-321 للتاريخ؛ لا يُضعف التراجع أيّ دستورٍ أو اختبارٍ أو شرط CI سابق."
   },
   "commercial_trace": {
     "offer_ids": [
       "ai-red-teaming-multilingual"
     ],
-    "customer_problem_ar": "حاجزٌ يقبل قاعدة حظرٍ عربية ويؤكّد قبولها ثمّ لا يطبّقها أبداً، بلا خطأٍ ولا تحذير، فيظنّ صاحبه أنّ سياسته مفعّلة وهي ليست كذلك.",
-    "value_hypothesis_ar": "فرضيّة غير مثبتة: مختبرٌ أو مورّد حواجز يدفع ليعرف إن كان حاجزه يُسقط قواعد عربية أو فرنسية بصمت. الاختبار يقيس الطلب قبل أيّ كود.",
+    "customer_problem_ar": "بناء منتجٍ لا يدفع له أحد: عشرة مسارات بُنيت قبل أن يردّ مشترٍ واحد، والأطروحة النشطة اختيرت بلا محادثة مشترٍ.",
+    "value_hypothesis_ar": "منع الكود قبل الطلب يوجّه وقت المالك الوحيد إلى قياس الطلب أولاً (رسائل وأسئلة) بدل بناء ما لا يُشترى. فرضيةٌ تُقاس بالسجلّ.",
     "foreign_currency_path_ar": "لا إيراد ولا يُدّعى؛ GATE_C = ABSENT. الإشارة المطلوبة طلبٌ من مشترٍ مسمّى (الحلقة 6) لا دفعة.",
-    "foundation_exception_ar": "وثائق تجارية وقرارٌ مسجَّل واختبار نصّ؛ لا ميزة ولا كود منتج، وnaas_verifier مجمَّد (D-300)."
+    "foundation_exception_ar": "حوكمة واحتواء تحت D-300 وD-321؛ لا ميزة ولا كود منتج (shared/research وshared/evidence آلة الدليل نفسها، مُعلَنةٌ في السياسة بسببها)."
   },
   "deletions": {
     "count": 0,
     "paths": [],
-    "policy_ar": "صفر حذف: إضافة ملفّات وسطرٍ في قائمة اختبار ومسارٍ في سلسلة القيمة، ولا اختبار ولا فحص أُزيل."
+    "policy_ar": "صفر حذف: ثلاثة أسطر فارغة بعد فاصل `---` في CLAUDE.md أُزيلت كي لا يُرفع سقف 1262، ولا نصّ قاعدة ولا اختبار ولا فحص أُزيل."
   },
   "verification": {
     "result": "PASS",
     "commands": [
+      "python3 scripts/fitness/check_demand_first_constitution.py — PASS",
       "python3 scripts/fitness/check_value_chain.py — PASS",
       "python3 scripts/research/value_chain.py --check — PASS",
       "python3 scripts/research/hard_currency_scorecard.py --check — PASS",
-      "python3 scripts/fitness/check_outbound_before_research.py — PASS",
+      "python3 scripts/fitness/check_founder_atlas_constitution.py — PASS",
+      "python3 scripts/fitness/check_engineering_governance.py — PASS",
+      "python3 scripts/fitness/check_governance_registry.py — PASS",
       "python3 scripts/fitness/check_memory_coherence.py — PASS",
       "python3 scripts/fitness/check_documentation_contract.py — PASS",
+      "python3 scripts/fitness/check_outbound_before_research.py — PASS",
       "python3 scripts/fitness/check_code_acceptance.py — PASS",
       "python3 scripts/fitness/check_repository_microscope.py — PASS",
-      "pytest tests/unit/tools/test_outreach_truth.py tests/unit/tools/test_buyer_claims.py tests/fitness/test_check_value_chain.py tests/shared/test_value_chain.py tests/shared/test_contact_ledger.py tests/shared/test_economic_truth.py — 152 passed",
+      "pytest tests/fitness/test_demand_first_constitution_gate.py tests/fitness/test_check_value_chain.py tests/fitness/test_code_acceptance_gate.py tests/shared/test_value_chain.py tests/fitness/test_founder_atlas_constitution_gate.py tests/shared/test_economic_truth.py tests/shared/test_contact_ledger.py tests/unit/tools/test_outreach_truth.py tests/unit/tools/test_buyer_claims.py tests/fitness/test_evidence_proportionality_constitution_gate.py — 215 passed",
       "python3 scripts/run_fitness_gates.py — PASS"
     ]
   },
@@ -147,42 +156,82 @@
     "owner": "curriculum-governance"
   },
   "changed_paths": [
+    ".github/workflows/ci.yml",
     ".memory/README.md",
+    ".memory/ci-gates.md",
     ".memory/decisions.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "ENGINEERING_CONSTITUTION.md",
     "README.ar.md",
     "README.md",
     "docs/DOCUMENTATION_INDEX.md",
+    "docs/DOCUMENTATION_MANIFEST.json",
+    "docs/architecture/DEMAND_FIRST_CONSTITUTION.md",
     "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json",
     "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
     "docs/commercial/VALUE_CHAIN.json",
     "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
     "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+    "docs/governance/CONSTITUTION_REGISTRY.json",
+    "docs/governance/D321_IMMUTABLE_TEXT.json",
+    "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
+    "docs/governance/NEGATIVE_PROOFS.json",
+    "docs/governance/amendments/D-321-DEMAND-FIRST-LAW.md",
+    "scripts/fitness/check_code_acceptance.py",
+    "scripts/fitness/check_demand_first_constitution.py",
+    "scripts/fitness/check_value_chain.py",
+    "shared/research/value_chain.py",
+    "tests/fitness/test_check_value_chain.py",
+    "tests/fitness/test_code_acceptance_gate.py",
+    "tests/fitness/test_demand_first_constitution_gate.py",
+    "tests/shared/test_value_chain.py",
     "tests/unit/tools/test_outreach_truth.py"
   ],
   "git_change_snapshot": {
     "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
+      ".github/workflows/ci.yml",
       ".memory/README.md",
+      ".memory/ci-gates.md",
       ".memory/decisions.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "ENGINEERING_CONSTITUTION.md",
       "README.ar.md",
       "README.md",
       "docs/DOCUMENTATION_INDEX.md",
+      "docs/DOCUMENTATION_MANIFEST.json",
+      "docs/architecture/DEMAND_FIRST_CONSTITUTION.md",
       "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
       "docs/commercial/VALUE_CHAIN.json",
       "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
       "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+      "docs/governance/CONSTITUTION_REGISTRY.json",
+      "docs/governance/D321_IMMUTABLE_TEXT.json",
+      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
+      "docs/governance/NEGATIVE_PROOFS.json",
+      "docs/governance/amendments/D-321-DEMAND-FIRST-LAW.md",
+      "scripts/fitness/check_code_acceptance.py",
+      "scripts/fitness/check_demand_first_constitution.py",
+      "scripts/fitness/check_value_chain.py",
+      "shared/research/value_chain.py",
+      "tests/fitness/test_check_value_chain.py",
+      "tests/fitness/test_code_acceptance_gate.py",
+      "tests/fitness/test_demand_first_constitution_gate.py",
+      "tests/shared/test_value_chain.py",
       "tests/unit/tools/test_outreach_truth.py"
     ],
-    "content_sha256_excluding_packet": "bb42fd1338715b97025e35689363f561b73206535c74a2300e4fff0d4a979bf3",
+    "content_sha256_excluding_packet": "dc1519de7dac04417631888cf8ea7d935db89c5719cbe4dae7d22060bba1659a",
     "refreshed_on": "2026-10-20",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3519,
-    "total_bytes_excluding_packet": 51388530,
-    "total_newlines_excluding_packet": 897042,
-    "sha256_excluding_packet": "9020c4f34f017147fee260bc73aa5e1f8d23e0381de311f5ae0bc76974c65170",
+    "file_count_excluding_packet": 3524,
+    "total_bytes_excluding_packet": 51452452,
+    "total_newlines_excluding_packet": 898124,
+    "sha256_excluding_packet": "a421a11971eb7d7321ae498f238745307837f268eed6b92a3f54b2d09be6d28f",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -198,121 +247,191 @@
     "operator_attestation_ar": "هذا ليس ادعاء فهم شامل بذاته؛ إنه شرط مجهر آلي يسبق التحليل البشري والمصفوفة، ويجعل تجاهل القديم مرئياً."
   },
   "pre_modification": {
-    "current_state": "TESTED: main عند 1dabe8e؛ OPP-04 عند الحلقة 5 (EXTERNAL_GUARD_PROBE.json) بصفر تواصل وبلا ledger_routes وبقرار DEFER؛ لا ملفّ أهداف ولا رسالة لهذا المسار.",
+    "current_state": "TESTED: main عند 1dabe8e؛ عشرة مسارات من 25 أعلنت حلقات بناءٍ بلا جهةٍ ردّت؛ OPP-04 عند الحلقة 5 بصفر تواصل؛ D-300 اختير بلا محادثة مشترٍ؛ السجلّ: خمس جهات، صفر عرض، صفر دفعة؛ وترتيب السلسلة يضع البناء (3–5) قبل الاهتمام الخارجي (7).",
     "architecture_and_boundaries": [
-      "السجلّ CONTACT_LEDGER.csv يسجّل ما حدث؛ وكلّ صفٍّ يجب أن يجد مساره عبر ledger_routes (check_value_chain).",
-      "نصّ المشتري يمرّ بـbuyer_claims عبر SEND_FILES في test_outreach_truth.",
-      "naas_verifier مجمَّد بقرار D-300؛ المسبار يعيش خارجه ونتيجته بيانات.",
-      "لا كود يرسل بريداً (§9.3 · check_hard_currency_engine)."
+      "shared/research لا يستورد app؛ value_chain.py stdlib حتمي، والحالة مُشتقّة في VALUE_CHAIN.json لا مكتوبة.",
+      "السجلّ CONTACT_LEDGER.csv يسجّل ما حدث؛ CI يحجب ما نكتبه نحن (إعلان الحلقات والأرجل والحزمة).",
+      "ما هو كود المنتج قائمةٌ واحدة في ENGINEERING_GOVERNANCE_POLICY.json (demand_first).",
+      "لا كود يرسل بريداً؛ والإرسال فعل المالك."
     ],
     "existing_failures_and_old_debt": [
-      "FOUND: OPP-04 بلا ledger_routes، فأيّ صفّ إرسالٍ له كان سيُرفض بلا مسار — أُضيف المسار قبل أيّ إرسال.",
-      "FOUND: صياغتان في المسوّدة الأولى خالفتا buyer_claims («ضمان» في سطر ملاحظة مقتبَس، و«sans erreur») — غُيّرت الصياغة لا القاعدة.",
+      "FOUND: عشرة مسارات أعلنت حلقات بناءٍ قبل أيّ طلب — جُمِّدت دَيناً يُعرَض ويتقلّص فقط، ولم يُحذف شيء.",
+      "FOUND: OPP-04 بلا ledger_routes — أُضيف المسار قبل أيّ إرسال (D-320).",
+      "FOUND: الموجز (economic_decision) لا يقرأ تجميد رسائل الفوترة — مُعلَنٌ في D-321 والـPR، لا يُبنى هنا.",
       "OLD DEBT (خارج النطاق): 8 اختبارات تفشل على main محلياً أيضاً (correlated_http ×3 · e2e_deferred_findings ×3 · no_double_encoded_frames ×1 · phase0 f3 tracing ×1)."
     ],
     "dependency_path": [
-      "test_outreach_truth.SEND_FILES → buyer_claims.buyer_lines → buyer_claims.findings",
-      "check_value_chain.py → shared.research.value_chain.route_table → OPP-04 ledger_routes → CONTACT_LEDGER.csv"
+      "ci.yml guardrails → check_value_chain.py → shared.research.value_chain.problems → _demand_declaration_problems · _built_before_demand_problems",
+      "ci.yml → check_code_acceptance.py → validate_demand_first → VALUE_CHAIN.json derived.code_licensed + policy.demand_first",
+      "ci.yml guardrails → check_demand_first_constitution.py → D321_IMMUTABLE_TEXT.json + مواطن file::symbol + رأس CLAUDE.md"
     ],
     "foundational_frontier": {
-      "status": "NO_BLOCKING_FOUNDATIONAL_DEFECT_IDENTIFIED",
+      "status": "REPAIRED_OR_CONTAINED_BEFORE_EXTENSION",
       "relevant_defects": [
-        "لا عيب أساسي يمسّه هذا التغيير؛ مسار OPP-04 الغائب في ledger_routes أُضيف قبل أوّل صفّ."
+        "البناء قبل الطلب في عشرة مسارات — احتُوي بدَينٍ مُجمَّد يتقلّص فقط قبل أيّ بناءٍ جديد."
       ],
-      "decision": "وثائق تجارية واختبار نصّ تحت D-300؛ لا ميزة ولا ترقية قدرة."
+      "decision": "حوكمة واحتواء مسموحان تحت D-300 وD-321؛ لا ميزة ولا ترقية قدرة."
     },
-    "root_cause": "سأل المالك عن ألمٍ يحلّه كودٌ نبيعه بالعملة الصعبة؛ أقرب أصلٍ مثبت هو OPP-04 وليس له مشترٍ مسمّى ولا تواصل، فالمجهول الأوّل هو الطلب لا الكود.",
-    "intended_change": "قرار D-320 بنجاحٍ وإيقافٍ مسجَّلين مسبقاً؛ 20 جهة بمصادر مؤرّخة موجَّهة في سلسلة القيمة؛ رسالةٌ بطلبٍ واحد وعيّنة دليل تقول ما تثبته وما لا تثبته، ويفحصهما buyer_claims.",
+    "root_cause": "لم يكن شيءٌ يمنع إعلان حلقة بناءٍ أو قبول كود منتجٍ قبل أن يتكلّم مشترٍ، فكان الموعد والأداة يقومان مقام الطلب.",
+    "intended_change": "القانون الأعلى D-321 بأرجله الثلاث ومرحلتيه، مفروضاً في سلسلة القيمة وحزمة القبول، بدَينٍ مُجمَّد لما بُني قبل الطلب، وبوابةٍ تحرس ربطه ورأسه في CLAUDE.md؛ مع اختبار المشتري D-320.",
     "affected_invariants": [
-      "D-300 قائم: الأطروحة النشطة الفوترة الفرنسية وnaas_verifier مجمَّد.",
-      "لا وعد غير مقيس في نصّ المشتري (buyer_claims).",
-      "كلّ صفٍّ في السجلّ له مسار (لا إسقاط صامت)."
+      "لا حلقة بناءٍ ولا كود منتج قبل ثلاث جهاتٍ ردّت ودافعٍ مُثبَت، أو صيانةٍ لا تضيف ملفّاً.",
+      "ما بُني قبل الطلب يُعرَض ولا يُحذف، ودَينه يتقلّص في الاتجاهين.",
+      "لا سُلَّم ولا مفردات حالةٍ جديدة؛ والقانون لا يقول PIVOT ولا STOP.",
+      "مستوى الدليل والقرار يحسبهما الكود؛ تغييرٌ يمسّ ملفّات المُتحقِّق يُحسب HOLD."
     ],
     "test_plan": [
-      "سلبي: اختبار نصّ المشتري كان أحمر على سطرين في الملفّين الجديدين قبل تعديل الصياغة (محفوظ).",
-      "إيجابي: 152 اختباراً في ستّة ملفّات، والبوّابات كلّها على origin/main."
+      "سلبي: 19 حالةً حمراء محفوظة قبل التنفيذ (34 فشلاً ووحدة البوابة غائبة)، ولكلٍّ ضمانٌ تكسره عمداً.",
+      "إيجابي: 215 اختباراً في عشرة ملفّات، والبوّابات كلّها على origin/main."
     ],
-    "rollback_strategy": "git revert للدفعات الثلاث؛ لا بوّابة ولا اختبار يُضعَف.",
+    "rollback_strategy": "git revert لدفعات D-320 وD-321؛ سجلّ التعديل يبقى للتاريخ.",
     "verification_strategy": [
+      "python scripts/fitness/check_demand_first_constitution.py",
       "python scripts/fitness/check_value_chain.py",
       "python scripts/fitness/check_code_acceptance.py",
-      "pytest tests/unit/tools/test_outreach_truth.py"
+      "pytest tests/fitness/test_demand_first_constitution_gate.py"
     ],
     "non_goals": [
-      "لا كود ولا فكّ تجميد لـnaas_verifier (D-300).",
-      "لا إرسال آلي: المالك يرسل بيده، بحدٍّ أقصى 20.",
-      "لا فحص لأيّ نظامٍ مستضاف قبل إذنٍ مكتوب من صاحبه.",
-      "لا سعر ولا ضمان في نصّ المشتري."
+      "لا كود منتج ولا فكّ تجميد لـnaas_verifier.",
+      "لا تعديل للموجز economic_decision في هذه الدفعة.",
+      "لا إرسال آلي: المالك يرسل بيده.",
+      "لا حذف لأيّ مسار أو أداةٍ بُنيت قبل الطلب."
     ],
     "acceptance_criteria": [
       "كلّ البوّابات المذكورة خضراء على origin/main، وrequired-ci وguardrails وdoc-integrity خضراء على الـPR.",
-      "buyer_claims لا يجد سطراً حاجباً في الرسالة ولا في العيّنة.",
-      "لا اسم شخص ولا بريد ولا هاتف في الملفّات الجديدة."
+      "evidence_report يحسب HOLD والـPR يقول ذلك.",
+      "الكتلة المُشتقّة تعرض عشرة مسارات built_before_demand ولا مسار code_licensed."
     ],
-    "target_operating_cost": "صفر كلفة تشغيل: ملفّات نصّية واختبارٌ قائم؛ وقت المالك للإرسال اليدوي (20 رسالة) هو الكلفة الوحيدة.",
+    "target_operating_cost": "صفر كلفة تشغيل: فحوصٌ stdlib حتمية في guardrails تزيد ثوانيَ على CI، بلا نداء نموذج لغوي ولا خدمة خارجية.",
     "claim_statuses": {
       "current_state": "TESTED",
+      "demand_law_enforced": "TESTED",
+      "built_before_demand_shown": "TESTED",
+      "code_acceptance_demand_rule": "TESTED",
       "targets_have_dated_sources": "TESTED",
       "buyer_text_lint_clean": "TESTED",
-      "probe_still_reproduces": "TESTED",
-      "contact_channels_complete": "UNKNOWN",
+      "pain_research_result": "UNKNOWN",
       "buyer_demand": "UNKNOWN",
       "no_personal_data_committed": "TESTED",
       "branch_protection_live_state": "UNKNOWN"
     }
   },
   "evidence_report": {
-    "change_id": "D-320-OPP04-BUYER-TEST",
-    "claim": "اختبار مشترٍ لـOPP-04 جاهز للإرسال اليدوي: 20 جهة بمصادر مؤرّخة موجَّهة في سلسلة القيمة، ورسالة وعيّنة دليل يفحصهما buyer_claims، ونجاحٌ وإيقافٌ مسجَّلان في D-320.",
+    "change_id": "D-320-D-321-DEMAND-FIRST",
+    "claim": "لا حلقة بناءٍ ولا كود منتج يُقبَل الآن قبل ثلاث جهاتٍ ردّت في السجلّ ودافعٍ مُثبَت (D-321)، وما بُني قبل الطلب يُعرَض بدَينٍ يتقلّص؛ واختبار مشترٍ لـOPP-04 جاهز للإرسال اليدوي (D-320).",
     "status": "PROPOSED",
     "risk_zone": "PRODUCT",
-    "risk_zone_reason_ar": "نصٌّ موجَّهٌ لمشترين خارجيين، قابلٌ للتراجع؛ لا كود منتج ولا مدفوعات ولا أسرار ولا فعلٌ خارجيٌّ يقوم به الكود — الإرسال فعل المالك.",
+    "risk_zone_reason_ar": "تغييرٌ قابل للتراجع على بوّاباتٍ ونصوص التزامٍ ونصّ مشترٍ؛ لا مدفوعات ولا أسرار ولا ترحيل بيانات ولا فعلٌ خارجيٌّ يقوم به الكود. وتعديل البوّابات نفسها يجعل القرار HOLD.",
     "registered": true,
     "scope": {
       "declared_files": [
+        ".github/workflows/ci.yml",
         ".memory/README.md",
+        ".memory/ci-gates.md",
         ".memory/decisions.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "ENGINEERING_CONSTITUTION.md",
         "README.ar.md",
         "README.md",
         "docs/DOCUMENTATION_INDEX.md",
+        "docs/DOCUMENTATION_MANIFEST.json",
+        "docs/architecture/DEMAND_FIRST_CONSTITUTION.md",
         "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
         "docs/commercial/VALUE_CHAIN.json",
         "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
         "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+        "docs/governance/CONSTITUTION_REGISTRY.json",
+        "docs/governance/D321_IMMUTABLE_TEXT.json",
+        "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
+        "docs/governance/NEGATIVE_PROOFS.json",
+        "docs/governance/amendments/D-321-DEMAND-FIRST-LAW.md",
+        "scripts/fitness/check_code_acceptance.py",
+        "scripts/fitness/check_demand_first_constitution.py",
+        "scripts/fitness/check_value_chain.py",
+        "shared/research/value_chain.py",
+        "tests/fitness/test_check_value_chain.py",
+        "tests/fitness/test_code_acceptance_gate.py",
+        "tests/fitness/test_demand_first_constitution_gate.py",
+        "tests/shared/test_value_chain.py",
         "tests/unit/tools/test_outreach_truth.py"
       ],
       "touched_files": [
+        ".github/workflows/ci.yml",
         ".memory/README.md",
+        ".memory/ci-gates.md",
         ".memory/decisions.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "ENGINEERING_CONSTITUTION.md",
         "README.ar.md",
         "README.md",
         "docs/DOCUMENTATION_INDEX.md",
+        "docs/DOCUMENTATION_MANIFEST.json",
+        "docs/architecture/DEMAND_FIRST_CONSTITUTION.md",
         "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
         "docs/commercial/VALUE_CHAIN.json",
         "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
         "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+        "docs/governance/CONSTITUTION_REGISTRY.json",
+        "docs/governance/D321_IMMUTABLE_TEXT.json",
+        "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
+        "docs/governance/NEGATIVE_PROOFS.json",
+        "docs/governance/amendments/D-321-DEMAND-FIRST-LAW.md",
+        "scripts/fitness/check_code_acceptance.py",
+        "scripts/fitness/check_demand_first_constitution.py",
+        "scripts/fitness/check_value_chain.py",
+        "shared/research/value_chain.py",
+        "tests/fitness/test_check_value_chain.py",
+        "tests/fitness/test_code_acceptance_gate.py",
+        "tests/fitness/test_demand_first_constitution_gate.py",
+        "tests/shared/test_value_chain.py",
         "tests/unit/tools/test_outreach_truth.py"
       ]
     },
-    "protected_paths_changed": [],
+    "protected_paths_changed": [
+      ".github/workflows/ci.yml",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "ENGINEERING_CONSTITUTION.md",
+      "docs/architecture/DEMAND_FIRST_CONSTITUTION.md",
+      "docs/governance/CONSTITUTION_REGISTRY.json",
+      "docs/governance/D321_IMMUTABLE_TEXT.json",
+      "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
+      "docs/governance/NEGATIVE_PROOFS.json",
+      "docs/governance/amendments/D-321-DEMAND-FIRST-LAW.md",
+      "scripts/fitness/check_code_acceptance.py",
+      "scripts/fitness/check_demand_first_constitution.py",
+      "scripts/fitness/check_value_chain.py",
+      "tests/fitness/test_check_value_chain.py",
+      "tests/fitness/test_code_acceptance_gate.py",
+      "tests/fitness/test_demand_first_constitution_gate.py"
+    ],
     "contracts_touched": [
-      "docs/commercial/VALUE_CHAIN.json: OPP-04 ledger_routes يضيف AI_REDTEAM_TARGETS_2026-10-20.csv (إضافة لا تغيير)."
+      "shared/research/value_chain.compute_derived: أربعة مفاتيح جديدة لكل مسار (إضافة لا تغيير).",
+      "shared/research/value_chain.problems و check_value_chain.run: معامل built_before_demand اختياري بافتراضٍ هو الدَّين الحقيقي.",
+      "docs/commercial/VALUE_CHAIN.json: OPP-04 ledger_routes + الكتلة المُشتقّة.",
+      "ENGINEERING_GOVERNANCE_POLICY.json: قسم demand_first وأربعة مسارات محمية."
     ],
     "evidence": {
-      "reachability_trace": "tests/unit/tools/test_outreach_truth.py SEND_FILES → buyer_claims.buyer_lines/findings على الملفّين الجديدين؛ scripts/fitness/check_value_chain.py → shared.research.value_chain.route_table → OPP-04 ledger_routes.",
+      "reachability_trace": "ci.yml guardrails → python scripts/fitness/check_demand_first_constitution.py؛ ci.yml → scripts/fitness/check_value_chain.py → shared.research.value_chain.problems؛ ci.yml → scripts/fitness/check_code_acceptance.py → validate_demand_first؛ tests/unit/tools/test_outreach_truth.py SEND_FILES → buyer_claims.",
       "tests": {
-        "passed": 152,
+        "passed": 215,
         "failed": 0,
-        "new_negative_cases": 1,
+        "new_negative_cases": 19,
         "files": [
+          "tests/fitness/test_demand_first_constitution_gate.py",
+          "tests/fitness/test_check_value_chain.py",
+          "tests/fitness/test_code_acceptance_gate.py",
+          "tests/shared/test_value_chain.py",
+          "tests/fitness/test_founder_atlas_constitution_gate.py",
+          "tests/shared/test_economic_truth.py",
+          "tests/shared/test_contact_ledger.py",
           "tests/unit/tools/test_outreach_truth.py",
           "tests/unit/tools/test_buyer_claims.py",
-          "tests/fitness/test_check_value_chain.py",
-          "tests/shared/test_value_chain.py",
-          "tests/shared/test_contact_ledger.py",
-          "tests/shared/test_economic_truth.py"
+          "tests/fitness/test_evidence_proportionality_constitution_gate.py"
         ],
-        "note_ar": "152 اختباراً في الملفّات الستّة تمرّ محلياً. الحالة السلبية الوحيدة: اختبار نصّ المشتري أحمر على سطرين في الملفّين الجديدين قبل تعديل الصياغة، وخرجه محفوظ."
+        "note_ar": "215 اختباراً في الملفّات العشرة تمرّ محلياً. ولا يُحتسَب من الحالات السلبية إلّا ما حُفظ خرجه أحمر قبل التنفيذ: 7 (سلسلة القيمة) + 4 (حزمة القبول) + 7 (بوابة D-321) + 1 (نصّ المشتري D-320) = 19."
       },
       "vacuity_probe": "not_run",
       "mutation_score": {
@@ -324,32 +443,32 @@
     },
     "unverified": [
       {
-        "what": "قنوات التواصل لـ16 جهة من 20",
-        "why": "لم تُعثَر صفحة تواصل رسمية مؤكَّدة؛ الحقل UNKNOWN ويتحقّق منه المالك قبل الإرسال."
+        "what": "tests/api/test_hard_currency_center.py",
+        "why": "fastapi وjwt غير مثبّتين محلياً؛ يشغّلها CI. الواجهة لا تقرأ المفاتيح الجديدة."
       },
       {
-        "what": "بلد 9 جهات",
-        "why": "المصدر المستشهَد به لا يذكره؛ كُتب UNKNOWN بدل التخمين."
+        "what": "صدق الألم و«الشغف» في أيّ ساقٍ تُعلَن",
+        "why": "الآلة تتحقّق من مصادر مؤرَّخة وصفوفٍ في السجلّ لا من صدق المحتوى؛ حكمٌ بشري."
       },
       {
-        "what": "مصدر HUMAIN أوّلي",
-        "why": "لم يُعثَر على البيان الصحفي للشركة؛ المصدر صحافة متخصّصة ومذكورٌ ذلك في الصفّ."
+        "what": "نتيجة البحث عن الألم",
+        "why": "توقّف بحث الوكلاء عند حدّ الجلسة بلا نتيجة؛ البحث المباشر لم يُجرَ بعد."
       },
       {
-        "what": "الطلب الفعلي من أيّ مشترٍ",
-        "why": "هذا ما يقيسه الاختبار؛ لم تُرسَل أيّ رسالة بعد."
+        "what": "قنوات التواصل لـ16 جهة من 20 وبلد 9 جهات (D-320)",
+        "why": "لم تُعثَر صفحة تواصل رسمية مؤكَّدة؛ المصدر لا يذكر البلد."
       },
       {
-        "what": "صنف الإخفاق نفسه على نصٍّ فرنسي",
-        "why": "المكتبة تقطّع الحروف اللاتينية المشكولة، فلم يُثبَت إخفاقٌ فرنسي؛ العيّنة تقول ذلك."
+        "what": "الموجز يقرأ تجميد رسائل الفوترة",
+        "why": "لم يُبنَ في هذه الدفعة؛ مُعلَنٌ في D-321."
       },
       {
         "what": "مجس الفراغ ونقاط الطفرات",
-        "why": "لا كود منتج في هذا التغيير؛ لم يُشغَّلا."
+        "why": "لم يُشغَّلا."
       }
     ],
-    "computed_verdict": "ACCEPT",
+    "computed_verdict": "HOLD: verifier files modified",
     "evidence_level": "E3",
-    "decision": "accept"
+    "decision": "hold"
   }
 }
