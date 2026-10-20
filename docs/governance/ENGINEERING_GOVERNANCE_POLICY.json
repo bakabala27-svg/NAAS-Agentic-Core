@@ -32,6 +32,9 @@
       "test_plan",
       "rollback_strategy",
       "verification_strategy",
+      "non_goals",
+      "acceptance_criteria",
+      "target_operating_cost",
       "claim_statuses"
     ],
     "foundational_frontier_statuses": [

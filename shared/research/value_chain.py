@@ -26,20 +26,25 @@ from __future__ import annotations
 import csv
 import io
 import json
-from collections.abc import Iterable, Mapping, Sequence
+from collections import Counter
+from collections.abc import Collection, Iterable, Mapping, Sequence
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 
 from shared.research.contact_ledger import INBOUND, MONEY, OUTBOUND, PAYMENT_SETTLED, LedgerRow
 
 __all__ = [
+    "ACTIVATION_CLAIMS",
     "CATALOG_REL",
     "CATALOG_REQUIRES",
     "CLASSIFICATIONS",
     "FORBIDDEN_TERMS",
     "LINKS",
     "MAP_REL",
+    "MIN_REPLYING_ENTITIES",
     "NOT_REACHED",
+    "OFFER_FIELDS",
     "REACHED",
     "VALUE_CHAIN_REL",
     "Link",
@@ -112,6 +117,27 @@ CATALOG_REQUIRES: dict[str, tuple[int, ...]] = {
     "REPEATABLE": (8,),
 }
 _PAYMENT_STATUSES = frozenset({"PAID_PROOF", "REPEATABLE"})
+#: كلّ حالةٍ من «جاهزٍ للعرض» فما فوق تَعِد المشتري بشيءٍ يُشترى.
+_AT_OR_ABOVE_READY = frozenset({"OFFER_READY", "PILOT", "PAID_PROOF", "REPEATABLE"})
+#: الأطلس §5.1 (D-319): عرضٌ قابلٌ للشراء يسمّي العميل والمشكلة والنتيجة والحدود ومدّة
+#: التجربة والسعر وشروط القبول وطريقة التسليم وطريقة التقييم — وما ينقصه واحدٌ فكرةٌ لا عرض.
+OFFER_FIELDS: tuple[str, ...] = (
+    "buyer_ar",
+    "paid_problem_ar",
+    "offer_outcome_ar",
+    "scope_limits_ar",
+    "trial_duration_ar",
+    "price_ar",
+    "acceptance_terms_ar",
+    "delivery_method_ar",
+    "evaluation_method_ar",
+)
+#: الأطلس §12.1 و§0.2 (D-319): ادّعاءا Economic Truth اللذان يسبقان أيّ ثمن — البيع قانونيّ
+#: والمال يصل. كلاهما بلا موطن تسجيلٍ اليوم (``unrecorded``)، فلا تبلغ حالةٌ OFFER_READY
+#: قبل أن يقرّر المالك موطنهما؛ المُنادي الذي لا يعرف حالتهما لا يمرّر شيئاً (الجانب الأشدّ).
+ACTIVATION_CLAIMS: tuple[str, ...] = ("C-LEGAL", "C-RAIL")
+#: الأطلس §3.4: «أدلّةٌ متكرّرة لدى عدّة عملاء مستقلّين» — قرار مشترٍ واحد ليس طلباً.
+MIN_REPLYING_ENTITIES = 3
 
 #: وصفٌ ممنوع ما دام المسار دون ``commercial_evidence`` (قاعدة المالك 2026-10-01 · D-227).
 #: سطرٌ يحمل ⛔ مُستثنى: القانون يجب أن يستطيع تسمية ما يحظره (D-208 §7).
@@ -263,7 +289,77 @@ def _missing(root: Path, rel: object) -> bool:
     return not isinstance(rel, str) or not rel.strip() or not (root / rel).exists()
 
 
-def _link_problems(pid: str, entry: Mapping[str, object], root: Path) -> list[str]:
+def _iso_date(value: object) -> bool:
+    try:
+        date.fromisoformat(str(value))
+    except ValueError:
+        return False
+    return True
+
+
+def _proof_scope_problems(pid: str, number: int, link: Mapping[str, object]) -> list[str]:
+    """الأطلس (D-319): «لا تضع علامة مثبت لمجرّد وجود ملفٍّ أو توثيقٍ أو نتيجة اختبارٍ محلية.
+    حدّد بالضبط ما الذي يثبته كلّ دليل، وما الذي لا يثبته»."""
+    found = [
+        f"{pid}: الحلقة {number} REACHED بلا `{field}` — الأطلس: سمِّ ما يثبته الدليل وما لا يثبته"
+        for field in ("proves_ar", "does_not_prove_ar")
+        if not str(link.get(field) or "").strip()
+    ]
+    if not _iso_date(link.get("as_of")):
+        found.append(f"{pid}: الحلقة {number} بلا `as_of` بتاريخ ISO — دليلٌ بلا تاريخ لا يُعرَف عمره")
+    return found
+
+
+def _buyer_decision_problems(
+    pid: str, link: Mapping[str, object], rows: Sequence[LedgerRow]
+) -> list[str]:
+    """الحلقة 6 قرار مشترٍ: يُقرأ من CONTACT_LEDGER.csv لا من ملفّ (الأطلس §3.4 · D-319)."""
+    found: list[str] = []
+    by_line = {row.line_no: row for row in rows}
+    refs = [str(ref) for ref in _items(link.get("ledger_refs"))]
+    if not refs:
+        found.append(
+            f"{pid}: الحلقة 6 REACHED بلا `ledger_refs` (LEDGER:n) — قرار المشتري سطرٌ في السجلّ"
+        )
+    for ref in refs:
+        number = ref.removeprefix("LEDGER:")
+        row = by_line.get(int(number)) if ref.startswith("LEDGER:") and number.isdigit() else None
+        if row is None or row.action not in INBOUND | MONEY:
+            found.append(f"{pid}: الحلقة 6 تستشهد بـ{ref!r} — ليس سطرَ ردٍّ أو مالٍ على هذا المسار")
+    replying = {row.entity for row in rows if row.action in INBOUND}
+    if len(replying) < MIN_REPLYING_ENTITIES:
+        found.append(
+            f"{pid}: الحلقة 6 وكياناتٌ ردّت {len(replying)} فقط — الأطلس §3.4 يتطلّب "
+            f"{MIN_REPLYING_ENTITIES} على الأقل"
+        )
+    return found
+
+
+def _reached_link_problems(
+    pid: str, number: int, link: Mapping[str, object], root: Path, rows: Sequence[LedgerRow]
+) -> list[str]:
+    found: list[str] = []
+    evidence = _items(link.get("evidence"))
+    if not evidence:
+        found.append(f"{pid}: الحلقة {number} REACHED بلا دليل")
+    for rel in evidence:
+        if _missing(root, rel):
+            found.append(f"{pid}: الحلقة {number} تستشهد بمسارٍ غير موجود: {rel!r}")
+    if number == 3 and link.get("contains_user_data") is not False:
+        found.append(
+            f"{pid}: الحلقة 3 تتطلّب `contains_user_data: false` مُصرَّحاً — "
+            "مسبارٌ يحفظ الخصوصية يقول ذلك ولا يُفترَض"
+        )
+    if number >= 5:
+        found.extend(_proof_scope_problems(pid, number, link))
+    if number == 6:
+        found.extend(_buyer_decision_problems(pid, link, rows))
+    return found
+
+
+def _link_problems(
+    pid: str, entry: Mapping[str, object], root: Path, rows: Sequence[LedgerRow]
+) -> list[str]:
     found: list[str] = []
     links = entry.get("links")
     if not isinstance(links, Mapping):
@@ -283,23 +379,15 @@ def _link_problems(pid: str, entry: Mapping[str, object], root: Path) -> list[st
             found.append(f"{pid}: الحلقة {number} بحالةٍ خارج المجموعة: {status!r}")
             continue
         if status == REACHED:
-            evidence = _items(link.get("evidence"))
-            if not evidence:
-                found.append(f"{pid}: الحلقة {number} REACHED بلا دليل")
-            for rel in evidence:
-                if _missing(root, rel):
-                    found.append(f"{pid}: الحلقة {number} تستشهد بمسارٍ غير موجود: {rel!r}")
-            if number == 3 and link.get("contains_user_data") is not False:
-                found.append(
-                    f"{pid}: الحلقة 3 تتطلّب `contains_user_data: false` مُصرَّحاً — "
-                    "مسبارٌ يحفظ الخصوصية يقول ذلك ولا يُفترَض"
-                )
+            found.extend(_reached_link_problems(pid, number, link, root, rows))
         elif not str(link.get("reason_ar") or "").strip():
             found.append(f"{pid}: الحلقة {number} NOT_REACHED بلا سببٍ منطوق")
     return found
 
 
-def _entry_problems(entry: Mapping[str, object], root: Path) -> list[str]:
+def _entry_problems(
+    entry: Mapping[str, object], root: Path, rows: Sequence[LedgerRow]
+) -> list[str]:
     pid = str(entry.get("id") or "").strip()
     if not pid:
         return ["مدخلٌ بلا `id`"]
@@ -313,7 +401,7 @@ def _entry_problems(entry: Mapping[str, object], root: Path) -> list[str]:
             found.append(f"{pid}: أصلٌ مُعاد استعماله غير موجود: {asset!r}")
         elif not str(asset.get("role_ar") or "").strip():
             found.append(f"{pid}: أصلٌ مُعاد استعماله بلا دورٍ منطوق: {asset.get('path')!r}")
-    found.extend(_link_problems(pid, entry, root))
+    found.extend(_link_problems(pid, entry, root, rows))
     return found
 
 
@@ -370,6 +458,48 @@ def _catalog_problems(
     return found
 
 
+def _offer_problems(
+    paths: Sequence[Mapping[str, object]],
+    catalog: Mapping[str, object],
+    ledger_rows: Sequence[LedgerRow],
+    supported_claims: Collection[str],
+) -> list[str]:
+    """ما يَعِد به الكتالوج المشتري يُفحَص لكلّ عرضٍ مرّةً واحدة (الأطلس · D-319)."""
+    grouped = _rows_by_path(paths, ledger_rows)
+    rows_by_offer: dict[str, list[LedgerRow]] = {}
+    for entry in paths:
+        if entry.get("catalog_id") is not None:
+            rows_by_offer.setdefault(str(entry.get("catalog_id")), []).extend(
+                grouped[str(entry.get("id"))]
+            )
+    found: list[str] = []
+    for offer in _items(catalog.get("offers")):
+        if not isinstance(offer, Mapping):
+            continue
+        oid, status = str(offer.get("id")), str(offer.get("status"))
+        if status in _AT_OR_ABOVE_READY:
+            if empty := [f for f in OFFER_FIELDS if not str(offer.get(f) or "").strip()]:
+                found.append(
+                    f"{oid}: {status} وحقول العرض {empty} فارغة — الأطلس §5.1: ما ينقصه "
+                    "واحدٌ منها فكرةٌ لا عرض"
+                )
+            if unsupported := [c for c in ACTIVATION_CLAIMS if c not in supported_claims]:
+                found.append(
+                    f"{oid}: {status} و{unsupported} غير مدعومة — الأطلس §12.1: لا ثمن قبل "
+                    "أن يُثبَت أنّ البيع قانونيّ وأنّ المال يصل"
+                )
+        if status == "REPEATABLE":
+            margin = offer.get("gross_margin")
+            if isinstance(margin, bool) or not isinstance(margin, (int, float)):
+                found.append(f"{oid}: REPEATABLE بلا `gross_margin` مُعلَن — الأطلس §0.3")
+            paid = Counter(
+                row.entity for row in rows_by_offer.get(oid, []) if row.action == PAYMENT_SETTLED
+            )
+            if not any(count >= 2 for count in paid.values()):
+                found.append(f"{oid}: REPEATABLE ولا كيان دفع مرّتين في السجلّ — الأطلس §0.3")
+    return found
+
+
 def _wording_problems(
     paths: Sequence[Mapping[str, object]], derived: Mapping[str, object]
 ) -> list[str]:
@@ -398,8 +528,12 @@ def problems(
     root: Path,
     ledger_rows: Sequence[LedgerRow],
     catalog: Mapping[str, object],
+    supported_claims: Collection[str] = (),
 ) -> list[str]:
-    """كلّ ما يمنع قبول ``VALUE_CHAIN.json`` — قائمةٌ كاملة لا أوّل خطأ."""
+    """كلّ ما يمنع قبول ``VALUE_CHAIN.json`` — قائمةٌ كاملة لا أوّل خطأ.
+
+    ``supported_claims``: مُعرِّفات ادّعاءات Economic Truth المدعومة؛ الافتراضيّ فارغ (الأشدّ).
+    """
     raw_paths = _items(doc.get("paths"))
     if not raw_paths:
         return ["`paths` فارغ أو مفقود — سلسلةٌ بلا مسارات لا تشهد لشيء"]
@@ -410,8 +544,9 @@ def problems(
     ids = [str(entry.get("id")) for entry in paths]
     if duplicates := sorted({pid for pid in ids if ids.count(pid) > 1}):
         found.append(f"مُعرِّفات مكرَّرة: {duplicates}")
+    grouped = _rows_by_path(paths, ledger_rows)
     for entry in paths:
-        found.extend(_entry_problems(entry, root))
+        found.extend(_entry_problems(entry, root, grouped.get(str(entry.get("id")), [])))
     found.extend(_ledger_route_problems(paths, ledger_rows))
     expected = compute_derived(doc, ledger_rows)
     if doc.get("derived") != expected:
@@ -419,6 +554,7 @@ def problems(
             "الكتلة `derived` لا تساوي الاشتقاق — شغّل `python3 scripts/research/value_chain.py`"
         )
     found.extend(_catalog_problems(paths, expected, catalog, ledger_rows))
+    found.extend(_offer_problems(paths, catalog, ledger_rows, supported_claims))
     found.extend(_wording_problems(paths, expected))
     return found
 

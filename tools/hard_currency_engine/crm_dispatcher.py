@@ -22,6 +22,8 @@ import csv
 import re
 from pathlib import Path
 
+from shared.research.opportunity_score import CONFIGURATION_OUTBOUND
+
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DRAFTS_DIR = _REPO_ROOT / "docs" / "commercial" / "outreach" / "drafts_2026"
 
@@ -169,17 +171,24 @@ def dispatch_campaign(csv_path: Path, output_dir: Path) -> list[Path]:
     """
     output_dir.mkdir(parents=True, exist_ok=True)
     targets = load_targets(csv_path)
-    generated_files = []
+    generated_files: list[Path] = []
 
     for t in targets:
         packet = generate_personalized_dispatch(t)
         file_path = output_dir / _draft_filename(packet)
-        if not is_dispatchable(t):
+        capped = is_dispatchable(t) and len(generated_files) >= CONFIGURATION_OUTBOUND
+        if capped or not is_dispatchable(t):
+            reason = (
+                f"plafond du lot : {CONFIGURATION_OUTBOUND} brouillons au plus par configuration "
+                "avant de savoir qui achète (Atlas §0.3 · D-319)"
+                if capped
+                else withdrawal_reason(t)
+            )
             file_path.write_text(
                 f"STATUS: WITHDRAWN — NE PAS ENVOYER.\n"
                 f"DESTINATAIRE: {packet['destinataire']}\n"
                 f"CORRIDOR: {packet['corridor']}\n"
-                f"RAISON: {withdrawal_reason(t)}\n",
+                f"RAISON: {reason}\n",
                 encoding="utf-8",
             )
             continue

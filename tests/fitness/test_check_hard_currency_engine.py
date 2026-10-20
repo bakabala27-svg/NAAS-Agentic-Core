@@ -50,3 +50,23 @@ def test_gate_blocks_when_retired_module_leaks_into_cli(tmp_path, monkeypatch) -
     assert gate.main() == 1
     assert any("retired modules exposed" in failure for failure in failures)
     assert any("customer path drifted" in failure for failure in failures)
+
+
+def test_gate_blocks_a_mail_sending_import_anywhere_in_the_engine(tmp_path, monkeypatch) -> None:
+    """Atlas §9.3 and §5.3 (D-319): early on the owner talks to buyers himself.
+
+    The engine may look up public registries; it must never send a message. A module that
+    imports a mail-sending library anywhere in the engine turns the gate red.
+    """
+    gate = _load_gate()
+    engine = tmp_path / "hard_currency_engine"
+    engine.mkdir()
+    (engine / "cli.py").write_text(
+        (gate.ENGINE / "cli.py").read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    (engine / "mailer.py").write_text("import smtplib\n", encoding="utf-8")
+    (engine / "blast.py").write_text("from sendgrid import SendGridAPIClient\n", encoding="utf-8")
+    monkeypatch.setattr(gate, "ENGINE", engine)
+    failures = gate._failures()
+    assert any("mailer.py" in failure and "smtplib" in failure for failure in failures)
+    assert any("blast.py" in failure and "sendgrid" in failure for failure in failures)

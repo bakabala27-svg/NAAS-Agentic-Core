@@ -18,6 +18,33 @@ ROOT = Path(__file__).resolve().parents[2]
 ENGINE = ROOT / "tools" / "hard_currency_engine"
 EXPECTED_COMMANDS = {"france", "belgium", "crm"}
 FORBIDDEN_CLIENT_MODULES = {"cbam_calculator", "zatca_validator", "eaa_scanner"}
+#: Atlas §9.3 and §5.3 (D-319): early on the owner talks to buyers himself — the engine may
+#: look up public registries but never sends a message. Top-level module names.
+FORBIDDEN_SEND_MODULES = {
+    "smtplib",
+    "sendgrid",
+    "mailjet_rest",
+    "yagmail",
+    "mailgun",
+    "postmarker",
+    "brevo_python",
+    "sib_api_v3_sdk",
+}
+
+
+def _send_imports(path: Path) -> list[str]:
+    """Mail-sending modules a file imports; an unreadable file is reported, not passed."""
+    try:
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    except (OSError, SyntaxError, UnicodeDecodeError) as exc:
+        return [f"unreadable ({exc.__class__.__name__})"]
+    found: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            found.update(alias.name.split(".")[0] for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+            found.add(node.module.split(".")[0])
+    return sorted(found & FORBIDDEN_SEND_MODULES)
 
 
 def _failures() -> list[str]:
@@ -30,6 +57,13 @@ def _failures() -> list[str]:
     with contextlib.redirect_stdout(buffer), contextlib.redirect_stderr(buffer):
         if not compileall.compile_dir(str(ENGINE), quiet=1, legacy=True):
             failures.append("one or more HCE modules do not compile")
+
+    for path in python_files:
+        if sent := _send_imports(path):
+            failures.append(
+                f"{path.name} imports {', '.join(sent)} — the engine never sends a message "
+                "(Atlas §9.3 · D-319)"
+            )
 
     cli_path = ENGINE / "cli.py"
     tree = ast.parse(cli_path.read_text(encoding="utf-8"), filename=str(cli_path))

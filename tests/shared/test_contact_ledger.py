@@ -185,3 +185,17 @@ def test_scorecard_with_a_settled_payment_derives_customer_metrics():
     assert metrics["refund_rate"]["value"] == 0.0
     assert card["conversion"]["payment_rate"]["value"] == 1.0
     assert card["gate_c"] != "ABSENT"
+
+
+def test_a_reply_or_any_non_money_row_never_moves_paid_customers_or_gate_c():
+    """Atlas oath 2 (D-319): interest, samples and quotes are recorded — none of them is money."""
+    text = _ledger(
+        SEED,
+        "2026-09-24,FR#7,Balagué Expertise,FR,phone,REPLY_RECEIVED,,,très intéressé",
+        "2026-09-25,FR#7,Balagué Expertise,FR,email,SAMPLE_DELIVERED,,,20 fiches",
+        "2026-09-26,FR#7,Balagué Expertise,FR,malt,QUOTE_SENT,390,,devis",
+    )
+    card = build_scorecard(text, today=date(2026, 10, 5))
+    assert card["hard_currency_scorecard"]["paid_customers"]["value"] == 0
+    assert card["hard_currency_scorecard"]["settled_revenue_eur"]["value"] in (0, 0.0, None)
+    assert card["gate_c"] == "ABSENT"

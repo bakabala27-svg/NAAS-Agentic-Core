@@ -2,22 +2,33 @@
 
 from __future__ import annotations
 
+import fnmatch
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from shared.evidence.gate import report_problems
+
 PACKET = ROOT / "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json"
 MATRIX = ROOT / "docs/governance/SOURCE_ADOPTION_MATRIX.json"
 EVIDENCE = ROOT / "docs/research/EVIDENCE_CATALOG.json"
 CURRICULUM = ROOT / "docs/research/CURRICULUM_APPLICATION_MATRIX.json"
 OFFERS = ROOT / "docs/commercial/OFFER_CATALOG.json"
 GOVERNANCE_POLICY = ROOT / "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json"
+WORKFLOWS = ROOT / ".github/workflows"
 FAILURES: list[str] = []
 PACKET_REL = "docs/changes/CURRENT_CODE_ACCEPTANCE_PACKET.json"
+#: A repository file a verification command cites (D-319): it must exist, and a cited gate
+#: must be one CI runs again — a PASS nobody re-runs is self-declared (Atlas rules 8-9).
+_CITED_FILE = re.compile(r"(?<![\w/.-])((?:scripts|tests)/[\w./-]+\.py)")
 
 
 def fail(message: str) -> None:
@@ -170,6 +181,81 @@ def validate_pre_modification(packet: dict, policy: dict) -> list[str]:
     return failures
 
 
+def validate_evidence_report(
+    packet: dict, actual_paths: list[str], protected_patterns: list[str]
+) -> list[str]:
+    """The thesis report (D-318 p.18), with its level and decision computed by ``gate.py``.
+
+    Only the evidence is declared: ``touched_files`` must equal what Git reports and
+    ``protected_paths_changed`` what the policy's protected paths match (D-319).
+    """
+    report = packet.get("evidence_report")
+    if not isinstance(report, dict):
+        return ["packet must contain an evidence_report (the D-318 template, computed by gate.py)"]
+    failures = [f"evidence_report: {problem}" for problem in report_problems(report)]
+    scope = report.get("scope")
+    touched = scope.get("touched_files") if isinstance(scope, dict) else None
+    if not isinstance(touched, list) or sorted(map(str, touched)) != sorted(actual_paths):
+        failures.append(
+            "evidence_report.scope.touched_files must equal the paths Git reports "
+            f"(excluding the packet): expected {len(actual_paths)}, "
+            f"got {len(touched) if isinstance(touched, list) else touched!r}"
+        )
+    expected_protected = sorted(
+        path
+        for path in actual_paths
+        if any(fnmatch.fnmatchcase(path, pattern) for pattern in protected_patterns)
+    )
+    declared = report.get("protected_paths_changed")
+    if not isinstance(declared, list) or sorted(map(str, declared)) != expected_protected:
+        failures.append(
+            "evidence_report.protected_paths_changed must equal the changed paths the policy "
+            f"protects: expected {expected_protected}, got {declared!r}"
+        )
+    return failures
+
+
+def _active_lines(ci_text: str) -> list[str]:
+    return [line for line in ci_text.splitlines() if not line.lstrip().startswith("#")]
+
+
+def validate_verification_claims(packet: dict, ci_text: str) -> list[str]:
+    """No self-declared PASS (Atlas master prompt, rules 8-9 · D-319).
+
+    A file a verification command cites must exist, and a fitness gate claimed in it must
+    run on an uncommented line of a workflow, so CI checks the claim again.
+    """
+    verification = packet.get("verification")
+    commands = verification.get("commands", []) if isinstance(verification, dict) else []
+    active = _active_lines(ci_text)
+    failures: list[str] = []
+    for command in commands if isinstance(commands, list) else []:
+        for rel in _CITED_FILE.findall(str(command)):
+            if not (ROOT / rel).is_file():
+                failures.append(f"verification cites a file that does not exist: {rel}")
+            elif rel.startswith("scripts/fitness/") and not any(rel in line for line in active):
+                failures.append(
+                    f"verification claims {rel} but no workflow runs it — a PASS CI never "
+                    "re-runs is self-declared"
+                )
+    return failures
+
+
+def validate_runtime_evidence(packet: dict) -> list[str]:
+    """Atlas §8.3 (D-319): runtime evidence is a file that exists, not a name."""
+    production = packet.get("production")
+    paths = production.get("runtime_evidence_paths", []) if isinstance(production, dict) else []
+    return [
+        f"production.runtime_evidence_paths names a missing path: {path}"
+        for path in (paths if isinstance(paths, list) else [])
+        if not (ROOT / str(path)).exists()
+    ]
+
+
+def _workflow_text() -> str:
+    return "\n".join(path.read_text(encoding="utf-8") for path in sorted(WORKFLOWS.glob("*.y*ml")))
+
+
 def main() -> int:
     packet = load(PACKET, "code acceptance packet")
     matrix = load(MATRIX, "source adoption matrix")
@@ -199,6 +285,12 @@ def main() -> int:
     snapshot = packet.get("git_change_snapshot", {})
     actual_paths = current_changed_paths()
     actual_paths_excluding_packet = [path for path in actual_paths if path != PACKET_REL]
+    for violation in validate_evidence_report(
+        packet,
+        actual_paths_excluding_packet,
+        [str(pattern) for pattern in governance_policy.get("protected_paths", [])],
+    ):
+        fail(violation)
     snapshot_paths = (
         snapshot.get("changed_paths_excluding_packet", []) if isinstance(snapshot, dict) else []
     )
@@ -315,6 +407,8 @@ def main() -> int:
             fail(f"production section missing `{field}`")
     if not production.get("runtime_evidence_paths"):
         fail("production section must name runtime/evidence paths")
+    for violation in validate_runtime_evidence(packet):
+        fail(violation)
 
     catalog_offer_ids = {
         str(row.get("id")) for row in offers.get("offers", []) if isinstance(row, dict)
@@ -348,6 +442,8 @@ def main() -> int:
     verification = packet.get("verification", {})
     if verification.get("result") != "PASS" or not verification.get("commands"):
         fail("verification must include commands and PASS result")
+    for violation in validate_verification_claims(packet, _workflow_text()):
+        fail(violation)
     if packet.get("decision") != "D-277":
         fail("packet must be governed by D-277")
 

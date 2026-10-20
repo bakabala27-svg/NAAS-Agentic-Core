@@ -36,6 +36,7 @@ from statistics import median
 
 __all__ = [
     "ATLAS_WEIGHTS",
+    "CONFIGURATION_OUTBOUND",
     "CRITERIA",
     "DECIDE_EXCLUDE",
     "DECIDE_POSTPONE",
@@ -152,6 +153,10 @@ MIN_ENTITIES: dict[str, dict[int, int]] = {
 }
 
 STALE_AFTER_DAYS = 183
+#: The pre-registered purchase kill (Atlas card): 20 outbound messages in one configuration,
+#: then 0 replies within 30 days, means purchase FAIL. The same number caps one CRM draft
+#: batch (Atlas §0.3 · D-319): no broad marketing before knowing who buys and why.
+CONFIGURATION_OUTBOUND = 20
 TOP_K = 3
 ROBUST_GAP = 2
 #: Owner table mapped onto the six criteria: solvability 15 + scalability 5 → C5 20.

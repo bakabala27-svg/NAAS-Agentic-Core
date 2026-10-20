@@ -21,6 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from shared.research.opportunity_score import CONFIGURATION_OUTBOUND
 from tools.hard_currency_engine import cli as hce_cli
 from tools.hard_currency_engine.belgium_validator import (
     audit_belgian_csv,
@@ -838,6 +839,32 @@ class TestCRMDispatcherHonesty(unittest.TestCase):
             self.assertTrue(stub.exists())
             self.assertIn("WITHDRAWN", stub.read_text(encoding="utf-8"))
             self.assertIn("EXCLU", stub.read_text(encoding="utf-8"))
+
+    def test_a_batch_never_exceeds_one_configuration(self):
+        """Atlas §0.3 (D-319): no broad marketing before knowing who buys. One run writes at
+        most ``CONFIGURATION_OUTBOUND`` drafts; the rest get a declared WITHDRAWN file."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            csv_in = Path(tmpdir) / "targets.csv"
+            rows = [
+                f"{i},FR_PDP,Firm{i},f{i}@x.fr,DAF,PROSPECT_QUALIFIE,hook"
+                for i in range(1, CONFIGURATION_OUTBOUND + 6)
+            ]
+            csv_in.write_text(
+                "id,corridor,nom_entite,contact_cible,role_cible,statut,hook_accroche\n"
+                + "\n".join(rows)
+                + "\n",
+                encoding="utf-8",
+            )
+            out_dir = Path(tmpdir) / "drafts"
+            files = dispatch_campaign(csv_in, out_dir)
+            self.assertEqual(len(files), CONFIGURATION_OUTBOUND)
+            capped = [
+                path
+                for path in out_dir.glob("*.txt")
+                if "plafond" in path.read_text(encoding="utf-8")
+            ]
+            self.assertEqual(len(capped), 5)
+            self.assertTrue(all("WITHDRAWN" in p.read_text(encoding="utf-8") for p in capped))
 
 
 class TestCBAMCalculator(unittest.TestCase):

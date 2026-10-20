@@ -48,7 +48,7 @@ from shared.research.economic_truth import (
     build_snapshot,
     load_inputs,
 )
-from shared.research.value_chain import compute_derived
+from shared.research.value_chain import ACTIVATION_CLAIMS, compute_derived
 from tools.hard_currency_engine.buyer_claims import classify, findings
 
 TODAY = date(2026, 10, 2)
@@ -498,3 +498,13 @@ def test_the_machine_imports_nothing_but_stdlib_and_shared(module: str) -> None:
     outside = imported - {"shared"} - set(sys.stdlib_module_names)
     assert outside == set(), outside
     assert imported & _REACH == set(), imported & _REACH
+
+
+def test_value_chain_activation_claims_are_economic_truth_claims() -> None:
+    """D-319: the claims that hold a priced offer back are named once, in Economic Truth."""
+    ids = {claim.claim_id for claim in CLAIMS}
+    assert set(ACTIVATION_CLAIMS) <= ids
+    # They have no recording home today, so no offer may reach OFFER_READY (Atlas §12.1).
+    assert all(
+        claim.basis == "unrecorded" for claim in CLAIMS if claim.claim_id in ACTIVATION_CLAIMS
+    )

@@ -257,6 +257,10 @@ def validate_policy(policy: dict[str, Any], root: Path = ROOT) -> list[str]:  # 
         "test_plan",
         "rollback_strategy",
         "verification_strategy",
+        # Atlas §8.1 (D-319): what the change will not do, how it is accepted, what it may cost.
+        "non_goals",
+        "acceptance_criteria",
+        "target_operating_cost",
         "claim_statuses",
     }
     if not isinstance(packet, dict):
