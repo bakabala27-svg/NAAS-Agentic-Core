@@ -74,6 +74,7 @@ SEND_FILES = (
     OUTREACH / "ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
     OUTREACH / "AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
     OUTREACH / "ready_to_send/06_EAA_FR_ECOMMERCE.md",
+    OUTREACH / "ready_to_send/07_HARD_CURRENCY_CHANNELS.md",
 )
 
 #: Verdicts that block a line from being sent. HYPOTHESIS_ONLY is not here: the email
