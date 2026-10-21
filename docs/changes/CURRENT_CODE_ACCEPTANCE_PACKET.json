@@ -1,9 +1,9 @@
 {
   "$schema_version": "1",
-  "packet_id": "CAP-2026-10-20-d320-d321-d322-demand-first",
+  "packet_id": "CAP-2026-10-21-d320-d321-d322-d323-demand-first",
   "status": "READY_FOR_GATE",
   "decision": "D-277",
-  "decision_of_change": "D-320 وD-321 بقرار المالك في 2026-10-20. D-320: اختبار مشترٍ قبل أيّ كود لـOPP-04 (20 جهة بمصادر مؤرّخة، ورسالةٌ بطلبٍ واحد وعيّنة دليل يفحصهما buyer_claims). D-321 (القانون الأعلى «الألم أولاً»، §0.32): لا بناء قبل دليلٍ على من يتألّم ومن يبحث الآن ومن يدفع؛ الدليل العامّ يُرخّص اختبار مشترٍ فقط، وحلقات البناء وكود المنتج تتطلّب ثلاث جهاتٍ ردّت في السجلّ ودافعاً مُثبَتاً؛ وما بُني قبل الطلب يُعرَض ودَينه يتقلّص فقط. ورسائل الفوترة الفرنسية مجمَّدة حتى تقرير البحث. D-322: اختبار مشترٍ لأقوى دافعٍ بالعملة الصعبة (قرار المالك «من أقوى من يدفع»): 20 موقع تجارةٍ إلكترونية فرنسياً نشر بنفسه تصريح إتاحةٍ «غير ممتثل» أو «ممتثل جزئياً»، ورسالةٌ بسؤالٍ واحد يفحصها buyer_claims، وساقا pain وpayer مُعلنتان لـOPP-13 بأدلّةٍ مؤرَّخة وactive_search غير مبلوغة بسببٍ منطوق. لا كود.",
+  "decision_of_change": "D-320 وD-321 بقرار المالك في 2026-10-20. D-320: اختبار مشترٍ قبل أيّ كود لـOPP-04 (20 جهة بمصادر مؤرّخة، ورسالةٌ بطلبٍ واحد وعيّنة دليل يفحصهما buyer_claims). D-321 (القانون الأعلى «الألم أولاً»، §0.32): لا بناء قبل دليلٍ على من يتألّم ومن يبحث الآن ومن يدفع؛ الدليل العامّ يُرخّص اختبار مشترٍ فقط، وحلقات البناء وكود المنتج تتطلّب ثلاث جهاتٍ ردّت في السجلّ ودافعاً مُثبَتاً؛ وما بُني قبل الطلب يُعرَض ودَينه يتقلّص فقط. ورسائل الفوترة الفرنسية مجمَّدة حتى تقرير البحث. D-322: اختبار مشترٍ لأقوى دافعٍ بالعملة الصعبة (قرار المالك «من أقوى من يدفع»): 20 موقع تجارةٍ إلكترونية فرنسياً نشر بنفسه تصريح إتاحةٍ «غير ممتثل» أو «ممتثل جزئياً»، ورسالةٌ بسؤالٍ واحد يفحصها buyer_claims، وساقا pain وpayer مُعلنتان لـOPP-13 بأدلّةٍ مؤرَّخة وactive_search غير مبلوغة بسببٍ منطوق. لا كود. D-323: ثلاث قنوات للعملة الصعبة اختارها المالك (ANAE ثمّ العمل الحر، ومنصّات الخبراء، ومنحة معيار Lean)، بدليلٍ للمالك يفحص buyer_claims نصوصَه، ولكلّ قناةٍ نجاحٌ وإيقاف. لا كود.",
   "standards": [
     "clean-code-book"
   ],
@@ -161,6 +161,7 @@
     ".memory/README.md",
     ".memory/ci-gates.md",
     ".memory/decisions.md",
+    ".runtime/truth_table.lock.json",
     "AGENTS.md",
     "CLAUDE.md",
     "ENGINEERING_CONSTITUTION.md",
@@ -175,6 +176,7 @@
     "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
     "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
     "docs/commercial/outreach/ready_to_send/06_EAA_FR_ECOMMERCE.md",
+    "docs/commercial/outreach/ready_to_send/07_HARD_CURRENCY_CHANNELS.md",
     "docs/governance/CONSTITUTION_REGISTRY.json",
     "docs/governance/D321_IMMUTABLE_TEXT.json",
     "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
@@ -197,6 +199,7 @@
       ".memory/README.md",
       ".memory/ci-gates.md",
       ".memory/decisions.md",
+      ".runtime/truth_table.lock.json",
       "AGENTS.md",
       "CLAUDE.md",
       "ENGINEERING_CONSTITUTION.md",
@@ -211,6 +214,7 @@
       "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
       "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
       "docs/commercial/outreach/ready_to_send/06_EAA_FR_ECOMMERCE.md",
+      "docs/commercial/outreach/ready_to_send/07_HARD_CURRENCY_CHANNELS.md",
       "docs/governance/CONSTITUTION_REGISTRY.json",
       "docs/governance/D321_IMMUTABLE_TEXT.json",
       "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
@@ -226,16 +230,16 @@
       "tests/shared/test_value_chain.py",
       "tests/unit/tools/test_outreach_truth.py"
     ],
-    "content_sha256_excluding_packet": "f938f08d4220094a09fe9f5a15982fb7bfb548e8bcd66598cd354b5aed7e5c80",
-    "refreshed_on": "2026-10-20",
+    "content_sha256_excluding_packet": "601f090f4997f9de3fc39b3794432435b92aa0a8f48e3dfbeca25223c99154f2",
+    "refreshed_on": "2026-10-21",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3526,
-    "total_bytes_excluding_packet": 51476096,
-    "total_newlines_excluding_packet": 898287,
-    "sha256_excluding_packet": "8152c9c97c9c2a1ad6261e65c814162c85b35b368a0975fcbca730b1dcb847f2",
+    "file_count_excluding_packet": 3527,
+    "total_bytes_excluding_packet": 51491597,
+    "total_newlines_excluding_packet": 898467,
+    "sha256_excluding_packet": "abc7812b63713dab91233893a5807b3d8ab98eb28c436192bf91a7ff153d1b98",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -287,7 +291,8 @@
     "test_plan": [
       "سلبي: 19 حالةً حمراء محفوظة قبل التنفيذ (34 فشلاً ووحدة البوابة غائبة)، ولكلٍّ ضمانٌ تكسره عمداً.",
       "إيجابي: 215 اختباراً في عشرة ملفّات، والبوّابات كلّها على origin/main.",
-      "D-322: رسالة 06 مُضافة إلى SEND_FILES؛ قرأ الفحص 17 سطراً بلا نتيجة، ونسخةٌ محوَّرة في الذاكرة بضمانٍ ونسبة أعطت 4 نتائج حاجبة (خرجها محفوظ)."
+      "D-322: رسالة 06 مُضافة إلى SEND_FILES؛ قرأ الفحص 17 سطراً بلا نتيجة، ونسخةٌ محوَّرة في الذاكرة بضمانٍ ونسبة أعطت 4 نتائج حاجبة (خرجها محفوظ).",
+      "D-323: الدليل 07 مُضاف إلى SEND_FILES؛ قرأ الفحص 45 سطراً بلا نتيجة."
     ],
     "rollback_strategy": "git revert لدفعات D-320 وD-321؛ سجلّ التعديل يبقى للتاريخ.",
     "verification_strategy": [
@@ -323,12 +328,14 @@
       "branch_protection_live_state": "UNKNOWN",
       "eaa_targets_from_own_statements": "TESTED",
       "eaa_buyer_demand": "UNKNOWN",
-      "eaa_legal_scope_primary_source": "UNKNOWN"
+      "eaa_legal_scope_primary_source": "UNKNOWN",
+      "hard_currency_channels_guide_lint_clean": "TESTED",
+      "platform_payout_currency_for_algeria": "UNKNOWN"
     }
   },
   "evidence_report": {
-    "change_id": "D-320-D-321-D-322-DEMAND-FIRST",
-    "claim": "لا حلقة بناءٍ ولا كود منتج يُقبَل الآن قبل ثلاث جهاتٍ ردّت في السجلّ ودافعٍ مُثبَت (D-321)، وما بُني قبل الطلب يُعرَض بدَينٍ يتقلّص؛ واختبار مشترٍ لـOPP-04 جاهز للإرسال اليدوي (D-320). واختبار مشترٍ لـOPP-13 (التجارة الإلكترونية الفرنسية غير الممتثلة للإتاحة) جاهز للإرسال اليدوي (D-322).",
+    "change_id": "D-320-D-321-D-322-D-323-DEMAND-FIRST",
+    "claim": "لا حلقة بناءٍ ولا كود منتج يُقبَل الآن قبل ثلاث جهاتٍ ردّت في السجلّ ودافعٍ مُثبَت (D-321)، وما بُني قبل الطلب يُعرَض بدَينٍ يتقلّص؛ واختبار مشترٍ لـOPP-04 جاهز للإرسال اليدوي (D-320). واختبار مشترٍ لـOPP-13 (التجارة الإلكترونية الفرنسية غير الممتثلة للإتاحة) جاهز للإرسال اليدوي (D-322). وثلاث قنوات للعملة الصعبة مُوثَّقة بدليلٍ للمالك ونجاحٍ وإيقافٍ لكلٍّ منها (D-323).",
     "status": "PROPOSED",
     "risk_zone": "PRODUCT",
     "risk_zone_reason_ar": "تغييرٌ قابل للتراجع على بوّاباتٍ ونصوص التزامٍ ونصّ مشترٍ؛ لا مدفوعات ولا أسرار ولا ترحيل بيانات ولا فعلٌ خارجيٌّ يقوم به الكود. وتعديل البوّابات نفسها يجعل القرار HOLD.",
@@ -339,6 +346,7 @@
         ".memory/README.md",
         ".memory/ci-gates.md",
         ".memory/decisions.md",
+        ".runtime/truth_table.lock.json",
         "AGENTS.md",
         "CLAUDE.md",
         "ENGINEERING_CONSTITUTION.md",
@@ -353,6 +361,7 @@
         "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
         "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
         "docs/commercial/outreach/ready_to_send/06_EAA_FR_ECOMMERCE.md",
+        "docs/commercial/outreach/ready_to_send/07_HARD_CURRENCY_CHANNELS.md",
         "docs/governance/CONSTITUTION_REGISTRY.json",
         "docs/governance/D321_IMMUTABLE_TEXT.json",
         "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
@@ -373,6 +382,7 @@
         ".memory/README.md",
         ".memory/ci-gates.md",
         ".memory/decisions.md",
+        ".runtime/truth_table.lock.json",
         "AGENTS.md",
         "CLAUDE.md",
         "ENGINEERING_CONSTITUTION.md",
@@ -387,6 +397,7 @@
         "docs/commercial/outreach/AI_REDTEAM_EVIDENCE_SAMPLE_2026-10-20.md",
         "docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
         "docs/commercial/outreach/ready_to_send/06_EAA_FR_ECOMMERCE.md",
+        "docs/commercial/outreach/ready_to_send/07_HARD_CURRENCY_CHANNELS.md",
         "docs/governance/CONSTITUTION_REGISTRY.json",
         "docs/governance/D321_IMMUTABLE_TEXT.json",
         "docs/governance/ENGINEERING_GOVERNANCE_POLICY.json",
@@ -491,6 +502,14 @@
       {
         "what": "scripts/fitness/check_tracing_gate.py و scripts/fitness/check_contracts_verified.py",
         "why": "تستدعيان pytest على اختباراتٍ تحتاج jwt وتبعيات التطبيق؛ غير مثبّتة محلياً. يشغّلهما CI، ولا تقرآن ملفّاً يغيّره هذا الـPR."
+      },
+      {
+        "what": "عملة أوّل دفعة من منصّات الخبراء إلى الجزائر",
+        "why": "جدول Stripe يدفع الجزائر بالدينار؛ لا يحسمه إلا أوّل دفعة فعلية."
+      },
+      {
+        "what": "نصّ بنك الجزائر 06-2021 وحصّة 100% للمقاول الذاتي",
+        "why": "المصدر خبرٌ صحفي ينقل عن ANAE؛ ملفّ البنك أرجع 503."
       }
     ],
     "computed_verdict": "HOLD: verifier files modified",
