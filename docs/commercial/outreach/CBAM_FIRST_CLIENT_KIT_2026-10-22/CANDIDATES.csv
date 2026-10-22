@@ -1,0 +1,19 @@
+rank,id,idea_ar,buyer_ar,currency,rail,buyer_score,currency_score,rail_score,urgency,proof_of_payment,asset_fit,moat,capital_ease,speed,scalability,hard_gate,proof_gate,score,verdict_ar
+1,C01,تأمين بيانات CBAM للمصدّرين — يدفع المستورد الأوروبي,EU importer / authorised declarant,EUR,SWIFT,3,3,3,2,3,2,3,3,3,3,PASS,PASS,28,المرشّح الأول: ألمٌ تنظيمي نافذ، دافع واضح، وسكة دفع قانونية
+2,C04,تقييم واختبار اختراق النماذج بالعربية/الفرنسية,AI labs / EU & US model providers,USD/EUR,Stripe/Payoneer/SWIFT,3,3,2,3,3,1,3,3,2,2,PASS,PASS,25,محرّك نقدي فوري — بلا خندق
+3,C09,شبكة خبراء عربية/فرنسية لبيانات الذكاء الاصطناعي,AI labs (Mercor/Scale/…),USD,Stripe/Payoneer,3,2,3,2,3,2,2,2,2,3,PASS,PASS,24,شركة قابلة للبناء — منافسة عالمية
+4,C08,مركز هندسة برمجيات نيابةً عن شركات EU,EU startups / scale-ups,EUR,SWIFT,3,2,3,2,3,2,1,2,3,2,PASS,PASS,23,مضمون تقريباً — بلا خندق
+5,C02,محقِّق CBAM معتمد (أول جهةٍ معتمدة في شمال أفريقيا),EU importer / Algerian exporter,EUR,SWIFT,3,3,3,1,3,3,1,1,2,2,PASS,PASS,22,الخندق الأطول — لا تبدأ به، ابنِ إليه
+6,C05,تنظيف مرجعيات الفوترة الإلكترونية FR/BE,French/Belgian accounting firms,EUR,Malt/SWIFT,3,3,3,1,1,3,1,3,2,2,PASS,CONDITIONAL,22,الأطروحة الحالية — بنية سليمة لكن صفر دليل دفعٍ خاصٍّ بها
+7,C06,حزمة أدلة الامتثال لقانون الذكاء الاصطناعي,EU deployers of AI,EUR,SWIFT,3,2,3,2,2,1,3,1,2,2,PASS,PASS,21,سوق مزدهر لكن مزدحم قانونياً
+8,C03,MRV الميثان لغاز شمال أفريقيا,EU gas importer / Sonatrach,EUR/USD,SWIFT,3,2,2,1,2,1,3,1,1,3,PASS,PASS,19,أكبر مالاً وأبطأ؛ الفصل الثاني
+9,C07,تصدير سلعٍ فاخرة (تمور/زيت زيتون) إلى تجزئة EU,EU retailers / distributors,EUR,SWIFT,3,1,3,2,3,1,2,0,1,3,PASS,PASS,19,أصل حقيقي وعملة مثبتة — يحتاج رأس مال
+10,C18,حجز مواعيد B2B لشركات أمريكية,US/UK founders,USD,Stripe,2,3,3,1,3,0,0,3,3,1,PASS,PASS,19,مرفوض: مهارة بلا أصلٍ مميَّز
+11,C11,شهادات حلال وسلامة غذائية لأسواق EU/الخليج,EU/Gulf buyers,EUR/USD,SWIFT,3,2,2,1,2,1,1,2,2,2,PASS,PASS,18,متخصّص — ليس أولاً
+12,C12,وكيل تنظيمي للأجهزة الطبية نحو EU MDR,Algerian manufacturers,DZD,local,3,2,0,2,2,1,2,2,2,1,FAIL,PASS,17,يفشل بوابة العملة: الدافع دينار
+13,C10,EUDR / جواز المنتج الرقمي للمصدّرين,EU importers (later),EUR,SWIFT,2,1,2,1,1,1,1,3,1,3,PASS,CONDITIONAL,16,مبكّر — راقب 2027–2029
+14,C16,تدقيق إمكانية الوصول EAA,EU e-commerce,EUR,SWIFT,2,2,1,2,1,2,0,3,2,1,PASS,CONDITIONAL,16,لا ميزة على وكالاتٍ قائمة؛ لكنّ D-322 اختارها اختبار مشترٍ بمعيار المال القابل للوصول
+15,C15,إصلاح سلاسل فواتير ZATCA,Saudi accounting firms,SAR,local,2,2,1,2,1,1,0,3,2,1,PASS,CONDITIONAL,15,مرفوض: لا أداة ولا توقيع
+16,C13,ذكاء اصطناعي محلي لقطاع الطاقة الخليجي,Gulf energy/mining,USD,SWIFT,2,1,2,1,1,1,2,0,0,2,PASS,CONDITIONAL,12,يفشل بوابة رأس المال والخبرة
+17,C14,تصدير الحوسبة/مراكز البيانات,EU AI companies,EUR,SWIFT,1,1,3,1,1,0,1,0,0,3,PASS,CONDITIONAL,11,مرفوض: تعرفة الكهرباء غير تفاوضية
+18,C17,دروبشيبينغ/تسويق بالعمولة,US/EU consumers,USD,Payoneer,1,1,2,0,1,0,0,1,2,2,PASS,CONDITIONAL,10,مرفوض: لا خندق ولا دليل
