@@ -105,7 +105,7 @@
     "status": "DOCUMENTATION_AND_TEST_ONLY",
     "interfaces": [
       "tests/unit/tools/test_opportunity_archive_additive.py: audit(archives, known_paths) — 4 قواعد (ثقب · إعادة استعمال · ملحق · مصدر وتاريخ)، و8 اختبارات منها 6 سلبية",
-      "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md: B19–B43 وJ10–J12 وملاحق B01/B03/B10/OPP-02/OPP-04/OPP-13 — يُقرأ ولا يُنفَّذ",
+      "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md: B19–B43 وJ10–J12 وملاحق B01/B03/B10/OPP-02/OPP-04/OPP-13 والدراسة الشاملة بالبوّابات G1–G5 (§12) — يُقرأ ولا يُنفَّذ",
       "docs/archive/commercial/OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md — لم يُمسّ"
     ],
     "runtime_evidence_paths": [
@@ -158,7 +158,7 @@
       "note_ar": "لا عيب أساسيّ يحجب: التغيير لا يمسّ shared/ ولا بوّابةً ولا قانوناً ولا الأرشيف السابق."
     },
     "root_cause": "طلب المالك حفظ الفرص الجديدة دون حذف القديم؛ وقاعدةٌ بلا فارضٍ تُنسى في أوّل تعديل (D-207)، فحفظُ النصّ وحده لا يكفي دون اختبارٍ يُحمرّ عند الحذف.",
-    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B43، J10–J12، ملاحق B01/B03/B10/OPP-02/OPP-04/OPP-13) وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط.",
+    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B43، J10–J12، ملاحق B01/B03/B10/OPP-02/OPP-04/OPP-13، والدراسة الشاملة §12) وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط.",
     "affected_invariants": [
       "D-321: لا كود منتج ولا ترخيص بناء؛ الأرشيف يقول ذلك صراحةً.",
       "D-297: لا صفّ سجلٍّ وهميّ؛ الأرشيف خارج جذور بوّابة البحث على سابقة 74bfba7.",
