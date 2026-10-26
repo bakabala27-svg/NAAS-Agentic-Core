@@ -278,9 +278,9 @@
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
     "file_count_excluding_packet": 3538,
-    "total_bytes_excluding_packet": 51773525,
-    "total_newlines_excluding_packet": 901147,
-    "sha256_excluding_packet": "216d2e7466a18600acef6e02f7c9aa835fe698a1539c45d80cf9cdf37bf63f72",
+    "total_bytes_excluding_packet": 51777874,
+    "total_newlines_excluding_packet": 901167,
+    "sha256_excluding_packet": "50bac050f816eadb318cf6a9350a751cc46e0ea2133e3428ea3939415fef6bf6",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -301,7 +301,7 @@
       "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
       "tests/unit/tools/test_opportunity_archive_additive.py"
     ],
-    "content_sha256_excluding_packet": "7d6b7d95ee2ec20462dd78d3ba35672b09d5d907a0bd93b6201a95e285b950a6",
+    "content_sha256_excluding_packet": "74c4419d6ef3f06c69b61907c42e84fdf02df214cf195a46581e1846d97556cb",
     "refreshed_on": "2026-10-26",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
