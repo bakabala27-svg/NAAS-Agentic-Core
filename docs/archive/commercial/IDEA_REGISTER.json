@@ -48,6 +48,7 @@
    "na": "—"
   },
   "domain": {
+   "development_finance": "التمويل التنموي والمناقصات الدولية",
    "einvoicing": "الفوترة الإلكترونية وبيانات الضريبة",
    "ai_assurance": "اختبار الذكاء الاصطناعي وضمانه",
    "accessibility": "الإتاحة الرقمية",
@@ -68,6 +69,7 @@
    "EUR": "يورو",
    "USD": "دولار",
    "USD_PEGGED": "عملة مربوطة بالدولار",
+   "EUR_PEGGED": "عملة مربوطة باليورو (فرنك CFA)",
    "DZD": "دينار",
    "CAD": "دولار كندي",
    "MIXED": "مختلطة",
@@ -100,7 +102,12 @@
    "data_law_dz": "قانون المعطيات الجزائري 25-11",
    "verifier_pending": "شهادة جهة التحقّق",
    "frozen_by_decision": "مجمّدة بقرار",
-   "channel": "قناة لا فرصة"
+   "channel": "قناة لا فرصة",
+   "payer_unproven": "الدافع مسمّى ودفعه غير مُثبَت",
+   "not_a_defect": "الإرشاد الرسمي لا يعدّه عيباً",
+   "references_needed": "مراجع سابقة وأهلية غير مُتحقَّقة",
+   "tax_withholding": "اقتطاعٌ ضريبي وإقامةٌ مطلوبة",
+   "client_account_access": "دخولٌ إلى حساب العميل لدى الجهة الرسمية"
   }
  },
  "groups": {
@@ -171,6 +178,37 @@
     "B24"
    ]
   },
+  "C5": {
+   "title_ar": "جاهزية Peppol في الإمارات لمزوّدي الخدمة المعتمدين",
+   "stage": "conditional",
+   "option_state": "held_option",
+   "next_test_ar": "رسالة لـ20 مزوّداً معتمداً أو مضيفاً مسمّى بأرقامه وحده: هل تتابعون غياب قدرة الاستقبال قبل يناير؟",
+   "kill_ar": "أقلّ من ردّين خلال 14 يوماً",
+   "members": [
+    "B45"
+   ]
+  },
+  "C6": {
+   "title_ar": "بيانات المالية العامّة في إفريقيا الفرنكوفونية",
+   "stage": "conditional",
+   "option_state": "held_option",
+   "next_test_ar": "10 فائزين تونسيين ومغاربة بعقود البنك الدولي + 24 مُدمِجاً إيفوارياً: هل تحتاجون فريق بياناتٍ فرنكوفونياً من الباطن؟",
+   "kill_ar": "لا اتفاق شراكة خلال 6 أشهر، أو أقلّ من 3 تأكيدات إيفوارية خلال 3 أسابيع",
+   "members": [
+    "B46",
+    "B47"
+   ]
+  },
+  "C7": {
+   "title_ar": "تجهيز تسجيل الأجهزة الطبية في EUDAMED",
+   "stage": "conditional",
+   "option_state": "held_option",
+   "next_test_ar": "20 ممثّلاً أوروبياً مسمّى: هل تدفعون سعراً ثابتاً لكلّ جهاز مقابل ملفّات رفعٍ جاهزة خلال 5 أيام؟",
+   "kill_ar": "أقلّ من اثنين يطلبان سعراً خلال 14 يوماً",
+   "members": [
+    "B48"
+   ]
+  },
   "C4": {
    "title_ar": "أطبّاء PADHUE",
    "stage": "conditional",
@@ -213,25 +251,42 @@
   {
    "id": "S03",
    "date": "2026-10-26",
-   "title_ar": "تعداد عيوب المعرّفات في دليل Peppol وسجلّه الحيّ (بلجيكا وفرنسا والإمارات)",
+   "title_ar": "تعداد عيوب المعرّفات في دليل Peppol وسجلّه الحيّ (بلجيكا وفرنسا)",
    "where": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md §13",
    "feeds": [
     "OPP-01",
     "OPP-02",
     "B30",
-    "B22"
+    "B44"
    ],
-   "finding_ar": "انظر §13: العيوب الشكلية نادرة، والعيب الحيّ في غياب معرّف الضريبة البلجيكي وفي مزوّدين بعينهم"
+   "finding_ar": "عيوب رقم التحقّق أقلّ من 0.12%؛ نحو 175,800 شركة بلجيكية بلا رقم الضريبة الاختياري (فاستُبعدت B44)؛ و28,427 شركة فرنسية مغلقة تحمل 28,920 عنواناً، 44% منها عند Qonto مقابل حصّة 6.4%"
+  },
+  {
+   "id": "S04",
+   "date": "2026-10-26",
+   "title_ar": "أسطول الوكلاء، الموجة الأولى: سبعة باحثين ونقدٌ مستقلّ مع تحقّقٍ من المصادر",
+   "where": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md §14",
+   "feeds": [
+    "B45",
+    "B46",
+    "B47",
+    "B48",
+    "B03",
+    "OPP-01",
+    "OPP-04",
+    "OPP-13"
+   ],
+   "finding_ar": "الإمارات: 1,119 معرّفاً بلا قدرة استقبال عند مزوّدين معتمدين؛ البنك الدولي: الجزائر 3 عقود مقابل تونس 95؛ EUDAMED: 44.5% بلا جهاز؛ والنقد جرح F1 وF2 وF3 ووضع سعراً منافساً لـF1"
   }
  ],
  "flow": {
-  "identified_ideas": 43,
+  "identified_ideas": 48,
   "identified_jobs": 12,
   "identified_value_chain_paths": 25,
-  "screened": 45,
+  "screened": 50,
   "included": 7,
-  "conditional": 5,
-  "excluded": 33
+  "conditional": 9,
+  "excluded": 34
  },
  "records": [
   {
@@ -277,7 +332,12 @@
     "OPP-02",
     "B30"
    ],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-26",
+     "event_ar": "النقد المستقلّ: Siretly يبيع التنظيف الآلي بـ0.29–0.40 € للسطر مقابل 1.45 € لسعر المالك؛ وعقودٌ فرنسية مُرساة للفوترة بوسيط 137,648 € تفتح طريق المقاول من الباطن"
+    }
+   ],
    "last_reviewed": "2026-10-26"
   },
   {
@@ -362,7 +422,12 @@
    "related": [
     "OPP-11"
    ],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-26",
+     "event_ar": "حساب كلفة القيم الافتراضية لآلية الكربون: نحو 250 مليون €/سنة على صادرات الجزائر، و132 مليوناً قابلة للتوفير بالقيم الفعلية (افتراضات معلنة)"
+    }
+   ],
    "last_reviewed": "2026-10-26"
   },
   {
@@ -729,7 +794,12 @@
     "OPP-04",
     "OFF-CND"
    ],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-26",
+     "event_ar": "معيار ArabicDialectSafety (EMNLP 2026) يغطّي الجزائرية؛ الفجوة باقية في المصنِّفات المغاربية"
+    }
+   ],
    "last_reviewed": "2026-10-26"
   },
   {
@@ -1457,7 +1527,12 @@
     "OPP-01",
     "OPP-02"
    ],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-26",
+     "event_ar": "قياس Peppol: لا عيوب شكلية تُذكر؛ الألم الحيّ في معرّفاتٍ مغلقة أو غائبة عند مزوّدين مسمّين (Qonto في فرنسا)"
+    }
+   ],
    "last_reviewed": "2026-10-26"
   },
   {
@@ -1992,6 +2067,220 @@
    "last_reviewed": "2026-10-26"
   },
   {
+   "id": "B44",
+   "kind": "idea",
+   "title_ar": "نظافة سجلّ Peppol لمزوّدي نقاط الوصول: قائمةٌ مسمّاة بالعيوب لكلّ مزوّد",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "BE",
+     "FR"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "قياسٌ أصلي (§13): نحو 175,800 شركة بلجيكية بلا رقم الضريبة، لكنّ الإرشاد الرسمي يجعله اختيارياً"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "pass",
+     "G4": "fail",
+     "G5": "pass"
+    },
+    "binding_constraint": "not_a_defect"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "دليلٌ مؤرَّخ على ارتداد فواتير مرسلة إلى رقم الضريبة + مزوّدٌ يقول إنه سيدفع"
+   },
+   "group": null,
+   "related": [
+    "OPP-02",
+    "B30",
+    "B45"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B45",
+   "kind": "idea",
+   "title_ar": "تدقيق جاهزية Peppol في الإمارات لمزوّدي الخدمة المعتمدين، قبل إطلاق 2027-01-01",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "AE"
+    ],
+    "currency": "USD_PEGGED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "إحصاءٌ كامل (§14): 1,119 معرّفاً إماراتياً عند أربعة مزوّدين بلا قدرة الاستقبال الإماراتية قبل إطلاق 2027-01-01؛ ثلاثة منهم معتمدون"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "payer_unproven"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "مزوّدٌ معتمد يردّ بأنه يتابع هذا أو يطلب أرقامه"
+   },
+   "group": "C5",
+   "related": [
+    "B22",
+    "B44",
+    "B30"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B46",
+   "kind": "idea",
+   "title_ar": "عقود الاستشارات الممولة من البنك الدولي في إفريقيا الفرنكوفونية: الجزائر غائبة",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "development_finance",
+    "markets": [
+     "NE",
+     "SN",
+     "CI",
+     "CG",
+     "BI"
+    ],
+    "currency": "EUR_PEGGED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "عقود البنك الدولي المُرساة: تونس 95 ومغرب 30 والجزائر 3 منذ 2024؛ النيجر 110.67 مليون فرنك"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "pass",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "references_needed"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "فائزٌ تونسي أو مغربي يقبل شراكةً من الباطن"
+   },
+   "group": "C6",
+   "related": [
+    "B47",
+    "B01"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B47",
+   "kind": "idea",
+   "title_ar": "فحص مطابقة الفاتورة الإيفوارية المعيارية قبل الإرسال، لصالح المدمجين المعتمدين",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "CI"
+    ],
+    "currency": "EUR_PEGGED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "قرار الضرائب الإيفواري 2026-09-14 بمهلة 45 يوماً + 24 مُدمِجاً مسمّى"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "tax_withholding"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "3 مُدمِجين يؤكّدون رفض تدفّقات عملائهم ويقبلون الدفع من الخارج"
+   },
+   "group": "C6",
+   "related": [
+    "B46",
+    "B30"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B48",
+   "kind": "idea",
+   "title_ar": "تجهيز بيانات تسجيل الأجهزة الطبية في EUDAMED قبل موعد الأجهزة القديمة",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "health",
+    "markets": [
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "44.5% من مصنّعي الأجهزة الطبية النشطين بلا جهازٍ في EUDAMED قبل 2026-11-28 + ممثّلون مسمّون + أسعار بائعين"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "pass",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "client_account_access"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "ممثّلان أوروبيان يطلبان سعراً لملفّات الرفع"
+   },
+   "group": "C7",
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
    "id": "J01",
    "kind": "job",
    "title_ar": "Meridial/Invisible — Finance Specialist, Fluent in French — Freelance AI Trainer",
@@ -2490,7 +2779,9 @@
    "title_ar": "تنظيف مرجعيات الأطراف الثالثة للفوترة الإلكترونية — فرنسا",
    "first_recorded": null,
    "archive": "docs/commercial/VALUE_CHAIN.json",
-   "addenda": [],
+   "addenda": [
+    "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
+   ],
    "facets": null,
    "evidence": {
     "level": "na",
@@ -2624,7 +2915,12 @@
    "related": [
     "B12"
    ],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-26",
+     "event_ar": "الجزائرية غائبة عن Belebele وFLEURS وFLORES+؛ والعمل الفردي يصل بالدينار فلا يجتاز G1"
+    }
+   ],
    "last_reviewed": "2026-10-26"
   },
   {
@@ -2920,7 +3216,12 @@
    },
    "group": "F3",
    "related": [],
-   "history": [],
+   "history": [
+    {
+     "date": "2026-10-26",
+     "event_ar": "محكمة ليل 2026-05-05 طبّقت سقف 250 مليون €؛ وتدقيقٌ آلي يُباع بـ190 €؛ ومشترون عموميون بوسيط سقفٍ 165,000 €"
+    }
+   ],
    "last_reviewed": "2026-10-26"
   },
   {
