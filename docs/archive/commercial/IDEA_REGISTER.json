@@ -1,0 +1,3320 @@
+{
+ "$schema_version": 1,
+ "title_ar": "سجلّ الأفكار الموحّد",
+ "reviewed_on": "2026-10-26",
+ "reading_view": "IDEA_REGISTER_AR.md",
+ "gates": {
+  "G1": "دافعٌ بالعملة الصعبة بدليلٍ منشور",
+  "G2": "جواز التسليم من الجزائر",
+  "G3": "قدرة الفريق على التسليم خلال 90 يوماً",
+  "G4": "ألمٌ موثَّق عمره 12 شهراً أو أقلّ",
+  "G5": "عشرون مشترياً مسمّى يمكن الوصول إليهم"
+ },
+ "vocabularies": {
+  "kind": {
+   "idea": "فكرة",
+   "job": "وظيفة أو مهمّة",
+   "value_chain_path": "مسار في سلسلة القيمة"
+  },
+  "stage": {
+   "included": "متأهّلة — اجتازت البوّابات الخمس",
+   "conditional": "مشروطة — شرطٌ واحد معلوم يفتحها",
+   "excluded": "مستبعدة — بوّابةٌ مسمّاة وسببٌ مكتوب",
+   "personal_income": "دخلٌ فردي — خارج غربال الشركة",
+   "governed_elsewhere": "حالتها في سلسلة القيمة لا هنا"
+  },
+  "option_state": {
+   "active_test": "اختبار مشترٍ جاهز للإرسال",
+   "awaiting_owner": "ينتظر قرار المالك",
+   "held_option": "خيارٌ محفوظ بشرط إعادة فتح",
+   "parked": "مركونة — لا مُحرِّك قريب",
+   "closed_by_fact": "أغلقتها واقعةٌ خارجية",
+   "frozen": "مجمّدة بقرارٍ قائم",
+   "see_value_chain": "تُدار في سلسلة القيمة"
+  },
+  "evidence_level": {
+   "D0": "ادّعاء بلا مصدر خارجي",
+   "D1": "مصدر خارجي يثبت المشكلة أو سعر بائع، بلا مشترٍ ملزم",
+   "D2": "مشترٍ مسمّى (فئةً أو جهة) + التزام قانوني أو ميزانية منشورة",
+   "D3": "محادثة موثّقة مع مشترٍ",
+   "D4": "عرض موقّع أو عيّنة مسلّمة أو عربون",
+   "D5": "دفعة مسوّاة في كشف بنكي",
+   "na": "لا ينطبق"
+  },
+  "gate_verdict": {
+   "pass": "✓",
+   "partial": "~",
+   "fail": "✗",
+   "na": "—"
+  },
+  "domain": {
+   "einvoicing": "الفوترة الإلكترونية وبيانات الضريبة",
+   "ai_assurance": "اختبار الذكاء الاصطناعي وضمانه",
+   "accessibility": "الإتاحة الرقمية",
+   "climate": "الامتثال المناخي والبيئي",
+   "industry": "التشغيل الصناعي والصيانة",
+   "trade_dz": "التجارة والمدفوعات عبر الجزائر",
+   "education": "التعليم",
+   "health": "الصحّة والدواء",
+   "legal_hr": "القانون والعمل والأجور",
+   "public_services": "الخدمات العامة والجالية",
+   "infrastructure": "البنية التحتية والمياه",
+   "cybersecurity": "الأمن السيبراني",
+   "language_data": "بيانات اللغة",
+   "channel": "قنوات البيع",
+   "finance_reg": "التنظيم المالي"
+  },
+  "currency": {
+   "EUR": "يورو",
+   "USD": "دولار",
+   "USD_PEGGED": "عملة مربوطة بالدولار",
+   "DZD": "دينار",
+   "CAD": "دولار كندي",
+   "MIXED": "مختلطة",
+   "unknown": "غير معروفة"
+  },
+  "delivery": {
+   "remote_service": "خدمة عن بُعد",
+   "remote_data": "عمل بيانات عن بُعد",
+   "field": "عمل ميداني أو أجهزة",
+   "software": "برمجية",
+   "channel": "قناة",
+   "employment": "توظيف"
+  },
+  "constraint": {
+   "none": "لا عائق حاسم",
+   "owner_decision": "قرار المالك (تجميد D-300)",
+   "competence": "كفاءة تُتعلَّم ولا تُرخَّص",
+   "licensed_profession": "مهنة مرخّصة",
+   "gdpr_transfer": "نقل معطيات شخصية أوروبية",
+   "health_data": "معطيات صحّية",
+   "ethics": "مانع أخلاقي",
+   "expertise": "اختصاص غير متوفّر",
+   "capital_field": "رأس مال أو حضور ميداني",
+   "slot_taken": "الدور أُسند لغيرنا",
+   "dzd_only": "الدفع بالدينار وحده",
+   "no_named_payer": "لا دافع مسمّى",
+   "stale_evidence": "دليل قديم",
+   "diplomatic": "مانع دبلوماسي",
+   "policy_flux": "سياسة متحرّكة",
+   "data_law_dz": "قانون المعطيات الجزائري 25-11",
+   "verifier_pending": "شهادة جهة التحقّق",
+   "frozen_by_decision": "مجمّدة بقرار",
+   "channel": "قناة لا فرصة"
+  }
+ },
+ "groups": {
+  "F1": {
+   "title_ar": "تنظيف معرّفات الفوترة الإلكترونية وبيانات العملاء (فرنسا وبلجيكا ثمّ الإمارات والسعودية)",
+   "stage": "included",
+   "option_state": "awaiting_owner",
+   "next_test_ar": "20 رسالة لموزّعي برامج المحاسبة والمنصّات ومزوّدي Peppol، بعد قرار المالك في D-300",
+   "kill_ar": "صفر ردود خلال 30 يوماً من الرسالة العشرين",
+   "members": [
+    "B01",
+    "B22",
+    "B30",
+    "B31",
+    "OPP-01",
+    "OPP-02"
+   ]
+  },
+  "F2": {
+   "title_ar": "اختبار حواجز الذكاء الاصطناعي بالعربية والدارجة",
+   "stage": "included",
+   "option_state": "active_test",
+   "next_test_ar": "إرسال قائمة D-320 (20 جهة) كما هي",
+   "kill_ar": "صفر ردود خلال 30 يوماً من الرسالة العشرين",
+   "members": [
+    "B12",
+    "OPP-04"
+   ]
+  },
+  "F3": {
+   "title_ar": "تدقيق الإتاحة الرقمية لمواقع التجارة الفرنسية ثمّ إصلاحها",
+   "stage": "included",
+   "option_state": "active_test",
+   "next_test_ar": "إرسال قائمة D-322 (20 استمارة) كما هي",
+   "kill_ar": "صفر ردود خلال 30 يوماً من الرسالة العشرين",
+   "members": [
+    "OPP-13"
+   ]
+  },
+  "C1": {
+   "title_ar": "بيانات اللغات الجزائرية",
+   "stage": "conditional",
+   "option_state": "held_option",
+   "next_test_ar": "رأي محامٍ جزائري مكتوب في نقل التسجيلات (القانون 25-11) + سعر ساعة من شركة بيانات",
+   "kill_ar": "رأيٌ يمنع النقل، أو لا سعر فوق كلفة الساعة",
+   "members": [
+    "B19"
+   ]
+  },
+  "C2": {
+   "title_ar": "بيانات CBAM للمصانع المصدّرة",
+   "stage": "conditional",
+   "option_state": "held_option",
+   "next_test_ar": "صدور شهادة جهة التحقّق الأوروبية ونطاقها",
+   "kill_ar": "رفض الاعتماد أو نطاقٌ لا يشمل الجزائر",
+   "members": [
+    "B03"
+   ]
+  },
+  "C3": {
+   "title_ar": "جاهزية الاستيراد والمدفوعات المحتجزة",
+   "stage": "conditional",
+   "option_state": "held_option",
+   "next_test_ar": "مصدّرٌ أوروبيّ غير فرنسي يقول إنّ شحنته أو دفعته عالقة",
+   "kill_ar": "صفر مصدّر مسمّى بعد 20 رسالة",
+   "members": [
+    "B10",
+    "B24"
+   ]
+  },
+  "C4": {
+   "title_ar": "أطبّاء PADHUE",
+   "stage": "conditional",
+   "option_state": "held_option",
+   "next_test_ar": "نصّ القانون الذي يعوّض المباراة",
+   "kill_ar": "نصٌّ يلغي الحاجة إلى الملفّ",
+   "members": [
+    "B38"
+   ]
+  }
+ },
+ "studies": [
+  {
+   "id": "S01",
+   "date": "2026-10-26",
+   "title_ar": "تغطية مكوّنات حراسة الذكاء الاصطناعي للعربية واللهجات المغاربية",
+   "where": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md §3 (ملحق OPP-04)",
+   "feeds": [
+    "OPP-04",
+    "B12"
+   ],
+   "finding_ar": "من 11 مكوّناً، واحدٌ يعلن العربية وصفرٌ يسمّي الدارجة الجزائرية؛ المطابقة بحدود الكلمات تلتقط 3/18 صيغة عربية مقابل 9/11 فرنسية"
+  },
+  {
+   "id": "S02",
+   "date": "2026-10-26",
+   "title_ar": "الغربال الموحّد بخمس بوّابات على كلّ المرشّحين",
+   "where": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md §12",
+   "feeds": [
+    "F1",
+    "F2",
+    "F3",
+    "C1",
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "finding_ar": "33 مستبعدة بسببٍ مسمّى، 5 مشروطة، 7 متأهّلة في ثلاثة عروض؛ B34 أُغلقت بواقعة"
+  },
+  {
+   "id": "S03",
+   "date": "2026-10-26",
+   "title_ar": "تعداد عيوب المعرّفات في دليل Peppol وسجلّه الحيّ (بلجيكا وفرنسا والإمارات)",
+   "where": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md §13",
+   "feeds": [
+    "OPP-01",
+    "OPP-02",
+    "B30",
+    "B22"
+   ],
+   "finding_ar": "انظر §13: العيوب الشكلية نادرة، والعيب الحيّ في غياب معرّف الضريبة البلجيكي وفي مزوّدين بعينهم"
+  }
+ ],
+ "flow": {
+  "identified_ideas": 43,
+  "identified_jobs": 12,
+  "identified_value_chain_paths": 25,
+  "screened": 45,
+  "included": 7,
+  "conditional": 5,
+  "excluded": 33
+ },
+ "records": [
+  {
+   "id": "B01",
+   "kind": "idea",
+   "title_ar": "تنظيف بيانات الفوترة الإلكترونية الفرنسية والبلجيكية",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [
+    "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
+   ],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "FR",
+     "BE"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "إلزامٌ قانوني في فرنسا وبلجيكا + بيانات رسمية عن الرفض؛ 4 مكاتب راسلناها بلا ردّ"
+   },
+   "screening": {
+    "stage": "included",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "owner_decision"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "قرار المالك في D-300"
+   },
+   "group": "F1",
+   "related": [
+    "OPP-01",
+    "OPP-02",
+    "B30"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B02",
+   "kind": "idea",
+   "title_ar": "منصة تعليمية/مختبر تعلم CogniForge وETAALIM.AI",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "education",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "software"
+   },
+   "evidence": {
+    "level": "D0",
+    "basis_ar": "أصلٌ قائم بلا طلبٍ مدفوع"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "frozen_by_decision"
+   },
+   "option": {
+    "state": "frozen",
+    "trigger_ar": "قرار المالك برفع تجميد المنصّة (D-300)"
+   },
+   "group": null,
+   "related": [
+    "OPP-19"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B03",
+   "kind": "idea",
+   "title_ar": "دعم بيانات CBAM للمصانع المصدرة",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [
+    "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
+   ],
+   "facets": {
+    "domain": "climate",
+    "markets": [
+     "EU",
+     "DZ"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D3",
+    "basis_ar": "محادثة مع جهة تحقّق أوروبية، غير مُتحقَّق منها استقلالياً"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "pass"
+    },
+    "binding_constraint": "verifier_pending"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "صدور شهادة جهة التحقّق ونطاقها"
+   },
+   "group": "C2",
+   "related": [
+    "OPP-11"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B04",
+   "kind": "idea",
+   "title_ar": "منصة أوسع لبيانات المصانع والتصدير",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "industry",
+    "markets": [
+     "DZ",
+     "EU"
+    ],
+    "currency": "MIXED",
+    "delivery": "software"
+   },
+   "evidence": {
+    "level": "D0",
+    "basis_ar": "فرضية توسّع بلا مصدر طلب"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "مستوردٌ أوروبي مسمّى يطلب ملفّ منتج"
+   },
+   "group": null,
+   "related": [
+    "B03"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B05",
+   "kind": "idea",
+   "title_ar": "المشتريات الصناعية ومتابعة الموردين",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "industry",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D0",
+    "basis_ar": "سياق سوق لا طلب"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "مشترٍ يدفع بالعملة الصعبة"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B06",
+   "kind": "idea",
+   "title_ar": "خفض تكلفة تشغيل المصانع",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "industry",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D0",
+    "basis_ar": "فرضية بلا مصدر طلب"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "capital_field"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "شريك عمليات + مصنع يدفع"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B07",
+   "kind": "idea",
+   "title_ar": "الصيانة التنبؤية وموثوقية المضخات/الضواغط",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "industry",
+    "markets": [
+     "GLOBAL"
+    ],
+    "currency": "EUR",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "حالة منشورة من بائع (Siemens)"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "capital_field"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "شريك OEM يطلب طبقة تحليل"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B08",
+   "kind": "idea",
+   "title_ar": "قطع الغيار المتقادمة والهندسة العكسية",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "industry",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "MIXED",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "أمثلة بائعين"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "capital_field"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "شريك تصنيع + طلب مسمّى"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B09",
+   "kind": "idea",
+   "title_ar": "بيانات الميثان وLDAR لسلسلة النفط والغاز",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "climate",
+    "markets": [
+     "DZ",
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "اشتراطات استيراد أوروبية + برنامج Eni/Sonatrach المعلن"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "capital_field"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "طلب توثيق مسمّى من مشغّل تحت إشراف مختصّ"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B10",
+   "kind": "idea",
+   "title_ar": "جاهزية صفقة الاستيراد قبل الشحن إلى الجزائر",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [
+    "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
+   ],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ",
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "تحذيرات رسمية + بائعون منافسون، بلا مصدّر مسمّى"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "مصدّرٌ أوروبي يقول إنّ شحنته أو دفعته عالقة"
+   },
+   "group": "C3",
+   "related": [
+    "B24"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B11",
+   "kind": "idea",
+   "title_ar": "اختبارات جودة الواجهات العربية وRTL",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "ai_assurance",
+    "markets": [
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "إشارة طلب على منصّة عمل حرّ لم تُتحقَّق"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "fail",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "stale_evidence"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "طلبٌ مسمّى حديث لاختبار واجهة عربية"
+   },
+   "group": null,
+   "related": [
+    "J09",
+    "OPP-18"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B12",
+   "kind": "idea",
+   "title_ar": "اختبار الذكاء الاصطناعي المالي بالعربية والفرنسية",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "ai_assurance",
+    "markets": [
+     "EU",
+     "GLOBAL"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "حالة بائع (BPCE/Giskard)"
+   },
+   "screening": {
+    "stage": "included",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "active_test",
+    "trigger_ar": "قائمة D-320"
+   },
+   "group": "F2",
+   "related": [
+    "OPP-04",
+    "OFF-CND"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B13",
+   "kind": "idea",
+   "title_ar": "سلامة سلسلة التبريد وتنسيق التدخل",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "industry",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "MIXED",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "منتج بائع (Sensitech)"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "capital_field"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "ناقل بمسار شحن محدّد يطلب التدخّل"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B14",
+   "kind": "idea",
+   "title_ar": "جودة وتتبع صادرات التمور",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ",
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "توثيق CBI؛ البرنامج مغلق"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "مستورد أوروبي مسمّى يطلب التتبّع"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B15",
+   "kind": "idea",
+   "title_ar": "المياه غير المفوترة: خفض الفاقد بعقود أداء",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "infrastructure",
+    "markets": [
+     "KE"
+    ],
+    "currency": "MIXED",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "تأهيلٌ منشور (Naivasha) أُغلق في يونيو 2025"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "capital_field"
+   },
+   "option": {
+    "state": "closed_by_fact",
+    "trigger_ar": "مناقصة أداء جديدة مفتوحة مع مقاول شريك"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B16",
+   "kind": "idea",
+   "title_ar": "حماية هامش المقاول وتوثيق التغييرات والمستحقات",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "legal_hr",
+    "markets": [
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "software"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "حالات بائعين + صفقة استحواذ منشورة"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "fail",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "expertise"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "خبير عقود شريك + مقاول مسمّى"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B17",
+   "kind": "idea",
+   "title_ar": "الأمن السيبراني المؤسسي وأدلة امتثال الموردين",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "cybersecurity",
+    "markets": [
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "إعلان شراء AfDB أُغلق في 2026-10-05"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "fail",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "expertise"
+   },
+   "option": {
+    "state": "closed_by_fact",
+    "trigger_ar": "مناقصة مفتوحة مع شريك أمني مؤهّل"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B18",
+   "kind": "idea",
+   "title_ar": "المناقصات الدولية والتعاقد من الباطن كقناة بيع",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "channel",
+    "markets": [
+     "GLOBAL"
+    ],
+    "currency": "MIXED",
+    "delivery": "channel"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "قناة بيع لا فرصة"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "channel"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "تُستعمل داخل أيّ متأهّل"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B19",
+   "kind": "idea",
+   "title_ar": "بيانات اللغات الجزائرية لتدريب الذكاء الاصطناعي (الدارجة والقبائلية والشاوية)",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "language_data",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "remote_data"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "شركات بيانات تنشر مهامّ مدفوعة للجزائر"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "pass",
+     "G2": "partial",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "data_law_dz"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "رأي محامٍ في القانون 25-11 + سعر ساعة"
+   },
+   "group": "C1",
+   "related": [
+    "OPP-05",
+    "J10",
+    "J11"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B20",
+   "kind": "idea",
+   "title_ar": "قدرة محاسبية مُشرَف عليها لمكاتب المحاسبة الفرنسية",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "finance_reg",
+    "markets": [
+     "FR"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "سياق مهنة وأسعار منشورة"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "fail",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "licensed_profession"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "إطار قانوني يسمح بالإسناد من خارج الاتحاد"
+   },
+   "group": null,
+   "related": [
+    "OPP-17"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B21",
+   "kind": "idea",
+   "title_ar": "جودة «سجلّ المعلومات» في DORA للمؤسسات المالية الأوروبية",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "finance_reg",
+    "markets": [
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "أرقام 2024 فقط"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "stale_evidence"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "دليل ألم مؤرَّخ بعد 2025"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B22",
+   "kind": "idea",
+   "title_ar": "الفوترة الإلكترونية الإماراتية: موعدٌ بعد أيام وسوقٌ بالعربية وعملة مربوطة بالدولار",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "AE"
+    ],
+    "currency": "USD_PEGGED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "إلزامٌ إماراتي + وظيفة منشورة لصيانة بيانات العملاء"
+   },
+   "screening": {
+    "stage": "included",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "owner_decision"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "قرار المالك في D-300"
+   },
+   "group": "F1",
+   "related": [
+    "B30",
+    "J12"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B23",
+   "kind": "idea",
+   "title_ar": "قانون منع إزالة الغابات الأوروبي (EUDR): يُطبَّق في 2026-12-30",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "climate",
+    "markets": [
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "نصّ تنظيمي بلا ألم مُبلَغ"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "شكوى مستورد مسمّاة بعد 2026-12-30"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B24",
+   "kind": "idea",
+   "title_ar": "نظام البرامج التقديرية للاستيراد في الجزائر (PPI)",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ",
+     "EU"
+    ],
+    "currency": "MIXED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "نظام رسمي + أدلّة للمصدّرين"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "مصدّرٌ أوروبي مسمّى"
+   },
+   "group": "C3",
+   "related": [
+    "B10"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B25",
+   "kind": "idea",
+   "title_ar": "المصدّرون الجزائريون تحت النظام 26-02: 120 يوماً وتأمين CAGEX وتصريح المنتج",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "نظام بنك الجزائر 26-02"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "مصدّر يدفع بالعملة الصعبة"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B26",
+   "kind": "idea",
+   "title_ar": "التصريح الجبائي الإلكتروني الإلزامي في الجزائر (Jibayatic)",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "إلزام جبائي جزائري"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "دافع بالعملة الصعبة"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B27",
+   "kind": "idea",
+   "title_ar": "مرتجعات الدفع عند الاستلام في التجارة الإلكترونية الجزائرية",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "software"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "مصادر بائعين"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "دافع بالعملة الصعبة"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B28",
+   "kind": "idea",
+   "title_ar": "الدروس الخصوصية للبكالوريا",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "education",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "مصدر قديم (يناير 2025)"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "رفع تجميد المنصّة + دافع"
+   },
+   "group": null,
+   "related": [
+    "B02",
+    "OPP-19"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B29",
+   "kind": "idea",
+   "title_ar": "ملفّات صندوق ترقية الصادرات (FSPE): تعويضٌ يضيع بالأوراق",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "إجراء رسمي بأجلٍ في 31 أكتوبر"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "pass",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "دورة FSPE القادمة بدفعٍ بالعملة الصعبة"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B30",
+   "kind": "idea",
+   "title_ar": "قدرةٌ واحدة لموجات إلزامٍ كثيرة: تنظيف معرّفات الفوترة وبيانات العملاء",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "FR",
+     "BE",
+     "AE",
+     "SA"
+    ],
+    "currency": "MIXED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "إلزامات متتالية + شكاوى منشورة في فرنسا"
+   },
+   "screening": {
+    "stage": "included",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "owner_decision"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "قرار المالك في D-300"
+   },
+   "group": "F1",
+   "related": [
+    "B01",
+    "B22",
+    "B31",
+    "OPP-01",
+    "OPP-02"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B31",
+   "kind": "idea",
+   "title_ar": "السعودية، الموجة 25: أوسع موجات الربط، والموعد 2027-02-01",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "SA"
+    ],
+    "currency": "USD_PEGGED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "إعلان الموجة 25؛ الدافع عند D1"
+   },
+   "screening": {
+    "stage": "included",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "owner_decision"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "قرار المالك في D-300"
+   },
+   "group": "F1",
+   "related": [
+    "B30",
+    "OPP-12"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B32",
+   "kind": "idea",
+   "title_ar": "عُمان: المرحلة الأولى من «فوترة» بدأت في أغسطس 2026",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "OM"
+    ],
+    "currency": "USD_PEGGED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "مرحلة رسمية بلا ألم مُبلَغ"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "شكوى مسمّاة من مكلّف عُماني"
+   },
+   "group": null,
+   "related": [
+    "B30"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B33",
+   "kind": "idea",
+   "title_ar": "المغرب: إلزامٌ قادم بنموذج المصادقة المسبقة",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "einvoicing",
+    "markets": [
+     "MA"
+    ],
+    "currency": "MIXED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "إلزام قادم"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "fail",
+     "G3": "pass",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "diplomatic"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "تغيّر العلاقات الجزائرية المغربية"
+   },
+   "group": null,
+   "related": [
+    "B30"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B34",
+   "kind": "idea",
+   "title_ar": "التحقّق من وجود المتقاعدين المقيمين في الجزائر لحساب صناديق التقاعد الفرنسية",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "public_services",
+    "markets": [
+     "FR",
+     "DZ"
+    ],
+    "currency": "EUR",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "ديوان المحاسبة + نيّة الصندوق المعلنة؛ الدور أُسند لمصرف"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "pass",
+     "G2": "fail",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "fail"
+    },
+    "binding_constraint": "slot_taken"
+   },
+   "option": {
+    "state": "closed_by_fact",
+    "trigger_ar": "مناقصة جديدة يقبل فيها غيرُ المصارف"
+   },
+   "group": null,
+   "related": [],
+   "history": [
+    {
+     "date": "2026-10-26",
+     "event_ar": "رادار الألم: 14 من 18 (ضمن الثلاث الأولى)"
+    },
+    {
+     "date": "2026-10-26",
+     "event_ar": "الغربال الموحّد: مستبعدة في G2 وG5 — Agirc-Arrco أسند المراقبة لمصرف بمناقصة (2025-10-26)"
+    }
+   ],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B35",
+   "kind": "idea",
+   "title_ar": "مكتب وثائق الجالية داخل الجزائر: المنصّة تعمل من الجزائر فقط",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "public_services",
+    "markets": [
+     "DZ",
+     "FR"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "صحافة"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "pass",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "fail"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "دافع مسمّى وسعر موجود"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B36",
+   "kind": "idea",
+   "title_ar": "الشفافية في الأجور الأوروبية: 5 دول من 27 نقلت التوجيه",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "legal_hr",
+    "markets": [
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "software"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "توجيه أوروبي + أسعار برمجيات"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "fail",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "gdpr_transfer"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "قرار كفاية أوروبي للجزائر أو عمل على معطيات مجهولة"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B37",
+   "kind": "idea",
+   "title_ar": "ترميز الإقامات الاستشفائية الفرنسي (PMSI): نقصٌ موثَّق ومسارٌ خارجيّ محجوب",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "health",
+    "markets": [
+     "FR"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "نقص موثّق غير مؤرَّخ"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "pass",
+     "G2": "fail",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "health_data"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "إطار قانوني يسمح بالترميز من الخارج"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B38",
+   "kind": "idea",
+   "title_ar": "الأطبّاء الحاصلون على شهادات من خارج الاتحاد الأوروبي في فرنسا (PADHUE): أشدّ الآلام قياساً في هذا الأرشيف",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "health",
+    "markets": [
+     "FR"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "محامون وجمعيات؛ سياسة متحرّكة"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "policy_flux"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "نصّ القانون الذي يعوّض المباراة"
+   },
+   "group": "C4",
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B39",
+   "kind": "idea",
+   "title_ar": "توظيف الممرّضين من الجزائر نحو كندا وأوروبا: ألمٌ ضخم وبابٌ أخلاقيّ مغلق جزئياً",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "health",
+    "markets": [
+     "CA",
+     "EU",
+     "DZ"
+    ],
+    "currency": "CAD",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "برامج توظيف مدفوعة؛ كيبك أغلقت إفريقيا"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "pass",
+     "G2": "fail",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "partial"
+    },
+    "binding_constraint": "ethics"
+   },
+   "option": {
+    "state": "closed_by_fact",
+    "trigger_ar": "لا يُعاد فتحه بلا مراجعة أخلاقية مكتوبة"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B40",
+   "kind": "idea",
+   "title_ar": "الاجتهادات المختلَقة بالذكاء الاصطناعي في المحاكم",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "legal_hr",
+    "markets": [
+     "US"
+    ],
+    "currency": "USD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "قرارات قضائية منشورة"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "fail",
+     "G4": "pass",
+     "G5": "fail"
+    },
+    "binding_constraint": "expertise"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "شريك قانوني أمريكي"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B41",
+   "kind": "idea",
+   "title_ar": "المساكن الفرنسية المصنّفة «مصافي حرارية»: منعٌ متدرّج للتأجير",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "infrastructure",
+    "markets": [
+     "FR"
+    ],
+    "currency": "EUR",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "منع تأجير متدرّج"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "fail",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "capital_field"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "شريك ميداني في فرنسا"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B42",
+   "kind": "idea",
+   "title_ar": "التجارب السريرية في الجزائر: بوّابةٌ قانونية جديدة لصناعةٍ تخسر مئات آلاف الدولارات يومياً",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "health",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "MIXED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "مرسوم جزائري يُلزم الممثّل المحلّي للمموّل الأجنبي"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "pass",
+     "G2": "partial",
+     "G3": "fail",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "expertise"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "شريك مؤهّل في GCP"
+   },
+   "group": null,
+   "related": [
+    "B43"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "B43",
+   "kind": "idea",
+   "title_ar": "شروط ANPP الجديدة لتسجيل الأدوية وتجديدها: سحبٌ فوريّ بلا دراسة أثرٍ واقعي",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "health",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "MIXED",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "شروط ANPP الجديدة"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "fail",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "expertise"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "شريك مختصّ في الوبائيات"
+   },
+   "group": null,
+   "related": [
+    "B42"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J01",
+   "kind": "job",
+   "title_ar": "Meridial/Invisible — Finance Specialist, Fluent in French — Freelance AI Trainer",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [
+    "OPP-03"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J02",
+   "kind": "job",
+   "title_ar": "Lionbridge — Arabic Transcriber",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J03",
+   "kind": "job",
+   "title_ar": "Sigma AI — Arabic, French, and English Linguistic Projects",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "unknown",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [
+    "OPP-03",
+    "B19"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J04",
+   "kind": "job",
+   "title_ar": "Testlio — اختبار يدوي/آلي",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J05",
+   "kind": "job",
+   "title_ar": "GoTranscript — تفريغ عربي/لهجات مغاربية",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J06",
+   "kind": "job",
+   "title_ar": "Altea — Instrument QA/QC Inspector، سكيكدة",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "unknown",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J07",
+   "kind": "job",
+   "title_ar": "Altea — Logistics Coordinator at Rig Site",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "unknown",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J08",
+   "kind": "job",
+   "title_ar": "Turing — ترشيح سابق",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "unknown",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J09",
+   "kind": "job",
+   "title_ar": "مهام Upwork لاختبار منصة عربية/RTL",
+   "first_recorded": "2026-10-22",
+   "archive": "OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [
+    "B11"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J10",
+   "kind": "job",
+   "title_ar": "DATAmundi — تسجيل محادثات بالأمازيغية/القبائلية",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "unknown",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [
+    "B19"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J11",
+   "kind": "job",
+   "title_ar": "Sigma — مشاريع العربية المغاربية",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "unknown",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [
+    "B19"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J12",
+   "kind": "job",
+   "title_ar": "مستشار فوترة إلكترونية — أبوظبي",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "USD_PEGGED",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [
+    "B22"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-01",
+   "kind": "value_chain_path",
+   "title_ar": "تنظيف مرجعيات الأطراف الثالثة للفوترة الإلكترونية — فرنسا",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "20 رسالة لموزّعي برامج المحاسبة والمنصّات ومزوّدي Peppol، بعد قرار المالك في D-300"
+   },
+   "group": "F1",
+   "related": [
+    "B01",
+    "B30"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-02",
+   "kind": "value_chain_path",
+   "title_ar": "تنظيف بيانات أطراف Peppol — بلجيكا",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [
+    "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
+   ],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "20 رسالة لموزّعي برامج المحاسبة والمنصّات ومزوّدي Peppol، بعد قرار المالك في D-300"
+   },
+   "group": "F1",
+   "related": [
+    "B01",
+    "B30"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-03",
+   "kind": "value_chain_path",
+   "title_ar": "عمل تقييم الذكاء الاصطناعي على المنصّات — قناة تمويل",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [
+    "J01",
+    "J03"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-04",
+   "kind": "value_chain_path",
+   "title_ar": "اختبار الاختراق العربي/الفرنسي للذكاء الاصطناعي",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [
+    "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
+   ],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "included",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "pass",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "active_test",
+    "trigger_ar": "إرسال قائمة D-320 (20 جهة) كما هي"
+   },
+   "group": "F2",
+   "related": [
+    "B12"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-05",
+   "kind": "value_chain_path",
+   "title_ar": "بيانات وتقييم RLHF متخصّصة",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [
+    "B19"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-06",
+   "kind": "value_chain_path",
+   "title_ar": "ذكاء اصطناعي محلّي لقطاع الطاقة",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-07",
+   "kind": "value_chain_path",
+   "title_ar": "ذكاء اصطناعي مُستنير بالفيزياء",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-08",
+   "kind": "value_chain_path",
+   "title_ar": "التحقّق الصوري لبرمجيات الذكاء الاصطناعي",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-09",
+   "kind": "value_chain_path",
+   "title_ar": "حزمة أدلّة قانون الذكاء الاصطناعي الأوروبي",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-10",
+   "kind": "value_chain_path",
+   "title_ar": "تسويق بالعمولة عالي العائد",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-11",
+   "kind": "value_chain_path",
+   "title_ar": "CBAM — أداة قرار المستورد الأوروبي من القيم الرسمية المدبوسة",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [
+    "B03"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-12",
+   "kind": "value_chain_path",
+   "title_ar": "إصلاح سلسلة فواتير ZATCA",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [
+    "B31"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-13",
+   "kind": "value_chain_path",
+   "title_ar": "تدقيق إتاحة EAA",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [
+    "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
+   ],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "included",
+    "gates": {
+     "G1": "pass",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "pass"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "active_test",
+    "trigger_ar": "إرسال قائمة D-322 (20 استمارة) كما هي"
+   },
+   "group": "F3",
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-14",
+   "kind": "value_chain_path",
+   "title_ar": "بناء أتمتة n8n/Make",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-15",
+   "kind": "value_chain_path",
+   "title_ar": "شهادة النتيجة للعمل الوكيلي",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-16",
+   "kind": "value_chain_path",
+   "title_ar": "حجز المواعيد B2B (الولايات المتحدة والمملكة المتحدة)",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-17",
+   "kind": "value_chain_path",
+   "title_ar": "الإسناد الإداري الشهري للمؤسّسات الفرنسية الصغيرة",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [
+    "B20"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-18",
+   "kind": "value_chain_path",
+   "title_ar": "التوطين التجاري والتقني فرنسي ⇄ عربي",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [
+    "B11"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OPP-19",
+   "kind": "value_chain_path",
+   "title_ar": "منصّة E-TAALIM التعليمية للبكالوريا",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [
+    "B02"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OFF-AHW",
+   "kind": "value_chain_path",
+   "title_ar": "بوّابة انحدارٍ عند الإصدار بدليلٍ مثبَّت",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OFF-CDKC",
+   "kind": "value_chain_path",
+   "title_ar": "حزمة تقييمٍ قابلة للتصدير لمختبرات النماذج",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OFF-CND",
+   "kind": "value_chain_path",
+   "title_ar": "ملفّ سلوك الحارس عبر أسطح اللغة",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [
+    "OPP-04",
+    "B12"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OFF-SSI",
+   "kind": "value_chain_path",
+   "title_ar": "تدقيق بنية قابلية بيع العرض التقني",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OFF-VERA",
+   "kind": "value_chain_path",
+   "title_ar": "بروتوكول دليلٍ محمول قابل لإعادة الإنتاج",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "OFF-WOD",
+   "kind": "value_chain_path",
+   "title_ar": "طبقة المشتري لحواجز الفاتورة الأولى",
+   "first_recorded": null,
+   "archive": "docs/commercial/VALUE_CHAIN.json",
+   "addenda": [],
+   "facets": null,
+   "evidence": {
+    "level": "na",
+    "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
+   },
+   "screening": {
+    "stage": "governed_elsewhere",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "see_value_chain",
+    "trigger_ar": "انظر VALUE_CHAIN.json"
+   },
+   "group": null,
+   "related": [],
+   "history": [],
+   "last_reviewed": "2026-10-26"
+  }
+ ]
+}

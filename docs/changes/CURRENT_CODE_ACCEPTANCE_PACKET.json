@@ -93,7 +93,10 @@
     {
       "standard": "clean-code-book",
       "paths": [
+        "docs/archive/commercial/IDEA_REGISTER.json",
+        "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+        "tests/unit/tools/test_idea_register.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
       ],
       "gate": "scripts/fitness/check_outbound_before_research.py",
@@ -106,7 +109,9 @@
     "interfaces": [
       "tests/unit/tools/test_opportunity_archive_additive.py: audit(archives, known_paths) — 4 قواعد (ثقب · إعادة استعمال · ملحق · مصدر وتاريخ)، و8 اختبارات منها 6 سلبية",
       "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md: B19–B43 وJ10–J12 وملاحق B01/B03/B10/OPP-02/OPP-04/OPP-13 والدراسة الشاملة بالبوّابات G1–G5 (§12) — يُقرأ ولا يُنفَّذ",
-      "docs/archive/commercial/OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md — لم يُمسّ"
+      "docs/archive/commercial/OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md — لم يُمسّ",
+      "docs/archive/commercial/IDEA_REGISTER.json + IDEA_REGISTER_AR.md: سجلّ موحّد لـB01–B43 وJ01–J12 و25 مساراً، بأوجهٍ ومراحل غربلة على نمط PRISMA 2020 — يُقرأ ولا يُنفَّذ",
+      "tests/unit/tools/test_idea_register.py: audit(register, source_ids, reading_view) — 8 اختبارات منها 6 سلبية"
     ],
     "runtime_evidence_paths": [
       "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
@@ -133,8 +138,8 @@
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 runner over tests/unit/tools/test_opportunity_archive_additive.py (pytest غير متاح في الجلسة) — 8 passed",
-      "ruff check tests/unit/tools/test_opportunity_archive_additive.py — PASS",
+      "python3 runner over tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py (pytest غير متاح في الجلسة) — 16 passed",
+      "ruff check + ruff format --check على ملفّي الاختبار — PASS",
       "python3 scripts/fitness/check_outbound_before_research.py — PASS",
       "python3 scripts/fitness/check_documentation_contract.py — PASS",
       "python3 scripts/fitness/check_value_chain.py — PASS",
@@ -145,20 +150,23 @@
     ]
   },
   "changed_paths": [
+    "docs/archive/commercial/IDEA_REGISTER.json",
+    "docs/archive/commercial/IDEA_REGISTER_AR.md",
     "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+    "tests/unit/tools/test_idea_register.py",
     "tests/unit/tools/test_opportunity_archive_additive.py"
   ],
   "pre_modification": {
     "current_state": "المستودع يحمل أطروحةً نشطةً واحدة (تنظيف مراجع الفوترة الفرنسية/البلجيكية) مجمَّدة الرسائل بقرار المالك، وسجلَّ اتصالٍ آخر صفوفه 2026-10-15 (18 صفاً، 5 كيانات، 5 ردود من كيانٍ واحد، صفر دفعة)، وعدّة CBAM مدموجة في 5a666a9، وأرشيفاً واحداً للفرص (2026-10-22) فيه B01–B18 وJ01–J09.",
     "architecture_and_boundaries": "الأرشيف يعيش في docs/archive/commercial/ (موطن تاريخيّ معلن، خارج جذور بوّابة البحث، على سابقة 74bfba7). والاختبار في tests/unit/tools/ (غير محميّ) يقرأ الأرشيفات وVALUE_CHAIN.json قراءةً فقط، ولا يستورد من app/ ولا shared/.",
     "existing_failures_and_old_debt": "ثلاثة ديونٍ معروفة: (1) أرشيف 2026-10-22 أُودِع في 74bfba7 دون تحديث حزمة القبول؛ (2) فكرتان في الأرشيف السابق (B02 وB11) بلا رابطٍ خارجي، فقاعدة المصدر والتاريخ تسري من 2026-10-26 فقط ولا تُطبَّق بأثرٍ رجعي؛ (3) قائمتا D-320/D-322 (40 جهة) ما زالتا NOT_CONTACTED، ولا يغيّر هذا التغيير ذلك.",
-    "dependency_path": "pytest (CI: python -m pytest tests scripts/ci) → tests/unit/tools/test_opportunity_archive_additive.py → يقرأ docs/archive/commercial/OPPORTUNITIES_*_AR.md وdocs/commercial/VALUE_CHAIN.json. وcheck_outbound_before_research → CONTACT_LEDGER.csv (لم يُمسّ).",
+    "dependency_path": "pytest (CI: python -m pytest tests scripts/ci) → tests/unit/tools/test_opportunity_archive_additive.py → يقرأ docs/archive/commercial/OPPORTUNITIES_*_AR.md وdocs/commercial/VALUE_CHAIN.json. وcheck_outbound_before_research → CONTACT_LEDGER.csv (لم يُمسّ). وtests/unit/tools/test_idea_register.py → يقرأ IDEA_REGISTER.json وIDEA_REGISTER_AR.md والأرشيفات وVALUE_CHAIN.json.",
     "foundational_frontier": {
       "status": "NO_BLOCKING_FOUNDATIONAL_DEFECT_IDENTIFIED",
       "note_ar": "لا عيب أساسيّ يحجب: التغيير لا يمسّ shared/ ولا بوّابةً ولا قانوناً ولا الأرشيف السابق."
     },
     "root_cause": "طلب المالك حفظ الفرص الجديدة دون حذف القديم؛ وقاعدةٌ بلا فارضٍ تُنسى في أوّل تعديل (D-207)، فحفظُ النصّ وحده لا يكفي دون اختبارٍ يُحمرّ عند الحذف.",
-    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B43، J10–J12، ملاحق B01/B03/B10/OPP-02/OPP-04/OPP-13، والدراسة الشاملة §12) وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط.",
+    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B43، J10–J12، ملاحق B01/B03/B10/OPP-02/OPP-04/OPP-13، والدراسة الشاملة §12) وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط. وسجلّ الأفكار الموحّد IDEA_REGISTER.json مع قراءته العربية IDEA_REGISTER_AR.md، وtests/unit/tools/test_idea_register.py الذي يفرض أنّ الترتيب لا يحذف.",
     "affected_invariants": [
       "D-321: لا كود منتج ولا ترخيص بناء؛ الأرشيف يقول ذلك صراحةً.",
       "D-297: لا صفّ سجلٍّ وهميّ؛ الأرشيف خارج جذور بوّابة البحث على سابقة 74bfba7.",
@@ -214,28 +222,36 @@
     "registered": true,
     "scope": {
       "declared_files": [
+        "docs/archive/commercial/IDEA_REGISTER.json",
+        "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+        "tests/unit/tools/test_idea_register.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
       ],
       "touched_files": [
+        "docs/archive/commercial/IDEA_REGISTER.json",
+        "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+        "tests/unit/tools/test_idea_register.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
       ]
     },
     "protected_paths_changed": [],
     "contracts_touched": [
-      "tests/unit/tools/test_opportunity_archive_additive.py: عقد «الإضافة فقط» لأرشيف الفرص (4 قواعد) — جديد"
+      "tests/unit/tools/test_opportunity_archive_additive.py: عقد «الإضافة فقط» لأرشيف الفرص (4 قواعد) — جديد",
+      "tests/unit/tools/test_idea_register.py: عقد «السجلّ يحفظ ولا يحذف» — كلّ معرّفٍ في الأرشيفات وسلسلة القيمة حاضر، ولكلّ مستبعَدٍ بوّابة وعائق وشرط إعادة فتح، والأرقام محسوبة — جديد"
     ],
     "evidence": {
-      "reachability_trace": "ci.yml → python -m pytest tests scripts/ci → tests/unit/tools/test_opportunity_archive_additive.py → docs/archive/commercial/OPPORTUNITIES_*_AR.md + docs/commercial/VALUE_CHAIN.json. ci.yml → check_outbound_before_research → CONTACT_LEDGER.csv (لم يُمسّ). ci.yml → check_code_acceptance → هذه الحزمة.",
+      "reachability_trace": "ci.yml → python -m pytest tests scripts/ci → tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py → docs/archive/commercial/OPPORTUNITIES_*_AR.md + docs/commercial/VALUE_CHAIN.json. ci.yml → check_outbound_before_research → CONTACT_LEDGER.csv (لم يُمسّ). ci.yml → check_code_acceptance → هذه الحزمة.",
       "tests": {
-        "passed": 8,
+        "passed": 16,
         "failed": 0,
-        "new_negative_cases": 6,
+        "new_negative_cases": 12,
         "files": [
-          "tests/unit/tools/test_opportunity_archive_additive.py"
+          "tests/unit/tools/test_opportunity_archive_additive.py",
+          "tests/unit/tools/test_idea_register.py"
         ],
-        "note_ar": "8 اختبارات: 2 إيجابية و6 سلبية، شُغّلت بمشغّل Python بسيط لا بـpytest. وكلّ قاعدةٍ أُسقطت بمجسّ طفرةٍ فأحمرّ اختبارها ثمّ أُعيدت فمرّ. و`vacuity_probe` و`mutation_score` الآليّان لم يُشغَّلا، فالسقف E3."
+        "note_ar": "16 اختباراً في ملفّين: 4 إيجابية و12 سلبية، شُغّلت بمشغّل Python بسيط لا بـpytest. وكلّ قاعدةٍ أُسقطت بحالةٍ سلبية فأحمرّ اختبارها. و`vacuity_probe` و`mutation_score` الآليّان لم يُشغَّلا، فالسقف E3."
       },
       "vacuity_probe": "not_run",
       "mutation_score": {
