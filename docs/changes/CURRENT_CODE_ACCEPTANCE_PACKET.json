@@ -293,10 +293,10 @@
   },
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
-    "file_count_excluding_packet": 3538,
-    "total_bytes_excluding_packet": 51777874,
-    "total_newlines_excluding_packet": 901167,
-    "sha256_excluding_packet": "50bac050f816eadb318cf6a9350a751cc46e0ea2133e3428ea3939415fef6bf6",
+    "file_count_excluding_packet": 3541,
+    "total_bytes_excluding_packet": 51903527,
+    "total_newlines_excluding_packet": 904995,
+    "sha256_excluding_packet": "6cd22c6ec7cfe9e6fd06470b2725229881221b69c26269ad70a00e043c62459e",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -314,10 +314,13 @@
   "git_change_snapshot": {
     "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
+      "docs/archive/commercial/IDEA_REGISTER.json",
+      "docs/archive/commercial/IDEA_REGISTER_AR.md",
       "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+      "tests/unit/tools/test_idea_register.py",
       "tests/unit/tools/test_opportunity_archive_additive.py"
     ],
-    "content_sha256_excluding_packet": "74c4419d6ef3f06c69b61907c42e84fdf02df214cf195a46581e1846d97556cb",
+    "content_sha256_excluding_packet": "d8dfcfa163767490c1c388d4b23012fcc0d55c73ec6327d7f6a267bf93bce814",
     "refreshed_on": "2026-10-26",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
