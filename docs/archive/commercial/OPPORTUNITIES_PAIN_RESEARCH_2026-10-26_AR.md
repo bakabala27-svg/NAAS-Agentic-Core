@@ -89,11 +89,12 @@
 - **نمط الشراء:** مكتب من شبكة Moore في الدار البيضاء وظّف محاسباً لمهمّة لعميل فرنسي ([Rekrute](https://www.rekrute.com/offre-emploi-collaborateur-comptable-assistant-comptable-confirme-offshore-france-recrutement-moore-casablanca-casablanca-181909.html)، إعلان منتهٍ).
 - **عائق قانوني حاسم:** حكمٌ فرنسي أدان مكتباً أسند أعمالاً تحتكرها المهنة إلى شركة غير مسجّلة ([Actu-Juridique](https://www.actu-juridique.fr/professions/exercice-illegal-de-la-profession-dexpert-comptable-sous-couvert-de-sous-traitance/)، الصفحة أرجعت 403 والمعلومة من ملخّص البحث). فالعرض الممكن «إنتاجٌ تحت إشراف المكتب» لا مسك دفاتر مستقلّ. ولا قرار ملاءمة أوروبياً للجزائر حسب ما وُجد، فالنقل يحتاج البنود التعاقدية النموذجية.
 - **صلةٌ بتجميد D-300:** قرار المالك.
+- **تاريخ القراءة:** قُرئت المصادر في 2026-10-26؛ الأرقام من 2023–2024، فالدليل ليس حديثاً.
 
 ### B21 — جودة «سجلّ المعلومات» في DORA للمؤسسات المالية الأوروبية
 
-- **الألم (2024 فقط):** في التجربة الرسمية لم يجتز كلّ الفحوص إلا 6.5% من السجلّات، و86% من الأخطاء معلومات إلزامية ناقصة ([ESAs](https://eba.europa.eu/sites/default/files/2024-12/c1454b59-15cc-445e-be14-966e3338cedc/ESA%202024%2035%20DORA%20Dry%20Run%20exercise%20summary%20report%20for%20publication.pdf)). لم يُعثر على أرقام 2025 أو 2026، فالدليل **ليس حديثاً**.
-- **من يدفع:** مهمّة «Expert DORA» بـ700–750€ لليوم ([Free-Work](https://www.free-work.com/fr/tech-it/job-mission/expert-seo-consultant-referencement/expert-dora-h-f-1)).
+- **الألم (2024 فقط):** في التجربة الرسمية لم يجتز كلّ الفحوص إلا 6.5% من السجلّات، و86% من الأخطاء معلومات إلزامية ناقصة ([ESAs، 2024-12-17](https://eba.europa.eu/sites/default/files/2024-12/c1454b59-15cc-445e-be14-966e3338cedc/ESA%202024%2035%20DORA%20Dry%20Run%20exercise%20summary%20report%20for%20publication.pdf)). لم يُعثر على أرقام 2025 أو 2026، فالدليل **ليس حديثاً**.
+- **من يدفع:** مهمّة «Expert DORA» بـ700–750€ لليوم، منشورة في 2026-06-29 ([Free-Work](https://www.free-work.com/fr/tech-it/job-mission/expert-seo-consultant-referencement/expert-dora-h-f-1)).
 - **العائق:** المؤسسة المالية لا تشتري من مزوّد مجهول خارج الاتحاد، وقد تجعله الخدمة نفسها خاضعاً لـDORA.
 
 ### B22 — الفوترة الإلكترونية الإماراتية: موعدٌ بعد أيام وسوقٌ بالعربية وعملة مربوطة بالدولار
@@ -135,7 +136,7 @@
 ### B27 — مرتجعات الدفع عند الاستلام في التجارة الإلكترونية الجزائرية
 
 - **الألم المعلن:** الدفع عند الاستلام 80–90% من الطلبات، ونسب الرفض والإرجاع 20–40% بحسب مدوّنات البائعين وشركات التوصيل ([DZ-Ecom](https://dz-ecom.com/en/blog/paiement-livraison-cod-algerie-reduire-taux-retour) · [Rakmanati](https://rakmanati.com/blog-cod-retours.html) · [Almawarid](https://almawarid.app/blog/e-commerce-en-algerie-reduire-vos-pertes-sur-le-cash-on-delivery-et-gerer-les-retours-comme-un-pro/))، وكلفة الطرد المرفوض 600–2,500 دج.
-- **حدّ الدليل:** كلّها مصادر بائعين (D1)، ولا رقم رسمي ولا شكوى بلسان تاجر في هذا البحث. السوق مزدحم بمراكز تأكيد الطلبات. الدفع بالدينار.
+- **حدّ الدليل:** كلّها مصادر بائعين (D1)، ولا رقم رسمي ولا شكوى بلسان تاجر في هذا البحث. السوق مزدحم بمراكز تأكيد الطلبات. الدفع بالدينار. قُرئت المصادر في 2026-10-26.
 
 ### B28 — الدروس الخصوصية للبكالوريا
 
