@@ -105,7 +105,7 @@
     "status": "DOCUMENTATION_AND_TEST_ONLY",
     "interfaces": [
       "tests/unit/tools/test_opportunity_archive_additive.py: audit(archives, known_paths) — 4 قواعد (ثقب · إعادة استعمال · ملحق · مصدر وتاريخ)، و8 اختبارات منها 6 سلبية",
-      "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md: B19–B28 وJ10–J12 وملاحق B01/B03/OPP-13 — يُقرأ ولا يُنفَّذ",
+      "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md: B19–B29 وJ10–J12 وملاحق B01/B03/B10/OPP-13 — يُقرأ ولا يُنفَّذ",
       "docs/archive/commercial/OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md — لم يُمسّ"
     ],
     "runtime_evidence_paths": [
@@ -158,7 +158,7 @@
       "note_ar": "لا عيب أساسيّ يحجب: التغيير لا يمسّ shared/ ولا بوّابةً ولا قانوناً ولا الأرشيف السابق."
     },
     "root_cause": "طلب المالك حفظ الفرص الجديدة دون حذف القديم؛ وقاعدةٌ بلا فارضٍ تُنسى في أوّل تعديل (D-207)، فحفظُ النصّ وحده لا يكفي دون اختبارٍ يُحمرّ عند الحذف.",
-    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B28، J10–J12، ملاحق B01/B03/OPP-13) وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط.",
+    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B29، J10–J12، ملاحق B01/B03/B10/OPP-13) وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط.",
     "affected_invariants": [
       "D-321: لا كود منتج ولا ترخيص بناء؛ الأرشيف يقول ذلك صراحةً.",
       "D-297: لا صفّ سجلٍّ وهميّ؛ الأرشيف خارج جذور بوّابة البحث على سابقة 74bfba7.",
@@ -270,9 +270,9 @@
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
     "file_count_excluding_packet": 3538,
-    "total_bytes_excluding_packet": 51723963,
-    "total_newlines_excluding_packet": 900920,
-    "sha256_excluding_packet": "3c8c1f673c3cddd6d9963bb333927a3df2b0bdfc61ccf5e797c6b6fa228da635",
+    "total_bytes_excluding_packet": 51729161,
+    "total_newlines_excluding_packet": 900941,
+    "sha256_excluding_packet": "7ee60bea2e6a7c1c6b08b1f941db8aec5bba99c9c49179e529c96ba347ab1f9a",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -293,7 +293,7 @@
       "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
       "tests/unit/tools/test_opportunity_archive_additive.py"
     ],
-    "content_sha256_excluding_packet": "1df3e214b367393b95dcf74aeab6872098d5bb5fba2f2d3e4121213b962f4848",
+    "content_sha256_excluding_packet": "d47b3f45d398d9b998956feeb39289ef98405533d28ddaddaa94928fe22a73d5",
     "refreshed_on": "2026-10-26",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
