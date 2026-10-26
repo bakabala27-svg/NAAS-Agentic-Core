@@ -351,19 +351,12 @@
     "operator_attestation_ar": "هذا ليس ادعاء فهم شامل بذاته؛ إنه شرط مجهر آلي يسبق التحليل البشري والمصفوفة، ويجعل تجاهل القديم مرئياً."
   },
   "git_change_snapshot": {
-    "base_ref": "74bfba70750f71e9ce325a0d70a0c16e4c0b206d",
+    "base_ref": "origin/main",
     "changed_paths_excluding_packet": [
-      "docs/commercial/outreach/CBAM_FIRST_CLIENT_KIT_2026-10-22/CANDIDATES.csv",
-      "docs/commercial/outreach/CBAM_FIRST_CLIENT_KIT_2026-10-22/CBAM_ECONOMICS.json",
-      "docs/commercial/outreach/CBAM_FIRST_CLIENT_KIT_2026-10-22/EVIDENCE.csv",
-      "docs/commercial/outreach/CBAM_FIRST_CLIENT_KIT_2026-10-22/README.md",
-      "docs/commercial/outreach/CBAM_FIRST_CLIENT_KIT_2026-10-22/cbam_economics.py",
-      "docs/commercial/outreach/START_HERE_2026-10-22.md",
-      "docs/commercial/outreach/ready_to_send/08_ANTON_K_FOLLOWUP_2026-10-22.md",
-      "tests/unit/tools/test_cbam_client_kit.py"
+      "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
     ],
-    "content_sha256_excluding_packet": "9f66a981647d6fa0ff638051d8d96b90f70c4784c77fdf11c3671088caffb003",
-    "refreshed_on": "2026-10-22",
+    "content_sha256_excluding_packet": "aa6c21e9c4776d9b2015f164cd243a16e082d6c1cc77e3ffdd1f02f2c39759a8",
+    "refreshed_on": "2026-10-26",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
 }
