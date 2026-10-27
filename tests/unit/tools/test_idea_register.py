@@ -60,7 +60,7 @@ def _flow(records: list[dict]) -> dict[str, int]:
         r
         for r in records
         if r["kind"] == "idea"
-        or (r["kind"] == "value_chain_path" and r["screening"]["stage"] == "included")
+        or (r["kind"] == "value_chain_path" and r["screening"]["stage"] != "governed_elsewhere")
     ]
     stages = collections.Counter(r["screening"]["stage"] for r in screened)
     return {

@@ -114,7 +114,7 @@
  "groups": {
   "F1": {
    "title_ar": "تنظيف معرّفات الفوترة الإلكترونية وبيانات العملاء (فرنسا وبلجيكا ثمّ الإمارات والسعودية)",
-   "stage": "included",
+   "stage": "conditional",
    "option_state": "awaiting_owner",
    "next_test_ar": "20 رسالة لموزّعي برامج المحاسبة والمنصّات ومزوّدي Peppol، بعد قرار المالك في D-300",
    "kill_ar": "صفر ردود خلال 30 يوماً من الرسالة العشرين",
@@ -125,28 +125,31 @@
     "B31",
     "OPP-01",
     "OPP-02"
-   ]
+   ],
+   "audit_note_ar": "تدقيق A1 (2026-10-27): كانت «متأهّلة»، ولم يبقَ عضوٌ يجتاز البوّابات الخمس بسندٍ مقروء"
   },
   "F2": {
    "title_ar": "اختبار حواجز الذكاء الاصطناعي بالعربية والدارجة",
-   "stage": "included",
+   "stage": "conditional",
    "option_state": "active_test",
    "next_test_ar": "إرسال قائمة D-320 (20 جهة) كما هي",
    "kill_ar": "صفر ردود خلال 30 يوماً من الرسالة العشرين",
    "members": [
     "B12",
     "OPP-04"
-   ]
+   ],
+   "audit_note_ar": "تدقيق A1 (2026-10-27): كانت «متأهّلة»، ولم يبقَ عضوٌ يجتاز البوّابات الخمس بسندٍ مقروء"
   },
   "F3": {
    "title_ar": "تدقيق الإتاحة الرقمية لمواقع التجارة الفرنسية ثمّ إصلاحها",
-   "stage": "included",
+   "stage": "conditional",
    "option_state": "active_test",
    "next_test_ar": "إرسال قائمة D-322 (20 استمارة) كما هي",
    "kill_ar": "صفر ردود خلال 30 يوماً من الرسالة العشرين",
    "members": [
     "OPP-13"
-   ]
+   ],
+   "audit_note_ar": "تدقيق A1 (2026-10-27): كانت «متأهّلة»، ولم يبقَ عضوٌ يجتاز البوّابات الخمس بسندٍ مقروء"
   },
   "C1": {
    "title_ar": "بيانات اللغات الجزائرية",
@@ -307,6 +310,35 @@
    "finding_ar": "الإحالة والإعداد لا يجتمعان قانونياً في CBAM؛ لا مناقصة مفتوحة للبنك الدولي في التنظيف والطريق مقاولةٌ من الباطن؛ الخيوط الأربعة الجديدة جريحة لا ميتة، ولكلٍّ اختبارٌ رخيص يحسمها"
   },
   {
+   "id": "S07",
+   "date": "2026-10-27",
+   "title_ar": "التدقيق الصارم A1: كلّ ✓ بسندٍ مقروء ومن نوعٍ مسموح، والبوّابات غير تعويضية",
+   "where": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md §17 · IDEA_REGISTER.json (audit_standard · claims)",
+   "feeds": [
+    "B01",
+    "B03",
+    "B10",
+    "B12",
+    "B19",
+    "B22",
+    "B24",
+    "B30",
+    "B31",
+    "B38",
+    "B45",
+    "B46",
+    "B47",
+    "B48",
+    "B49",
+    "B50",
+    "B51",
+    "B52",
+    "OPP-04",
+    "OPP-13"
+   ],
+   "finding_ar": "لا فكرة تجتاز البوّابات الخمس: G1 مسنودة بترسيةٍ فعلية في B46 وحدها (البنك الدولي، النيجر، 2026-01-08، 168,715 €)؛ المتأهّلة صفر، وB31 مستبعدة، والدليل D2→D1 في B19 وB47؛ وD-320 غير جاهزة (16 من 20 قناة مجهولة)"
+  },
+  {
    "id": "S06",
    "date": "2026-10-27",
    "title_ar": "أسطول الوكلاء، الموجة الثالثة: أرضٌ جديدة ودروسٌ صارت اختبارات",
@@ -347,10 +379,830 @@
   "identified_jobs": 12,
   "identified_value_chain_paths": 25,
   "screened": 54,
-  "included": 7,
-  "conditional": 13,
-  "excluded": 34
+  "included": 0,
+  "conditional": 19,
+  "excluded": 35
  },
+ "audit_standard": {
+  "id": "A1",
+  "date": "2026-10-27",
+  "source": "docs/commercial/DECISION_COMMITMENT_ENGINE.md",
+  "tiers": {
+   "P1": "مصدرٌ أوّلي قرأناه، أو بياناتٌ رسمية أعدنا حسابها بأنفسنا",
+   "P2": "مصدرٌ ثانوي مؤرَّخ قرأناه",
+   "A": "نقلٌ عن وكيل لم نقرأ مصدره ولم نُعِد حسابه",
+   "Q": "ملخّص بحث، أو صفحة محجوبة، أو مصدر لم يُقرأ"
+  },
+  "kinds": {
+   "award": "ترسية منشورة لمورّدٍ خارجي على المخرَج نفسه",
+   "award_adjacent": "ترسية منشورة على مخرَجٍ مجاور لا المخرَج نفسه",
+   "award_segment_mismatch": "ترسية على المخرَج نفسه لشريحة مشترين غير التي نختبرها",
+   "buyer_tender": "طلب شراءٍ مفتوح ينشره المشتري نفسه",
+   "payment": "دفعة مسوّاة",
+   "vendor_price": "سعرٌ ينشره بائع",
+   "vendor_case": "دراسة حالة يكتبها البائع",
+   "vendor_marketing": "مقالٌ أو بيانٌ لطرفٍ يبيع الحلّ",
+   "job_ad": "إعلان توظيف (العمل يُشترى توظيفاً لا من مورّد)",
+   "gig_task": "مهمّةٌ لأفراد بلا أجرٍ أو عملةٍ معلنة",
+   "official": "جهةٌ رسمية أو تنظيمية",
+   "press": "صحافة أو نشرة مهنية مستقلّة عن البائع",
+   "court": "حكمٌ أو قرارٌ قضائي",
+   "buyer_voice": "شكوى بلسان صاحبها",
+   "measurement": "قياسٌ أصلي لعيبٍ عند الطرف الملزَم",
+   "market_shift": "تحوّلٌ في السوق لا يقيس ألماً",
+   "demand_signal": "اهتمامٌ معلن لا ألم ولا شراء",
+   "deadline": "موعدٌ تنظيمي وحده",
+   "defect_prelaunch": "عيبٌ مقيس قبل أن يصير له أثر",
+   "named_list": "قائمة ≥20 جهة مسمّاة لكلٍّ قناةٌ عامّة",
+   "named_list_incomplete": "قائمة مسمّاة ناقصة العدد أو القنوات",
+   "capability": "قدرةٌ موجودة في المستودع أو مُثبتة في سلسلة القيمة",
+   "capability_withdrawn": "قدرةٌ سُحبت من مسار العميل",
+   "legal_text": "نصٌّ قانوني قرأناه",
+   "legal_analysis": "تحليلٌ قانوني",
+   "scope_check": "حدود العرض مكتوبة: لا معطيات شخصية ولا عملٌ محجوز لمهنة",
+   "absence": "غيابٌ مقيس بأداةٍ قادرة على الرصد"
+  },
+  "gate_kinds": {
+   "G1": [
+    "award",
+    "buyer_tender",
+    "payment"
+   ],
+   "G2": [
+    "legal_text",
+    "legal_analysis",
+    "scope_check"
+   ],
+   "G3": [
+    "capability"
+   ],
+   "G4": [
+    "official",
+    "press",
+    "court",
+    "buyer_voice",
+    "measurement",
+    "buyer_tender",
+    "award"
+   ],
+   "G5": [
+    "named_list"
+   ]
+  },
+  "rules_ar": [
+   "البوّابات غير تعويضية: «متأهّلة» تعني ✓ في الخمس، وما دونها مشروطة أو مستبعدة.",
+   "لا ✓ إلا بسندٍ قرأناه (P1 أو P2) من نوعٍ مسموح لتلك البوّابة؛ نقل الوكيل وملخّص البحث والصفحة المحجوبة «مجهول» لا تحقّق.",
+   "G1 لا تُمنح بسعرِ بائع ولا بإعلان توظيف ولا بدراسة حالة: يلزم ترسيةٌ أو طلب شراءٍ مفتوح أو دفعة، على المخرَج نفسه وبالمسار الذي نبيع به.",
+   "G4 لا تُمنح بموعدٍ تنظيمي وحده ولا بمقالٍ يكتبه بائع الحلّ، ويلزم حدثٌ عمره 365 يوماً أو أقلّ عند تاريخ التدقيق.",
+   "G5 لا تُمنح إلا بقائمةٍ من 20 جهة مسمّاة أو أكثر، لكلٍّ قناةٌ عامّة، محفوظة في المستودع أو في سجلٍّ رسمي.",
+   "مستوى الدليل D2 فما فوق يلزمه سندٌ أوّلي (P1) واحدٌ على الأقلّ.",
+   "كلّ تغيير يُكتب في `history` آلياً بقيمته السابقة؛ لا يُمحى شيء."
+  ]
+ },
+ "claims": [
+  {
+   "id": "C01",
+   "records": [
+    "B01",
+    "B30"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "official",
+   "tier": "P2",
+   "text_ar": "لجنة متابعة الفوترة (بيان الوزارة 2026-10-08): 75% من المكلّفين بالضريبة على القيمة المضافة عيّنوا منصّة استقبال، أي نحو الربع لم يفعل؛ 20 مليون فاتورة؛ صعوباتٌ رفعتها AFEP وMEDEF وLes Entrepreneurs وU2P؛ ولا عقوبات قبل نهاية 2026",
+   "source": "Legifiscal (نُشر 2026-10-15)",
+   "url": "https://www.legifiscal.fr/actualites-fiscales/4687-facturation-electronique-mois-lancement-3-entreprises-4-designe-plateforme.html",
+   "event_date": "2026-10-08",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C02",
+   "records": [
+    "B01",
+    "B30"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "buyer_voice",
+   "tier": "P2",
+   "text_ar": "«فاتورتي تُرفض في كلّ مرّة ولا يُذكر لي أيّ سبب» ثمّ «اتصلت بالجميع بلا جواب»؛ السبب: عنوان SIRET غير مفعّل في الدليل. التاريخ نسبيّ في الصفحة («منذ شهر» عند القراءة)",
+   "source": "منتدى مستخدمي Sage",
+   "url": "https://communityhub.sage.com/fr/sage-active/f/facture-electronique/273487/difficulte-d-emission-d-une-facture-electronique/657107",
+   "event_date": "2026-09",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C03",
+   "records": [
+    "B01",
+    "B30"
+   ],
+   "gates": [
+    "G5"
+   ],
+   "kind": "named_list",
+   "tier": "P1",
+   "text_ar": "34 مكتب محاسبة فرنسي مسمّى، لكلٍّ بريدٌ عامّ ورقم SIREN",
+   "source": "قائمة المستودع",
+   "url": "repo:docs/commercial/FR_EINVOICING_TARGETS_V2_2026-10-04.csv",
+   "event_date": "2026-10-04",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C04",
+   "records": [
+    "B01",
+    "B30"
+   ],
+   "gates": [
+    "G3"
+   ],
+   "kind": "capability",
+   "tier": "P1",
+   "text_ar": "أدوات تحقّقٍ من معرّفات فرنسا وبلجيكا موجودة: france_validator.py وbelgium_validator.py",
+   "source": "المستودع",
+   "url": "repo:tools/hard_currency_engine/france_validator.py",
+   "event_date": "2026-10-27",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C05",
+   "records": [
+    "B01",
+    "B30"
+   ],
+   "gates": [
+    "G1"
+   ],
+   "kind": "award_adjacent",
+   "tier": "P1",
+   "text_ar": "إعادة حساب سجلّ الصفقات العمومية الفرنسية DECP: 17 ترسية تذكر الفوترة الإلكترونية بوسيط 178,400 €، أغلبها مرافقة وإدارة مشاريع (مثل «Accompagnement P2P facturation électronique» بـ137,648 €) لا تنظيف بيانات",
+   "source": "DECP (data.gouv.fr)، بيانات التقطها وكيل وأعدنا حسابها",
+   "url": "https://www.data.gouv.fr/fr/datasets/donnees-essentielles-de-la-commande-publique-fichiers-consolides/",
+   "event_date": "2026-10-26",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C06",
+   "records": [
+    "B01",
+    "B30",
+    "B10",
+    "B24",
+    "B36"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "legal_text",
+   "tier": "P1",
+   "text_ar": "اللائحة العامة لحماية البيانات م46(2)(c) والقرار 2021/914: النقل إلى الجزائر جائز ببنودٍ نموذجية وتقييم أثر؛ الشرط الثالث (رأي محامٍ جزائري في القانون 18-07) لم يتحقّق بعد، فالبوّابة جزئية",
+   "source": "GDPR / EUR-Lex",
+   "url": "https://gdpr-info.eu/art-46-gdpr/",
+   "event_date": "2021-06-04",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C07",
+   "records": [
+    "B22",
+    "B45"
+   ],
+   "gates": [
+    "G5"
+   ],
+   "kind": "named_list",
+   "tier": "P1",
+   "text_ar": "سجلّ وزارة المالية الإماراتية: 79 مزوّد خدمة معتمداً، لكلٍّ موقعٌ وبريدٌ وشخصُ اتصال؛ آخر تحديث 2026-10-27",
+   "source": "وزارة المالية (الإمارات)",
+   "url": "https://mof.gov.ae/en/about-us/initiatives/einvoicing/einvoicing-accredited-service-providers-asps/",
+   "event_date": "2026-10-27",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C08",
+   "records": [
+    "B22"
+   ],
+   "gates": [
+    "G1"
+   ],
+   "kind": "job_ad",
+   "tier": "Q",
+   "text_ar": "إعلان «E-Invoicing Consultant» في أبوظبي يطلب صيانة بيانات العملاء والمورّدين (حضوري)",
+   "source": "ZeroTaxJobs",
+   "url": "https://zerotaxjobs.com/jobs/e-invoicing-consultant-2oe47655",
+   "event_date": "2026-09-03",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C09",
+   "records": [
+    "B22"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "legal_analysis",
+   "tier": "Q",
+   "text_ar": "قانون حماية البيانات الإماراتي، المادتان 22–23: النقل إلى بلدٍ بلا مستوى حماية كافٍ يحتاج ضماناتٍ تعاقدية؛ وحالة اللائحة التنفيذية متضاربة بين المصادر",
+   "source": "ملخّص بحث (Kayrouz وPrimerus)",
+   "url": "https://www.kayrouzandassociates.com/insights/cross-border-data-transfers-under-uae-law-in-2026",
+   "event_date": "unknown",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C10",
+   "records": [
+    "B31"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "deadline",
+   "tier": "P2",
+   "text_ar": "إعلان الموجة 25: إيرادات تتجاوز 187,500 ريال في أيٍّ من 2022–2025، والربط من 2027-02-01؛ بلا عدد منشآت ولا ذكرٍ لصعوبات أو رفض",
+   "source": "صدى (Slaati)",
+   "url": "https://slaati.com/2026/07/24/p2853674.html",
+   "event_date": "2026-07-24",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C11",
+   "records": [
+    "B12",
+    "OPP-04"
+   ],
+   "gates": [
+    "G1",
+    "G4"
+   ],
+   "kind": "vendor_case",
+   "tier": "P2",
+   "text_ar": "دراسة حالة BPCE يكتبها Giskard نفسه (2026-07-13): اختبار اختراقٍ ومئات الاختبارات الوظيفية؛ لا لغة مسمّاة، ولا عربية، ولا ميزانية",
+   "source": "Giskard",
+   "url": "https://www.giskard.ai/knowledge/how-bpce-secured-its-customer-facing-banking-chatbot",
+   "event_date": "2026-07-13",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C12",
+   "records": [
+    "B12",
+    "OPP-04"
+   ],
+   "gates": [
+    "G3"
+   ],
+   "kind": "capability",
+   "tier": "P1",
+   "text_ar": "OPP-04 في سلسلة القيمة: validated_capability وبلغ الحلقة 5",
+   "source": "سلسلة القيمة",
+   "url": "repo:docs/commercial/VALUE_CHAIN.json",
+   "event_date": "2026-10-15",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C13",
+   "records": [
+    "B12",
+    "OPP-04"
+   ],
+   "gates": [
+    "G5"
+   ],
+   "kind": "named_list_incomplete",
+   "tier": "P1",
+   "text_ar": "قائمة D-320: 20 جهة مسمّاة، 16 منها قناتها UNKNOWN؛ فالقائمة غير جاهزة للإرسال كما وُصفت",
+   "source": "قائمة المستودع",
+   "url": "repo:docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
+   "event_date": "2026-10-20",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C14",
+   "records": [
+    "B12",
+    "OPP-04"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "scope_check",
+   "tier": "P1",
+   "text_ar": "قواعد D-320: لا فحص لنظامٍ مستضاف قبل إذنٍ مكتوب، والمسبار اصطناعي بلا معطيات شخصية",
+   "source": "رسالة D-320",
+   "url": "repo:docs/commercial/outreach/ready_to_send/05_AI_REDTEAM_LABS_EN_FR.md",
+   "event_date": "2026-10-20",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C15",
+   "records": [
+    "OPP-13"
+   ],
+   "gates": [
+    "G5"
+   ],
+   "kind": "named_list",
+   "tier": "P1",
+   "text_ar": "قائمة D-322: 20 موقع تجارة فرنسي مسمّى، لكلٍّ قناةٌ عامّة (17 استمارة و3 عناوين وظيفية)",
+   "source": "قائمة المستودع",
+   "url": "repo:docs/commercial/EAA_FR_ECOMMERCE_TARGETS_2026-10-20.csv",
+   "event_date": "2026-10-20",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C16",
+   "records": [
+    "OPP-13"
+   ],
+   "gates": [
+    "G1"
+   ],
+   "kind": "award_segment_mismatch",
+   "tier": "P1",
+   "text_ar": "إعادة حساب DECP: 21 قيداً لترسيات تدقيق الإتاحة بوسيط 180,000 €، ونحو 4 عقودٍ متمايزة في 12 شهراً (أحدها مكرّر بين مصدرين)، و8–16 عرضاً لكلّ مناقصة؛ المشترون عموميون، والاختبار D-322 يستهدف تجّاراً خاصّين",
+   "source": "DECP (data.gouv.fr)، بيانات التقطها وكيل وأعدنا حسابها",
+   "url": "https://www.data.gouv.fr/fr/datasets/donnees-essentielles-de-la-commande-publique-fichiers-consolides/",
+   "event_date": "2026-09-29",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C17",
+   "records": [
+    "OPP-13"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "press",
+   "tier": "P2",
+   "text_ar": "DGCCRF في المؤتمر الوطني للإعاقة (2026-09-04): أكثر من نصف مواقع التجارة الإلكترونية المراقَبة منذ بداية السنة فيها إخلالات، تبعتها إجراءات تصحيحية أو ردعية؛ والنتائج النهائية مطلع 2027",
+   "source": "Lettre des Réseaux",
+   "url": "https://www.lettredesreseaux.com/?p=24379",
+   "event_date": "2026-09-04",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C18",
+   "records": [
+    "OPP-13"
+   ],
+   "gates": [
+    "G2",
+    "G3"
+   ],
+   "kind": "scope_check",
+   "tier": "P1",
+   "text_ar": "قواعد D-322: لا فحص لموقعٍ قبل طلبٍ مكتوب، والقراءة يدوية بيد المالك، ولا تُكتب للجهة «déclaration» ولا «attestation»؛ وأداة eaa_scanner مسحوبة من مسار العميل (D-297 §4)، فالقدرة غير جاهزة",
+   "source": "رسالة D-322",
+   "url": "repo:docs/commercial/outreach/ready_to_send/06_EAA_FR_ECOMMERCE.md",
+   "event_date": "2026-10-20",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C19",
+   "records": [
+    "B03"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "legal_text",
+   "tier": "P1",
+   "text_ar": "اللائحة المفوّضة 2025/2551، الملحق II §1.7.3: إعداد بيانات المنشأة جائز ما لم تقم العلاقة مع المتحقّق على عمولة إحالة",
+   "source": "الجريدة الرسمية للاتحاد",
+   "url": "https://publications.europa.eu/resource/celex/32025R2551",
+   "event_date": "2025-12-22",
+   "read_on": "2026-10-26"
+  },
+  {
+   "id": "C20",
+   "records": [
+    "B03"
+   ],
+   "gates": [
+    "G1"
+   ],
+   "kind": "press",
+   "tier": "P2",
+   "text_ar": "Asmidal وقّعت مع مركز البحث في البيئة بعنابة اتفاقاً لخمس سنوات لمصنعَي Fertial: المصنع العمومي يدفع بالدينار والدور أُسند",
+   "source": "Algérie Eco",
+   "url": "https://algerie-eco.com/2026/09/08/exigences-carbone-accord-entre-asmidal-et-le-cre-pour-conformer-fertial-au-cbam-et-securiser-les-exportations-vers-leurope/",
+   "event_date": "2026-09-07",
+   "read_on": "2026-10-26"
+  },
+  {
+   "id": "C21",
+   "records": [
+    "B10",
+    "B24"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "official",
+   "tier": "P1",
+   "text_ar": "تحذير سفارة الهند (محدّث 2026-10-27): لا شحن قبل التوطين البنكي؛ مخاطر تأخّر الدفع واحتجاز البضاعة ورسوم التأخير وعدم الدفع؛ وطلب نسخة رخصة الاستيراد قبل الشحن",
+   "source": "سفارة الهند بالجزائر",
+   "url": "https://indianembassyalgiers.gov.in/page/trade-advisory/",
+   "event_date": "2026-10-27",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C22",
+   "records": [
+    "B24"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "press",
+   "tier": "P2",
+   "text_ar": "3,961 متعاملاً من 0 إلى 5 أُجراء صرّحوا بطلبات استيراد قدرها 130.32 مليار دولار؛ عملية مراقبة وتحقيقٌ معلن",
+   "source": "Algérie Eco",
+   "url": "https://algerie-eco.com/2026/09/06/programmes-previsionnels-dimportation-pres-de-4-000-operateurs-declarent-des-besoins-de-130-milliards-de-dollars/",
+   "event_date": "2026-09-06",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C23",
+   "records": [
+    "B19"
+   ],
+   "gates": [
+    "G1",
+    "G4"
+   ],
+   "kind": "gig_task",
+   "tier": "P2",
+   "text_ar": "DATAmundi (2026-09-19): مشروع تسجيل صوتي بالأمازيغية والقبائلية والسيبيدي، الموقع DZ عن بُعد؛ لا أجر ولا عملة ولا وسيلة دفع معلنة، والمشاركون أفراد",
+   "source": "AlignList",
+   "url": "https://alignlist.com/jobs/datamundi-voice-recording-project-tamazight-sepedi-kabyle-550",
+   "event_date": "2026-09-19",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C24",
+   "records": [
+    "B38"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "press",
+   "tier": "P2",
+   "text_ar": "امتحانات التحقّق من المعارف 2026: قُبل 1,863 مقابل 3,873 في الدورة السابقة رغم 4,400 منصب؛ الطريق الخارجي 438 من 4,040",
+   "source": "What's up Doc",
+   "url": "https://www.whatsupdoc-lemag.fr/article/medecins-padhue-2-fois-moins-dadmis-aux-evc-cette-annee-la-reforme-pose-question",
+   "event_date": "2026-04-01",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C25",
+   "records": [
+    "B46"
+   ],
+   "gates": [
+    "G1",
+    "G4"
+   ],
+   "kind": "award",
+   "tier": "P1",
+   "text_ar": "البنك الدولي OP00421218: «تنظيف محفظة المكلّفين لدى المديرية العامة للضرائب» في النيجر (تدقيق البيانات وتصحيحها)، أُرسي في 2026-01-08 على UNITED ADVISERS وWEVIOO (تونس) مع CGP PROFISC (النيجر)، 3 أشهر، 110,670,000 فرنك (168,715 € بالتعادل الثابت)",
+   "source": "واجهة إشعارات البنك الدولي",
+   "url": "https://search.worldbank.org/api/v2/procnotices?format=json&id=OP00421218",
+   "event_date": "2026-01-08",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C26",
+   "records": [
+    "B46"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "buyer_tender",
+   "tier": "P1",
+   "text_ar": "البنك الدولي OP00469806: طلب إبداء اهتمام لتنظيف بيانات مكتب الضرائب البوروندي (2026-09-24، أُغلق 2026-10-09)",
+   "source": "واجهة إشعارات البنك الدولي",
+   "url": "https://search.worldbank.org/api/v2/procnotices?format=json&id=OP00469806",
+   "event_date": "2026-09-24",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C27",
+   "records": [
+    "B47"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "buyer_voice",
+   "tier": "Q",
+   "text_ar": "بلاغ اتحاد التجّار FENACCI في 2026-08-30 يطلب تعليق مراقبة الفاتورة المعيارية؛ ومهلة 45 يوماً من 2026-09-14 للمدمجين (مصدرٌ واحد ثانوي)",
+   "source": "Digitalmag (403) وVATupdate (ملخّص بحث)",
+   "url": "https://digitalmag.ci/cote-divoire-facture-normalisee-electronique-fne-pourquoi-les-commercants-demandent-la-suspension-des-controles/",
+   "event_date": "2026-08-30",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C28",
+   "records": [
+    "B48"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "measurement",
+   "tier": "P1",
+   "text_ar": "عيّنة عشوائية من 400 مصنّع نشط في EUDAMED (البذرة 20261026): 178 بلا أيّ جهاز مسجّل (44.5%، فترة ويلسون 39.7–49.4%)؛ أعدنا الحساب",
+   "source": "EUDAMED (الواجهة العامّة)، بيانات التقطها وكيل وأعدنا حسابها",
+   "url": "https://ec.europa.eu/tools/eudamed/",
+   "event_date": "2026-10-26",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C29",
+   "records": [
+    "B48"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "deadline",
+   "tier": "P1",
+   "text_ar": "الهيئة الأيرلندية HPRA (2026-03-23): الاستعمال الإلزامي من 2026-05-28، وآخر أجلٍ للأجهزة الموضوعة في السوق قبله 2026-11-28",
+   "source": "HPRA",
+   "url": "https://www.hpra.ie/news-events/news/article/mandatory-use-of-eudamed-modules-for-medical-devices",
+   "event_date": "2026-03-23",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C30",
+   "records": [
+    "B49"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "market_shift",
+   "tier": "P1",
+   "text_ar": "Eurostat (محدّث 2026-10-16)، يناير–أغسطس 2026 مقابل 2024: صادرات فرنسا إلى الجزائر −26.5% وإسبانيا +222.4% وإيطاليا +19.2%؛ حصّة فرنسا 31.7%→22.6% وإسبانيا 4.9%→15.2%؛ أعدنا الحساب",
+   "source": "Eurostat Comext",
+   "url": "https://ec.europa.eu/eurostat/comext/newxtweb/",
+   "event_date": "2026-10-16",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C31",
+   "records": [
+    "B49"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "demand_signal",
+   "tier": "P1",
+   "text_ar": "غرفة تجارة فالنسيا: يومان عن «الوضع الراهن في الجزائر» لمصدّري الإقليم (2026-03-05 و2026-04-21)",
+   "source": "Cámara Valencia",
+   "url": "https://www.camaravalencia.com/wp-content/uploads/2026/02/JORNADA-ARGELIA-21.04.2026.pdf",
+   "event_date": "2026-04-21",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C32",
+   "records": [
+    "B49"
+   ],
+   "gates": [
+    "G1"
+   ],
+   "kind": "vendor_price",
+   "tier": "P2",
+   "text_ar": "Systemday يبيع تقرير ائتمان شركةٍ جزائرية بـ100 جنيه وتقرير بحث بـ188 جنيهاً في 8–10 أيام عمل؛ وما يدفعه لمراسله غير معروف",
+   "source": "Systemday",
+   "url": "https://www.systemday.com/algeria-company-documents/",
+   "event_date": "2026-10-27",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C33",
+   "records": [
+    "B50"
+   ],
+   "gates": [
+    "G1",
+    "G4"
+   ],
+   "kind": "buyer_tender",
+   "tier": "P1",
+   "text_ar": "UNGM (قُرئت حيّة): UNDP-SAU-00160 (نُشر 2026-10-01، يُغلق 2026-11-08، العروض بالإنجليزية) وUNIDO 7000008901 (نُشر 2026-10-19، يُغلق 2026-11-06)؛ لا يذكر أيٌّ منهما زوج اللغات العربي-الفرنسي",
+   "source": "UNGM",
+   "url": "https://www.ungm.org/Public/Notice/316534",
+   "event_date": "2026-10-19",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C34",
+   "records": [
+    "B50"
+   ],
+   "gates": [
+    "G1"
+   ],
+   "kind": "absence",
+   "tier": "P1",
+   "text_ar": "عقود UNGM حسب بلد المورّد 2024–2026 (أعدنا العدّ): الجزائر 0، وتونس 228 والمغرب 21 ومصر 56 والأردن 159؛ عقود الترجمة الكتابية بينها 0، والترجمة الفورية لفعالياتٍ حضورية 7",
+   "source": "UNGM، بيانات التقطها وكيل وأعدنا حسابها",
+   "url": "https://www.ungm.org/Public/ContractAward",
+   "event_date": "2026-10-27",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C35",
+   "records": [
+    "B51"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "press",
+   "tier": "P2",
+   "text_ar": "«عددٌ قياسي آخر من الشكاوى» لدى مكتب اللغة الفرنسية (CTV، 2026-06-18)؛ والرقم 11,125 (+7%) و33% للوثائق التجارية والمواقع من ملخّص البحث لا من الصفحة",
+   "source": "CTV News",
+   "url": "https://www.ctvnews.ca/montreal/article/french-in-quebec-oqlf-receives-another-record-number-of-complaints/",
+   "event_date": "2026-06-18",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C36",
+   "records": [
+    "B51"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "measurement",
+   "tier": "P1",
+   "text_ar": "600 نطاق .ca عشوائي: 106 متاجر، 44 منها بلا فرنسية (41.5%)؛ 9 من 10 متاجر برمزٍ بريدي كيبكي بالفرنسية، و43 من 44 خارج كيبك؛ أعدنا العدّ — العيب عند من لا عقوبة عليه",
+   "source": "قياس وكيل كيبك، أعدنا حسابه",
+   "url": "https://tranco-list.eu/",
+   "event_date": "2026-10-27",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C37",
+   "records": [
+    "B52"
+   ],
+   "gates": [
+    "G2",
+    "G4"
+   ],
+   "kind": "legal_text",
+   "tier": "P1",
+   "text_ar": "اللائحة 2025/40: م15(2) تقييم المطابقة والملفّ التقني والإعلان قبل الطرح، م15(3) الحفظ 5 سنوات (10 للقابل لإعادة الاستعمال)، م39(2) إعلانٌ يُحدَّث باستمرار وبلغة الدولة، م39(4) المصنّع يتحمّل المسؤولية بتوقيعه، م68(1) قواعد العقوبات قبل 2027-02-12، م71 التطبيق من 2026-08-12؛ ولا تقول م39 إنّ لكلّ متغيّر إعلاناً",
+   "source": "مكتب منشورات الاتحاد (النصّ الأصلي)",
+   "url": "https://publications.europa.eu/resource/celex/32025R0040",
+   "event_date": "2026-08-12",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C38",
+   "records": [
+    "B52"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "vendor_marketing",
+   "tier": "P2",
+   "text_ar": "كلّ إعلانات المورّدين في الشهر الأول أُعيد إصدارها «ومنها أفضلها»؛ كاتب المقال يرأس Emission Core التي تبيع هذه الخدمة",
+   "source": "Packaging Europe",
+   "url": "https://www.packagingeurope.com/how-to-avoid-the-most-common-ppwr-mistakes/",
+   "event_date": "2026-09-24",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C39",
+   "records": [
+    "B52"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "deadline",
+   "tier": "P2",
+   "text_ar": "أحكام الغرامات الألمانية على مخالفات اللائحة لا تسري إلا من 2027-02-12 (§68 الفقرة 15 من VerpackDG)، مهلة ستّة أشهر",
+   "source": "ZDH (كُتب يونيو 2026)",
+   "url": "https://www.zdh.de/fachbereiche/wirtschaft-energie-umwelt/umweltpolitik-nachhaltigkeit/das-neue-verpackungsgesetz-regelungen-im-ueberblick/",
+   "event_date": "2026-06",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C40",
+   "records": [
+    "B52"
+   ],
+   "gates": [
+    "G5"
+   ],
+   "kind": "named_list_incomplete",
+   "tier": "P1",
+   "text_ar": "مخزون SIRENE الرسمي (2026-10-01، أعدنا العدّ): 1,072 صانع تغليف بعشرة أُجراء فأكثر؛ المسمّى منهم 13 مصنّعاً و11 مكتب امتثال، وقنواتهم غير متحقَّق منها",
+   "source": "INSEE SIRENE",
+   "url": "https://www.data.gouv.fr/fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/",
+   "event_date": "2026-10-01",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C41",
+   "records": [
+    "B45"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "defect_prelaunch",
+   "tier": "P1",
+   "text_ar": "إعادة فحصٍ حيّ لـ1,293 معرّفاً إماراتياً: 1,003 بلا قدرة الاستقبال الإماراتية قبل إطلاق 2027-01-01؛ العيب بلا أثرٍ بعد",
+   "source": "سجلّ Peppol (SML والمزوّدون)، أعدنا العدّ",
+   "url": "https://directory.peppol.eu/",
+   "event_date": "2026-10-26",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C42",
+   "records": [
+    "B45"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "scope_check",
+   "tier": "P1",
+   "text_ar": "الخدمة تقرأ بيانات تسجيلٍ عامّة لشركات (SML والدليل) ولا تعالج معطيات شخصية",
+   "source": "أرشيف 2026-10-26 §14",
+   "url": "repo:docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "event_date": "2026-10-26",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C43",
+   "records": [
+    "B38"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "scope_check",
+   "tier": "P1",
+   "text_ar": "تحضيرٌ لامتحانٍ مهني لأطبّاء: لا معطيات مرضى ولا عملٌ طبيّ محجوز",
+   "source": "أرشيف 2026-10-26 (B38)",
+   "url": "repo:docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "event_date": "2026-10-26",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C44",
+   "records": [
+    "B50",
+    "B51"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "scope_check",
+   "tier": "P1",
+   "text_ar": "ترجمة وثائق منشورة أو محتوى تجاري: لا معطيات شخصية ولا مهنة محجوزة",
+   "source": "أرشيف 2026-10-26 §16",
+   "url": "repo:docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "event_date": "2026-10-27",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C45",
+   "records": [
+    "B20"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "court",
+   "tier": "P2",
+   "text_ar": "النقض الجنائي 2026-01-21 (24-81.008) بعد 21-85.594 (2022-10-04): مسك الحسابات وتصويبها حكرٌ على خبيرٍ مسجّل أو أجيرٍ لمستخدِمه، ولا استثناء بالإعارة ولا بالمقاولة من الباطن",
+   "source": "Eurojuris",
+   "url": "https://www.eurojuris.fr/assurances/articles/monopole-experts-comptables-interdiction-montage-mise-a-disposition-43629.htm",
+   "event_date": "2026-01-21",
+   "read_on": "2026-10-27"
+  }
+ ],
  "records": [
   {
    "id": "B01",
@@ -375,10 +1227,10 @@
     "basis_ar": "إلزامٌ قانوني في فرنسا وبلجيكا + بيانات رسمية عن الرفض؛ 4 مكاتب راسلناها بلا ردّ"
    },
    "screening": {
-    "stage": "included",
+    "stage": "conditional",
     "gates": {
-     "G1": "pass",
-     "G2": "pass",
+     "G1": "partial",
+     "G2": "partial",
      "G3": "pass",
      "G4": "pass",
      "G5": "pass"
@@ -403,9 +1255,35 @@
     {
      "date": "2026-10-27",
      "event_ar": "تصحيح G2 (§16): ملفّات الأطراف تحمل أسماء المقاولين الأفراد وأرقامهم، فالعرض تحت الشروط الأربعة للنقل (بنود نموذجية، وتقييم أثر يغطّي القانون 09-04، ورأي محامٍ جزائري، ولا فئات خاصّة)؛ G2 تبقى ✓ لاختبار المشتري وتصير شرطاً قبل أوّل عقد"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · G2 ✓→~ · المرحلة متأهّلة→مشروطة"
     }
    ],
-   "last_reviewed": "2026-10-27"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C05"
+     ],
+     "G2": [
+      "C06"
+     ],
+     "G3": [
+      "C04"
+     ],
+     "G4": [
+      "C01",
+      "C02"
+     ],
+     "G5": [
+      "C03"
+     ]
+    }
+   }
   },
   {
    "id": "B02",
@@ -477,7 +1355,7 @@
      "G2": "pass",
      "G3": "partial",
      "G4": "partial",
-     "G5": "pass"
+     "G5": "partial"
     },
     "binding_constraint": "verifier_pending"
    },
@@ -497,9 +1375,25 @@
     {
      "date": "2026-10-26",
      "event_ar": "الموجة الثانية: اللائحة 2025/2551 تمنع اجتماع عمولة الإحالة مع إعداد بيانات المنشأة نفسها؛ وFertial أُسندت لمركز CRE عنابة؛ والدافع بالعملة الصعبة غائب (جريحة في G1)"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G5 ✓→~"
     }
    ],
-   "last_reviewed": "2026-10-26"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C20"
+     ],
+     "G2": [
+      "C19"
+     ]
+    }
+   }
   },
   {
    "id": "B04",
@@ -765,7 +1659,7 @@
     "stage": "conditional",
     "gates": {
      "G1": "partial",
-     "G2": "pass",
+     "G2": "partial",
      "G3": "partial",
      "G4": "pass",
      "G5": "partial"
@@ -780,8 +1674,25 @@
    "related": [
     "B24"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-26"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G2 ✓→~"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G2": [
+      "C06"
+     ],
+     "G4": [
+      "C21"
+     ]
+    }
+   }
   },
   {
    "id": "B11",
@@ -846,19 +1757,19 @@
     "basis_ar": "حالة بائع (BPCE/Giskard)"
    },
    "screening": {
-    "stage": "included",
+    "stage": "conditional",
     "gates": {
-     "G1": "pass",
+     "G1": "partial",
      "G2": "pass",
      "G3": "pass",
-     "G4": "pass",
-     "G5": "pass"
+     "G4": "partial",
+     "G5": "partial"
     },
-    "binding_constraint": "none"
+    "binding_constraint": "payer_unproven"
    },
    "option": {
     "state": "active_test",
-    "trigger_ar": "قائمة D-320"
+    "trigger_ar": "حلّ القنوات الـ16 المجهولة في قائمة D-320، ثمّ إرسالها كما هي"
    },
    "group": "F2",
    "related": [
@@ -869,9 +1780,34 @@
     {
      "date": "2026-10-26",
      "event_ar": "معيار ArabicDialectSafety (EMNLP 2026) يغطّي الجزائرية؛ الفجوة باقية في المصنِّفات المغاربية"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · G4 ✓→~ · G5 ✓→~ · المرحلة متأهّلة→مشروطة · العائق «لا عائق حاسم»→«الدافع مسمّى ودفعه غير مُثبَت» · الشرط كان: «قائمة D-320»"
     }
    ],
-   "last_reviewed": "2026-10-26"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C11"
+     ],
+     "G2": [
+      "C14"
+     ],
+     "G3": [
+      "C12"
+     ],
+     "G4": [
+      "C11"
+     ],
+     "G5": [
+      "C13"
+     ]
+    }
+   }
   },
   {
    "id": "B13",
@@ -1125,16 +2061,16 @@
     "delivery": "remote_data"
    },
    "evidence": {
-    "level": "D2",
+    "level": "D1",
     "basis_ar": "شركات بيانات تنشر مهامّ مدفوعة للجزائر"
    },
    "screening": {
     "stage": "conditional",
     "gates": {
-     "G1": "pass",
+     "G1": "partial",
      "G2": "partial",
-     "G3": "pass",
-     "G4": "pass",
+     "G3": "partial",
+     "G4": "partial",
      "G5": "partial"
     },
     "binding_constraint": "data_law_dz"
@@ -1149,8 +2085,25 @@
     "J10",
     "J11"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-26"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · G3 ✓→~ · G4 ✓→~ · الدليل D2→D1"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C23"
+     ],
+     "G4": [
+      "C23"
+     ]
+    }
+   }
   },
   {
    "id": "B20",
@@ -1257,12 +2210,12 @@
     "basis_ar": "إلزامٌ إماراتي + وظيفة منشورة لصيانة بيانات العملاء"
    },
    "screening": {
-    "stage": "included",
+    "stage": "conditional",
     "gates": {
-     "G1": "pass",
-     "G2": "pass",
-     "G3": "pass",
-     "G4": "pass",
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "partial",
      "G5": "pass"
     },
     "binding_constraint": "owner_decision"
@@ -1276,8 +2229,28 @@
     "B30",
     "J12"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-26"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · G2 ✓→~ · G3 ✓→~ · G4 ✓→~ · المرحلة متأهّلة→مشروطة"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C08"
+     ],
+     "G2": [
+      "C09"
+     ],
+     "G5": [
+      "C07"
+     ]
+    }
+   }
   },
   {
    "id": "B23",
@@ -1347,7 +2320,7 @@
     "stage": "conditional",
     "gates": {
      "G1": "partial",
-     "G2": "pass",
+     "G2": "partial",
      "G3": "partial",
      "G4": "pass",
      "G5": "partial"
@@ -1362,8 +2335,26 @@
    "related": [
     "B10"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-26"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G2 ✓→~"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G2": [
+      "C06"
+     ],
+     "G4": [
+      "C21",
+      "C22"
+     ]
+    }
+   }
   },
   {
    "id": "B25",
@@ -1586,10 +2577,10 @@
     "basis_ar": "إلزامات متتالية + شكاوى منشورة في فرنسا"
    },
    "screening": {
-    "stage": "included",
+    "stage": "conditional",
     "gates": {
-     "G1": "pass",
-     "G2": "pass",
+     "G1": "partial",
+     "G2": "partial",
      "G3": "pass",
      "G4": "pass",
      "G5": "pass"
@@ -1616,9 +2607,35 @@
     {
      "date": "2026-10-26",
      "event_ar": "النقد الثاني: العنوان المتبقّي لشركةٍ مغلقة قد لا يستقبل شيئاً إن كان الدليل المركزي يستبعدها، ولا عقوبة معروفة؛ معرفةٌ صحيحة بلا دافع حتى الآن"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · G2 ✓→~ · المرحلة متأهّلة→مشروطة"
     }
    ],
-   "last_reviewed": "2026-10-26"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C05"
+     ],
+     "G2": [
+      "C06"
+     ],
+     "G3": [
+      "C04"
+     ],
+     "G4": [
+      "C01",
+      "C02"
+     ],
+     "G5": [
+      "C03"
+     ]
+    }
+   }
   },
   {
    "id": "B31",
@@ -1640,27 +2657,41 @@
     "basis_ar": "إعلان الموجة 25؛ الدافع عند D1"
    },
    "screening": {
-    "stage": "included",
+    "stage": "excluded",
     "gates": {
-     "G1": "pass",
-     "G2": "pass",
-     "G3": "pass",
-     "G4": "pass",
-     "G5": "pass"
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "fail"
     },
-    "binding_constraint": "owner_decision"
+    "binding_constraint": "no_named_payer"
    },
    "option": {
-    "state": "awaiting_owner",
-    "trigger_ar": "قرار المالك في D-300"
+    "state": "parked",
+    "trigger_ar": "شكوى مسمّاة من منشأةٍ سعودية بعد 2027-02-01، أو قائمة 20 مُدمِجاً مسمّى بقنواتٍ عامّة"
    },
    "group": "F1",
    "related": [
     "B30",
     "OPP-12"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-26"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · G2 ✓→~ · G3 ✓→~ · G4 ✓→✗ · G5 ✓→✗ · المرحلة متأهّلة→مستبعدة · العائق «قرار المالك (تجميد D-300)»→«لا دافع مسمّى» · الخيار «ينتظر قرار المالك»→«مركونة — لا مُحرِّك قريب» · الشرط كان: «قرار المالك في D-300»"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G4": [
+      "C10"
+     ]
+    }
+   }
   },
   {
    "id": "B32",
@@ -1957,8 +2988,25 @@
    },
    "group": "C4",
    "related": [],
-   "history": [],
-   "last_reviewed": "2026-10-26"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: لا تغيير — كلّ ✓ مسنودة بمصدرٍ مقروء"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G2": [
+      "C43"
+     ],
+     "G4": [
+      "C24"
+     ]
+    }
+   }
   },
   {
    "id": "B39",
@@ -2222,15 +3270,15 @@
    },
    "evidence": {
     "level": "D2",
-    "basis_ar": "إحصاءٌ كامل (§14): 1,119 معرّفاً إماراتياً عند أربعة مزوّدين بلا قدرة الاستقبال الإماراتية قبل إطلاق 2027-01-01؛ ثلاثة منهم معتمدون"
+    "basis_ar": "إحصاءٌ كامل (§14) ثمّ إعادة فحصٍ حيّ (§15): 1,003 معرّفاً إماراتياً بلا قدرة الاستقبال الإماراتية عند أربعة مزوّدين قبل إطلاق 2027-01-01؛ ثلاثة منهم معتمدون"
    },
    "screening": {
     "stage": "conditional",
     "gates": {
      "G1": "partial",
-     "G2": "partial",
-     "G3": "pass",
-     "G4": "pass",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "partial",
      "G5": "pass"
     },
     "binding_constraint": "payer_unproven"
@@ -2253,9 +3301,28 @@
     {
      "date": "2026-10-26",
      "event_ar": "النقد الثاني: لا قاعدة تُلزم بإعلان القدرة قبل الإطلاق، والمزوّد يصلحها بنفسه؛ مبكّرة حتى إعادة القياس بعد 2027-01-01"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G2 ~→✓ · G3 ✓→~ · G4 ✓→~ · الأساس كان: «إحصاءٌ كامل (§14): 1,119 معرّفاً إماراتياً عند أربعة مزوّدين بلا قدرة الاستقبال الإماراتية قبل إطلاق 2027-01-01؛ ثلاثة منهم معتمدون»"
     }
    ],
-   "last_reviewed": "2026-10-26"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G2": [
+      "C42"
+     ],
+     "G4": [
+      "C41"
+     ],
+     "G5": [
+      "C07"
+     ]
+    }
+   }
   },
   {
    "id": "B46",
@@ -2287,7 +3354,7 @@
      "G2": "partial",
      "G3": "partial",
      "G4": "pass",
-     "G5": "pass"
+     "G5": "partial"
     },
     "binding_constraint": "references_needed"
    },
@@ -2304,9 +3371,26 @@
     {
      "date": "2026-10-26",
      "event_ar": "الملفّ الجراحي: لا مناقصة مفتوحة اليوم في تنظيف السجلّات؛ القواعد لا تستبعد الجزائريين والحاجز المراجع؛ الطريق مقاولةٌ من الباطن لـ15 فائزاً مسمّى"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G5 ✓→~"
     }
    ],
-   "last_reviewed": "2026-10-26"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C25"
+     ],
+     "G4": [
+      "C25",
+      "C26"
+     ]
+    }
+   }
   },
   {
    "id": "B47",
@@ -2324,7 +3408,7 @@
     "delivery": "remote_service"
    },
    "evidence": {
-    "level": "D2",
+    "level": "D1",
     "basis_ar": "قرار الضرائب الإيفواري 2026-09-14 بمهلة 45 يوماً + 24 مُدمِجاً مسمّى"
    },
    "screening": {
@@ -2332,9 +3416,9 @@
     "gates": {
      "G1": "partial",
      "G2": "partial",
-     "G3": "pass",
-     "G4": "pass",
-     "G5": "pass"
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "partial"
     },
     "binding_constraint": "tax_withholding"
    },
@@ -2347,8 +3431,22 @@
     "B46",
     "B30"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-26"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G3 ✓→~ · G4 ✓→~ · G5 ✓→~ · الدليل D2→D1"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G4": [
+      "C27"
+     ]
+    }
+   }
   },
   {
    "id": "B48",
@@ -2372,11 +3470,11 @@
    "screening": {
     "stage": "conditional",
     "gates": {
-     "G1": "pass",
+     "G1": "partial",
      "G2": "partial",
      "G3": "partial",
      "G4": "pass",
-     "G5": "pass"
+     "G5": "partial"
     },
     "binding_constraint": "client_account_access"
    },
@@ -2390,9 +3488,23 @@
     {
      "date": "2026-10-26",
      "event_ar": "النقد الثاني: الموعد بعد 33 يوماً، وممثّلٌ كبير طوّر أداته (MedNet، 2026-03-10)، وجزءٌ من الصفر قد يكون إعفاءً؛ وظهور الأجهزة القديمة في الواجهة لم يُحسم"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · G5 ✓→~"
     }
    ],
-   "last_reviewed": "2026-10-26"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G4": [
+      "C28",
+      "C29"
+     ]
+    }
+   }
   },
   {
    "id": "B49",
@@ -2422,8 +3534,8 @@
     "gates": {
      "G1": "partial",
      "G2": "partial",
-     "G3": "pass",
-     "G4": "pass",
+     "G3": "partial",
+     "G4": "partial",
      "G5": "partial"
     },
     "binding_constraint": "payer_unproven"
@@ -2437,8 +3549,26 @@
     "B10",
     "B24"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-27"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G3 ✓→~ · G4 ✓→~"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C32"
+     ],
+     "G4": [
+      "C30",
+      "C31"
+     ]
+    }
+   }
   },
   {
    "id": "B50",
@@ -2468,7 +3598,7 @@
      "G2": "pass",
      "G3": "partial",
      "G4": "pass",
-     "G5": "pass"
+     "G5": "partial"
     },
     "binding_constraint": "references_needed"
    },
@@ -2480,8 +3610,29 @@
    "related": [
     "B46"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-27"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G5 ✓→~"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C33",
+      "C34"
+     ],
+     "G2": [
+      "C44"
+     ],
+     "G4": [
+      "C33"
+     ]
+    }
+   }
   },
   {
    "id": "B51",
@@ -2521,8 +3672,26 @@
    "related": [
     "B50"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-27"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: لا تغيير — كلّ ✓ مسنودة بمصدرٍ مقروء"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G2": [
+      "C44"
+     ],
+     "G4": [
+      "C35",
+      "C36"
+     ]
+    }
+   }
   },
   {
    "id": "B52",
@@ -2551,8 +3720,8 @@
      "G1": "partial",
      "G2": "pass",
      "G3": "partial",
-     "G4": "pass",
-     "G5": "pass"
+     "G4": "partial",
+     "G5": "partial"
     },
     "binding_constraint": "payer_unproven"
    },
@@ -2566,8 +3735,30 @@
     "B03",
     "B48"
    ],
-   "history": [],
-   "last_reviewed": "2026-10-27"
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G4 ✓→~ · G5 ✓→~"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G2": [
+      "C37"
+     ],
+     "G4": [
+      "C37",
+      "C38",
+      "C39"
+     ],
+     "G5": [
+      "C40"
+     ]
+    }
+   }
   },
   {
    "id": "J01",
@@ -3186,13 +4377,13 @@
     "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
    },
    "screening": {
-    "stage": "included",
+    "stage": "conditional",
     "gates": {
-     "G1": "pass",
+     "G1": "partial",
      "G2": "pass",
      "G3": "pass",
-     "G4": "pass",
-     "G5": "pass"
+     "G4": "partial",
+     "G5": "partial"
     },
     "binding_constraint": "none"
    },
@@ -3208,9 +4399,34 @@
     {
      "date": "2026-10-26",
      "event_ar": "الجزائرية غائبة عن Belebele وFLEURS وFLORES+؛ والعمل الفردي يصل بالدينار فلا يجتاز G1"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · G4 ✓→~ · G5 ✓→~ · المرحلة متأهّلة→مشروطة"
     }
    ],
-   "last_reviewed": "2026-10-26"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C11"
+     ],
+     "G2": [
+      "C14"
+     ],
+     "G3": [
+      "C12"
+     ],
+     "G4": [
+      "C11"
+     ],
+     "G5": [
+      "C13"
+     ]
+    }
+   }
   },
   {
    "id": "OPP-05",
@@ -3489,9 +4705,9 @@
     "basis_ar": "الحالة الحاكمة في VALUE_CHAIN.json"
    },
    "screening": {
-    "stage": "included",
+    "stage": "conditional",
     "gates": {
-     "G1": "pass",
+     "G1": "partial",
      "G2": "pass",
      "G3": "partial",
      "G4": "pass",
@@ -3509,9 +4725,34 @@
     {
      "date": "2026-10-26",
      "event_ar": "محكمة ليل 2026-05-05 طبّقت سقف 250 مليون €؛ وتدقيقٌ آلي يُباع بـ190 €؛ ومشترون عموميون بوسيط سقفٍ 165,000 €"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: G1 ✓→~ · المرحلة متأهّلة→مشروطة"
     }
    ],
-   "last_reviewed": "2026-10-26"
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C16"
+     ],
+     "G2": [
+      "C18"
+     ],
+     "G3": [
+      "C18"
+     ],
+     "G4": [
+      "C17"
+     ],
+     "G5": [
+      "C15"
+     ]
+    }
+   }
   },
   {
    "id": "OPP-14",

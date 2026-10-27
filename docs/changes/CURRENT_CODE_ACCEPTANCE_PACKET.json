@@ -97,6 +97,7 @@
         "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
         "tests/unit/tools/test_idea_register.py",
+        "tests/unit/tools/test_idea_register_audit.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
       ],
       "gate": "scripts/fitness/check_outbound_before_research.py",
@@ -108,10 +109,11 @@
     "status": "DOCUMENTATION_AND_TEST_ONLY",
     "interfaces": [
       "tests/unit/tools/test_opportunity_archive_additive.py: audit(archives, known_paths) — 4 قواعد (ثقب · إعادة استعمال · ملحق · مصدر وتاريخ)، و8 اختبارات منها 6 سلبية",
-      "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md: B19–B52 وJ10–J12 وملاحق B01/B03/B10/OPP-01/OPP-02/OPP-04/OPP-13 والدراسة الشاملة بالبوّابات G1–G5 (§12) وقياس Peppol الأصلي (§13) وأسطول الوكلاء بموجاته الثلاث (§14–§16) — يُقرأ ولا يُنفَّذ",
+      "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md: B19–B52 وJ10–J12 وملاحق B01/B03/B10/OPP-01/OPP-02/OPP-04/OPP-13 والدراسة الشاملة بالبوّابات G1–G5 (§12) وقياس Peppol الأصلي (§13) وأسطول الوكلاء بموجاته الثلاث (§14–§16) والتدقيق الصارم A1 (§17) — يُقرأ ولا يُنفَّذ",
       "docs/archive/commercial/OPPORTUNITIES_AND_JOBS_CONVERSATION_2026-10-22_AR.md — لم يُمسّ",
-      "docs/archive/commercial/IDEA_REGISTER.json + IDEA_REGISTER_AR.md: سجلّ موحّد لـB01–B52 وJ01–J12 و25 مساراً، بأوجهٍ ومراحل غربلة على نمط PRISMA 2020 — يُقرأ ولا يُنفَّذ",
-      "tests/unit/tools/test_idea_register.py: audit(register, source_ids, reading_view) — 8 اختبارات منها 6 سلبية"
+      "docs/archive/commercial/IDEA_REGISTER.json + IDEA_REGISTER_AR.md: سجلّ موحّد لـB01–B52 وJ01–J12 و25 مساراً، بأوجهٍ ومراحل غربلة على نمط PRISMA 2020، وسجلّ سنداتٍ (claims) ومعيار تدقيقٍ (audit_standard) A1 — يُقرأ ولا يُنفَّذ",
+      "tests/unit/tools/test_idea_register.py: audit(register, source_ids, reading_view) — 8 اختبارات منها 6 سلبية",
+      "tests/unit/tools/test_idea_register_audit.py: audit(register) — 11 اختباراً منها 10 سلبية: لا ✓ بلا سندٍ مقروء من نوعٍ مسموح، والبوّابات غير تعويضية، وG4 حديثة، وكلّ فكرةٍ حيّة مدقّقة"
     ],
     "runtime_evidence_paths": [
       "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md"
@@ -138,7 +140,7 @@
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 runner over tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py (pytest غير متاح في الجلسة) — 16 passed",
+      "python3 runner over tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py + test_idea_register_audit.py (pytest غير متاح في الجلسة) — 27 passed",
       "ruff check + ruff format --check على ملفّي الاختبار — PASS",
       "python3 scripts/fitness/check_outbound_before_research.py — PASS",
       "python3 scripts/fitness/check_documentation_contract.py — PASS",
@@ -154,6 +156,7 @@
     "docs/archive/commercial/IDEA_REGISTER_AR.md",
     "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
     "tests/unit/tools/test_idea_register.py",
+    "tests/unit/tools/test_idea_register_audit.py",
     "tests/unit/tools/test_opportunity_archive_additive.py"
   ],
   "pre_modification": {
@@ -166,7 +169,7 @@
       "note_ar": "لا عيب أساسيّ يحجب: التغيير لا يمسّ shared/ ولا بوّابةً ولا قانوناً ولا الأرشيف السابق."
     },
     "root_cause": "طلب المالك حفظ الفرص الجديدة دون حذف القديم؛ وقاعدةٌ بلا فارضٍ تُنسى في أوّل تعديل (D-207)، فحفظُ النصّ وحده لا يكفي دون اختبارٍ يُحمرّ عند الحذف.",
-    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B52، J10–J12، ملاحق B01/B03/B10/OPP-01/OPP-02/OPP-04/OPP-13، والدراسة الشاملة §12، وقياس Peppol §13، وأسطول الوكلاء §14–§16) وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط. وسجلّ الأفكار الموحّد IDEA_REGISTER.json مع قراءته العربية IDEA_REGISTER_AR.md، وtests/unit/tools/test_idea_register.py الذي يفرض أنّ الترتيب لا يحذف.",
+    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B52، J10–J12، ملاحق B01/B03/B10/OPP-01/OPP-02/OPP-04/OPP-13، والدراسة الشاملة §12، وقياس Peppol §13، وأسطول الوكلاء §14–§16، والتدقيق الصارم A1 §17) وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط. وسجلّ الأفكار الموحّد IDEA_REGISTER.json مع قراءته العربية IDEA_REGISTER_AR.md، وtests/unit/tools/test_idea_register.py الذي يفرض أنّ الترتيب لا يحذف.",
     "affected_invariants": [
       "D-321: لا كود منتج ولا ترخيص بناء؛ الأرشيف يقول ذلك صراحةً.",
       "D-297: لا صفّ سجلٍّ وهميّ؛ الأرشيف خارج جذور بوّابة البحث على سابقة 74bfba7.",
@@ -226,6 +229,7 @@
         "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
         "tests/unit/tools/test_idea_register.py",
+        "tests/unit/tools/test_idea_register_audit.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
       ],
       "touched_files": [
@@ -233,23 +237,26 @@
         "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
         "tests/unit/tools/test_idea_register.py",
+        "tests/unit/tools/test_idea_register_audit.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
       ]
     },
     "protected_paths_changed": [],
     "contracts_touched": [
       "tests/unit/tools/test_opportunity_archive_additive.py: عقد «الإضافة فقط» لأرشيف الفرص (4 قواعد) — جديد",
-      "tests/unit/tools/test_idea_register.py: عقد «السجلّ يحفظ ولا يحذف» — كلّ معرّفٍ في الأرشيفات وسلسلة القيمة حاضر، ولكلّ مستبعَدٍ بوّابة وعائق وشرط إعادة فتح، والأرقام محسوبة — جديد"
+      "tests/unit/tools/test_idea_register.py: عقد «السجلّ يحفظ ولا يحذف» — كلّ معرّفٍ في الأرشيفات وسلسلة القيمة حاضر، ولكلّ مستبعَدٍ بوّابة وعائق وشرط إعادة فتح، والأرقام محسوبة — جديد",
+      "tests/unit/tools/test_idea_register_audit.py: عقد «لا حكم أقوى من دليله» (DECISION_COMMITMENT_ENGINE) — جديد"
     ],
     "evidence": {
-      "reachability_trace": "ci.yml → python -m pytest tests scripts/ci → tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py → docs/archive/commercial/OPPORTUNITIES_*_AR.md + docs/commercial/VALUE_CHAIN.json. ci.yml → check_outbound_before_research → CONTACT_LEDGER.csv (لم يُمسّ). ci.yml → check_code_acceptance → هذه الحزمة.",
+      "reachability_trace": "ci.yml → python -m pytest tests scripts/ci → tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py + test_idea_register_audit.py → docs/archive/commercial/OPPORTUNITIES_*_AR.md + docs/commercial/VALUE_CHAIN.json. ci.yml → check_outbound_before_research → CONTACT_LEDGER.csv (لم يُمسّ). ci.yml → check_code_acceptance → هذه الحزمة.",
       "tests": {
-        "passed": 16,
+        "passed": 27,
         "failed": 0,
-        "new_negative_cases": 12,
+        "new_negative_cases": 22,
         "files": [
           "tests/unit/tools/test_opportunity_archive_additive.py",
-          "tests/unit/tools/test_idea_register.py"
+          "tests/unit/tools/test_idea_register.py",
+          "tests/unit/tools/test_idea_register_audit.py"
         ],
         "note_ar": "16 اختباراً في ملفّين: 4 إيجابية و12 سلبية، شُغّلت بمشغّل Python بسيط لا بـpytest. وكلّ قاعدةٍ أُسقطت بحالةٍ سلبية فأحمرّ اختبارها. و`vacuity_probe` و`mutation_score` الآليّان لم يُشغَّلا، فالسقف E3."
       },
@@ -318,6 +325,7 @@
       "docs/archive/commercial/IDEA_REGISTER_AR.md",
       "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
       "tests/unit/tools/test_idea_register.py",
+      "tests/unit/tools/test_idea_register_audit.py",
       "tests/unit/tools/test_opportunity_archive_additive.py"
     ],
     "content_sha256_excluding_packet": "4520d57a82ded532487e653df64c976b8d744fc154efe0ba4c72da01e971c58d",
