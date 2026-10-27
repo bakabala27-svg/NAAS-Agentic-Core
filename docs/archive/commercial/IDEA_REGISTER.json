@@ -73,6 +73,7 @@
    "EUR_PEGGED": "عملة مربوطة باليورو (فرنك CFA)",
    "DZD": "دينار",
    "CAD": "دولار كندي",
+   "TND": "دينار تونسي",
    "MIXED": "مختلطة",
    "unknown": "غير معروفة"
   },
@@ -108,7 +109,8 @@
    "not_a_defect": "الإرشاد الرسمي لا يعدّه عيباً",
    "references_needed": "مراجع سابقة وأهلية غير مُتحقَّقة",
    "tax_withholding": "اقتطاعٌ ضريبي وإقامةٌ مطلوبة",
-   "client_account_access": "دخولٌ إلى حساب العميل لدى الجهة الرسمية"
+   "client_account_access": "دخولٌ إلى حساب العميل لدى الجهة الرسمية",
+   "no_margin": "لا هامش عبر الطريق القانوني"
   }
  },
  "groups": {
@@ -256,6 +258,22 @@
  },
  "studies": [
   {
+   "id": "S09",
+   "date": "2026-10-27",
+   "title_ar": "أسطول الوكلاء، الموجة الرابعة: العالم كلّه بعد تونس، والهواتف، والمموّلون الآخرون",
+   "where": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md §19",
+   "feeds": [
+    "B46",
+    "B49",
+    "B50",
+    "B53",
+    "B54",
+    "J13",
+    "J14"
+   ],
+   "finding_ar": "في 99,967 إشعاراً للبنك الدولي تفوز تونس 520 مرّة (282 خارجها) والجزائر 6 (صفر داخلها، لأنها لا تقترض: صفر ترسية في كلّ تاريخ الواجهة)؛ الهواتف بلا هامشٍ قانوني في 22 طرازاً؛ البنك الإفريقي بيانات محجوبة وعقدا بيانات من 100؛ الاتحاد الأوروبي يفتح المشاركة للجزائريين وهم 1% من 58.23 مليون €؛ والأمم المتحدة تشتري من الجزائر 23.2 مليون $ مقابل 91.3 لتونس في 2025"
+  },
+  {
    "id": "S01",
    "date": "2026-10-26",
    "title_ar": "تغطية مكوّنات حراسة الذكاء الاصطناعي للعربية واللهجات المغاربية",
@@ -389,13 +407,13 @@
   }
  ],
  "flow": {
-  "identified_ideas": 52,
-  "identified_jobs": 12,
+  "identified_ideas": 54,
+  "identified_jobs": 14,
   "identified_value_chain_paths": 25,
-  "screened": 54,
+  "screened": 56,
   "included": 0,
-  "conditional": 19,
-  "excluded": 35
+  "conditional": 20,
+  "excluded": 36
  },
  "audit_standard": {
   "id": "A1",
@@ -1280,6 +1298,102 @@
    "source": "سجلّ الاتصال",
    "url": "repo:docs/commercial/outreach/CONTACT_LEDGER.csv",
    "event_date": "2026-10-07",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C50",
+   "records": [
+    "B53"
+   ],
+   "gates": [
+    "G1"
+   ],
+   "kind": "measurement",
+   "tier": "P1",
+   "text_ar": "22 طرازاً وسعة: وسيط 722 عرضاً جديداً في متاجر جزائرية (Allotech-dz) بالسعر الرسمي يعادل سعر Tunisianet بين −26% و+13% (الوسيط نحو −1%)؛ أعدنا حساب ستّة طرازات من الخام فطابقت؛ وبعد شحنٍ 3% ورسمٍ 10% و1% وهامش بائع 15% يخسر كلّ طراز 36–98%",
+   "source": "Allotech-dz وTunisianet والبنك المركزي التونسي، أعدنا الحساب",
+   "url": "https://www.tunisianet.com.tn/smartphone-tunisie/81864-smartphone-samsung-galaxy-a16-12go-128-go-noir.html",
+   "event_date": "2026-10-26",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C51",
+   "records": [
+    "B53"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "legal_text",
+   "tier": "A",
+   "text_ar": "الأمر 05-06 المادة 10 (مكافحة التهريب): الحبس 1–5 سنوات وغرامة بخمسة أضعاف القيمة، و2–10 سنوات وعشرة أضعاف إن اشترك ثلاثة فأكثر — نقلاً عن الوكيل، والرابط أعاد صفحة تحقّق لا النصّ",
+   "source": "WIPO Lex (لم يُقرأ من بيئتنا)",
+   "url": "https://wipolex-res.wipo.int/edocs/lexdocs/laws/fr/dz/dz037fr.pdf",
+   "event_date": "2005-08-23",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C52",
+   "records": [
+    "B54"
+   ],
+   "gates": [
+    "G1"
+   ],
+   "kind": "award",
+   "tier": "P1",
+   "text_ar": "FTS 2023–2025 (أعدنا الحساب): عقودٌ فائدتها كلّها للجزائر بـ58.23 مليون € نالت منها الجهات المقيمة في الجزائر 1%، وعقدا عمل خارجي فقط بشركةٍ جزائرية مقابل 35 لتونس و30 للمغرب؛ المبالغ باليورو وعملة الدفع في الشروط العامّة لم تُقرأ",
+   "source": "نظام الشفافية المالية للاتحاد الأوروبي",
+   "url": "https://ec.europa.eu/budget/financial-transparency-system/download/2025_FTS_dataset_en.xlsx",
+   "event_date": "2025-12-31",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C53",
+   "records": [
+    "B54"
+   ],
+   "gates": [
+    "G2"
+   ],
+   "kind": "legal_text",
+   "tier": "P1",
+   "text_ar": "اللائحة 2021/947 (NDICI) المادة 28(1)(b) و(c): المشاركة في مناقصات البرامج الجغرافية مفتوحة لشركات البلدان الشريكة في الجوار (الجزائر أوّل الملحق الأوّل) ولبلدان المساعدة التنموية من خارج العشرين",
+   "source": "مكتب المنشورات الأوروبي",
+   "url": "https://publications.europa.eu/resource/celex/32021R0947",
+   "event_date": "2021-06-09",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C54",
+   "records": [
+    "B54"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "buyer_tender",
+   "tier": "P1",
+   "text_ar": "إعلانٌ مسبق لمندوبية الاتحاد في الجزائر: «EU-Algeria 4 Business» — حوارات وتسهيل تجارة واستثمار ودراسات وتشخيصات موجّهة؛ تاريخ النشر في بيانات البوّابة الخام 2026-09-16",
+   "source": "بوّابة التمويل والمناقصات للمفوضية",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/tender-details/96fb12f3-6de0-40ed-8e7d-5f97070b4dea-PIN",
+   "event_date": "2026-09-16",
+   "read_on": "2026-10-27"
+  },
+  {
+   "id": "C55",
+   "records": [
+    "B54"
+   ],
+   "gates": [
+    "G4"
+   ],
+   "kind": "buyer_tender",
+   "tier": "P1",
+   "text_ar": "إعلانٌ مسبق: مساعدة تقنية لبرنامج MASSALEK (الشباب والسياحة والثقافة في الجزائر)، منشور 2026-10-27",
+   "source": "بوّابة التمويل والمناقصات للمفوضية",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/tender-details/a8c9ce61-edc3-48fe-a9c9-a806f7294cee-PIN",
+   "event_date": "2026-10-27",
    "read_on": "2026-10-27"
   }
  ],
@@ -3465,6 +3579,10 @@
     },
     {
      "date": "2026-10-27",
+     "event_ar": "الموجة الرابعة: الجذر المقيس — الجزائر لا تقترض من البنك الدولي (8 إشعارات وصفر ترسية في كلّ تاريخ الواجهة مقابل 937 لتونس)، فلا مرجع أوّل يُكسَب في البيت؛ والبنك الإفريقي الآلية نفسها بخطٍّ أرقّ (عقدا بيانات من آخر 100 ترسية، والبيانات محجوبة)"
+    },
+    {
+     "date": "2026-10-27",
      "event_ar": "تدقيق A1 الصارم: G5 ✓→~"
     }
    ],
@@ -3649,6 +3767,10 @@
    "history": [
     {
      "date": "2026-10-27",
+     "event_ar": "الموجة الرابعة: B53 (الهواتف) سُجّلت مستبعدة بجوارها في التجارة عبر الجزائر — لا تمسّ شرط B49"
+    },
+    {
+     "date": "2026-10-27",
      "event_ar": "تدقيق A1 الصارم: G3 ✓→~ · G4 ✓→~"
     }
    ],
@@ -3708,6 +3830,10 @@
     "B46"
    ],
    "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "الموجة الرابعة: الأمم المتحدة اشترت من الجزائر 23.2 مليون $ في 2025 مقابل 91.3 لتونس، وأغلب ذلك شراءٌ محلّي (94% من الترسيات التونسية داخل تونس)؛ وثلاثة إعلانات ترجمة للشركات مفتوحة حتى 2026-11-19"
+    },
     {
      "date": "2026-10-27",
      "event_ar": "تدقيق A1 الصارم: G5 ✓→~"
@@ -3853,6 +3979,120 @@
      ],
      "G5": [
       "C40"
+     ]
+    }
+   }
+  },
+  {
+   "id": "B53",
+   "kind": "idea",
+   "title_ar": "شراء الهواتف من الجزائر وبيعها في تونس",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ",
+     "TN"
+    ],
+    "currency": "TND",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "قياسٌ أصلي (§19): 22 طرازاً وسعة، الفارق بالسعر الرسمي بين −26% و+13% والوسيط نحو −1%، وكلّ طرازٍ يخسر 36–98% بعد الرسوم القانونية وهامش البائع؛ و«الربح» يظهر بسعر الصرف الموازي وحده، وهو غير قانوني"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "fail"
+    },
+    "binding_constraint": "no_margin"
+   },
+   "option": {
+    "state": "closed_by_fact",
+    "trigger_ar": "فارقٌ موجب يتجاوز 25% بالسعر الرسمي بعد الشحن والرسوم وهامش البائع لشهرين متتاليين، عبر تصديرٍ مسجّل يُدفع بالعملة الصعبة"
+   },
+   "group": null,
+   "related": [
+    "B49"
+   ],
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "الموجة الرابعة: سُجّلت مستبعدة من أوّل يوم — أسعار المتاجر متعادلة بالسعر الرسمي، والطريق القانوني يضيف 14% على الأقلّ، والتهريب جريمة في البلدين"
+    }
+   ],
+   "last_reviewed": "2026-10-27"
+  },
+  {
+   "id": "B54",
+   "kind": "idea",
+   "title_ar": "شريكٌ جزائري في تجمّعات المساعدة التقنية الأوروبية داخل الجزائر",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "development_finance",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D2",
+    "basis_ar": "إعلانان مسبقان لمندوبية الاتحاد في الجزائر (2026-09-16 و2026-10-27) + المادة 28 من NDICI + قياسٌ أصلي (FTS 2023–2025): الجهات المقيمة في الجزائر نالت 1% من 58.23 مليون € فائدتها كلّها للجزائر، ولا شركة جزائرية بين 63 قائداً لعقود الاستشارة"
+   },
+   "screening": {
+    "stage": "conditional",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "references_needed"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "شركتان قائدتان تقبلان شريكاً جزائرياً في عرض EU-Algeria 4 Business أو MASSALEK قبل نشر الإعلان الكامل"
+   },
+   "group": null,
+   "related": [
+    "B46",
+    "B49"
+   ],
+   "history": [
+    {
+     "date": "2026-10-27",
+     "event_ar": "الموجة الرابعة: الأهلية مقروءة في المادة 28 من NDICI، والإعلانان المسبقان مؤكَّدا التاريخ في بيانات البوّابة الخام؛ الأداة المالية غير مسمّاة في البيانات الوصفية"
+    },
+    {
+     "date": "2026-10-27",
+     "event_ar": "تدقيق A1 الصارم: لا تغيير — كلّ ✓ مسنودة بمصدرٍ مقروء"
+    }
+   ],
+   "last_reviewed": "2026-10-27",
+   "audit": {
+    "standard": "A1",
+    "date": "2026-10-27",
+    "support": {
+     "G1": [
+      "C52"
+     ],
+     "G2": [
+      "C53"
+     ],
+     "G4": [
+      "C54",
+      "C55"
      ]
     }
    }
@@ -4349,6 +4589,90 @@
    ],
    "history": [],
    "last_reviewed": "2026-10-26"
+  },
+  {
+   "id": "J13",
+   "kind": "job",
+   "title_ar": "البنك الإسلامي للتنمية — تقييم برنامج STEP (BCC2026-052)",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "USD",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [
+    "B46"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-27"
+  },
+  {
+   "id": "J14",
+   "kind": "job",
+   "title_ar": "مركز التدريب الدولي لمنظمة العمل الدولية — ترجمة مواد دورة HDPN إلى العربية بمساعدة الذكاء الاصطناعي",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "employment",
+    "markets": [
+     "DZ",
+     "GLOBAL"
+    ],
+    "currency": "unknown",
+    "delivery": "employment"
+   },
+   "evidence": {
+    "level": "na",
+    "basis_ar": "إعلانٌ قُرئ أثناء البحث؛ ليس عرضاً للمؤسس"
+   },
+   "screening": {
+    "stage": "personal_income",
+    "gates": {
+     "G1": "na",
+     "G2": "na",
+     "G3": "na",
+     "G4": "na",
+     "G5": "na"
+    },
+    "binding_constraint": "none"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "إعادة التحقّق من الإعلان قبل التقديم"
+   },
+   "group": null,
+   "related": [
+    "B50"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-27"
   },
   {
    "id": "OPP-01",
