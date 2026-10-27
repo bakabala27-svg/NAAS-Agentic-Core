@@ -96,8 +96,17 @@
         "docs/archive/commercial/IDEA_REGISTER.json",
         "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+        "docs/archive/commercial/OWNER_ROUTES_2026-10-27_AR.md",
+        "docs/archive/commercial/README_AR.md",
+        "docs/archive/commercial/data/CAR_IMPORT_UNDER_3Y_LANDED_COST_2026-10-27.csv",
+        "docs/archive/commercial/data/MACRO_REMITTANCES_ICT_DZ_TN_MA_EG_2026-10-27.csv",
+        "docs/archive/commercial/data/PHONES_DZ_TN_PRICE_GAP_2026-10-27.csv",
+        "docs/archive/commercial/data/SCHENGEN_VISA_REFUSALS_CONSULATES_IN_ALGERIA_2024_2025.csv",
+        "docs/archive/commercial/data/STARTUP_FUNDING_PARTECH_DZ_TN_MA_EG_2024_2025.csv",
+        "docs/archive/commercial/data/WB_AWARDS_SUPPLIER_COUNTRY_LEAGUE_2026-10-27.csv",
         "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
         "docs/commercial/WB_DATA_WINNERS_FRANCOPHONE_AFRICA_2026-10-27.csv",
+        "tests/unit/tools/test_archive_personal_names.py",
         "tests/unit/tools/test_idea_register.py",
         "tests/unit/tools/test_idea_register_audit.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
@@ -142,7 +151,7 @@
   "verification": {
     "result": "PASS",
     "commands": [
-      "python3 runner over tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py + test_idea_register_audit.py (pytest غير متاح في الجلسة) — 27 passed",
+      "python3 runner over tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py + test_idea_register_audit.py + test_archive_personal_names.py (pytest غير متاح في الجلسة) — 32 passed",
       "ruff check + ruff format --check على ملفّي الاختبار — PASS",
       "python3 scripts/fitness/check_outbound_before_research.py — PASS",
       "python3 scripts/fitness/check_documentation_contract.py — PASS",
@@ -157,8 +166,17 @@
     "docs/archive/commercial/IDEA_REGISTER.json",
     "docs/archive/commercial/IDEA_REGISTER_AR.md",
     "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+    "docs/archive/commercial/OWNER_ROUTES_2026-10-27_AR.md",
+    "docs/archive/commercial/README_AR.md",
+    "docs/archive/commercial/data/CAR_IMPORT_UNDER_3Y_LANDED_COST_2026-10-27.csv",
+    "docs/archive/commercial/data/MACRO_REMITTANCES_ICT_DZ_TN_MA_EG_2026-10-27.csv",
+    "docs/archive/commercial/data/PHONES_DZ_TN_PRICE_GAP_2026-10-27.csv",
+    "docs/archive/commercial/data/SCHENGEN_VISA_REFUSALS_CONSULATES_IN_ALGERIA_2024_2025.csv",
+    "docs/archive/commercial/data/STARTUP_FUNDING_PARTECH_DZ_TN_MA_EG_2024_2025.csv",
+    "docs/archive/commercial/data/WB_AWARDS_SUPPLIER_COUNTRY_LEAGUE_2026-10-27.csv",
     "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
     "docs/commercial/WB_DATA_WINNERS_FRANCOPHONE_AFRICA_2026-10-27.csv",
+    "tests/unit/tools/test_archive_personal_names.py",
     "tests/unit/tools/test_idea_register.py",
     "tests/unit/tools/test_idea_register_audit.py",
     "tests/unit/tools/test_opportunity_archive_additive.py"
@@ -173,7 +191,7 @@
       "note_ar": "لا عيب أساسيّ يحجب: التغيير لا يمسّ shared/ ولا بوّابةً ولا قانوناً ولا الأرشيف السابق."
     },
     "root_cause": "طلب المالك حفظ الفرص الجديدة دون حذف القديم؛ وقاعدةٌ بلا فارضٍ تُنسى في أوّل تعديل (D-207)، فحفظُ النصّ وحده لا يكفي دون اختبارٍ يُحمرّ عند الحذف.",
-    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B55، J10–J14، ملاحق B01/B03/B10/B46/B50/B53/OPP-01/OPP-02/OPP-04/OPP-13، والدراسة الشاملة §12، وقياس Peppol §13، وأسطول الوكلاء §14–§16، والتدقيق الصارم A1 §17، وقياس الترسيات §18، والموجة الرابعة §19، والموجة الخامسة §20) وقائمة WB_DATA_WINNERS_FRANCOPHONE_AFRICA_2026-10-27.csv (24 جهة) وملء 12 قناة في AI_REDTEAM_TARGETS_2026-10-20.csv، وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط. وسجلّ الأفكار الموحّد IDEA_REGISTER.json مع قراءته العربية IDEA_REGISTER_AR.md، وtests/unit/tools/test_idea_register.py الذي يفرض أنّ الترتيب لا يحذف.",
+    "intended_change": "إضافة docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md (B19–B55، J10–J14، ملاحق B01/B03/B10/B46/B50/B53/OPP-01/OPP-02/OPP-04/OPP-13، والدراسة الشاملة §12، وقياس Peppol §13، وأسطول الوكلاء §14–§16، والتدقيق الصارم A1 §17، وقياس الترسيات §18، والموجة الرابعة §19، والموجة الخامسة §20) وقائمة WB_DATA_WINNERS_FRANCOPHONE_AFRICA_2026-10-27.csv (24 جهة) وملء 12 قناة في AI_REDTEAM_TARGETS_2026-10-20.csv، وtests/unit/tools/test_opportunity_archive_additive.py الذي يفرض الإضافة فقط. وسجلّ الأفكار الموحّد IDEA_REGISTER.json مع قراءته العربية IDEA_REGISTER_AR.md، وtests/unit/tools/test_idea_register.py الذي يفرض أنّ الترتيب لا يحذف. وفهرس المجلّد README_AR.md، ومسارات المالك الشخصية OWNER_ROUTES_2026-10-27_AR.md (العملة الصعبة قانونياً وملفّ ASF والتأشيرة والسيارة، بلا أسماء)، وست بيانات مُعاد حسابها في docs/archive/commercial/data/، وtests/unit/tools/test_archive_personal_names.py الذي يمنع أسماء الأشخاص ببصماتٍ لا بالأسماء.",
     "affected_invariants": [
       "D-321: لا كود منتج ولا ترخيص بناء؛ الأرشيف يقول ذلك صراحةً.",
       "D-297: لا صفّ سجلٍّ وهميّ؛ الأرشيف خارج جذور بوّابة البحث على سابقة 74bfba7.",
@@ -232,8 +250,17 @@
         "docs/archive/commercial/IDEA_REGISTER.json",
         "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+        "docs/archive/commercial/OWNER_ROUTES_2026-10-27_AR.md",
+        "docs/archive/commercial/README_AR.md",
+        "docs/archive/commercial/data/CAR_IMPORT_UNDER_3Y_LANDED_COST_2026-10-27.csv",
+        "docs/archive/commercial/data/MACRO_REMITTANCES_ICT_DZ_TN_MA_EG_2026-10-27.csv",
+        "docs/archive/commercial/data/PHONES_DZ_TN_PRICE_GAP_2026-10-27.csv",
+        "docs/archive/commercial/data/SCHENGEN_VISA_REFUSALS_CONSULATES_IN_ALGERIA_2024_2025.csv",
+        "docs/archive/commercial/data/STARTUP_FUNDING_PARTECH_DZ_TN_MA_EG_2024_2025.csv",
+        "docs/archive/commercial/data/WB_AWARDS_SUPPLIER_COUNTRY_LEAGUE_2026-10-27.csv",
         "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
         "docs/commercial/WB_DATA_WINNERS_FRANCOPHONE_AFRICA_2026-10-27.csv",
+        "tests/unit/tools/test_archive_personal_names.py",
         "tests/unit/tools/test_idea_register.py",
         "tests/unit/tools/test_idea_register_audit.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
@@ -242,8 +269,17 @@
         "docs/archive/commercial/IDEA_REGISTER.json",
         "docs/archive/commercial/IDEA_REGISTER_AR.md",
         "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+        "docs/archive/commercial/OWNER_ROUTES_2026-10-27_AR.md",
+        "docs/archive/commercial/README_AR.md",
+        "docs/archive/commercial/data/CAR_IMPORT_UNDER_3Y_LANDED_COST_2026-10-27.csv",
+        "docs/archive/commercial/data/MACRO_REMITTANCES_ICT_DZ_TN_MA_EG_2026-10-27.csv",
+        "docs/archive/commercial/data/PHONES_DZ_TN_PRICE_GAP_2026-10-27.csv",
+        "docs/archive/commercial/data/SCHENGEN_VISA_REFUSALS_CONSULATES_IN_ALGERIA_2024_2025.csv",
+        "docs/archive/commercial/data/STARTUP_FUNDING_PARTECH_DZ_TN_MA_EG_2024_2025.csv",
+        "docs/archive/commercial/data/WB_AWARDS_SUPPLIER_COUNTRY_LEAGUE_2026-10-27.csv",
         "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
         "docs/commercial/WB_DATA_WINNERS_FRANCOPHONE_AFRICA_2026-10-27.csv",
+        "tests/unit/tools/test_archive_personal_names.py",
         "tests/unit/tools/test_idea_register.py",
         "tests/unit/tools/test_idea_register_audit.py",
         "tests/unit/tools/test_opportunity_archive_additive.py"
@@ -253,18 +289,20 @@
     "contracts_touched": [
       "tests/unit/tools/test_opportunity_archive_additive.py: عقد «الإضافة فقط» لأرشيف الفرص (4 قواعد) — جديد",
       "tests/unit/tools/test_idea_register.py: عقد «السجلّ يحفظ ولا يحذف» — كلّ معرّفٍ في الأرشيفات وسلسلة القيمة حاضر، ولكلّ مستبعَدٍ بوّابة وعائق وشرط إعادة فتح، والأرقام محسوبة — جديد",
-      "tests/unit/tools/test_idea_register_audit.py: عقد «لا حكم أقوى من دليله» (DECISION_COMMITMENT_ENGINE) — جديد"
+      "tests/unit/tools/test_idea_register_audit.py: عقد «لا حكم أقوى من دليله» (DECISION_COMMITMENT_ENGINE) — جديد",
+      "tests/unit/tools/test_archive_personal_names.py: عقد «لا أسماء أشخاص في الأرشيف التجاري» — بصماتٌ بملحٍ ثابت لا الأسماء نفسها، وثلاث حالاتٍ سلبية — جديد"
     ],
     "evidence": {
       "reachability_trace": "ci.yml → python -m pytest tests scripts/ci → tests/unit/tools/test_opportunity_archive_additive.py + test_idea_register.py + test_idea_register_audit.py → docs/archive/commercial/OPPORTUNITIES_*_AR.md + docs/commercial/VALUE_CHAIN.json. ci.yml → check_outbound_before_research → CONTACT_LEDGER.csv (لم يُمسّ). ci.yml → check_code_acceptance → هذه الحزمة.",
       "tests": {
-        "passed": 27,
+        "passed": 32,
         "failed": 0,
-        "new_negative_cases": 22,
+        "new_negative_cases": 25,
         "files": [
           "tests/unit/tools/test_opportunity_archive_additive.py",
           "tests/unit/tools/test_idea_register.py",
-          "tests/unit/tools/test_idea_register_audit.py"
+          "tests/unit/tools/test_idea_register_audit.py",
+          "tests/unit/tools/test_archive_personal_names.py"
         ],
         "note_ar": "16 اختباراً في ملفّين: 4 إيجابية و12 سلبية، شُغّلت بمشغّل Python بسيط لا بـpytest. وكلّ قاعدةٍ أُسقطت بحالةٍ سلبية فأحمرّ اختبارها. و`vacuity_probe` و`mutation_score` الآليّان لم يُشغَّلا، فالسقف E3."
       },
@@ -332,8 +370,17 @@
       "docs/archive/commercial/IDEA_REGISTER.json",
       "docs/archive/commercial/IDEA_REGISTER_AR.md",
       "docs/archive/commercial/OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+      "docs/archive/commercial/OWNER_ROUTES_2026-10-27_AR.md",
+      "docs/archive/commercial/README_AR.md",
+      "docs/archive/commercial/data/CAR_IMPORT_UNDER_3Y_LANDED_COST_2026-10-27.csv",
+      "docs/archive/commercial/data/MACRO_REMITTANCES_ICT_DZ_TN_MA_EG_2026-10-27.csv",
+      "docs/archive/commercial/data/PHONES_DZ_TN_PRICE_GAP_2026-10-27.csv",
+      "docs/archive/commercial/data/SCHENGEN_VISA_REFUSALS_CONSULATES_IN_ALGERIA_2024_2025.csv",
+      "docs/archive/commercial/data/STARTUP_FUNDING_PARTECH_DZ_TN_MA_EG_2024_2025.csv",
+      "docs/archive/commercial/data/WB_AWARDS_SUPPLIER_COUNTRY_LEAGUE_2026-10-27.csv",
       "docs/commercial/AI_REDTEAM_TARGETS_2026-10-20.csv",
       "docs/commercial/WB_DATA_WINNERS_FRANCOPHONE_AFRICA_2026-10-27.csv",
+      "tests/unit/tools/test_archive_personal_names.py",
       "tests/unit/tools/test_idea_register.py",
       "tests/unit/tools/test_idea_register_audit.py",
       "tests/unit/tools/test_opportunity_archive_additive.py"

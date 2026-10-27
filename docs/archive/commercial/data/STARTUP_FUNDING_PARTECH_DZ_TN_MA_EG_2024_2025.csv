@@ -1,0 +1,9 @@
+report_year,country,equity_usd_m,debt_usd_m,total_usd_m,deals,status,source,retrieved_on
+2025,Egypt,358,246,604,100,read,Partech Africa Tech Venture Capital report (2024 and 2025 editions),2026-10-27
+2025,Morocco,79,2,80,29,read,Partech Africa Tech Venture Capital report (2024 and 2025 editions),2026-10-27
+2025,Tunisia,37,5,42,,read,Partech Africa Tech Venture Capital report (2024 and 2025 editions),2026-10-27
+2025,Algeria,8,,8,,read,Partech Africa Tech Venture Capital report (2024 and 2025 editions),2026-10-27
+2024,Egypt,297,,,89,read (equity only),Partech Africa Tech Venture Capital report (2024 and 2025 editions),2026-10-27
+2024,Morocco,82,,,25,read (equity only),Partech Africa Tech Venture Capital report (2024 and 2025 editions),2026-10-27
+2024,Tunisia,24,,,11,read (equity only),Partech Africa Tech Venture Capital report (2024 and 2025 editions),2026-10-27
+2024,Algeria,4-5,,,2,PDF layout ambiguous,Partech Africa Tech Venture Capital report (2024 and 2025 editions),2026-10-27

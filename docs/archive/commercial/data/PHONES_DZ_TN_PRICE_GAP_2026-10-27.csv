@@ -1,0 +1,23 @@
+model,variant(RAM/storage physical),dz_n_new_offers,dz_median_dzd,dz_min_dzd,tn_tunisianet_tnd,tn_variant_match,dz_median_in_tnd@official,gap_TN_vs_DZ_%_before_costs,landed_cost_tnd_exVAT@duty10%,net_margin_tnd@duty10%_retail15%,net_margin_%_of_TN_exVAT,"best_case_net_tnd(min DZ price,0% duty,0 retail margin)","gap_%_at_PARALLEL_rate(illegal_channel,illustrative)",reverse_gap_DZ_vs_TN_%_before_costs,reverse_net_dzd(DD30+DAPS60+2%),"reverse_net_dzd(DD30+2%,no DAPS)",reverse_net_%_no_DAPS,note,verification
+Samsung Galaxy A16 4G,"6/128 (TN lists 12=6+6, read)",6,34200,28900,749,read,758,-1.2,866,-331,-52.7,-37,80.6,1.2,-31741,-14188,-49.4,,Algerian median recomputed from raw offers 2026-10-27
+Samsung Galaxy A17 4G,6/128 (TN lists 12; 6+6 inferred),13,47900,36300,949,inferred,1061,-10.6,1214,-536,-67.2,-39,63.4,11.9,-36954,-14714,-36.6,,"agent computation (inputs saved, not re-run)"
+Samsung Galaxy A26 5G,6/128 (TN lists 12; 6+6 inferred),19,50500,38000,1069,inferred,1119,-4.5,1279,-516,-57.4,22,74.5,4.7,-44096,-19044,-44.9,,"agent computation (inputs saved, not re-run)"
+Samsung Galaxy A36 5G,8/128 (TN lists 16; 8+8 inferred),20,64900,59900,1359,inferred,1438,-5.5,1644,-674,-59.0,-239,72.7,5.8,-55559,-23710,-43.5,,"agent computation (inputs saved, not re-run)"
+Samsung Galaxy A36 5G,8/256 (TN lists 16; 8+8 inferred),5,67900,65000,1549,inferred,1505,2.9,1720,-614,-47.2,-197,88.1,-2.9,-67664,-31363,-55.0,,"agent computation (inputs saved, not re-run)"
+Samsung Galaxy A56 5G,"8/128 (TN lists 16=8+8, read)",24,77945,60000,1699,read,1727,-1.6,1975,-761,-53.3,45,79.7,1.7,-71738,-31922,-48.7,,Algerian median recomputed from raw offers 2026-10-27
+Samsung Galaxy A56 5G,8/256 (TN lists 16; 8+8),8,86245,77900,1899,read,1911,-0.6,2185,-829,-51.9,-200,81.5,0.6,-80808,-36305,-50.1,,"agent computation (inputs saved, not re-run)"
+Samsung Galaxy A57 5G,8/128 (TN lists 16; 8+8 inferred),23,83990,71000,2099,inferred,1861,12.8,2128,-629,-35.6,127,106.1,-11.3,-97418,-48227,-68.3,,Algerian median recomputed from raw offers 2026-10-27
+Samsung Galaxy A57 5G,8/256 (TN lists 16; 8+8 inferred),11,96000,83500,2299,inferred,2127,8.1,2432,-790,-40.9,7,97.5,-7.5,-103838,-49960,-61.9,,"agent computation (inputs saved, not re-run)"
+Samsung Galaxy S25 FE,8/256,7,126000,124900,2799,exact,2792,0.2,3192,-1193,-50.7,-527,83.2,-0.2,-119906,-54310,-51.3,,"agent computation (inputs saved, not re-run)"
+Samsung Galaxy S25 Ultra,12/256,19,195000,178000,4499,exact,4321,4.1,4940,-1727,-45.7,-323,90.2,-4.0,-198109,-92673,-56.6,,"agent computation (inputs saved, not re-run)"
+Xiaomi Redmi Note 15 4G,8/256,6,46745,44900,949,exact,1036,-8.4,1184,-506,-63.5,-238,67.4,9.2,-37779,-15539,-39.6,,"agent computation (inputs saved, not re-run)"
+Xiaomi Redmi 15C 4G,8/256,2,30150,29800,679,exact,668,1.6,764,-279,-48.9,-116,85.7,-1.6,-29385,-13472,-53.2,,"agent computation (inputs saved, not re-run)"
+Apple iPhone 15,128,25,142000,86000,3249,exact(storage),3147,3.3,3598,-1277,-46.8,748,88.7,-3.1,-142224,-66083,-55.4,,Algerian median recomputed from raw offers 2026-10-27
+Apple iPhone 16e,128,6,115450,45000,2799,exact(storage),2558,9.4,2925,-926,-39.4,1315,99.9,-8.6,-127442,-61846,-63.7,,"agent computation (inputs saved, not re-run)"
+Apple iPhone 16,128,19,174000,135000,3899,exact(storage),3856,1.1,4408,-1623,-49.5,164,84.8,-1.1,-168113,-76738,-52.5,,"agent computation (inputs saved, not re-run)"
+Apple iPhone 17,256,16,226000,177000,4699,exact(storage),5008,-6.2,5726,-2369,-60.0,-132,71.4,6.6,-190964,-80842,-42.6,,"agent computation (inputs saved, not re-run)"
+Apple iPhone 17 Pro,256,21,302000,245000,5995,exact(storage),6692,-10.4,7651,-3369,-66.9,-610,63.7,11.6,-233870,-93375,-36.8,,"agent computation (inputs saved, not re-run)"
+Apple iPhone 17 Pro Max,256,57,329900,261999,6799,exact(storage),7311,-7.0,8358,-3502,-61.3,-326,69.9,7.5,-274236,-114899,-41.4,,Algerian median recomputed from raw offers 2026-10-27
+Honor X9d 5G,12/256,26,82500,72000,1499,exact,1828,-18.0,2090,-1019,-80.9,-400,49.8,22.0,-53486,-18357,-26.5,,"agent computation (inputs saved, not re-run)"
+Honor X7d 4G,"8/256 (TN lists 16=8+8, read)",9,48500,43500,799,read,1075,-25.7,1229,-658,-98.0,-331,35.8,34.5,-25277,-6552,-16.1,,Algerian median recomputed from raw offers 2026-10-27
+Oppo A5 4G,"6/128 (TN lists 12=6+6, read)",5,33500,32290,699,read,742,-5.8,849,-349,-59.5,-157,72.0,6.2,-28492,-12110,-43.0,,"agent computation (inputs saved, not re-run)"
