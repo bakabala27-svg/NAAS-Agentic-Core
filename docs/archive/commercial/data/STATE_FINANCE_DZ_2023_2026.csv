@@ -1,0 +1,18 @@
+indicator,period,value,source,source_url,status
+hydrocarbon_export_revenue_usd_bn,2023,50.50,"Bank of Algeria, Rapport annuel 2024",https://www.bank-of-algeria.dz/stoodroa/2025/09/Rapport-2024-fr.pdf,read
+hydrocarbon_export_revenue_usd_bn,2024,45.23,"Bank of Algeria, Rapport annuel 2024",https://www.bank-of-algeria.dz/stoodroa/2025/09/Rapport-2024-fr.pdf,read
+treasury_account_at_bank_of_algeria_dzd_bn,2023-12,2917.94,"Bank of Algeria, Rapport annuel 2024",https://www.bank-of-algeria.dz/stoodroa/2025/09/Rapport-2024-fr.pdf,read
+treasury_account_at_bank_of_algeria_dzd_bn,2024-12,241.83,"Bank of Algeria, Rapport annuel 2024",https://www.bank-of-algeria.dz/stoodroa/2025/09/Rapport-2024-fr.pdf,read
+hydrocarbon_receipts_share_of_budget_spending_pct,2024,29.03,"Bank of Algeria, Rapport annuel 2024",https://www.bank-of-algeria.dz/stoodroa/2025/09/Rapport-2024-fr.pdf,read
+gross_official_reserves_usd_bn,2023,70.6,IMF Press Release 26/290 (2026-09-21),https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+gross_official_reserves_usd_bn,2024,68.9,IMF Press Release 26/290 (2026-09-21),https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+gross_official_reserves_usd_bn,2025,51.0,IMF Press Release 26/290 (2026-09-21),https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+gross_official_reserves_usd_bn,2026p,46.5,IMF Press Release 26/290 (2026-09-21),https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+reserves_months_of_next_year_imports,2023,15.6,IMF Press Release 26/290,https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+reserves_months_of_next_year_imports,2024,11.1,IMF Press Release 26/290,https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+reserves_months_of_next_year_imports,2025,8.6,IMF Press Release 26/290,https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+overall_budget_balance_pct_gdp,2023,-5.5,IMF Press Release 26/290,https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+overall_budget_balance_pct_gdp,2024,-14.0,IMF Press Release 26/290,https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+overall_budget_balance_pct_gdp,2025,-10.5,IMF Press Release 26/290,https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+headline_inflation_pct_yoy,2025-09,-2.0,IMF Press Release 26/290,https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read
+headline_inflation_pct_yoy,2026-04,5.2,IMF Press Release 26/290,https://www.imf.org/en/news/articles/2026/09/21/pr26290-algeria-imf-concludes-2026-aiv-consultation,read

@@ -1,7 +1,7 @@
 {
  "$schema_version": 1,
  "title_ar": "سجلّ الأفكار الموحّد",
- "reviewed_on": "2026-10-27",
+ "reviewed_on": "2026-10-28",
  "reading_view": "IDEA_REGISTER_AR.md",
  "gates": {
   "G1": "دافعٌ بالعملة الصعبة بدليلٍ منشور",
@@ -64,7 +64,8 @@
    "language_data": "بيانات اللغة",
    "channel": "قنوات البيع",
    "finance_reg": "التنظيم المالي",
-   "translation": "الترجمة والتكييف اللغوي"
+   "translation": "الترجمة والتكييف اللغوي",
+   "tourism": "السياحة والنقل عبر الحدود"
   },
   "currency": {
    "EUR": "يورو",
@@ -258,6 +259,27 @@
  },
  "studies": [
   {
+   "id": "S11",
+   "date": "2026-10-28",
+   "title_ar": "الموجة السادسة: كيف نستفيد نحن من مشاكل الجزائر",
+   "where": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md §21",
+   "feeds": [
+    "B56",
+    "B57",
+    "B58",
+    "B59",
+    "B60",
+    "B61",
+    "B62",
+    "B63",
+    "B64",
+    "B65",
+    "B03",
+    "B53"
+   ],
+   "finding_ar": "لا طريق قانونياً إلى العملة الصعبة داخل هذه المشاكل خلال 90 يوماً: كلّ دافعٍ وُجد يدفع بالدينار؛ رصيد الخزينة −91.7% والاحتياطي 68.9→51.0 مليار $؛ المادة 58 تحجز الصفقات للمؤسسات الناشئة؛ المصدّر لا يدفع لمقيمٍ بالعملة الصعبة؛ 152 مناقصة عجلات من 123 جهة؛ ومكاتب الصرف بلا طلبٍ واحد"
+  },
+  {
    "id": "S10",
    "date": "2026-10-27",
    "title_ar": "الموجة الخامسة: لماذا يكسب الجيران العملة الصعبة أكثر، والتحويلات، والسيارات",
@@ -420,13 +442,13 @@
   }
  ],
  "flow": {
-  "identified_ideas": 55,
+  "identified_ideas": 65,
   "identified_jobs": 14,
   "identified_value_chain_paths": 25,
-  "screened": 57,
+  "screened": 67,
   "included": 0,
   "conditional": 20,
-  "excluded": 37
+  "excluded": 47
  },
  "audit_standard": {
   "id": "A1",
@@ -1583,6 +1605,10 @@
     {
      "date": "2026-10-26",
      "event_ar": "الموجة الثانية: اللائحة 2025/2551 تمنع اجتماع عمولة الإحالة مع إعداد بيانات المنشأة نفسها؛ وFertial أُسندت لمركز CRE عنابة؛ والدافع بالعملة الصعبة غائب (جريحة في G1)"
+    },
+    {
+     "date": "2026-10-28",
+     "event_ar": "الموجة السادسة: فصلا الأسمدة والحديد (31 و72) نحو 47% من صادرات الجزائر غير الطاقوية إلى الاتحاد الأوروبي في 2025 (حدٌّ أعلى على مستوى الفصل)؛ والمصدّر لا يدفع لمقيمٍ بالعملة الصعبة إلا برأي بنك الجزائر"
     },
     {
      "date": "2026-10-27",
@@ -4043,9 +4069,13 @@
     {
      "date": "2026-10-27",
      "event_ar": "الموجة الخامسة، الاتجاه المعاكس: التونسيون يشترون في الطارف وعنابة للسببين نفسيهما (السعر الموازي والدعم) بدنانير من السوق الموازية — لا يدخل البنوكَ يورو، فلا يغيّر الحكم"
+    },
+    {
+     "date": "2026-10-28",
+     "event_ar": "الموجة السادسة: ممرّ الطارف نحو تونس قائمٌ لشاحنات الأجهزة والتغليف، لكنّ الدافع التونسي يدفع بالدينار التونسي، فلا يغيّر الحكم"
     }
    ],
-   "last_reviewed": "2026-10-27"
+   "last_reviewed": "2026-10-28"
   },
   {
    "id": "B54",
@@ -4157,6 +4187,427 @@
    ],
    "history": [],
    "last_reviewed": "2026-10-27"
+  },
+  {
+   "id": "B56",
+   "kind": "idea",
+   "title_ar": "ورشات مراجعة البكالوريا يقدّمها الشريك المؤسِّس، بحجزٍ مسبق بالدينار",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "education",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "876,000 مترشّح للبكالوريا 2026 و1,232 بتقدير ممتاز (TSA 2026-07-12)؛ منصّات مدفوعة بـ500–1,200 دينار وتطبيقٌ مجاني بالذكاء الاصطناعي؛ 20 جهةً مسمّاة قُرئت قنوات 10 منها"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "قرار المالك بفتح مسار الدينار لإثبات الجرّ أمام ASF، ثمّ 50 تسجيلاً مسبقاً بلا دفع خلال 21 يوماً بعد بطاقة ANAE"
+   },
+   "group": null,
+   "related": [
+    "B02"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B57",
+   "kind": "idea",
+   "title_ar": "متابعة عمر العجلات لأساطيل الجهات العمومية، بالدينار",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "industry",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "software"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "قياسٌ أصلي (§21): 152 مناقصة عجلات من 123 جهة عمومية بين 2025-10 و2026-08، من 11 شهرياً إلى 25؛ ولا مناقصة تطلب برنامجاً"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "pass",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "قرار المالك بمسار الدينار، ثمّ جهتان من 20 أسطولاً مسمّى تقبلان سعراً لكلّ مركبة في السنة"
+   },
+   "group": null,
+   "related": [
+    "B55"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B58",
+   "kind": "idea",
+   "title_ar": "ملفّات تعويض صندوق دعم الصادرات (FSPE) للمصدّرين الصغار، بالدينار",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "مجلس المحاسبة: 3% فقط من اعتمادات صندوق دعم الصادرات لسنة 2020 استُعملت (نقلاً عن الوكيل)؛ 25 مصدّراً مسمّى؛ المصدّر لا يدفع لمقيمٍ بالعملة الصعبة (التعليمة 06-2021 المادة 7.2)"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "قرار المالك بمسار الدينار، ثمّ 3 ردود من 20 مصدّراً على سؤال: أيّ بندٍ من الصندوق لم تطالبوا به ولماذا؟"
+   },
+   "group": null,
+   "related": [
+    "B59",
+    "B49"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B59",
+   "kind": "idea",
+   "title_ar": "وكيل مصادرٍ لمشترين أجانب للمنتج الجزائري، يُدفع له باليورو",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "trade_dz",
+    "markets": [
+     "DZ",
+     "FR",
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "صادرات الجزائر غير الطاقوية إلى الاتحاد الأوروبي 1,843.7 مليون € في 2025 مقابل 12,986.5 لتونس (Comext، مُعاد حسابه)؛ تصدير الخدمة لغير مقيم يُحتفظ بعائده كاملاً (التعليمة 06-2021 المادة 4)؛ لا مشترٍ أجنبي مسمّى"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "pass",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "fail"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "held_option",
+    "trigger_ar": "قائمة 20 مستورداً فرنسياً للأغذية أو المواد الجزائرية بقنواتٍ عامّة، ويقول اثنان منهم نعم لوكيل مصادر يُدفع له باليورو"
+   },
+   "group": null,
+   "related": [
+    "B58",
+    "B49",
+    "B03"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B60",
+   "kind": "idea",
+   "title_ar": "صفقات محجوزة للمؤسسات الناشئة (المادة 58) لدى الجامعات ومديريات الولايات، بالدينار",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "public_services",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "remote_service"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "القانون 23-12 المادة 58: حجزٌ إلزامي للمؤسسات الناشئة الحاملة للعلامة حتى 20% من الطلب العمومي؛ 25 جهةً عمومية مسمّاة؛ ولا مناقصة رقمية حيّة في الولايات الخمس"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "partial"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "awaiting_owner",
+    "trigger_ar": "قرار المالك بمسار الدينار وبتأسيس شركةٍ تحمل العلامة، ثمّ 3 استشاراتٍ في نطاقنا بميزانيةٍ معلنة خلال 60 يوماً"
+   },
+   "group": null,
+   "related": [
+    "B56"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B61",
+   "kind": "idea",
+   "title_ar": "نقطة تذاكر ومعلومات للحافلة والقطار بين تونس وعنابة في القالة، بالدينار",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "tourism",
+    "markets": [
+     "DZ",
+     "TN"
+    ],
+    "currency": "DZD",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "حافلة تونس–عنابة منذ 2026-03-13 والقطار منذ 2026-10-21، و2,660,358 مسافراً عبر ملّولة في 2025؛ لا نظام وكلاء معروف"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "fail"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "مشغّلٌ يعلن نظام وكلاء في الطارف بعمولةٍ لا تقلّ عن 5%"
+   },
+   "group": null,
+   "related": [
+    "B64"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B62",
+   "kind": "idea",
+   "title_ar": "مكتب صرف خاصّ عند أم الطبول أو القالة",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "finance_reg",
+    "markets": [
+     "DZ"
+    ],
+    "currency": "DZD",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "النظام 23-01 (رأسمال 1–5 ملايين دينار)؛ وزير المالية: «لم نتلقَّ أيّ طلب» والأورو 260 في السوق مقابل 150 رسمياً؛ منحة السياحة بالبطاقة وحدها منذ 2026-07-19"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "fail"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "closed_by_fact",
+    "trigger_ar": "انحسار الفارق بين السعرين الرسمي والموازي إلى أقلّ من 10% لثلاثة أشهر متتالية"
+   },
+   "group": null,
+   "related": [
+    "B53"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B63",
+   "kind": "idea",
+   "title_ar": "عجلات جزائرية الصنع إلى أوروبا عبر الشريك في فرنسا، بعمولةٍ باليورو",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "industry",
+    "markets": [
+     "DZ",
+     "FR",
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "channel"
+   },
+   "evidence": {
+    "level": "D0",
+    "basis_ar": "مصانع العجلات الجديدة وIris ضاعف طاقته؛ لكنّ التصدير في عزّ النقص المحلّي هشٌّ سياسياً، ولـIris شريكٌ إسباني بحسب الوكيل"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "partial",
+     "G2": "partial",
+     "G3": "fail",
+     "G4": "partial",
+     "G5": "fail"
+    },
+    "binding_constraint": "policy_flux"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "انتهاء النقص المحلّي المعلن رسمياً بعد تشغيل المصانع الأربعة في 2027، ومصنّعٌ يطلب وكيلاً أوروبياً"
+   },
+   "group": null,
+   "related": [
+    "B57"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B64",
+   "kind": "idea",
+   "title_ar": "وكالة سفر تبيع رحلات طبرقة لعائلات الطارف، بالدينار",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "tourism",
+    "markets": [
+     "DZ",
+     "TN"
+    ],
+    "currency": "DZD",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D1",
+    "basis_ar": "نحو 60 وكالة جزائرية استكشفت طبرقة في ربيع 2026؛ والوكالات مذكورة في حملة 2026 على تحويل منحة السياحة"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "partial",
+     "G5": "fail"
+    },
+    "binding_constraint": "dzd_only"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "قرار المالك بمسار الدينار وقراءة رخصة الوكالة وضمانها"
+   },
+   "group": null,
+   "related": [
+    "B61"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
+  },
+  {
+   "id": "B65",
+   "kind": "idea",
+   "title_ar": "خدمات ميدانية لمنظّمي رحلاتٍ تونسيين أو أوروبيين في حظيرة القالة، باليورو",
+   "first_recorded": "2026-10-26",
+   "archive": "OPPORTUNITIES_PAIN_RESEARCH_2026-10-26_AR.md",
+   "addenda": [],
+   "facets": {
+    "domain": "tourism",
+    "markets": [
+     "DZ",
+     "TN",
+     "EU"
+    ],
+    "currency": "EUR",
+    "delivery": "field"
+   },
+   "evidence": {
+    "level": "D0",
+    "basis_ar": "لا دليل على طلبٍ سياحي وافد إلى حظيرة القالة أو عنابة؛ قواعد التأشيرة والرخصة لم تُقرأ"
+   },
+   "screening": {
+    "stage": "excluded",
+    "gates": {
+     "G1": "fail",
+     "G2": "partial",
+     "G3": "partial",
+     "G4": "fail",
+     "G5": "fail"
+    },
+    "binding_constraint": "no_named_payer"
+   },
+   "option": {
+    "state": "parked",
+    "trigger_ar": "منظّم رحلاتٍ تونسي أو أوروبي مسمّى يطلب خدماتٍ ميدانية في الطارف ويدفع باليورو"
+   },
+   "group": null,
+   "related": [
+    "B61"
+   ],
+   "history": [],
+   "last_reviewed": "2026-10-28"
   },
   {
    "id": "J01",
