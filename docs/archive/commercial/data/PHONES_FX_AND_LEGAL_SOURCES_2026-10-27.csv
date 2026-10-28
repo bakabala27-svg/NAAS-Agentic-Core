@@ -1,0 +1,29 @@
+item,value,source_url,source_date,status
+TND per EUR (BCT interbank),3.3595,https://www.bct.gov.tn/bct/siteprod/cours.jsp,2026-10-26,read
+TND per USD (BCT interbank),2.9997,https://www.bct.gov.tn/bct/siteprod/cours.jsp,2026-10-26,read
+TND per 10 DZD (BCT interbank),0.2216 (1 TND = 45.13 DZD),https://www.bct.gov.tn/bct/siteprod/cours.jsp,2026-10-26,read
+DZD per EUR official (Bank of Algeria via press),151.1803,https://maghrebemergent.news/fr/algerie-legere-baisse-du-dinar-face-a-leuro-sur-le-marche-interbancaire/,2026-10-21,read (BoA site itself: 503/TLS not read)
+DZD per USD official (Bank of Algeria via press),134.4243,same,2026-10-21,read
+DZD per EUR official,150.52 (2 Oct),https://www.tsa-algerie.com/le-dinar-algerien-au-plus-haut-depuis-une-annee-face-a-leuro/,2026-10-03,read
+DZD per EUR PARALLEL (Square Port-Said; illegal channel),277,same TSA,2026-10-03,read
+DZD per USD PARALLEL (illegal channel),239.5,same TSA,2026-10-03,read
+Cross TND/DZD via EUR (official),0.022222 (3.3595/151.1803),recomputed,2026-10-21/26,recomputed
+Cross TND/DZD via EUR (parallel; illustrative only),0.012128 (3.3595/277),recomputed,2026-10,recomputed
+TN smartphone customs duty proposed (PLF 2027 art.68),10% (current rate not stated),https://www.tunisienumerique.com/tunisie-plf-2027-smartphones-moins-taxes-a-limportation-mais-un-droit-de-timbre-de-20-dt-prevu/,2026-10-16,read
+TN smartphone duty to 10% (PLF 2027),confirmation,https://realites.com.tn/fr/smartphones-et-terminaux-de-paiement-ce-que-prevoit-le-projet-de-loi-de-finances-2027/,2026-10-17,read
+TN smartphone duty to 10% (PLF 2027),og:description only,https://managers.tn/2026/10/26/les-droits-de-douane-sur-les-smartphones-pourraient-etre-ramenes-a-10/,2026-10-26,read (summary meta only)
+TN 20 TND stamp per mobile registration in central identifier register (CERT; first registration exempt),proposed PLF 2027,tunisienumerique (above),2026-10-16,read
+TN LF2026 tax 1% of customs value on imported smartphones,1%,https://www.infirst.tn/wp-content/uploads/2025/12/Commentaire-LF-2026-InFirst-V2.pdf,2025-12,read
+TN current base customs duty on 8517.13,UNKNOWN (>10% implied by 'ramener a 10%'),-,-,not found
+TN VAT on phones,19% assumed,-,-,NOT read (assumption)
+TN Sajalni IMEI white/grey/black list; unregistered blocked,search summary only,https://idaraty.tn/fr/procedures/sajalni-declarer-son-appareil-mobile-et-le-proteger-contre-les-vols-et-la-contrefacon,-,UNKNOWN (403 not read)
+DZ commercial import of smartphones: 30% DD + 60% DAPS + 19% TVA + 2% solidarity,customs official quoted,https://www.algerie360.com/taxe-sur-les-smartphones-cest-dans-linteret-collectif-douanes/,2022-02-13,read (2026 status not verified)
+DZ DAPS 60% on mobile phones (arrete 26-01-2019 JO n6),60%,https://www.nticweb.com/mobile/9611-le-daps-fix%C3%A9-%C3%A0-60-les-t%C3%A9l%C3%A9phones-mobiles-encore-plus-chers-%C3%A0-l%E2%80%99importation.html,2019-01-30,read
+DZ phones/tablets total tax ~133% (El Watan via TSA),133%,https://www.tsa-algerie.com/pc-portables-et-telephones-fortement-taxes-une-mesure-a-haut-risque/,2022-02-10,read
+DZ 40% integration rate required of smartphone makers,40%,https://www.tsa-algerie.com/industrie-des-smartphones-en-algerie-2-principales-conditions-exigees/,2025-02-23,read
+DZ Ord. 05-06 art.10 smuggling: 1-5 yrs + fine 5x value; 3+ persons 2-10 yrs + 10x,text,https://wipolex-res.wipo.int/edocs/lexdocs/laws/fr/dz/dz037fr.pdf,2006 compilation,read (later amendments not checked)
+DZ export regime / BoA reg. 26-02 (120/180 days) / FX retention,-,-,-,NOT read this run (brief only)
+TN Code des douanes contrebande penalty article,-,-,-,NOT read
+GAFTA / Algeria-Tunisia preferential agreement rules of origin,-,-,-,NOT read
+Traveller allowances (DZ exit / TN entry),-,-,-,NOT read
+DZ IMEI registration/blocking regime,-,-,-,NOT found

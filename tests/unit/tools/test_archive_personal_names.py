@@ -25,7 +25,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 ARCHIVE = REPO_ROOT / "docs/archive/commercial"
-SCANNED_SUFFIXES = (".md", ".json", ".csv")
+SCANNED_SUFFIXES = (".md", ".json", ".csv", ".html")
 SALT = "archive-names-v1|"
 WINDOW = 3
 

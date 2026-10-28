@@ -1,0 +1,21 @@
+org,country,role,measured_fact,public_channel,channel_status_2026-10-26,payer_currency_note
+Tosyali Algerie (Bethioua),DZ,installation operator DRI-EAF steel,"DZ steel default 3.000 route C (+10%) -> 153 EUR/t vs ~65 EUR/t actual (gap ~88 EUR/t); DZ steel to EU 738 kt 2025",tosyali.com.tr contact,NOT READ (503/TLS hostname error),foreign-owned (Tosyali Holding TR) - EUR possible via parent
+Tosyali Holding,TR,foreign parent,"same; communique: rebar->BE 7kt, slabs->IT 10kt, HRC->ES 5kt (El Khabar, undated)",tosyali.com.tr,NOT READ,hard currency
+Algerian Qatari Steel (AQS) Bellara,DZ,installation operator DRI-EAF,"2.2 Mt steel; same 88 EUR/t gap","export.sales@aqs.dz; contact@aqs.dz; aqs.dz/contact",READ,51% Algerian state -> DZD unless importer/QSI pays
+Qatar Steel (QSI),QA,49% shareholder AQS,"same",commercial@qatarsteel.com.qa; qatarsteel.com.qa/contact/contact-details/,READ,hard currency
+Sider El Hadjar / IMETAL,DZ,BF-BOF operator,"default 3.000 still above BF-BOF physics (~2.0-2.3, assumption)",imetal.dz,READ (no channel found),state DZD
+Sorfert Algerie (Arzew),DZ,ammonia/urea operator,"capacity NH3 1.6 Mt urea 1.3 Mt; NH3 gap ~16 EUR/t, urea ~17 EUR/t (central)",sorfert.com,NOT READ (TLS error),Fertiglobe 51%
+Fertiglobe (ADNOC),AE,parent of Sorfert,"Fertiglobe AR 2025: 51% of Sorfert",fertiglobe.com/contact-us/,READ,hard currency; likely in-house CBAM team (assumption)
+AOA Algerienne Omanaise des Fertilisants,DZ,ammonia/urea operator,">90% output exported (secondary)",aoa.dz,READ (no channel found),Suhail Bahwan Group parent
+Suhail Bahwan Group,OM,parent of AOA,"",suhailbahwangroup.com/contact-us/enquiry-form,READ,hard currency
+Fertial (Annaba/Arzew),DZ,NH3/AN operator,"SLOT TAKEN: Asmidal-CRE 5-yr MRV agreement signed 2026-09-07",fertial-dz.com,NOT READ (reset),EXCLUDE
+CRE Annaba,DZ,competitor (public research centre),"holds Fertial MRV/CBAM mandate",secretariat@cre.dz; cre.dz contact page,READ,competitor/possible subcontract (DZD)
+GICA (group),DZ,cement group (state),"DZ grey clinker default 1.280 (+10%) -> 58.9 EUR/t > clinker unit value 56 EUR/t; gap ~40 EUR/t; DZ clinker to EU 1,449 kt 2025",secretariat.dg@gica.dz; gica.dz/fr/contact/,READ,state DZD -> importer must pay
+SCAEK (GICA),DZ,clinker exporter,"same",secretariat.cm@scaek.dz; scaek.dz/Contacts,READ,state DZD
+ECDE Chlef (GICA),DZ,clinker exporter,"exported 1 Mt clinker to FR/ES/IT in 2022 (algerie-eco 2022-10-10)",ecde.dz,READ (no channel found),state DZD
+Holcim El Djazair (ex-Lafarge Algerie),DZ,clinker exporter,"8 kt clinker -> Portugal May 2026 (algerie-eco 2026-05-03)",dz.contact-algerie@holcim.com; holcim.dz/contact,READ,Holcim parent (CH) - EUR possible; in-house team likely
+Cilas (Biskra; Holcim+Souakri),DZ,clinker exporter,"first clinker to France 2021 (TSA)",cilas.dz,NOT READ (502),mixed
+Biskria Ciment,DZ,white cement/clinker exporter,"white cement -> IT 1.9 kt, US 33 kt (2026-05-03)",contact@biskriaciment.dz,READ,private DZ -> DZD
+LISCO Libyan Iron and Steel,LY,DRI exporter,"LY has no 7203 row -> Other-countries default 1.325 (+10%) ~83 EUR/t vs ~17 EUR/t actual 0.6 (assumption); ~244 kt to IT/FR/ES 2025 (wave-1)",marketing@libyansteel.com,READ,USD/EUR possible; Libya risk
+Green and Fair JSC,BG,verifier (live thread),"accreditation not documented in list of 5 at 2026-10-13",repo thread,n/a,PARTNER not buyer; no referral commission (DR 2025/2551 Annex II 1.7.3)
+EmiCert / BV Italia / RINA / SGS ICS Italia / Intertek AB,EU,accredited verifiers (secondary list 2026-10-13),"only 5 documented; Commission list unpublished",not collected,n/a,partners

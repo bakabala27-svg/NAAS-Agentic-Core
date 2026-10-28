@@ -1,0 +1,322 @@
+<title>دراسة الفرص الشاملة</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Kufi+Arabic:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (~46rem) for argument, wide evidence tables in their own scroll boxes. */
+:root {
+  --paper: #f4f6f3;
+  --panel: #ffffff;
+  --ink: #18212b;
+  --muted: #56616c;
+  --rule: #d6dbd4;
+  --accent: #1d6a51;
+  --accent-soft: #e2eee8;
+  --warn: #8a5a00;
+  --warn-soft: #f5ead2;
+  --bad: #9c3527;
+  --bad-soft: #f4e0dc;
+  --font-display: "Noto Kufi Arabic", "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161b; --panel: #171e24; --ink: #e5e9e6; --muted: #9ba6ae; --rule: #2b343c;
+    --accent: #63c39b; --accent-soft: #1b3128; --warn: #e2b15a; --warn-soft: #382c16;
+    --bad: #e78d7f; --bad-soft: #3a2320; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11161b; --panel: #171e24; --ink: #e5e9e6; --muted: #9ba6ae; --rule: #2b343c;
+  --accent: #63c39b; --accent-soft: #1b3128; --warn: #e2b15a; --warn-soft: #382c16;
+  --bad: #e78d7f; --bad-soft: #3a2320; color-scheme: dark;
+}
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.75; }
+.page { direction: rtl; max-width: 64rem; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 2.75rem; }
+.read { max-width: 46rem; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.35; margin: 0; }
+h1 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); }
+h2 { font-size: 1.45rem; padding-bottom: .4rem; border-bottom: 2px solid var(--ink); }
+h3 { font-size: 1.12rem; }
+p { margin: 0; }
+section { display: grid; gap: 1.1rem; }
+.eyebrow { font-size: .8rem; letter-spacing: .04em; color: var(--muted); }
+.lede { font-size: 1.12rem; color: var(--ink); }
+.meta { color: var(--muted); font-size: .9rem; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
+ul, ol { margin: 0; padding-inline-start: 1.3rem; display: grid; gap: .45rem; }
+
+/* Funnel strip: the counts ARE the finding. */
+.funnel { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: .75rem; }
+.stage { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: .85rem 1rem; display: grid; gap: .2rem; }
+.stage b { font-family: var(--font-data); font-size: 1.7rem; font-weight: 500; line-height: 1.2; }
+.stage span { color: var(--muted); font-size: .85rem; }
+.stage.final { border-color: var(--accent); background: var(--accent-soft); }
+
+.verdict { background: var(--panel); border: 1px solid var(--rule); border-inline-start: 4px solid var(--accent); border-radius: 4px; padding: 1.1rem 1.25rem; display: grid; gap: .7rem; }
+
+.tbl { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: start; padding: .55rem .7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; background: var(--paper); white-space: nowrap; }
+tbody tr:last-child td { border-bottom: 0; }
+td.c { text-align: center; white-space: nowrap; }
+.pill { display: inline-block; font-size: .78rem; padding: .05rem .55rem; border-radius: 999px; white-space: nowrap; font-weight: 600; }
+.ok { background: var(--accent-soft); color: var(--accent); }
+.mid { background: var(--warn-soft); color: var(--warn); }
+.no { background: var(--bad-soft); color: var(--bad); }
+.g { font-family: var(--font-data); font-weight: 500; }
+.g.y { color: var(--accent); } .g.m { color: var(--warn); } .g.n { color: var(--bad); }
+
+.finalist { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 1.3rem 1.4rem; display: grid; gap: 1rem; }
+.finalist header { display: grid; gap: .3rem; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .9rem 1.4rem; }
+.fact { display: grid; gap: .25rem; min-width: 0; }
+.fact h4 { margin: 0; font-size: .82rem; letter-spacing: .03em; color: var(--muted); font-weight: 600; }
+.test { border-top: 1px dashed var(--rule); padding-top: .9rem; display: grid; gap: .5rem; }
+.note { color: var(--muted); font-size: .88rem; }
+.sources ol { font-size: .88rem; gap: .35rem; }
+details { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: .6rem 1rem; }
+summary { cursor: pointer; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="page" lang="ar">
+
+<header class="read" style="display:grid;gap:.9rem">
+  <p class="eyebrow">دراسة مستقلّة · 26 أكتوبر 2026 · للمؤسّس وفريقه</p>
+  <h1>دراسة الفرص الشاملة</h1>
+  <p class="lede">من أين يمكن لفريقٍ مقيم في الجزائر، يتكلّم الفرنسية والعربية ويملك مبرمجين، أن يحصل على دخلٍ بالعملة الصعبة من ألمٍ قائمٍ اليوم؟ هذه الدراسة تطبّق منهجاً واحداً على كلّ ما جُمع من أفكار، وتنتهي بثلاثة متأهّلين واختبارٍ لكلٍّ منهم.</p>
+  <p class="meta">كلّ رقمٍ هنا إمّا مصدرٌ مؤرَّخ (بين معقوفين، والقائمة في الأسفل)، أو افتراضٌ مكتوبٌ بصفته افتراضاً، أو حسابٌ حتميّ منهما. لا شيء هنا تنبّؤ بإيراد.</p>
+</header>
+
+<section aria-labelledby="sum">
+  <h2 id="sum">الخلاصة</h2>
+  <div class="funnel" role="list">
+    <div class="stage" role="listitem"><b>45</b><span>مرشّحاً: 43 فكرة (B01–B43) + مساران قائمان (OPP-04 · OPP-13)</span></div>
+    <div class="stage" role="listitem"><b>5</b><span>بوّابات إقصاء موحّدة</span></div>
+    <div class="stage" role="listitem"><b>33</b><span>استُبعدت، كلٌّ ببوّابةٍ مسمّاة</span></div>
+    <div class="stage" role="listitem"><b>5</b><span>مشروطة بشرطٍ واحد معلوم (في 4 مجموعات)</span></div>
+    <div class="stage final" role="listitem"><b>7</b><span>متأهّلة، مدموجة في 3 عروض لاختبار مشترٍ</span></div>
+  </div>
+  <div class="verdict read">
+    <p><strong>المتأهّلون الثلاثة:</strong> (1) تنظيف معرّفات الفوترة الإلكترونية وبيانات العملاء، أوّلاً في فرنسا وبلجيكا ثمّ في الإمارات والسعودية؛ (2) اختبار حواجز الذكاء الاصطناعي بالعربية والدارجة؛ (3) تدقيق الإتاحة الرقمية لمواقع التجارة الإلكترونية الفرنسية.</p>
+    <p><strong>التوصية:</strong> المتأهّلان الثاني والثالث لهما قائمتا 20 جهةً جاهزتان في المستودع منذ 20 أكتوبر ولم تُرسَلا؛ يُرسَلان هذا الأسبوع. الأوّل يحتاج قراراً منك بفكّ تجميد رسائل الفوترة، ومشترياً مختلفاً عن مكاتب المحاسبة التي لم تردّ.</p>
+    <p><strong>ما تغيّر عن الجولات السابقة:</strong> فرصة المعاشات الفرنسية (B34) كانت ضمن الثلاث الأولى في رادار الألم (14 من 18)، وسقطت هنا: اتحاد Agirc-Arrco فوّض المراقبة الميدانية في الجزائر إلى مصرفٍ محلّي اختير بمناقصةٍ عمومية، يستدعي نحو 60,000 متقاعدٍ سنوياً [21][22]، والصندوق الوطني (CNAV) يذكر المصرف نفسه مثالاً لشريكه المحلّي. الدور مشغول، والملفّ المطلوب ليس ملفّ شركةٍ ناشئة.</p>
+  </div>
+</section>
+
+<section aria-labelledby="start" class="read">
+  <h2 id="start">نقطة الانطلاق: ما يملكه الفريق وما يقيّده</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>العنصر</th><th>الواقع</th><th>أثره على الاختيار</th></tr></thead>
+    <tbody>
+      <tr><td>المؤسّس</td><td>ماستر اقتصاد، مقيم في الطارف، ليس مبرمجاً</td><td>يرجّح ما فيه تحليل بيانات وتنسيق، ويستبعد ما يحتاج مهنةً مرخّصة</td></tr>
+      <tr><td>الفريق</td><td>مبرمجون، وشريكٌ في فرنسا بخلفية معلوماتية، ووضعه القانوني للعمل المدفوع غير مُتحقَّق</td><td>القدرة على التسليم موجودة؛ الفوترة من فرنسا غير متاحة بعد</td></tr>
+      <tr><td>الأصول التقنية</td><td>أداة تحقّق SIREN/SIRET/TVA، ومسبار حواجز الذكاء الاصطناعي، ومنصّة تعليمية مجمّدة</td><td>تمنح أفضلية للمتأهّلين الأوّل والثاني</td></tr>
+      <tr><td>سكّة المال</td><td>اليورو ≈ <span class="num">151</span> دج رسمياً و<span class="num">274–276</span> في الموازي [20]؛ نظام بنك الجزائر 26-02: إعادة العائدات خلال <span class="num">120</span> يوماً [27]</td><td>الدفع بتحويلٍ بنكيّ إلى حسابٍ بالعملة الصعبة، بآجالٍ قصيرة في العقود</td></tr>
+      <tr><td>سقف المقاول الذاتي</td><td><span class="num">5,000,000</span> دج سنوياً ≈ <span class="num">33,073</span> € بالسعر الرسمي (حساب)</td><td>أيّ نجاحٍ فعليّ يتجاوز السقف ويحتاج شركة</td></tr>
+      <tr><td>قانون المستودع</td><td>D-321: لا كود منتجٍ قبل ثلاث جهاتٍ ردّت ودافعٍ مُثبَت</td><td>كلّ متأهّل يبدأ برسالة، لا ببناء</td></tr>
+      <tr><td>السجلّ التجاري</td><td>آخر صفّ تواصل في 15 أكتوبر؛ ردٌّ واحد حيّ (جهة تحقّق CBAM)</td><td>العائق الأكبر هو الإرسال لا الأفكار</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section aria-labelledby="method" class="read">
+  <h2 id="method">المنهج</h2>
+  <p>جُمعت كلّ الأفكار من أرشيفَي 22 و26 أكتوبر ومن مسارات سلسلة القيمة، ودُمجت المكرّرة (مثلاً B01 وB22 وB30 وB31 وOPP-02 سوقٌ واحدة بموجات). ثمّ طُبّقت عليها خمس بوّابات بالترتيب نفسه. البوّابة غير المستوفاة تُقصي، والمستوفاة جزئياً تجعل الفكرة مشروطة. بعد ذلك فقط فُحص المتأهّلون: المشتري، والدليل، والسعر، والحجم، والمنافسة، والاقتصاد، والمخاطر، واختبار المشتري.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>البوّابة</th><th>السؤال</th><th>تُستوفى حين</th></tr></thead>
+    <tbody>
+      <tr><td class="g">G1</td><td>هل يوجد دافعٌ بالعملة الصعبة؟</td><td>جهةٌ من نوعٍ مسمّى تدفع اليوم لخدمةٍ مشابهة، بدليلٍ منشور</td></tr>
+      <tr><td class="g">G2</td><td>هل يجوز تسليمها من الجزائر؟</td><td>لا مهنة مرخّصة، ولا نقل معطياتٍ شخصية أوروبية محظور، ولا دورٌ أُسند لغيرنا</td></tr>
+      <tr><td class="g">G3</td><td>هل يستطيع الفريق تسليمها خلال 90 يوماً؟</td><td>بالمهارات الحالية، أو بمهارةٍ تُتعلَّم بلا ترخيص</td></tr>
+      <tr><td class="g">G4</td><td>هل الألم موثَّق وحديث؟</td><td>مصدرٌ رسميّ أو مهنيّ أو شكوى بلسان صاحبها، عمرها 12 شهراً أو أقلّ</td></tr>
+      <tr><td class="g">G5</td><td>هل يمكن الوصول إلى المشترين؟</td><td>20 جهةً مسمّاة على الأقلّ من قوائم عامّة</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">البوّابات حكمٌ موثَّق لا قياس؛ وكلّ سطرٍ في جدول الإقصاء يذكر سببه، ودليلُه الكامل في ملفّ الأرشيف بالمستودع.</p>
+</section>
+
+<section aria-labelledby="gates">
+  <h2 id="gates" class="read">تطبيق البوّابات على كلّ المرشّحين</h2>
+  <p class="read note">✓ مستوفاة · ~ جزئياً · ✗ غير مستوفاة. القراءة من اليمين.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>الفكرة</th><th>G1</th><th>G2</th><th>G3</th><th>G4</th><th>G5</th><th>الحكم</th><th>السبب الحاسم</th></tr></thead>
+    <tbody>
+      <tr><td>F1 · معرّفات الفوترة (B01 · B22 · B30 · B31 · OPP-02)</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g y">✓</td><td><span class="pill ok">متأهّل</span></td><td>ألمٌ رسمي في أكتوبر، وأداة موجودة، ومعرّفاتٌ تجارية لا معطيات شخصية في الغالب</td></tr>
+      <tr><td>F2 · حواجز الذكاء الاصطناعي بالعربية (OPP-04 · B12)</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g y">✓</td><td><span class="pill ok">متأهّل</span></td><td>فجوةٌ مقيسة في الدارجة الجزائرية، وقائمة 20 جهة جاهزة</td></tr>
+      <tr><td>F3 · الإتاحة الرقمية (OPP-13)</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g y">✓</td><td><span class="pill ok">متأهّل</span></td><td>رقابة DGCCRF نشطة؛ مهارة التدقيق تُتعلَّم ولا تُرخَّص</td></tr>
+      <tr><td>B19 · بيانات اللغات الجزائرية</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g m">~</td><td><span class="pill mid">مشروط</span></td><td>نقل الأصوات إلى الخارج يمرّ بالقانون 25-11</td></tr>
+      <tr><td>B03 · بيانات CBAM</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g m">~</td><td class="c g y">✓</td><td><span class="pill mid">مشروط</span></td><td>يتوقّف على شهادة جهة التحقّق التي ردّت</td></tr>
+      <tr><td>B10 + B24 · جاهزية الاستيراد والمدفوعات المحتجزة</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g m">~</td><td><span class="pill mid">مشروط</span></td><td>لا مصدّر أوروبي مسمّى يبحث عن الخدمة</td></tr>
+      <tr><td>B38 · أطبّاء PADHUE</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g m">~</td><td><span class="pill mid">مشروط</span></td><td>إصلاحٌ معلن قد يلغي المباراة</td></tr>
+      <tr><td>B34 · التحقّق من وجود المتقاعدين</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g n">✗</td><td><span class="pill no">مستبعد</span></td><td>Agirc-Arrco أسند الدور لمصرفٍ بمناقصةٍ عمومية [21][22]</td></tr>
+      <tr><td>B20 · قدرة محاسبية لمكاتب فرنسية</td><td class="c g m">~</td><td class="c g n">✗</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g y">✓</td><td><span class="pill no">مستبعد</span></td><td>احتكار المهنة ونقل معطياتٍ أوروبية</td></tr>
+      <tr><td>B36 · الشفافية في الأجور</td><td class="c g m">~</td><td class="c g n">✗</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>الأجور معطياتٌ شخصية لا تنتقل إلى الجزائر</td></tr>
+      <tr><td>B37 · ترميز PMSI</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g n">✗</td><td class="c g m">~</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>معطياتٌ صحية</td></tr>
+      <tr><td>B39 · توظيف الممرّضين</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g m">~</td><td class="c g n">✗</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>مسألةٌ أخلاقية؛ كيبك أغلقت التوظيف في إفريقيا</td></tr>
+      <tr><td>B42 · التجارب السريرية</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>خبرة GCP غير متوفّرة (يعود بشريكٍ مؤهّل)</td></tr>
+      <tr><td>B43 · تجديد تسجيل الأدوية</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>يحتاج اختصاصاً في الوبائيات</td></tr>
+      <tr><td>B33 · المغرب</td><td class="c g m">~</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>العلاقات مقطوعة منذ 2021</td></tr>
+      <tr><td>B35 · مكتب وثائق الجالية</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g n">✗</td><td><span class="pill no">مستبعد</span></td><td>لا دافع ولا سعر موجود</td></tr>
+      <tr><td>B40 · اجتهاداتٌ مختلَقة</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g n">✗</td><td><span class="pill no">مستبعد</span></td><td>سوقٌ أمريكية بعيدة عن الفريق</td></tr>
+      <tr><td>B41 · المصافي الحرارية</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>عملٌ ميدانيّ في فرنسا</td></tr>
+      <tr><td>B21 · DORA</td><td class="c g m">~</td><td class="c g m">~</td><td class="c g m">~</td><td class="c g n">✗</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>أرقام 2024 فقط</td></tr>
+      <tr><td>B23 · EUDR · B32 · عُمان</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g n">✗</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>لا ألم مُبلَغ ولا مشترٍ</td></tr>
+      <tr><td>B29 · ملفّات FSPE</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>بالدينار، والأجل 31 أكتوبر</td></tr>
+      <tr><td>B02 · B05 · B25 · B26 · B27 · B28</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g m">~</td><td class="c g m">~</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>الدفع بالدينار وحده (التعليم · المشتريات · المصدّرون · Jibayatic · المرتجعات · الدروس)</td></tr>
+      <tr><td>B04 · B14</td><td class="c g n">✗</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g m">~</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>لا دافع مسمّى (منصّة بيانات المصانع · تتبّع التمور)</td></tr>
+      <tr><td>B06 · B07 · B08 · B09 · B13 · B15</td><td class="c g m">~</td><td class="c g m">~</td><td class="c g n">✗</td><td class="c g m">~</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>عملٌ ميداني أو أجهزة أو رأس مال (المصانع · الصيانة · القطع · الميثان · التبريد · المياه)</td></tr>
+      <tr><td>B11 · B16 · B17</td><td class="c g m">~</td><td class="c g y">✓</td><td class="c g n">✗</td><td class="c g n">✗</td><td class="c g m">~</td><td><span class="pill no">مستبعد</span></td><td>خبرةٌ متخصّصة أو ألمٌ غير مؤرَّخ (الواجهات العربية · مطالبات المقاولين · الأمن)</td></tr>
+      <tr><td>B18 · المناقصات الدولية</td><td colspan="5" class="c note">قناة بيع لا فرصة</td><td><span class="pill no">مستبعد</span></td><td>تُستعمل داخل أيّ متأهّل</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section aria-labelledby="finalists">
+  <h2 id="finalists" class="read">المتأهّلون الثلاثة</h2>
+
+  <article class="finalist">
+    <header>
+      <p class="eyebrow">المتأهّل الأوّل</p>
+      <h3>تنظيف معرّفات الفوترة الإلكترونية وبيانات العملاء قبل أن تُرفض الفاتورة</h3>
+      <p>الفاتورة الإلكترونية تُرفض حين يكون رقم SIREN متوقّفاً، أو عنوان التوجيه غائباً عن الدليل الوطني، أو رقم الضريبة ناقصاً. والعطل نفسه يتكرّر في كلّ سوقٍ تُلزم بالفوترة الإلكترونية.</p>
+    </header>
+    <div class="facts">
+      <div class="fact"><h4>الدليل على الألم</h4><p>بيان الوزارة الفرنسية في 8 أكتوبر 2026: ربع المؤسسات بلا منصّة استقبال، وصعوبات توافقٍ بين المنصّات [1]. جلسة FNFE في 9 أكتوبر: «SIREN متوقّفة منشورة» و«عناوين غائبة عن الدليل» [2]. مستخدمةٌ في منتدى Sage: «فاتورتي تُرفض كلّ مرّة بلا سبب» [3]. بلجيكا: أرقام ضريبة ناقصة وعملاء غير مسجّلين [4].</p></div>
+      <div class="fact"><h4>الموجات القادمة</h4><p>فرنسا: <span class="num">172,600</span> مؤسسة صغيرة ومتوسطة تُصدر إلكترونياً من 1 سبتمبر 2027 [9]. الإمارات: تعيين المزوّد للأصغر قبل 31 مارس 2027، و<span class="num">70</span> مزوّداً معتمداً [5][6]. السعودية: الموجة 25 قبل 1 فبراير 2027 [8].</p></div>
+      <div class="fact"><h4>المشتري المقترح</h4><p>ليس مكاتب المحاسبة (4 جهات، صفر ردود). بل موزّعو برامج المحاسبة الذين يتحمّلون عبء الدعم، والمنصّات المعتمدة التي تُدخل عملاءها، والمزوّدون المعتمدون في الإمارات. وظيفةٌ في أبوظبي تطلب «صيانة بيانات العملاء والمورّدين» [7].</p></div>
+      <div class="fact"><h4>السعر</h4><p>قرار المالك: <span class="num">290</span> € دون ضريبة حتى 200 سجلّ (30 سبتمبر 2026). مراجع السوق: أدوات بيانات بين <span class="num">203</span> و<span class="num">468</span> €/سنة، ومستقلٌّ بـ<span class="num">300</span> €/يوم [11].</p></div>
+      <div class="fact"><h4>الحجم في فرنسا وحدها</h4><p>إن اشترت 1% أو 3% أو 5% من المؤسسات الصغيرة والمتوسطة بالسعر نفسه: <span class="num">0.50</span> أو <span class="num">1.50</span> أو <span class="num">2.50</span> مليون يورو لمرّةٍ واحدة. نسبة الشراء نفسها غير معروفة، فهذه مساحة لا توقّع.</p></div>
+      <div class="fact"><h4>المنافسة</h4><p>بيانات SIRENE الرسمية مجانية، وأدوات تجارية تبيع الإثراء. القيمة ليست في البيانات بل في معالجة الاستثناءات يدوياً بكلفةٍ منخفضة، وبالفرنسية والعربية معاً.</p></div>
+      <div class="fact"><h4>الاقتصاد (حساب)</h4><p>المهمّة الواحدة <span class="num">3.3–10</span> ساعات، وكلفة عملها <span class="num">11–66</span> €، فالهامش الإجمالي <span class="num">77–96%</span>. فريقٌ من ثلاثة بكلفة <span class="num">2,712</span> €/شهر يحتاج نحو <span class="num">11</span> مهمّة شهرياً للتعادل، وسقف المقاول الذاتي يُبلَغ عند <span class="num">114</span> مهمّة في السنة.</p></div>
+      <div class="fact"><h4>المخاطر</h4><p>قد يفضّل المشتري أداةً على خدمة؛ والوصول إلى الموزّعين يمرّ بعلاقات؛ وأرقام المقاولين الأفراد معطياتٌ شخصية؛ ورسائل الفوترة مجمّدة بقرارك.</p></div>
+    </div>
+    <div class="test">
+      <h4 style="margin:0">اختبار المشتري</h4>
+      <p>20 جهة من موزّعي برامج المحاسبة والمنصّات المعتمدة، بسؤالٍ واحد: «كيف تعالجون اليوم الفواتير المرفوضة بسبب المعرّفات والدليل، ومن يقوم بذلك؟». <strong>النجاح:</strong> جهةٌ مسمّاة تطلب عيّنة أو سعراً. <strong>الإيقاف:</strong> صفر ردود خلال 30 يوماً من الرسالة العشرين. يحتاج قرارك بفكّ تجميد D-300.</p>
+    </div>
+  </article>
+
+  <article class="finalist">
+    <header>
+      <p class="eyebrow">المتأهّل الثاني</p>
+      <h3>اختبار حواجز الذكاء الاصطناعي على العربية والدارجة الجزائرية</h3>
+      <p>الشركات تضع «حاجزاً» أمام نماذجها اللغوية، وأغلب هذه الحواجز لا ترى العربية، ولا شيء منها يسمّي الدارجة الجزائرية.</p>
+    </header>
+    <div class="facts">
+      <div class="fact"><h4>الدليل (قياسٌ أوّلي من هذا المستودع)</h4><p>من 11 مكوّن حراسة، واحدٌ يعلن العربية رسمياً، وصفرٌ يسمّي الدارجة الجزائرية [12]. منطق المطابقة بحدود الكلمات يلتقط <span class="num">3</span> من <span class="num">18</span> صيغة عربية يومية مقابل <span class="num">9</span> من <span class="num">11</span> فرنسية، و<span class="num">25.5%</span> من 527,765 رمزاً عربياً تحمل سابقةً ملتصقة.</p></div>
+      <div class="fact"><h4>دليلٌ مستقلّ</h4><p>أفضل نموذج بلغ <span class="num">68%</span> في مؤشّر السلامة العربي ASAS [13]. معيار SalamahBench يغطّي خمس لهجات منها المغربية وليس منها الجزائرية [14].</p></div>
+      <div class="fact"><h4>المشتري</h4><p>مختبرات النماذج التي تخدم مستخدمين عرباً، ومورّدو حواجز الذكاء الاصطناعي. القائمة: 10 مختبرات و10 مورّدين في المستودع (D-320).</p></div>
+      <div class="fact"><h4>السعر</h4><p>نطاقاتٌ ينشرها البائعون: <span class="num">15,000–80,000</span> دولار أسترالي للاشتباك الواحد [15]، و<span class="num">25,000–150,000</span> دولار أمريكي لاشتباكات الفرق الحمراء [16]. لم يُعثر على سعرٍ لاختبارٍ بالعربية تحديداً.</p></div>
+      <div class="fact"><h4>المنافسة</h4><p>معايير أكاديمية مجانية، وبائعو اختبارٍ عامّون. لم يُعثر على بائعٍ يقدّم اختبار الدارجة الجزائرية خدمةً.</p></div>
+      <div class="fact"><h4>الاقتصاد (حساب)</h4><p>ثلاثة أشخاص لثلاثة أسابيع ≈ <span class="num">1,650</span> € كلفة. اشتباكٌ واحد في الربع، حتى في أدنى النطاق المنشور، يغطّي الفريق.</p></div>
+      <div class="fact"><h4>المخاطر</h4><p>فريقٌ مجهول أمام مختبرات كبيرة؛ والمعايير المجانية بديلٌ جزئي؛ ولا اختبار على نظامٍ دون إذنٍ مكتوب؛ ولا محتوى مسيء في الذخيرة.</p></div>
+    </div>
+    <div class="test">
+      <h4 style="margin:0">اختبار المشتري</h4>
+      <p>جاهزٌ منذ 20 أكتوبر: رسالةٌ واحدة تعرض تشغيل المسبار على حاجز الجهة بإذنها، ومعها الآن آليةٌ يُعاد إنتاجها في سطرين. <strong>النجاح:</strong> جهةٌ تطلب المسبار على نظامها أو سعراً. <strong>الإيقاف:</strong> صفر ردود خلال 30 يوماً من الرسالة العشرين.</p>
+    </div>
+  </article>
+
+  <article class="finalist">
+    <header>
+      <p class="eyebrow">المتأهّل الثالث</p>
+      <h3>تدقيق الإتاحة الرقمية لمواقع التجارة الإلكترونية الفرنسية ثمّ إصلاحها</h3>
+      <p>القانون الأوروبي للإتاحة ساري منذ 28 يونيو 2025، والرقابة الفرنسية بدأت تعاقب.</p>
+    </header>
+    <div class="facts">
+      <div class="fact"><h4>الدليل على الألم</h4><p>حصيلة DGCCRF في 4 سبتمبر 2026: أكثر من نصف مواقع التجارة الإلكترونية المفحوصة فيها إخلالات، والنتائج النهائية مطلع 2027، والتبليغ عبر SignalConso منذ ديسمبر 2025 [17].</p></div>
+      <div class="fact"><h4>المشتري</h4><p>مواقع فرنسية غير متناهية الصغر نشرت بنفسها أنها «غير ممتثلة» أو «ممتثلة جزئياً». القائمة: 20 جهة في المستودع (D-322).</p></div>
+      <div class="fact"><h4>السعر</h4><p>التدقيق بين <span class="num">1,500</span> و<span class="num">8,000</span> € دون ضريبة، ونحو <span class="num">5,000</span> € لموقع تجارة على 25 صفحة، والتدقيق المضادّ <span class="num">700–2,000</span> € [18][19]. والإصلاح، وهو أغلى الأجزاء، يقوم به المبرمجون.</p></div>
+      <div class="fact"><h4>المنافسة</h4><p>سوقٌ فرنسية مزدحمة بوكالات الإتاحة. الفرق الممكن: الكلفة، والتدقيق والإصلاح معاً.</p></div>
+      <div class="fact"><h4>الاقتصاد (حساب)</h4><p>تدقيقٌ بثمانية أيام عملٍ لمدقّقٍ واحد ≈ <span class="num">293</span> € كلفة، والهامش <span class="num">80–96%</span>. تدقيقٌ واحد بـ5,000 € يغطّي الفريق لنحو شهرين.</p></div>
+      <div class="fact"><h4>المخاطر</h4><p>يحتاج كفاءةً حقيقية في المرجع الفرنسي RGAA، وDGCCRF تتحرّى «نزاهة المدقّقين». لا تصريح امتثالٍ ولا ادّعاء قانوني. والجهات كبيرة ولها مشترياتٌ رسمية.</p></div>
+    </div>
+    <div class="test">
+      <h4 style="margin:0">اختبار المشتري</h4>
+      <p>جاهزٌ منذ 20 أكتوبر: 20 استمارة بسؤالٍ واحد عن السلوك الحالي. <strong>النجاح:</strong> جهةٌ تطلب قراءةً يدوية لصفحةٍ من مسار الشراء أو سعراً. <strong>الإيقاف:</strong> صفر ردود خلال 30 يوماً من الرسالة العشرين.</p>
+    </div>
+  </article>
+</section>
+
+<section aria-labelledby="cond" class="read">
+  <h2 id="cond">المشروطة: ما الذي يفتح كلّاً منها</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>الفكرة</th><th>الشرط الواحد</th><th>من يحسمه</th></tr></thead>
+    <tbody>
+      <tr><td>B19 · بيانات اللغات الجزائرية</td><td>رأيٌ مكتوب من محامٍ جزائري في نقل التسجيلات الصوتية بالقانون 25-11، وسعر الساعة المقبولة من شركة بيانات</td><td>محامٍ + رسالةٌ إلى DATAmundi وSigma [25]</td></tr>
+      <tr><td>B03 · بيانات CBAM</td><td>صدور شهادة جهة التحقّق الأوروبية ونطاقها</td><td>الخيط القائم في السجلّ</td></tr>
+      <tr><td>B10 + B24 · الاستيراد</td><td>مصدّرٌ أوروبيّ غير فرنسي يقول إنّ شحنته أو دفعته عالقة</td><td>رسائل إلى غرف التجارة الإيطالية والإسبانية في الجزائر</td></tr>
+      <tr><td>B38 · أطبّاء PADHUE</td><td>نصّ القانون الذي يعوّض المباراة [24]</td><td>متابعة النصّ، وسؤال جمعيات الأطبّاء عمّا يحتاجونه الآن</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section aria-labelledby="plan" class="read">
+  <h2 id="plan">التوصية وخطّة الثلاثين يوماً</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>الأيام</th><th>الفعل</th><th>المخرَج</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1–2</td><td>إرسال 20 استمارة الإتاحة (F3) و20 رسالة الحواجز العربية (F2)، كما هي في المستودع</td><td>40 صفّاً في سجلّ التواصل</td></tr>
+      <tr><td class="num">1–5</td><td>بريد البنك بالأسئلة الستّة، وسؤالٌ سابع عن قائمة الاتحاد الأوروبي عالية المخاطر</td><td>جوابٌ مكتوب عن سكّة الدفع</td></tr>
+      <tr><td class="num">3–7</td><td>قرارك في فكّ تجميد D-300، ثمّ بناء قائمة 20 موزّعاً ومنصّة معتمدة (F1)</td><td>قائمة F1 ورسالتها</td></tr>
+      <tr><td class="num">8</td><td>إرسال رسائل F1</td><td>20 صفّاً إضافياً</td></tr>
+      <tr><td class="num">30</td><td>حكمٌ على كلّ اختبار بشرط الإيقاف المسجّل مسبقاً</td><td>متابعة الفائز، وإغلاق البقية بلا تأويل</td></tr>
+    </tbody>
+  </table></div>
+  <p>لماذا هذا الترتيب: F2 وF3 لا يحتاجان أيّ إعداد، فكلّ يوم تأخير فيهما يوم ضائع؛ وF1 هو الأعلى قيمةً لكنه يحتاج قراراً منك ومشترياً جديداً. ولا كود منتج في أيّ منها قبل ردٍّ ودافع (D-321).</p>
+</section>
+
+<section aria-labelledby="limits" class="read">
+  <h2 id="limits">حدود هذه الدراسة</h2>
+  <ul>
+    <li>لم يُقابَل أيّ مشترٍ. كلّ ما يخصّ الطلب منشور، لا محادثة.</li>
+    <li>الأسعار المرجعية منشورة في الغالب من البائعين أنفسهم، فهي سقوفٌ معلنة لا أسعار مدفوعة.</li>
+    <li>رواتب الفريق افتراضٌ بثلاثة مستويات (80 و120 و160 ألف دج شهرياً)، لأنه لم يُعثر على مسحٍ رسمي.</li>
+    <li>البوّابات حكمٌ موثَّق؛ وإعادة تقييم سطرٍ ممكنة بدليلٍ جديد.</li>
+    <li>صفحاتٌ رسمية لم تُقرأ مباشرة: الخطّ التوجيهي للتجارب السريرية (503)، وصفحة DGCCRF (403)، ونصّ القانون 25-11.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="src" class="read sources">
+  <h2 id="src">المصادر</h2>
+  <ol>
+    <li><a href="https://www.legifiscal.fr/actualites-fiscales/4687-facturation-electronique-mois-lancement-3-entreprises-4-designe-plateforme.html">Legifiscal — بيان لجنة متابعة الفوترة الإلكترونية</a>، 2026-10-08</li>
+    <li><a href="https://bworkshop.fr/facturation-electronique-bilan-du-premier-mois-et-dernieres-actualites/">b.workshop — جلسة FNFE العامّة</a>، 2026-10-09</li>
+    <li><a href="https://communityhub.sage.com/fr/sage-active/f/facture-electronique/273487/difficulte-d-emission-d-une-facture-electronique/657107">منتدى مستخدمي Sage</a>، نحو سبتمبر 2026</li>
+    <li><a href="https://www.banqup.com/fr-fr/resources/blog/belgium-s-2026-e-invoicing-mandate-what-have-we-learned-so-far-">Banqup — دروس بلجيكا</a>، 2026-07-22</li>
+    <li><a href="https://gulfnews.com/business/corporate-tax/uae-scraps-e-invoicing-pre-approval-ahead-of-october-deadline-heres-why-1.500707895">Gulf News — مواعيد الفوترة الإماراتية والقرار 168</a>، 2026-10-13</li>
+    <li><a href="https://finline.ae/en/articles/uae-e-invoicing-asp-list">Finline — سجلّ المزوّدين المعتمدين</a>، حُدّث 2026-10-23</li>
+    <li><a href="https://zerotaxjobs.com/jobs/e-invoicing-consultant-2oe47655">ZeroTaxJobs — مستشار فوترة إلكترونية، أبوظبي</a>، 2026-09-03</li>
+    <li><a href="https://slaati.com/2026/07/24/p2853674.html">صدى — إعلان الموجة 25</a>، 2026-07-24</li>
+    <li><a href="https://www.insee.fr/fr/statistiques/fichier/8295813/IA101.pdf">Insee — أعداد المؤسسات حسب الفئة</a>، بيانات 2022</li>
+    <li><a href="https://www.ice.it/it/news/notizie-dal-mondo/299770">ICE — عدد المسجّلين في ضريبة القيمة المضافة بالإمارات (573,000)</a>، فبراير 2026</li>
+    <li><a href="https://societeinfo.com/presentation/comparatif-bases-de-donnees-b2b">SocieteInfo — مقارنة أدوات البيانات</a>، قُرئ 2026-10-26</li>
+    <li>تعداد مكوّنات الحراسة: <a href="https://huggingface.co/meta-llama/Llama-Guard-3-8B">Llama Guard 3</a> · <a href="https://huggingface.co/nvidia/Llama-3.1-Nemotron-Safety-Guard-8B-v3/blob/main/README.md">Nemotron Safety Guard</a> · <a href="https://qwenlm.github.io/blog/qwen3/">Qwen3</a> · <a href="https://github.com/microsoft/presidio/tree/main/presidio-analyzer/presidio_analyzer/predefined_recognizers/country_specific">Presidio</a> · <a href="https://raw.githubusercontent.com/protectai/llm-guard/main/llm_guard/input_scanners/ban_substrings.py">LLM Guard</a>، قُرئت 2026-10-26</li>
+    <li><a href="https://arxiv.org/pdf/2608.21985">ASAS — اختبار النماذج العربية</a>، 2026</li>
+    <li><a href="https://deeplearn.org/arxiv/831654/salamahbench:-dialect-and-category-level-safety-evaluation-of-arabic-language-models">SalamahBench</a>، 2026</li>
+    <li><a href="https://aona.ai/blog/ai-red-teaming-cost-roi-enterprise-budget-2026/">Aona — كلفة اختبار الذكاء الاصطناعي</a>، 2026</li>
+    <li><a href="https://ud.hk/en/blogs/insight/article/ai-penetration-testing-cost-hong-kong-2026-09-14">UD — كلفة الفرق الحمراء</a>، 2026-09-14</li>
+    <li><a href="https://www.lettredesreseaux.com/?p=24379">Lettre des Réseaux — حصيلة DGCCRF</a>، 2026-09-04</li>
+    <li><a href="https://kolonell.com/fr/blog/mise-en-conformite-rgaa-site-entreprise-strasbourg-cout-2026">Kolonell — كلفة تدقيق RGAA</a>، 2026</li>
+    <li><a href="https://sk-web.fr/article/prix-audit-rgaa-2026">SK-Web — أسعار تدقيق RGAA</a>، 2026</li>
+    <li><a href="https://observalgerie.com/2026/10/20/economie/marche-noir-en-algerie-leuro-et-le-dollar-reculent-voici-les-nouveaux-prix/">ObservAlgérie — سعر الصرف الرسمي والموازي</a>، 2026-10-20</li>
+    <li><a href="https://www.ccomptes.fr/sites/default/files/2025-05/20250526-RALFSS-2025-Fraude-retraites-versees-a-l-etranger.pdf">ديوان المحاسبة — الاحتيال في المعاشات المدفوعة في الخارج</a>، 2025-05-26</li>
+    <li><a href="https://www.journaldugeek.com/2025/10/26/les-retraites-francais-en-algerie-seront-controles-par-une-banque/">Journal du Geek — مصرفٌ اختير بمناقصة</a>، 2025-10-26</li>
+    <li><a href="https://www.whatsupdoc-lemag.fr/article/medecins-padhue-2-fois-moins-dadmis-aux-evc-cette-annee-la-reforme-pose-question">Whatsupdoc — نتائج EVC 2026</a>، 2026-04-01</li>
+    <li><a href="https://info.fr/padhue-gouvernement-fin-concours-titularisation-medecins-etrangers/">Info.fr — إعلان إنهاء المباراة</a>، 2026-05-02</li>
+    <li><a href="https://alignlist.com/jobs/datamundi-voice-recording-project-tamazight-sepedi-kabyle-550">DATAmundi — مهمّة الجزائر</a>، 2026-09-19</li>
+    <li>قرارات المستودع: D-300 · D-320 · D-321 · D-322 · D-323، في <span class="num">.memory/decisions.md</span></li>
+    <li><a href="https://dnalgerie.com/rapatriement-de-devises-ce-qui-change-en-algerie/">DNAlgérie — النظام 26-02</a>، 2026-08-15</li>
+  </ol>
+</section>
+
+</div>
