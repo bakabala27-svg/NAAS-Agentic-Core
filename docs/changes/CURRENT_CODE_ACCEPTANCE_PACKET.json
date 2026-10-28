@@ -566,9 +566,9 @@
   "repository_microscope": {
     "mode": "FULL_REPOSITORY_BYTE_CENSUS_EXCLUDING_PACKET",
     "file_count_excluding_packet": 3606,
-    "total_bytes_excluding_packet": 53121235,
-    "total_newlines_excluding_packet": 918047,
-    "sha256_excluding_packet": "08d569f3c04097209ab4f5722e505679fa0c97567b091ac194eb1ae91d070c0f",
+    "total_bytes_excluding_packet": 53122371,
+    "total_newlines_excluding_packet": 918055,
+    "sha256_excluding_packet": "d1e907b977e33d133887527768e92d773e6fbd6c0a404178d22dacbd98fc2d94",
     "largest_file_excluding_packet": {
       "path": "Introduction to Agents.pdf",
       "bytes": 9473606
@@ -658,7 +658,7 @@
       "tests/unit/tools/test_idea_register_reproducible.py",
       "tests/unit/tools/test_opportunity_archive_additive.py"
     ],
-    "content_sha256_excluding_packet": "50539e6d5ce8b4100853db1aab9d581ea25b66b11ad83e099f65d5db4e17c300",
+    "content_sha256_excluding_packet": "2fa1f28b81193164584230b258dcc71392b920ec68d3f30fc08bd2ef56b7367a",
     "refreshed_on": "2026-10-28",
     "refresh_command": "python3 scripts/research/refresh_acceptance_diff_snapshot.py"
   }
