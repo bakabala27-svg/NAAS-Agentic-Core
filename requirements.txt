@@ -55,7 +55,7 @@ bcrypt==4.3.0
 argon2-cffi==23.1.0
 argon2-cffi-bindings==25.1.0
 cryptography>=50.0.0
-Authlib==1.7.2
+Authlib==1.9.1
 httpx==0.27.0
 python-dotenv==1.0.1
 python-multipart==0.0.32
