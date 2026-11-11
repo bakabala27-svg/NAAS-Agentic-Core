@@ -10,7 +10,7 @@
 # here alone (#2296); `ci.yml:46-51` records why that number is not free — ruff
 # 0.16 promoted PLR0917 and flags 69 pre-existing signatures. Raising these
 # means fixing those first and moving all three pins in one commit.
-black==26.5.1
+black==26.10.1
 ruff==0.14.0
 
 # Type Checking
